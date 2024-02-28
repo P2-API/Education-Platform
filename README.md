@@ -1,5 +1,5 @@
-### 1. npm install
+### 1. cd Education-Platform
 
-### 2. npm run dev (front end environment)
+### 2. npm install
 
-### 3. npm run both (både front end og server opstart)
+### 3. npm run dev
