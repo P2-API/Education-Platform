@@ -8,8 +8,8 @@ function App() {
     <>
       <div>
       </div>
-      <h2>P2</h2>
-      <h3>React Typescript</h3>
+      <h1>P2</h1>
+      <h2>React Typescript</h2>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           Du har trykket her {count} gange
