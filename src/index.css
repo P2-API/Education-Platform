@@ -10,32 +10,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
 
 button {
   border-radius: 0.5em;
@@ -49,12 +25,44 @@ button {
 }
 
 button:hover {
-  transform: translateY(-0.5px);
-  transition: transform 0.1s ease;
+  scale: 1.01 ;
+  transition: scale 0.1s ease;
 }
 
 button:active {
   background-color: #ffffff;
-  transform: translateY(1px);
-  transition: transform 0.1s ease;
+  scale: 0.99;
+  transition: scale 0.1s ease;
 }
+
+
+h1, li, h2, h3, h4, h5, h6, p, a, span, div {
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style-type: none;
+  font-size: large;
+  border-bottom: 1px transparent #000000;
+}
+
+li {
+  list-style-type: none;
+  font-size: large;
+}
+
+li:hover {
+  scale: 1.02 ;
+
+  transition: scale 0.1s ease;
+}
+
+li:active {
+  scale: 0.95;
+  color: #006eff;
+  transition: scale 0.1s ease;
+
+}
+
