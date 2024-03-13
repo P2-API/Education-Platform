@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Lottie from "lottie-react";
 import animationData from "../assets/animation.json";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -13,6 +13,8 @@ type DataRow = {
 };
 const Homepage = () => {
   const [count, setCount] = useState(0);
+
+  const tableRef = useRef<HTMLDivElement>(null);
 
   const columns: TableColumn<DataRow>[] = [
     { name: "ID", selector: (row) => row.id, sortable: true },
@@ -112,21 +114,28 @@ const Homepage = () => {
         style={{
           display: "flex",
           width: "100%",
-          justifyContent: "center",
+          justifyContent: "space-evenly",
           minWidth: "900px",
+          marginBottom: "5em",
+          alignItems: "start",
         }}
       >
-        <div style={{ margin: "3em", width: "30em" }}>
+        <div style={{ margin: "3em", width: "25em" }}>
           <h1>UddannelsesPlatform</h1>
-          <p>
+          <p >
             Velkommen til uddannelsesplatformen. Her kan du finde information om
-            forskellige uddannelser og metoder. Lorem ipsum dolor sit amet,
-            consectetur adipisicing elit. Id nobis hic laudantium voluptate?
-            Quia maxime provident doloremque eaque, voluptas ut error sed libero
-            tempore, excepturi esse eligendi aut sunt blanditiis.
+            forskellige uddannelser og metoder. Du kan også finde information
+            om løn og arbejdstid.
+            For at se mere omkring vores metoder, klik på metoder øverst.
+            Hvis du vil se mere omkring uddannelser,
+            Klik på knappen for at gå til uddannelser.
           </p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            Du har trykket her {count} gange
+          <button
+            onClick={() => {
+              tableRef.current?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            Gå til uddannelser
           </button>
         </div>
         <Lottie
@@ -136,6 +145,7 @@ const Homepage = () => {
       </div>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
         <div style={{ border: "1px solid black" }}>
+          <div ref={tableRef} id="table" />
           <DataTable title={"Uddannelser"} columns={columns} data={data} />
         </div>
       </div>
