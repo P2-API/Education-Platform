@@ -15,37 +15,45 @@
 
 button {
   border-radius: 0.5em;
-  border: 2px solid rgb(48, 48, 48);
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f3f3f3;
+  background: linear-gradient(180deg, #006eff 10%, #0460d7 100%);
+  color: #ffffff;
   cursor: pointer;
+  transition: scale 0.1s ease-out;
 }
 
 button:hover {
   scale: 1.01 ;
-  transition: scale 0.1s ease;
+  background: linear-gradient(180deg, rgb(19, 121, 255) 10%, #0460d7 100%);
+  transition: scale 0.1s ease
 }
+
 
 button:active {
-  background-color: #ffffff;
   scale: 0.99;
+  background: linear-gradient(180deg, #006eff 10%, #0460d7 100%);
+
   transition: scale 0.1s ease;
 }
 
 
-h1, li, h2, h3, h4, h5, h6, p, a, span, div {
+li, p, a, span {
   font-weight: 700;
   text-decoration: none;
   color: inherit;
 }
 
+ 
+
 li {
   list-style-type: none;
   font-size: large;
   border-bottom: 1px transparent #000000;
+  transition: scale 0.1s ease-out;
 }
 
 li {
