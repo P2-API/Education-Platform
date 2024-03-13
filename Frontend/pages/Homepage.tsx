@@ -18,13 +18,11 @@ const Homepage = () => {
         <h1>UddannelsesPlatform</h1>
 
         <p>
-          {" "}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quod
-          pariatur neque ea est! Ea, nihil. Laborum, ipsa sapiente, eum corporis
-          ratione harum incidunt ullam temporibus, ipsum illo et ut.m, ipsa
-          sapiente, eum corporis ratione harum incidunt ullam temporibus, ipsum
-          illo et ut.m, ipsa sapiente, eum corporis ratione harum incidunt ullam
-          temporibus, ipsum illo et ut.
+          Velkommen til uddannelsesplatformen. Her kan du finde information om
+          forskellige uddannelser og metoder. Lorem ipsum dolor sit amet,
+          consectetur adipisicing elit. Id nobis hic laudantium voluptate? Quia
+          maxime provident doloremque eaque, voluptas ut error sed libero
+          tempore, excepturi esse eligendi aut sunt blanditiis.
         </p>
         <button onClick={() => setCount((count) => count + 1)}>
           Du har trykket her {count} gange
