@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  overflow-y: scroll;
   color: rgba(0, 0, 0, 0.87);
   background-color: #ffffff;
 
@@ -12,7 +12,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* This applies to all scrollable elements */
+::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
 
+::-webkit-scrollbar-track {
+  background: #f1f1f100; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #88888800; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+}
+
+/* change color on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 button {
   border-radius: 0.5em;
   border: none;
