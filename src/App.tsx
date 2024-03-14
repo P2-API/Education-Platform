@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div style={{ margin: "1em", marginTop: "0em", marginLeft: "1.2em" }}>
+    <div style={{ margin: "1em", marginTop: "0em", marginLeft: "1.2em", height: "100vh" }}>
       <Navbar />
 
       <Routes>

@@ -12,7 +12,7 @@ const Navbar = () => {
         height: "5em",
       }}
     >
-      <div style={{ width: "15%", minWidth: "200px", alignItems: "center" }}>
+      <div style={{ width: "15%", minWidth: "250px", alignItems: "center" }}>
         <img
           style={{ width: "100%", minWidth: "250px" }}
           height={"auto"}
@@ -24,7 +24,7 @@ const Navbar = () => {
       <ul
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-evenly",
           width: "25%",
           minWidth: "400px",
         }}
@@ -58,7 +58,9 @@ const Navbar = () => {
         </li>
       </ul>
       <div style={{ width: "20%", minWidth: "160px", textAlign: "right" }}>
-        <button style={{ minWidth: "118px" }}>Læs mere</button>
+        <button className="primary-button" style={{ minWidth: "118px" }}>
+          Læs mere
+        </button>
       </div>
     </div>
   );
