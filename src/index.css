@@ -106,5 +106,6 @@ li:active {
 }
 
 .crazy-shadow {
-  border: 2px solid #0460d7;
+  border: 2px solid #044fb3;
+  border-radius: 0.5em;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;}
