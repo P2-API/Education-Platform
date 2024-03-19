@@ -1,0 +1,34 @@
+li,
+p,
+a,
+span {
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+}
+
+
+li {
+    list-style-type: none;
+    font-size: large;
+    border-bottom: 2px transparent #000000;
+    transition: scale 0.3s ease-out;
+}
+
+li:hover {
+    scale: 1.02;
+    color: #006eff;
+
+    transition: color 0.1s ease;
+}
+
+li:active {
+    scale: 0.95;
+    color: #006eff;
+    transition: scale 0.05s ease;
+    border-bottom: "2px solid #006eff";
+}
