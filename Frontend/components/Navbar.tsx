@@ -10,6 +10,8 @@ const Navbar = () => {
         justifyContent: "space-between",
         alignItems: "center",
         height: "5em",
+        marginRight: "1em",
+        marginLeft: "1em",
       }}
     >
       <div style={{ width: "15%", minWidth: "250px", alignItems: "center" }}>
