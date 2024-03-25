@@ -1,7 +1,8 @@
 import axios from 'axios';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import TextRazor from 'textrazor';
 import * as deepl from 'deepl-node';
+import spacy from 'spacy';
 
 
 const textRazor = new TextRazor('ee38eb1dffc5d19af37965711c0f6533e65a5297e9deaeb4fc495563');
@@ -20,7 +21,7 @@ async function fetchHtmlData(url) {
 
 async function filterData(htmlData) {
     try {
-        const $ = cheerio.load(htmlData);
+        const $ = load(htmlData);
         const element = $('.views-row.views-row-1');
 
         const text = getTextSanitized(element, $);
@@ -32,7 +33,7 @@ async function filterData(htmlData) {
 
 async function filterData2(htmlData) {
     try {
-        const $ = cheerio.load(htmlData);
+        const $ = load(htmlData);
         const element = $('.field-item.even');
         const text = getTextSanitized(element, $);
         return text;
@@ -106,7 +107,7 @@ let responseStruct = {};
     }
 })();
 
-//implimention of word similarity api intergration
+//implimention of word similarity api intergration using spacy https://spacy.io/universe/project/spacy-js
 
 
 })();       
