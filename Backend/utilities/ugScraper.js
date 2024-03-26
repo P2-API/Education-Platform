@@ -80,7 +80,7 @@ function addSpaceBeforeUppercase(text) {
 
 (async () => {
     
-const url = 'https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/samfundsvidenskabeligebacheloruddannelser/erhvervsoekonomi/erhvervsoekonomi-ha';
+const url = 'https://www.ug.dk/uddannelser/professionsbacheloruddannelser/socialogsundhedsuddannelser/sygeplejerske';
 const htmlData = await fetchHtmlData(url);
 const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
 const useableText = addSpaceBeforeUppercase(text);
@@ -95,7 +95,7 @@ let responseStruct = {};
     //console.log(result.text);
 
     try {
-        const res = await textRazor.exec(result.text, options, { languageOverride: 'dk' });
+        const res = await textRazor.exec(result.text, options, { languageOverride: 'en' });
         responseStruct = res;
         console.log("First 10 Specific Topics and Scores:");
         console.log(responseStruct.response.topics.slice(0, 10).map(topic => ({
