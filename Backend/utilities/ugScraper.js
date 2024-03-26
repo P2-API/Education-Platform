@@ -23,7 +23,6 @@ async function filterData(htmlData) {
     try {
         const $ = load(htmlData);
         const element = $('.views-row.views-row-1');
-
         const text = getTextSanitized(element, $);
         return text;
     } catch (error) {
