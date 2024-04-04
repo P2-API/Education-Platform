@@ -45,7 +45,7 @@ function getTextSanitized(element, $) {
     let textContent = [];
     let stopAdding = false;
 
-    element.contents().each(function() {
+    element.contents().each(function () {
         if (this.type === 'text') {
             const nodeText = $(this).text().trim();
             if (nodeText === 'Brug for mere hjælp?') {
@@ -78,35 +78,35 @@ function addSpaceBeforeUppercase(text) {
 
 
 (async () => {
-    
-const url = 'https://www.ug.dk/uddannelser/professionsbacheloruddannelser/socialogsundhedsuddannelser/sygeplejerske';
-const htmlData = await fetchHtmlData(url);
-const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
-const useableText = addSpaceBeforeUppercase(text);
 
-//console.log(useableText);
+    const url = 'https://www.ug.dk/uddannelser/erhvervsuddannelser/teknologibyggeriogtransport/fotograf';
+    const htmlData = await fetchHtmlData(url);
+    const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
+    const useableText = addSpaceBeforeUppercase(text);
 
-const options = { extractors: 'topics' };
-let responseStruct = {};
+    //console.log(useableText);
 
-(async () => {
-    let result = await translator.translateText(useableText, 'DA', 'en-GB');
-    //console.log(result.text);
+    const options = { extractors: 'topics' };
+    let responseStruct = {};
 
-    try {
-        const res = await textRazor.exec(result.text, options, { languageOverride: 'en' });
-        responseStruct = res;
-        console.log("First 10 Specific Topics and Scores:");
-        console.log(responseStruct.response.topics.slice(0, 10).map(topic => ({
-            label: topic.label,
-            score: topic.score
-        })));
-    } catch (err) {
-        console.error(err);
-    }
-})();
+    (async () => {
+        let result = await translator.translateText(useableText, 'DA', 'en-GB');
+        //console.log(result.text);
 
-//implimention of word similarity api intergration using spacy https://spacy.io/universe/project/spacy-js
+        try {
+            const res = await textRazor.exec(result.text, options, { languageOverride: 'en' });
+            responseStruct = res;
+            console.log("First 10 Specific Topics and Scores:");
+            console.log(responseStruct.response.topics.slice(0, 10).map(topic => ({
+                label: topic.label,
+                score: topic.score
+            })));
+        } catch (err) {
+            console.error(err);
+        }
+    })();
+
+    //implimention of word similarity api intergration using spacy https://spacy.io/universe/project/spacy-js
 
 
 })();       
