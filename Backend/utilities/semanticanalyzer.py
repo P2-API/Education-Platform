@@ -3,40 +3,43 @@ import spacy
 # Load the Danish spaCy model
 nlp = spacy.load("da_core_news_lg")
 
-# Definer nøgleord og deres tilhørende samlinger af ord
+# Define keywords and their corresponding word collections
 keywords_collections = {
-    "Matematik": ["Matematik", "Analyse", "Algebra", "Modellering", "Statistik"],
-    "Sundhedsvæsen": ["Patient", "hospital", "sygdom", "medicin", "behandling", "diagnose"],
-    "Økonomi": ["Finans", "penge", "marked", "mikroøkonomi", "makroøkonomi", "kapitalisme", "handel", "regnskab", "statistik", "virksomhed"],
-    "Kommunikation": ["Journalistik", "artikler", "spørgsmål", "medier", "psykologi", "digital"],
-    "Markedsføring": ["Produkt", "målgruppe", "branding", "marked", "analyse", "strategi", "salg", "sociale medier", "digital", "reklame", "distribution"],
-    "Kunst": ["Maleri", "skulptur", "billedkunst", "fotografi", "design", "grafik", "æstetik", "udstilling"],
-    "Naturvidenskab": ["Biologi", "Kemi", "Fysik", "Geologi", "Astronomi", "Økologi", "Genetik", "Molekyler", "Matematik", "Modellering", "Evolution", "Atomer"]
+    "Matematik": ["Matematik", "Algebra", "Modellering", "Statistik"],
+    "Sundhedsvæsen": ["Sundhedsvæsen", "hospital", "sygdom", "medicin"],
+    "Økonomi": ["Finans", "Økonomi", "Regnskab", "Virksomhed"],
+    "Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"],
+    "Markedsføring": ["Markedsføring", "Målgruppe", "Branding",  "Reklame"],
+    "Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"],
+    "Naturvidenskab": ["Naturvidenskab", "Fysik", "Biologi", "Kemi"]
 }
 
 # Define your Danish words
 word_list = [
-    'Økonomi',
-    'Forretning',
-    'Bachelorgrad',
-    'Erhvervsøkonomi',
-    'Erhvervsadministration',
-    'Ledelse',
-    'Organisation',
-    'Viden',
-    'Akademisk grad',
-    'Teori'
+    'Journalistik',
+    'Medier (kommunikation)',
+    'Forskning',
+    'Videnskabens grene',
+    'Menneskelig kommunikation',
+    'Kommunikation',
+    'Humaniora uddannelse',
+    'Kognition',
+    'Videnskab',
+    'Metodologi'
 ]
 
-# Beregn lignende scores for hvert nøgleord
-keyword_scores = {keyword: 0 for keyword in keywords_collections.keys()}
+# Calculate similarity scores for each keyword
+keyword_scores = {keyword: [] for keyword in keywords_collections.keys()}
 for keyword, collection in keywords_collections.items():
-    for word in collection:
-        # Beregn summen af lignende scores for hvert nøgleord
-        similarity_sum = sum(nlp(keyword).similarity(nlp(word)) for word in word_list)
-        # Opdater den samlede score for nøgleordet
-        keyword_scores[keyword] += similarity_sum
+    for keyword_word in collection:
+        for word in word_list:
+            # Calculate the similarity score for each word in the collection
+            similarity_score = nlp(keyword_word).similarity(nlp(word))
+            keyword_scores[keyword].append(similarity_score)
 
-# Udskriv scores for hvert nøgleord
-for keyword, score in keyword_scores.items():
-    print(f"Score for '{keyword}': {score}")
+# Calculate the sum of similarity scores for each keyword
+sum_similarity_scores = {keyword: sum(scores) for keyword, scores in keyword_scores.items()}
+
+# Print the sum of similarity scores for each keyword
+for keyword, score in sum_similarity_scores.items():
+    print(f"Sum of similarity scores for '{keyword}': {score}")
