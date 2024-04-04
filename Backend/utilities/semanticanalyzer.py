@@ -11,7 +11,7 @@ keywords_collections = {
     "Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"],
     "Markedsføring": ["Markedsføring", "Målgruppe", "Branding",  "Reklame"],
     "Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"],
-    "Naturvidenskab": ["Naturvidenskab", "Fysik", "Biologi", "Kemi"]
+    "Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"]
 }
 
 # Define your Danish words

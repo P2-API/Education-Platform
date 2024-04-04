@@ -93,7 +93,7 @@ async function calculateSimilarities(topics, wordList) {
 
 (async () => {
 
-    const url = 'https://www.ug.dk/uddannelser/professionsbacheloruddannelser/sprogogformidlingsuddannelser/journalist';
+    const url = 'https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi';
     const htmlData = await fetchHtmlData(url);
     const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
     const useableText = addSpaceBeforeUppercase(text);
@@ -123,9 +123,13 @@ async function calculateSimilarities(topics, wordList) {
                 label: topic.label,
                 score: topic.score
             }));
+            const word_list = res.response.topics.slice(0, 10).map(topic => (
+                topic.label
+            ));
 
             console.log("First 10 Specific Topics and Scores:");
             console.log(topics);
+            console.log(word_list);
 
             // Call calculateSimilarities
             calculateSimilarities(topics, subjects);
