@@ -3,46 +3,40 @@ import spacy
 # Load the Danish spaCy model
 nlp = spacy.load("da_core_news_lg")
 
-# Define the words to compare against
-words_to_compare = [
-    "Matematik",
-    "Sundhedsvæsen", 
-    "Computer",
-    "Kunst",
-    "Naturvidenskab",
-    "Økonomi",
-    "Finans",
-    "Kommunikation",
-    "Medicin"
-]
+# Definer nøgleord og deres tilhørende samlinger af ord
+keywords_collections = {
+    "Matematik": ["Matematik", "Analyse", "Algebra", "Modellering", "Statistik"],
+    "Sundhedsvæsen": ["Patient", "hospital", "sygdom", "medicin", "behandling", "diagnose"],
+    "Økonomi": ["Finans", "penge", "marked", "mikroøkonomi", "makroøkonomi", "kapitalisme", "handel", "regnskab", "statistik", "virksomhed"],
+    "Kommunikation": ["Journalistik", "artikler", "spørgsmål", "medier", "psykologi", "digital"],
+    "Markedsføring": ["Produkt", "målgruppe", "branding", "marked", "analyse", "strategi", "salg", "sociale medier", "digital", "reklame", "distribution"],
+    "Kunst": ["Maleri", "skulptur", "billedkunst", "fotografi", "design", "grafik", "æstetik", "udstilling"],
+    "Naturvidenskab": ["Biologi", "Kemi", "Fysik", "Geologi", "Astronomi", "Økologi", "Genetik", "Molekyler", "Matematik", "Modellering", "Evolution", "Atomer"]
+}
 
 # Define your Danish words
 word_list = [
-  'sygepleje',
-  'sygeplejerske',
-  'semestre',
-  'patient',
-  'pårørende',
-  'borger',
-  'klinisk',
-  'processer',
-  'hospital',
-  'fagfolk'
+    'Økonomi',
+    'Forretning',
+    'Bachelorgrad',
+    'Erhvervsøkonomi',
+    'Erhvervsadministration',
+    'Ledelse',
+    'Organisation',
+    'Viden',
+    'Akademisk grad',
+    'Teori'
 ]
 
-# Calculate the similarity between each word to compare and each word in the list
-word_similarities = {word: {} for word in words_to_compare}
-for compare_word in words_to_compare:
-    for word in word_list:
-        similarity = nlp(compare_word).similarity(nlp(word))
-        word_similarities[compare_word][word] = similarity
+# Beregn lignende scores for hvert nøgleord
+keyword_scores = {keyword: 0 for keyword in keywords_collections.keys()}
+for keyword, collection in keywords_collections.items():
+    for word in collection:
+        # Beregn summen af lignende scores for hvert nøgleord
+        similarity_sum = sum(nlp(keyword).similarity(nlp(word)) for word in word_list)
+        # Opdater den samlede score for nøgleordet
+        keyword_scores[keyword] += similarity_sum
 
-# Compute the sum of similarities for each word to compare
-sum_similarities = {word: sum(similarities.values()) for word, similarities in word_similarities.items()}
-
-# Round the sum of similarities to two decimal places
-rounded_sum_similarities = {word: round(similarity, 2) for word, similarity in sum_similarities.items()}
-
-# Print the rounded sum of similarities for each word to compare
-for word, similarity in rounded_sum_similarities.items():
-    print(f"Sum of similarities for '{word}': {similarity}")
+# Udskriv scores for hvert nøgleord
+for keyword, score in keyword_scores.items():
+    print(f"Score for '{keyword}': {score}")
