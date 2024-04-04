@@ -1,8 +1,9 @@
+import { spawn } from 'child_process';
 import axios from 'axios';
 import { load } from 'cheerio';
 import TextRazor from 'textrazor';
 import * as deepl from 'deepl-node';
-import spacy from 'spacy';
+
 
 
 const textRazor = new TextRazor('ee38eb1dffc5d19af37965711c0f6533e65a5297e9deaeb4fc495563');
@@ -75,21 +76,29 @@ function addSpaceBeforeUppercase(text) {
     return text.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
 }
 
-async function calculateSimilarities(topics, wordList) {
-    const nlp = await spacy.load('en_core_web_sm');
-    const wordSimilarities = {};
+function calculateSimilarities(topics, wordList) {
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python', ['calculate_similarity.py']);
 
-    for (let topic of topics) {
-        for (let word of wordList) {
-            const similarity = nlp.similarity(topic.label, word);
-            wordSimilarities[`${topic.label}-${word}`] = similarity;
-        }
-    }
+        let dataToSend = {
+            topics: topics,
+            word_list: wordList
+        };
 
-    const sortedPairs = Object.entries(wordSimilarities).sort((a, b) => b[1] - a[1]);
+        pythonProcess.stdin.write(JSON.stringify(dataToSend));
+        pythonProcess.stdin.end();
 
-    return sortedPairs;
+        pythonProcess.stdout.on('data', (data) => {
+            const result = JSON.parse(data.toString());
+            resolve(result);
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            reject(data.toString());
+        });
+    });
 }
+
 
 (async () => {
 
@@ -98,16 +107,13 @@ async function calculateSimilarities(topics, wordList) {
     const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
     const useableText = addSpaceBeforeUppercase(text);
     const subjects = [
-        "Science", "Technology", "Engineering", "Mathematics",
-        "Arts", "Humanities", "Literature",
-        "Business", "Entrepreneurship", "Management",
-        "Social", "Sciences", "Psychology",
-        "Health", "Medicine", "Nursing",
-        "Environmental", "Sustainability", "Ecology",
-        "Technology", "Innovation", "Data",
-        "Education", "Teaching", "Mentorship",
-        "Media", "Communication", "Journalism",
-        "Interdisciplinary", "Studies", "Exploration"
+        {"Matematik": ["Matematik", "Algebra", "Modellering", "Statistik"]},
+        {"Sundhedsvæsen": ["Sundhedsvæsen", "hospital", "sygdom", "medicin"]},
+        {"Økonomi": ["Finans", "Økonomi", "Regnskab", "Virksomhed"]},
+        {"Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"]},
+        {"Markedsføring": ["Markedsføring", "Målgruppe", "Branding",  "Reklame"]},
+        {"Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"]},
+        {"Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"]},
     ];
 
     //console.log(useableText);
@@ -132,14 +138,15 @@ async function calculateSimilarities(topics, wordList) {
             console.log(word_list);
 
             // Call calculateSimilarities
-            calculateSimilarities(topics, subjects);
-            const sortedPairs = await calculateSimilarities(topics, subjects);
-            console.log(sortedPairs);
+            const similarities = await calculateSimilarities(word_list, subjects);
+            console.log(similarities);
+
         } catch (err) {
             console.error(err);
         }
+
+
     })();
 
-    //implimention of word similarity api intergration using spacy https://spacy.io/universe/project/spacy-js
 
 })();       
