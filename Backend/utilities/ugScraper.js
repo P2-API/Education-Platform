@@ -93,7 +93,7 @@ async function calculateSimilarities(topics, wordList) {
 
 (async () => {
 
-    const url = 'https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi';
+    const url = 'https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/sundhedsvidenskabeligebacheloruddannelser/medicin';
     const htmlData = await fetchHtmlData(url);
     const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
     const useableText = addSpaceBeforeUppercase(text);
