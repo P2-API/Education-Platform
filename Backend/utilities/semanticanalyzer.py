@@ -5,41 +5,45 @@ nlp = spacy.load("da_core_news_lg")
 
 # Define keywords and their corresponding word collections
 keywords_collections = {
-    "Matematik": ["Matematik", "Algebra", "Modellering", "Statistik"],
+    "Matematik": ["Matematik", "Modellering", "Programmering", "Statistik"],
     "Sundhedsvæsen": ["Sundhedsvæsen", "hospital", "sygdom", "medicin"],
     "Økonomi": ["Finans", "Økonomi", "Regnskab", "Virksomhed"],
-    "Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"],
+    "Kommunikation": ["Kommunikation", "Sprog", "Journalistik", "Medier"],
     "Markedsføring": ["Markedsføring", "Målgruppe", "Branding",  "Reklame"],
     "Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"],
-    "Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"]
+    "Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"],
+    "IT": ["Informationsteknologi", "Software", "Teknologi", "Data"],
 }
 
 # Define your Danish words
 word_list = [
-    'Journalistik',
-    'Medier (kommunikation)',
-    'Forskning',
-    'Videnskabens grene',
-    'Menneskelig kommunikation',
-    'Kommunikation',
-    'Humaniora uddannelse',
-    'Kognition',
-    'Videnskab',
-    'Metodologi'
+'Computerprogrammering',
+'Datavidenskab',
+'Data',
+'Computer',
+'Videnskab',
+'Software',
+'Videnskabens grene',
+'Informationsteknologi',
+'Computing',
+'Teknologi',
+'Matematik'
 ]
 
 # Calculate similarity scores for each keyword
-keyword_scores = {keyword: [] for keyword in keywords_collections.keys()}
-for keyword, collection in keywords_collections.items():
-    for keyword_word in collection:
-        for word in word_list:
-            # Calculate the similarity score for each word in the collection
-            similarity_score = nlp(keyword_word).similarity(nlp(word))
-            keyword_scores[keyword].append(similarity_score)
+rankings = {subject: 0 for subject in keywords_collections}
 
-# Calculate the sum of similarity scores for each keyword
-sum_similarity_scores = {keyword: sum(scores) for keyword, scores in keyword_scores.items()}
+for subject in keywords_collections:
+    similarity_scores = 0
+    for word in keywords_collections[subject]:
+        for keyword in word_list:
+            similarity_scores += nlp(word).similarity(nlp(keyword))
+            if keywords_collections[subject][0] == word: # If the word is the first word in the list
+                similarity_scores *= 0.5
+    rankings[subject] = similarity_scores
+
+
 
 # Print the sum of similarity scores for each keyword
-for keyword, score in sum_similarity_scores.items():
-    print(f"Sum of similarity scores for '{keyword}': {score}")
+for subject in rankings:
+    print(f"{subject}: {rankings[subject]}")
