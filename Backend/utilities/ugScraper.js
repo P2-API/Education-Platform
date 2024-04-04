@@ -75,38 +75,67 @@ function addSpaceBeforeUppercase(text) {
     return text.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
 }
 
+async function calculateSimilarities(topics, wordList) {
+    const nlp = await spacy.load('en_core_web_sm');
+    const wordSimilarities = {};
 
+    for (let topic of topics) {
+        for (let word of wordList) {
+            const similarity = nlp.similarity(topic.label, word);
+            wordSimilarities[`${topic.label}-${word}`] = similarity;
+        }
+    }
+
+    const sortedPairs = Object.entries(wordSimilarities).sort((a, b) => b[1] - a[1]);
+
+    return sortedPairs;
+}
 
 (async () => {
 
-    const url = 'https://www.ug.dk/uddannelser/erhvervsuddannelser/teknologibyggeriogtransport/fotograf';
+    const url = 'https://www.ug.dk/uddannelser/professionsbacheloruddannelser/socialogsundhedsuddannelser/sygeplejerske';
     const htmlData = await fetchHtmlData(url);
     const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
     const useableText = addSpaceBeforeUppercase(text);
+    const subjects = [
+        "Science", "Technology", "Engineering", "Mathematics",
+        "Arts", "Humanities", "Literature",
+        "Business", "Entrepreneurship", "Management",
+        "Social", "Sciences", "Psychology",
+        "Health", "Medicine", "Nursing",
+        "Environmental", "Sustainability", "Ecology",
+        "Technology", "Innovation", "Data",
+        "Education", "Teaching", "Mentorship",
+        "Media", "Communication", "Journalism",
+        "Interdisciplinary", "Studies", "Exploration"
+    ];
 
     //console.log(useableText);
 
     const options = { extractors: 'topics' };
-    let responseStruct = {};
 
     (async () => {
         let result = await translator.translateText(useableText, 'DA', 'en-GB');
-        //console.log(result.text);
 
         try {
             const res = await textRazor.exec(result.text, options, { languageOverride: 'en' });
-            responseStruct = res;
-            console.log("First 10 Specific Topics and Scores:");
-            console.log(responseStruct.response.topics.slice(0, 10).map(topic => ({
+            const topics = res.response.topics.slice(0, 10).map(topic => ({
                 label: topic.label,
                 score: topic.score
-            })));
+            }));
+
+            console.log("First 10 Specific Topics and Scores:");
+            console.log(topics);
+
+            // Call calculateSimilarities
+            calculateSimilarities(topics, subjects);
+            const sortedPairs = await calculateSimilarities(topics, subjects);
+            console.log(sortedPairs);
         } catch (err) {
             console.error(err);
         }
     })();
 
     //implimention of word similarity api intergration using spacy https://spacy.io/universe/project/spacy-js
-
 
 })();       
