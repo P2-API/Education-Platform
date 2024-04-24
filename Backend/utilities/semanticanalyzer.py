@@ -7,31 +7,31 @@ nlp = spacy.load("da_core_news_lg")
 keywords_collections = {
     "Matematik": ["Matematik", "Algebra"],
     "Sundhedsvæsen": ["Omsorg", "Sundhed", "hospital", "sygdom", "medicin"],
-    "Økonomi": ["Økonomi", "Regnskab", "Virksomhed", "Forretning", "Statistik"],
-    "Kommunikation": ["Argumentation", "Jura", "Journalistik", "Medie", "Organisation", "Research", "Strategi", "Kultur", "Kampagne", "Politik"],
-    "Markedsføring": ["Markedsføring", "Målgruppe", "Værdiskabelse", "Salg", "International", "Digital marketing", "Koordinator", "Konkurrenter", "Branding",  "Reklame"],
-    "Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur", "Historie", "Kultur", "Design", "Arkitektur", "Film", "Teater"],
+    "Økonomi": ["Økonomi", "Regnskab", "Statistik", "Finans"],
+    "Kommunikation": ["Journalistik", "Kommunikation"],
+    "Markedsføring": ["Markedsføring"],
+    "Kunst": ["Kunst", "Litteratur", "Teater"],
     "Naturvidenskab": ["Naturvidenskab", "Fysik", "Matematik", "Kemi", "Biologi", "Geologi", "Miljø", "Energi", "Klima", "Teknologi"],
-    "IT": ["Informationsteknologi", "Data", "Programmering", "Netværk", "Computer"],
-    "Filosofi": ['Filosofi', 'Anvendt filosofi', 'Uddannelse', 'Humaniora uddannelse', 'Kognition', 'Videnskabens grene', 'Læring', 'Kognitiv videnskab', "Bachelorgrad", 'Adfærdsændring'],
+    "IT": ["Computer", "software"],
+    "Filosofi": ['Filosofi'],
     "Historie": ["Historie", "Litteratur", "Informationssøgning", "Kildekritik"],
-    "Håndværk": ["Tømrer", "Murer", "Lære", "Byggeri", "Håndværk", "Erhverv", "Teknik", "Værktøj", "Materialer", "Bygning"],
-    "Landbrug": ["Landbrug", "Dyr", "Planter", "Fødevarer", "Miljø", "Bæredygtighed", "Kemi", "Biologi", "Teknologi", "Jordbrug"],
-    "Natur": ["Natur", "Miljø", "Bæredygtighed", "Klima", "Energi", "Vand", "Luft", "Jord", "Dyr", "Planter"],
+    "Håndværk": ["Håndværk" ],
+    "Landbrug": ["Landbrug", "Dyr", "Planter", "Fødevarer", "Miljø", "Bæredygtighed", "Biologi", "Jordbrug"],
+    "Natur": ["Natur", "Miljø", "Bæredygtighed", "Klima", "Skov", "Vand", "Luft", "Jord", "Dyr", "Planter"],
 }
 
 # Define your Danish words
 word_list = [
-'Historie',
-'Analyse',
-'Metodologi',
-'Uddannelse',
-'Videnskab',
-'Videnskabens grene',
-'Humaniora uddannelse',
-'Kommunikation',
-"Bachelorgrad",
-'Menneskelig kommunikation'
+'Skovbrug',
+'Naturmiljø',
+'Naturressourcer',
+'Miljøsamfundsvidenskab',
+'Naturressourceforvaltning',
+'Jordvidenskaber',
+'Økologi',
+'Skov',
+'Landskab',
+'Miljøbevarelse'
 ]
 
 # Calculate similarity scores for each keyword
