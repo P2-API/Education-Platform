@@ -102,18 +102,18 @@ async function calculateSimilarities(topics, wordList) {
 
 (async () => {
 
-    const url = 'https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi';
+    const url = 'https://www.ug.dk/uddannelser/professionsbacheloruddannelser/tekniskeogteknologiskeudd/oevrigetekniskeuddannelser/skov-og-landskabsingenioer';
     const htmlData = await fetchHtmlData(url);
     const text = await filterData(htmlData) + '. ' + await filterData2(htmlData);
     const useableText = addSpaceBeforeUppercase(text);
     const subjects = [
-        {"Matematik": ["Matematik", "Algebra", "Modellering", "Statistik"]},
-        {"Sundhedsvæsen": ["Sundhedsvæsen", "hospital", "sygdom", "medicin"]},
-        {"Økonomi": ["Finans", "Økonomi", "Regnskab", "Virksomhed"]},
-        {"Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"]},
-        {"Markedsføring": ["Markedsføring", "Målgruppe", "Branding",  "Reklame"]},
-        {"Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"]},
-        {"Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"]},
+        { "Matematik": ["Matematik", "Algebra", "Modellering", "Statistik"] },
+        { "Sundhedsvæsen": ["Sundhedsvæsen", "hospital", "sygdom", "medicin"] },
+        { "Økonomi": ["Finans", "Økonomi", "Regnskab", "Virksomhed"] },
+        { "Kommunikation": ["Journalistik", "Kommunikation", "Medier", "Psykologi"] },
+        { "Markedsføring": ["Markedsføring", "Målgruppe", "Branding", "Reklame"] },
+        { "Kunst": ["Kunst", "Billedkunst", "Musik", "Litteratur"] },
+        { "Naturvidenskab": ["Naturvidenskab", "Fysik", "Fysik", "Fysik"] },
     ];
 
     //console.log(useableText);
