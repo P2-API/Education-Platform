@@ -76,7 +76,7 @@ function addSpaceBeforeUppercase(text) {
     return text.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
 }
 
-function calculateSimilarities(topics, wordList) {
+async function calculateSimilarities(topics, wordList) {
     return new Promise((resolve, reject) => {
         const pythonProcess = spawn('python', ['calculate_similarity.py']);
 
