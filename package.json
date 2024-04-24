@@ -11,6 +11,10 @@
     "test": "vitest --coverage"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "child_process": "^1.0.2",
