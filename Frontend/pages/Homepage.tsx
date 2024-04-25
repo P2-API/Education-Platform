@@ -40,30 +40,51 @@ const Homepage = () => {
             }),
           }}
         >
-          {matches ? (
-            <h1 className="text-color-blue" style={{ fontSize: "xxx-large" }}>
-              UddannelsesPlatform
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexWrap: "wrap",
+              marginTop: "2em",
+              justifyContent: centerHero ? "center" : "flex-start",
+            }}
+          >
+            <h1
+              className="text-color-blue"
+              style={{
+                fontSize: "xxx-large",
+                minWidth: "20px",
+                margin: 0,
+                marginRight: "0.5em",
+                marginTop: 0,
+              }}
+            >
+              Find den
             </h1>
-          ) : (
-            <>
-              <h1
-                className="text-color-blue"
-                style={{ fontSize: "xxx-large", marginBottom: 0 }}
-              >
-                Uddannelses
-              </h1>
-              <h1
-                className="text-color-blue"
-                style={{
-                  fontSize: "xxx-large",
-                  marginTop: -20,
-                  marginBottom: 0,
-                }}
-              >
-                Platform
-              </h1>
-            </>
-          )}
+            <h1
+              className="text-color-blue"
+              style={{
+                fontSize: "xxx-large",
+                minWidth: "50px",
+                margin: 0,
+                justifyContent: "center",
+                marginTop: 0,
+              }}
+            >
+              perfekte
+            </h1>
+            <h1
+              className="text-color-blue"
+              style={{
+                fontSize: "xxx-large",
+                minWidth: "50px",
+                margin: 0,
+              }}
+            >
+              uddannelse!
+            </h1>
+          </div>
+
           <p
             style={{
               fontWeight: "normal",
