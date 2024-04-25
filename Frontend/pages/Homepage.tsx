@@ -10,6 +10,7 @@ const Homepage = () => {
   const matches = useMediaQuery("(min-width: 800px)");
 
   const useMargin = useMediaQuery("(min-width: 1179px)");
+  const centerHero = useMediaQuery("(max-width: 925px)");
 
   return (
     <>
@@ -29,6 +30,14 @@ const Homepage = () => {
           style={{
             width: "35%",
             minWidth: "345px",
+            ...(centerHero && {
+              display: "flex",
+              justifyContent: "space-evenly",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              // reduce gap
+            }),
           }}
         >
           {matches ? (
@@ -45,16 +54,27 @@ const Homepage = () => {
               </h1>
               <h1
                 className="text-color-blue"
-                style={{ fontSize: "xxx-large", marginTop: -20 }}
+                style={{
+                  fontSize: "xxx-large",
+                  marginTop: -20,
+                  marginBottom: 0,
+                }}
               >
                 Platform
               </h1>
             </>
           )}
-          Velkommen til uddannelsesplatformen. Her kan du finde den idéelle
-          uddannelse til dig, baseret på data fra offentlige myndigheder og
-          statistikker, samt ved hjælp af rangeringsalgoritmer og
-          visualiseringsværktøjer.
+          <p
+            style={{
+              fontWeight: "normal",
+              marginBottom: centerHero ? -35 : "",
+            }}
+          >
+            Velkommen til uddannelsesplatformen. Her kan du finde den idéelle
+            uddannelse til dig, baseret på data fra offentlige myndigheder og
+            statistikker, samt ved hjælp af rangeringsalgoritmer og
+            visualiseringsværktøjer.
+          </p>
           <p></p>
           <div style={{ display: "flex", marginTop: "2em" }}>
             <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
@@ -71,10 +91,13 @@ const Homepage = () => {
             </div>
           </div>
           <div
-            style={{ display: "flex", marginTop: "1em", marginBottom: "2em" }}
+            style={{
+              display: "flex",
+              marginTop: "1em",
+            }}
           >
             <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
-            <div>
+            <div style={{ marginBottom: centerHero ? "0em" : "1em" }}>
               <b> Personlig anbefaling</b> – Få en personlig forklaring på
               rangeringen af uddannelserne baseret på dine præferencer baseret
               på AI-teknologi
