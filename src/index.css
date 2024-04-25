@@ -12,9 +12,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 0;
+}
+
 /* This applies to all scrollable elements */
 ::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
+  width: 0px; /* width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {

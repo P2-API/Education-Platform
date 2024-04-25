@@ -12,6 +12,7 @@ const Navbar = () => {
   };
 
   const showNavbar = useMediaQuery("(min-width:850px)");
+  const condenseNavbar = useMediaQuery("(min-width:1280px)");
 
   const drawerList = (
     <div
@@ -61,36 +62,46 @@ const Navbar = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        height: "8%",
-        marginLeft: "3em",
-        marginTop: "1em",
+        height: "7%",
+        width: condenseNavbar ? "60%" : "95%",
+        borderBottom: "3px solid #dee2e6",
+        paddingLeft: condenseNavbar ? "20%" : "5%",
+        paddingRight: condenseNavbar ? "20%" : "5%",
+        backgroundColor: "white",
+        position: "fixed",
+        zIndex: 10,
       }}
     >
-      <div style={{ width: "15%", minWidth: "350px", alignItems: "center" }}>
-        <img
-          style={{ width: "100%", minWidth: "350px" }}
-          height={"auto"}
-          src={Logo}
-          className="logo"
-          alt="Logo"
-        />
-      </div>
+      <img
+        style={{ width: "250px" }}
+        height={"auto"}
+        src={Logo}
+        className="logo"
+        alt="Logo"
+      />
       {showNavbar ? (
         <ul
           style={{
             display: "flex",
             justifyContent: "space-evenly",
-            width: "35%",
+            width: "30%",
             minWidth: "500px",
-            alignItems: "end",
+            alignItems: "center",
           }}
         >
           <li
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/about" ? "#006eff" : undefined,
-              fontSize: "22px",
+              color: path === "/about" ? "white" : undefined,
+              backgroundColor: path === "/about" ? "#006eff" : undefined,
+              fontSize: "18px",
+              height: "2em",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "0.5em",
+              paddingRight: "0.5em",
+              borderRadius: "5px",
             }}
           >
             <Link to="/about">Om siden</Link>
@@ -99,8 +110,15 @@ const Navbar = () => {
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/" ? "#006eff" : undefined,
-              fontSize: "22px",
+              color: path === "/" ? "white" : undefined,
+              backgroundColor: path === "/" ? "#006eff" : undefined,
+              fontSize: "18px",
+              height: "2em",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "0.5em",
+              paddingRight: "0.5em",
+              borderRadius: "5px",
             }}
           >
             <Link to="/">Uddannelser</Link>
@@ -109,8 +127,15 @@ const Navbar = () => {
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/methods" ? "#006eff" : undefined,
-              fontSize: "22px",
+              color: path === "/methods" ? "white" : undefined,
+              backgroundColor: path === "/methods" ? "#006eff" : undefined,
+              fontSize: "20px",
+              height: "2.2em",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "0.5em",
+              paddingRight: "0.5em",
+              borderRadius: "5px",
             }}
           >
             <Link to="/methods">Metoder</Link>
