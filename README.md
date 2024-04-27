@@ -1,6 +1,6 @@
 ### 1. cd Education-Platform
 
 ### 2. npm install
-npm install axios cheerio textrazor deepl-node
+npm install
 
 ### 3. npm run dev
