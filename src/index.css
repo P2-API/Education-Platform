@@ -12,9 +12,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 0;
+}
+
 /* This applies to all scrollable elements */
 ::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
+  width: 0px; /* width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -37,24 +41,23 @@
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background: linear-gradient(180deg, #006eff 10%, #0460d7 100%);
+  background: linear-gradient(180deg, rgb(59 161 58) 10%, #029100 100%);
   color: #ffffff;
   cursor: pointer;
-  transition: scale 0.1s ease-out;
+}
+
+.text-color-blue {
+  color: #006eff;
 }
 
 .primary-button:hover {
-  scale: 1.01 ;
-  background: linear-gradient(180deg, rgb(19, 121, 255) 10%, #0460d7 100%);
-  transition: scale 0.1s ease
+  background: linear-gradient(180deg, rgb(52, 136, 50) 10%, #047202 100%);
 }
 
 
 .primary-button:active {
   scale: 0.99;
-  background: linear-gradient(180deg, #006eff 10%, #0460d7 100%);
 
-  transition: scale 0.1s ease;
 }
 
 
@@ -70,7 +73,6 @@ li {
   list-style-type: none;
   font-size: large;
   border-bottom: 1px transparent #000000;
-  transition: scale 0.1s ease-out;
 }
 
 li {
@@ -79,16 +81,12 @@ li {
 }
 
 li:hover {
-  scale: 1.02 ;
-
-  transition: scale 0.1s ease;
+  color: #006eff;
 }
 
 li:active {
-  scale: 0.95;
+  scale: 0.98;
   color: #006eff;
-  transition: scale 0.1s ease;
-
 }
 
 

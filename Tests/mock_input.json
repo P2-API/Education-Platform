@@ -1,0 +1,130 @@
+{
+    "title": "Datalogi",
+    "degree_type": "Bachelor/Kandidat",
+    "geography": "Sydjylland",
+    "institutions": ["DTU", "AAU", "ITU"],
+    "subjects": {
+        "Math": 0.80,
+        "Programming": 0.90,    
+        "History": 0.20,
+        "Design": 0.30,
+        "Physics": 0.70,
+        "Biology": 0.40,
+        "Chemistry": 0.50,
+        "Literature": 0.10,
+        "Philosophy": 0.10,
+        "Economics": 0.60,
+        "Sociology": 0.30,
+        "Psychology": 0.40,
+        "Anthropology": 0.20,
+        "Geography": 0.30,
+        "Political Science": 0.40,
+        "Law": 0.30,
+        "Business": 0.50,
+        "Marketing": 0.40,
+        "Management": 0.50,
+        "Finance": 0.60,
+        "Accounting": 0.50,
+        "Engineering": 0.70,
+        "Medicine": 0.60,
+        "Nursing": 0.50,
+        "Dentistry": 0.40,
+        "Pharmacy": 0.40
+    },
+    "industries": {
+        "1_industry": {
+            "title": "Metal",
+            "share": 0.17
+        },
+        "2_industry": {
+            "title": "Energi",
+            "share": 0.15
+        },
+        "3_industry": {
+            "title": "IT",
+            "share": 0.13
+        }
+    },
+    "hours": {
+        "with_many_students": 155,
+        "with_few_students": 201,
+        "with_supervision": 80
+    },
+    "student_feedback": {
+        "social_environment": 4.5, 
+        "academic_environment": 4.3,
+        "group_engagement": 4.2, 
+        "loneliness": 2.1,
+        "stress": 3.2,
+        "teacher_evaluation": 4.4,
+        "satisfaction": 4.6
+    },
+    "academic_workload": {
+        "lectures": 20,
+        "literature": 10,
+        "student_job": 5
+    },
+    "degree_structure" : {
+        "contents": {
+            "teaching": 0.30,
+            "exams": 0.20,
+            "internship": 0.40,
+            "international_stay": 0.10
+        },
+        "teaching_method": {
+            "1st": "classroom",
+            "2nd": "self_study",
+            "3rd": "practice_sessions",
+            "4th": "e-learning",
+            "5th": "academic_supervision"
+        }
+    },
+    "dropout_rate": 0.28,
+    "job_data": {
+        "salary": {
+            "new_graduate": {
+                "lower_quartile": 30000,
+                "median": 35000,
+                "upper_quartile": 40000,
+                "projected_direction": "increasing"
+            },
+            "experienced": {
+                "lower_quartile": 45000,
+                "median": 50000,
+                "upper_quartile": 60000,
+                "projected_direction": "increasing"
+        },
+        "unemployment": {
+            "new_graduate": 0.05,
+            "experienced": 0.01,
+            "projected_new_graduate": 0.03,
+            "projected_experienced": 0.01
+        },
+        "work_schedule": {
+            "fixed_hours": 0.74,
+            "flexible_hours": 0.20,
+            "self_schedule": 0.06,
+            "variable_schedule": 0.01,
+            "night_and_evening_shifts": 0.02
+        },
+        "hours:": 39,
+        "job_importance": {
+            "1st": "degree_competencies",
+            "2nd": "internships",
+            "3rd": "networking",
+            "4th": "student_job",
+            "5th": "job_necessitates_degree"
+        },
+        "job_skills": {
+            "1st": "creative/innovative",
+            "2nd": "analytical",
+            "3rd": "collaboration_skills",
+            "4th": "practical skills",
+            "5th": "technical skills"
+        },
+        "degree_relevance": 4.03,
+        "degree_prepares_for_job": 3.9,
+        "national_jobs": 0.89
+        }
+    }
+}
