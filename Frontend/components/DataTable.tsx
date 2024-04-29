@@ -6,6 +6,7 @@ import {
   type MRT_ColumnDef,
   type MRT_SortingState,
   type MRT_RowVirtualizer,
+  MRT_Row,
 } from "material-react-table";
 import Chip from "@mui/material/Chip";
 
@@ -18,7 +19,7 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "title",
         header: "Uddannelse", // Change to your language's translation for "Uddannelse"
-        size: 100,
+
       },
       {
         accessorKey: "degree_type",
@@ -33,12 +34,12 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "institutions",
         header: "Uddannelsessteder",
-        Cell: ({ row }: { row: any }) => {
+        Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const institutions: string[] = row.original.institutions; // Access the institutions data from row.original
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {institutions.map((institution: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={institution}>{institution}</p>
+                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={institution}>{institution}</p>
               ))}
             </ul>
           );
@@ -47,32 +48,34 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "subjects",
         header: "Fag", // Change to your language's translation for "subjects"
-        Cell: ({ row }: { row: any }) => {
-          const subjects: string[] = row.original.subjects; // Access the institutions data from row.original
+        Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
+          const subjects: string[] = row.original.subjects.map((subject) => subject.title)
           console.log("subjects", subjects)
           return (
-            <div style={{ overflowX: "scroll", width: "250px", justifyContent: "center", height: "60px", display: "flex", flexDirection: "column", flexWrap: "wrap", scrollbarWidth: "thin" }}>
-              {subjects?.map((subject: any) => (
-
-                <Chip key={subject.title} label={subject.title} variant="outlined" />
+            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+              {subjects.map((subject: string) => (
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={subject}>{subject}</p>
               ))}
-            </div>
-          )
+            </ul>
+          );
         }
       },
       {
         accessorKey: "industries",
         header: "Brancher", // Change to your language's translation for "subjects"
-        Cell: ({ row }: { row: Uddannelse }) => (
-          <ul>
-            {row.industries?.map((industries: any) => (
-              <b key={industries.title}>
-                {industries.title}: {industries.share}
-              </b>
-            ))}
-          </ul>
-        ),
+        Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
+          const industries: string[] = row.original.industries.map((industry) => industry.title)
+          console.log("subjects", industries)
+          return (
+            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+              {industries.map((industry: string) => (
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={industry}>{industry}</p>
+              ))}
+            </ul>
+          );
+        }
       },
+
     ],
     []
   );
@@ -195,9 +198,9 @@ const MaterialReactDataTable = () => {
   const table = useMaterialReactTable({
     columns,
     data, //10,000 rows
-    defaultDisplayColumn: { enableResizing: true },
+    defaultDisplayColumn: { enableResizing: false, },
     enableBottomToolbar: false,
-    enableColumnResizing: true,
+    enableColumnResizing: false,
     enableColumnVirtualization: true,
     enableGlobalFilterModes: true,
     enablePagination: false,
