@@ -24,7 +24,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
           width: centerHero ? "80%" : "40%",
           justifyContent: "center",
           gap: "5em",
-          height: "94vh",
+          height: centerHero ? "auto" : "94vh",
           flexWrap: "wrap",
           alignItems: "center",
           marginTop: useMargin ? "1em" : "3em",
@@ -58,7 +58,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
                 fontSize: "xxx-large",
                 minWidth: "20px",
                 margin: 0,
-                marginRight: "0.5em",
+                marginRight: "0.25em",
                 marginTop: 0,
               }}
             >
@@ -72,6 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
                 margin: 0,
                 justifyContent: "center",
                 marginTop: 0,
+                marginRight: "0.25em",
               }}
             >
               perfekte
@@ -104,16 +105,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
               </p>
             </div>
             <p></p>
-            <div style={{ display: "flex", marginTop: "2em" }}>
-              <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
-              <div>
-                <b>Rangeringsalgoritme </b> - Ved hjælp af linear programmering
-                modelleres og rangeres uddannelserne
-              </div>
-            </div>
+
 
           </div>
-          <div style={{ display: "flex", marginTop: "1em" }}>
+          <div style={{ display: "flex", marginTop: "2em", textAlign: "left" }}>
+            <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
+            <div>
+              <b>Rangeringsalgoritme </b> - Ved hjælp af linear programmering
+              modelleres og rangeres uddannelserne
+            </div>
+          </div>
+          <div style={{ display: "flex", marginTop: "1em", textAlign: "left" }}>
             <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
             <div>
               <b> Visualisering</b> – Principal Component Analysis (PCA)
@@ -121,11 +123,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
             </div>
           </div>
           <div
-            style={{
-              display: "flex",
-              marginTop: "1em",
-            }}
-          >
+            style={{ display: "flex", marginTop: "1em", textAlign: "left" }} >
             <CheckCircleIcon sx={{ marginRight: 1 }} color="primary" />{" "}
             <div style={{ marginBottom: centerHero ? "0em" : "1em" }}>
               <b> Personlig anbefaling</b> – Få en personlig forklaring på
@@ -146,7 +144,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
         </div>
       </div>
 
-      <div style={{ width: "40%", minWidth: "400px" }}>
+      <div style={{ width: centerHero ? "100%" : "40%", minWidth: "400px" }}>
         <Lottie
           animationData={animationData}
           style={{ minWidth: "400px", height: "500px", minHeight: "400px" }}

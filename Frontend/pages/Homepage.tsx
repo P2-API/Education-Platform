@@ -8,14 +8,15 @@ const Homepage = () => {
   const tableRef = useRef<HTMLDivElement>(null);
   const useMargin = useMediaQuery("(min-width: 1179px)");
 
+
   return (
     <>
 
-      <HeroSection tableRef={tableRef}  />
+      <HeroSection tableRef={tableRef} />
 
       <TableSection tableRef={tableRef} />
 
-      </>
+    </>
   );
 };
 

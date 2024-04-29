@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Uddannelse } from "../../src/types";
 import {
   MaterialReactTable,
@@ -7,8 +7,12 @@ import {
   type MRT_SortingState,
   type MRT_RowVirtualizer,
 } from "material-react-table";
+import Chip from "@mui/material/Chip";
 
 const MaterialReactDataTable = () => {
+
+
+
   const columns: MRT_ColumnDef<Uddannelse>[] = useMemo(
     () => [
       {
@@ -32,9 +36,9 @@ const MaterialReactDataTable = () => {
         Cell: ({ row }: { row: any }) => {
           const institutions: string[] = row.original.institutions; // Access the institutions data from row.original
           return (
-            <ul>
+            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {institutions.map((institution: string) => (
-                <li key={institution}>{institution}</li>
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={institution}>{institution}</p>
               ))}
             </ul>
           );
@@ -43,15 +47,18 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "subjects",
         header: "Fag", // Change to your language's translation for "subjects"
-        Cell: ({ row }: { row: Uddannelse }) => (
-          <ul>
-            {row.subjects?.map((subject: any) => (
-              <li key={subject.fag}>
-                {subject.fag}: {subject.score}
-              </li>
-            ))}
-          </ul>
-        ),
+        Cell: ({ row }: { row: any }) => {
+          const subjects: string[] = row.original.subjects; // Access the institutions data from row.original
+          console.log("subjects", subjects)
+          return (
+            <div style={{ overflowX: "scroll", width: "250px", justifyContent: "center", height: "60px", display: "flex", flexDirection: "column", flexWrap: "wrap", scrollbarWidth: "thin" }}>
+              {subjects?.map((subject: any) => (
+
+                <Chip key={subject.title} label={subject.title} variant="outlined" />
+              ))}
+            </div>
+          )
+        }
       },
       {
         accessorKey: "industries",
@@ -59,9 +66,9 @@ const MaterialReactDataTable = () => {
         Cell: ({ row }: { row: Uddannelse }) => (
           <ul>
             {row.industries?.map((industries: any) => (
-              <li key={industries.title}>
+              <b key={industries.title}>
                 {industries.title}: {industries.share}
-              </li>
+              </b>
             ))}
           </ul>
         ),
@@ -75,7 +82,7 @@ const MaterialReactDataTable = () => {
       title: "Computer Science",
       degree_type: "Bachelor",
       geography: "Denmark",
-      institutions: ["Aarhus University", "Copenhagen University"], // Array of strings
+      institutions: ["Aarhus University", "Copenhagen University", "Aalborg Universitet", "VIA Viborg"], // Array of strings
       subjects: [
         {
           title: "Matematik",
@@ -195,6 +202,7 @@ const MaterialReactDataTable = () => {
     enableGlobalFilterModes: true,
     enablePagination: false,
     enableColumnPinning: true,
+    initialState: { density: "compact" },
     enableRowNumbers: true,
     enableRowVirtualization: true,
     muiTableContainerProps: { sx: { maxHeight: "600px" } },

@@ -23,7 +23,7 @@ const Navbar = () => {
         flexDirection: "column",
       }}
     >
-      <li
+      <li className="elements"
         style={{
           color: path === "/about" ? "#006eff" : undefined,
           fontSize: "x-large",
@@ -33,7 +33,7 @@ const Navbar = () => {
           Om siden
         </Link>
       </li>
-      <li
+      <li className="elements"
         style={{
           color: path === "/" ? "#006eff" : undefined,
           fontSize: "x-large",
@@ -43,7 +43,7 @@ const Navbar = () => {
           Uddannelser
         </Link>
       </li>
-      <li
+      <li className="elements"
         style={{
           color: path === "/methods" ? "#006eff" : undefined,
           fontSize: "x-large",
