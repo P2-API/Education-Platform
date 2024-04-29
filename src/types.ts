@@ -119,7 +119,7 @@ export type Uddannelse = {
 };
 
 
-type QuizAnswers = {
+export type QuizAnswers = {
     geography_priority: number;
     institution_priority: number;
     subjects_priority: number;
