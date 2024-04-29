@@ -18,7 +18,7 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
             <div style={{ display: "flex", padding: "1em" }}>
                 <div style={{ width: "30%", height: "100%", minWidth: "302px" }}>
                     <Paper elevation={2} style={{ marginRight: "1em" }}>
-                        <div style={{ height: "3.5em", borderBottom: "2px solid black", backgroundColor: "#006eff2b", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{ height: "3.5em", borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre</h2>
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
