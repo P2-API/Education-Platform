@@ -19,7 +19,9 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "title",
         header: "Uddannelse", // Change to your language's translation for "Uddannelse"
-
+        minSize: 130,
+        size: 150,
+        maxSize: 200,
       },
       {
         accessorKey: "degree_type",
@@ -83,7 +85,7 @@ const MaterialReactDataTable = () => {
   const data: Uddannelse[] = [
     {
       title: "Computer Science",
-      degree_type: "Bachelor",
+      degree_type: "Professionsbachelor",
       geography: "Denmark",
       institutions: ["Aarhus University", "Copenhagen University", "Aalborg Universitet", "VIA Viborg"], // Array of strings
       subjects: [
@@ -198,17 +200,15 @@ const MaterialReactDataTable = () => {
   const table = useMaterialReactTable({
     columns,
     data, //10,000 rows
-    defaultDisplayColumn: { enableResizing: false, },
     enableBottomToolbar: false,
     enableColumnResizing: false,
     enableColumnVirtualization: true,
-    enableGlobalFilterModes: true,
     enablePagination: false,
     enableColumnPinning: true,
     initialState: { density: "compact" },
-    enableRowNumbers: true,
     enableRowVirtualization: true,
     muiTableContainerProps: { sx: { maxHeight: "600px" } },
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "0.5rem", } },
     onSortingChange: setSorting,
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 5 }, //optionally customize the row virtualizer

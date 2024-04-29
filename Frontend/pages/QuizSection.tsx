@@ -12,32 +12,33 @@ import Modal from '@mui/material/Modal';
 import { QuizAnswers } from ',,/../../src/types.tsx'
 
 const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 1000,
-  height: 800,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: "800px",
+    height: "500px",
+    bgcolor: 'background.paper',
+    border: '4px solid',
+    borderColor: 'primary.main',
+    borderRadius: "0.5em",
+    boxShadow: 24,
+    p: 4,
 };
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
+        <Box sx={{ width: "800px", height: "30%" }}>
+            <Box sx={{ minWidth: "800px", textAlign: "center", height: "100%", display: "flex", flexDirection: "column", justifyContent: "end" }}>
+                <Typography sx={{ marginBottom: 2 }} variant="h5" color="black">{`${Math.round(
+                    props.value,
+                )}%`}</Typography>
+                <LinearProgress style={{ height: 10, borderRadius: 2, color: "primary.main", marginTop: 0 }} variant="determinate" {...props} />
+
+            </Box>
         </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            props.value,
-          )}%`}</Typography>
-        </Box>
-      </Box>
     );
-  }
+}
 
 type QuizModalProperties = {
     isModalOpen: boolean;
@@ -54,12 +55,12 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
         {
             positiveReferencedAnswers: ["subjects_priority"],
             negativeReferencedAnswers: [],
-            question: "Hvor vigtigt er det for dig, at der er høj faglig interesse på studiet?",
+            question: "Hvor vigtigt er det for dig, at uddannelsens faglige indhold er spændende?",
         },
         {
             positiveReferencedAnswers: ["social_environment_priority", "group_engagement_priority"],
             negativeReferencedAnswers: ["loneliness_priority"],
-            question: "Hvor vigtigt er det for dig, at der er et godt socialt miljø på studiet?",
+            question: "Hvor vigtigt er det for dig, at man i høj grad er social på studiet (gruppearbejde m.m.)?",
         },
         {
             positiveReferencedAnswers: ["academic_environment_priority"],
@@ -84,7 +85,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
         {
             positiveReferencedAnswers: ["dislike_exam_priority"],
             negativeReferencedAnswers: [],
-            question: "Hvor vigtigt er det for dig, at der er mindre eksamner?",
+            question: "Hvor vigtigt er det for dig, at have få eksamener?",
         },
         {
             positiveReferencedAnswers: ["internship_priority"],
@@ -109,18 +110,18 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
         {
             positiveReferencedAnswers: ["degree_relevance_priority"],
             negativeReferencedAnswers: [],
-            question: "Hvor vigtigt er det for dig, at dine mulige jobs har høj relevans på arbejdsmarkedet?",
+            question: "Hvor vigtigt er det for dig, at uddannelsen er relevant på arbejdsmarkedet?",
         },
         {
             positiveReferencedAnswers: ["flexible_hours_priority", "self_schedule_priority"],
             negativeReferencedAnswers: ["fixed_hours_priority", "variable_schedule_priority"],
-            question: "Hvor vigtigt er det for dig, at der er høj fleksibilitet på studiet?",
+            question: "Hvor vigtigt er det for dig, at din arbejdstid i job efter studiet er fleksibel og selvbestemt?",
         },
         {
             positiveReferencedAnswers: [],
             negativeReferencedAnswers: ["night_and_evening_shifts_priority"],
             question: "Hvor vigtigt er det for dig, at du ikke arbejder sent (aften og nat) på mulige jobs efter studiet?",
-        },    
+        },
     ];
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -148,23 +149,23 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
     }
 
     const HandleNextQuestion = () => {
-        
+
         const newAnswer: QuizAnswers = {
             ...quizAnswerState,
         };
 
-        currentQuestion.positiveReferencedAnswers.forEach(propName => {       
-            newAnswer[propName as keyof QuizAnswers] = sliderValue;      
+        currentQuestion.positiveReferencedAnswers.forEach(propName => {
+            newAnswer[propName as keyof QuizAnswers] = sliderValue;
         });
 
-        currentQuestion.negativeReferencedAnswers.forEach(propName =>{
-            newAnswer[propName as keyof QuizAnswers] = (6 - sliderValue);            
+        currentQuestion.negativeReferencedAnswers.forEach(propName => {
+            newAnswer[propName as keyof QuizAnswers] = (6 - sliderValue);
         })
 
         SetQuizAnwerState(newAnswer);
 
         const isLastQuestion = (currentQuestionIndex + 1) == questions.length;
-        if (isLastQuestion){
+        if (isLastQuestion) {
             setIsModalOpen(false);
             setCurrentQuestionIndex(0);
             return;
@@ -175,51 +176,55 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
         console.log(newAnswer)
     }
 
-  return (
-    <div>
-      <Modal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box>            
-            <Box sx={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <div style={{ textAlign: "center", width: "700px"}}>
-                    <Typography id="modal-modal-title" variant="h3" component="h2">
-                        Preference Quiz
-                    </Typography>
-                    <Typography variant="h6" component="h3" mt={2}>
-                        {"Question " + (currentQuestionIndex + 1)}
-                    </Typography>
-                    <Typography mt={1}>
-                        {currentQuestion.question}
-                    </Typography>
-                    <Slider onChange={(e, value) => SetSliderValue(Number(value))}
-                        aria-label="discrete-slider-custom"
-                        defaultValue={3}
-                        value={sliderValue}
-                        step={1}
-                        marks={sliderMarks}
-                        min={1}
-                        max={5}
-                        valueLabelDisplay="auto"
-                    />
-                    <div style={{display: 'flex', gap: '2em', justifyContent: 'center'}}>                       
-                        <Button onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
-                            Tilbage
-                        </Button>                          
-                        <Button onClick={HandleNextQuestion}>
-                            Næste
-                        </Button>    
-                    </div>            
-                    <LinearProgressWithLabel value={getProgress()} />
-                </div>
-            </Box>
-        </Box>
-      </Modal>
-    </div>
-  );
+    return (
+        <div>
+            <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box height={"100%"}>
+                    <Box sx={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 0, height: "500px" }}>
+                        <div style={{ height: "100%" }}>
+                            <div style={{ textAlign: "center", padding: "4em", paddingTop: 0, paddingBottom: 0, height: "70%", alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                <Typography id="modal-modal-title" variant="h3" component="h2">
+                                    UddannelsesQuiz
+                                </Typography>
+                                <Typography variant="h6" component="h3" mt={2}>
+                                    {"Question " + (currentQuestionIndex + 1)}
+                                </Typography>
+                                <Typography mt={1}>
+                                    {currentQuestion.question}
+                                </Typography>
+                                <Slider onChange={(e, value) => SetSliderValue(Number(value))}
+                                    aria-label="discrete-slider-custom"
+                                    defaultValue={3}
+                                    value={sliderValue}
+                                    step={1}
+                                    marks={sliderMarks}
+                                    min={1}
+                                    max={5}
+                                    valueLabelDisplay="auto"
+                                />
+                                <div style={{ display: 'flex', gap: '2em', justifyContent: 'center' }}>
+                                    <Button onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
+                                        Tilbage
+                                    </Button>
+                                    <Button onClick={HandleNextQuestion}>
+                                        Næste
+                                    </Button>
+                                </div>
+                            </div>
+                            <LinearProgressWithLabel sx={{ marginTop: "5em" }} value={getProgress()} />
+
+                        </div>
+
+                    </Box>
+                </Box>
+            </Modal>
+        </div>
+    );
 }
 
 export default QuizModal;
