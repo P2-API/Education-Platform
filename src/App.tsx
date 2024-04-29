@@ -4,12 +4,11 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "100vh"}}>
       <Navbar />
 
       <div
         style={{
-          height: "92%",
           display: "flex",
           justifyContent: "center",
           flexWrap: "wrap",
