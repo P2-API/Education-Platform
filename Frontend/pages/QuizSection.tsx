@@ -5,6 +5,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
@@ -22,6 +23,21 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', mr: 1 }}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">{`${Math.round(
+            props.value,
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
 
 type QuizModalProperties = {
     isModalOpen: boolean;
@@ -171,15 +187,17 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const currentQuestion = questions[currentQuestionIndex];
 
+  const getProgress = () => (currentQuestionIndex) / questions.length * 100;
+
   const [sliderValue, SetSliderValue] = React.useState(3);
   const sliderMarks = [
     {
         value: 1,
-        label: "Least Agree"
+        label: "Not Important"
     },
     {
         value: 5,
-        label: "Most Agree"
+        label: "Very Important"
     }
   ]
 
@@ -187,16 +205,24 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
   const [quizAnswerState, SetQuizAnwerState] = React.useState<QuizAnswers>();
 
 
-  const HandleNextQuestion = () => {
-    const newAnswer = ({
-        ...quizAnswerState,
-        [currentQuestion.referencedAnswer]: sliderValue
-    });
-    SetQuizAnwerState(newAnswer)
-    SetSliderValue(3);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    console.log(newAnswer)
-  }
+    const HandleNextQuestion = () => {
+        
+        const newAnswer = ({
+            ...quizAnswerState,
+            [currentQuestion.referencedAnswer]: sliderValue
+        });
+        SetQuizAnwerState(newAnswer);
+
+        const isLastQuestion = (currentQuestionIndex + 1) == questions.length;
+        if (isLastQuestion){
+            setIsModalOpen(false);
+            setCurrentQuestionIndex(0);
+            return;
+        }
+
+        SetSliderValue(3);
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
 
   return (
     <div>
@@ -206,31 +232,34 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ textAlign: "center" }}>
-            <Typography id="modal-modal-title" variant="h3" component="h2">
-              Preference Quiz
-            </Typography>
-            <Typography variant="h6" component="h3" mt={2}>
-              {"Question " + (currentQuestionIndex + 1)}
-            </Typography>
-            <Typography mt={1}>
-              {currentQuestion.text}
-            </Typography>
-            <Slider onChange={(e, value) => SetSliderValue(Number(value))}
-              aria-label="discrete-slider-custom"
-              defaultValue={3}
-              value={sliderValue}
-              step={1}
-              marks={sliderMarks}
-              min={1}
-              max={5}
-              valueLabelDisplay="auto"
-            />
-            <Button onClick={HandleNextQuestion}>
-              Next Question
-            </Button>
-          </div>
+        <Box>            
+            <Box sx={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ textAlign: "center" }}>
+                <Typography id="modal-modal-title" variant="h3" component="h2">
+                Preference Quiz
+                </Typography>
+                <Typography variant="h6" component="h3" mt={2}>
+                {"Question " + (currentQuestionIndex + 1)}
+                </Typography>
+                <Typography mt={1}>
+                {currentQuestion.text}
+                </Typography>
+                <Slider onChange={(e, value) => SetSliderValue(Number(value))}
+                aria-label="discrete-slider-custom"
+                defaultValue={3}
+                value={sliderValue}
+                step={1}
+                marks={sliderMarks}
+                min={1}
+                max={5}
+                valueLabelDisplay="auto"
+                />
+                <Button onClick={HandleNextQuestion}>
+                Next Question
+                </Button>                
+                <LinearProgressWithLabel value={getProgress()} />
+            </div>
+            </Box>
         </Box>
       </Modal>
     </div>
