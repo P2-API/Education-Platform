@@ -39,7 +39,7 @@ const MaterialReactDataTable = () => {
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {institutions.map((institution: string) => (
-                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={institution}>{institution}</p>
+                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={institution}>{institution}</p>
               ))}
             </ul>
           );
@@ -54,7 +54,7 @@ const MaterialReactDataTable = () => {
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {subjects.map((subject: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={subject}>{subject}</p>
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>{subject}</p>
               ))}
             </ul>
           );
