@@ -22,4 +22,4 @@ test('adds 1 - 2  to equal 3', () => {
     const result = subtract(input.a, input.b);
 
     expect(result).toBe(output);
-}
+})
