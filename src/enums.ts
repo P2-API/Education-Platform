@@ -146,3 +146,15 @@ enum Institution {
     
     "?" = 1000,
 }
+
+enum DegreeType {
+    "Akademisk overbygningsuddannelse" = 1,
+    "Bacheloruddannelse" = 2,
+    "Erhvervsakademiuddannelse" = 3,
+    "Kandidatuddannelse" = 4,
+    "Kunstnerisk uddannelse" = 5,
+    "Politi og forsvar" = 6,
+    "Professionsbacheloruddannelse" = 7,
+
+    "Andre uddannelser" = 1000,
+}
