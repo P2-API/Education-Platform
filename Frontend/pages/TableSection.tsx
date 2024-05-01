@@ -1,5 +1,9 @@
 import MaterialReactDataTable from "../components/DataTable";
+import { DegreeType } from "../../src/enums"
+
 import Paper from '@mui/material/Paper';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 
 
@@ -9,6 +13,9 @@ type TableSectionProps = {
 };
 
 const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen }) => {
+    const degreeTypes = Object.values(DegreeType).filter(value => typeof value === 'string');    
+    //const 
+    
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>
             <div ref={tableRef} id="table" style={{ marginTop: "9vh", backgroundColor: "white" }} />
@@ -23,7 +30,20 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", }}>
-                            <p>Filter efter uddannelsestype</p>
+                            <Autocomplete
+                                multiple
+                                id="tags-outlined"
+                                options={degreeTypes}
+                                getOptionLabel={(option) => option.toString()}
+                                filterSelectedOptions
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Filtrer efter uddannelsestype"
+                                        placeholder="Uddannelsestype"
+                                    />
+                                )}
+                            />
                             <p>Filter efter uddannelsessted</p>
                             <p>Filter efter uddannelsesniveau</p>
                             <p>Filter efter uddannelsesvarighed</p>
