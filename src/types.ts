@@ -106,9 +106,6 @@ export type Uddannelse = {
             night_and_evening_shifts: number;
         };
         working_hours: number; // quiz
-        job_importance: { // quiz
-            [key: string]: string;
-        };
         job_skills: {
             [key: string]: string;
         };

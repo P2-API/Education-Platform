@@ -1,14 +1,12 @@
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Uddannelse } from "../../src/types";
 import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_SortingState,
   type MRT_RowVirtualizer,
   MRT_Row,
 } from "material-react-table";
-import Chip from "@mui/material/Chip";
 
 const MaterialReactDataTable = () => {
 
@@ -16,6 +14,11 @@ const MaterialReactDataTable = () => {
 
   const columns: MRT_ColumnDef<Uddannelse>[] = useMemo(
     () => [
+      {
+        accessorKey: "rank",
+        header: "Rang", // Change to your language's translation for "Rang"
+        size: 60,
+      },
       {
         accessorKey: "title",
         header: "Uddannelse", // Change to your language's translation for "Uddannelse"
@@ -31,17 +34,18 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "geography",
         header: "Geografi", // Change to your language's translation for "geography"
-        size: 150,
+        size: 110,
       },
       {
         accessorKey: "institutions",
         header: "Uddannelsessteder",
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const institutions: string[] = row.original.institutions; // Access the institutions data from row.original
+          console.log("institutions", institutions)
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {institutions.map((institution: string) => (
-                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={institution}>{institution}</p>
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={institution}>{institution}</p>
               ))}
             </ul>
           );
@@ -50,6 +54,7 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "subjects",
         header: "Fag", // Change to your language's translation for "subjects"
+        size: 130,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const subjects: string[] = row.original.subjects.map((subject) => subject.title)
           console.log("subjects", subjects)
@@ -65,13 +70,32 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "industries",
         header: "Brancher", // Change to your language's translation for "subjects"
+        size: 130,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const industries: string[] = row.original.industries.map((industry) => industry.title)
           console.log("subjects", industries)
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {industries.map((industry: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none" }} key={industry}>{industry}</p>
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={industry}>{industry}</p>
+              ))}
+            </ul>
+          );
+        }
+      },
+      {
+        accessorKey: "hours",
+        header: "Undervisningsfordeling",
+        size: 180,
+        Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
+          const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
+          const hoursNumbers: number[] = Object.values(row.original.hours);
+          console.log("hoursNumbers", hoursNumbers)
+          console.log("hoursTitles", hoursTitles)
+          return (
+            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+              {hoursTitles.map((title: string, index: number) => (
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={title}>{title}: {hoursNumbers[index]}%</p>
               ))}
             </ul>
           );
@@ -84,6 +108,7 @@ const MaterialReactDataTable = () => {
 
   const data: Uddannelse[] = [
     {
+      rank: 1,
       title: "Computer Science",
       degree_type: "Professionsbachelor",
       geography: "Denmark",
@@ -117,9 +142,9 @@ const MaterialReactDataTable = () => {
         },
       ],
       hours: {
-        with_many_students: 20,
-        with_few_students: 25,
-        with_supervision: 30,
+        with_many_students: 30,
+        with_few_students: 60,
+        with_supervision: 10,
       },
       student_feedback: {
         social_environment: 4.5,
@@ -194,7 +219,6 @@ const MaterialReactDataTable = () => {
     },
   ];
 
-  const [sorting, setSorting] = useState<MRT_SortingState>([]);
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
 
   const table = useMaterialReactTable({
@@ -202,17 +226,25 @@ const MaterialReactDataTable = () => {
     data, //10,000 rows
     enableBottomToolbar: false,
     enableColumnResizing: false,
+    enableGlobalFilter: false,
     enableColumnVirtualization: true,
     enablePagination: false,
+    enableStickyHeader: true,
+    enableSorting: true,
     enableColumnPinning: true,
-    initialState: { density: "compact" },
+    enableColumnActions: false,
+    initialState: {
+      density: "compact",
+      columnPinning: { left: ["rank"] },
+
+    },
     enableRowVirtualization: true,
-    muiTableContainerProps: { sx: { maxHeight: "600px" } },
-    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "0.5rem", } },
-    onSortingChange: setSorting,
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "70px" } },
+    muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 5 }, //optionally customize the row virtualizer
     columnVirtualizerOptions: { overscan: 2 }, //optionally customize the column virtualizer
+
   });
 
   return <MaterialReactTable table={table} />;

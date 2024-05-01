@@ -46,6 +46,19 @@ body {
   cursor: pointer;
 }
 
+.red-button {
+  background: linear-gradient(180deg, rgb(209, 41, 41) 10%, #c00808 100%);
+  border-radius: 0.5em;
+  border: none;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
 .text-color-blue {
   color: #006eff;
 }
@@ -58,6 +71,14 @@ body {
 .primary-button:active {
   scale: 0.99;
 
+}
+
+.red-button:hover {
+  background: linear-gradient(180deg, rgb(153, 39, 39) 10%, #9a0707 100%);
+}
+
+.red-button:active {
+  scale: 0.99;
 }
 
 
