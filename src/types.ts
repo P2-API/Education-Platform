@@ -12,6 +12,8 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
+import { Geography, Institution, JobFlexibility } from "enums";
+
 type Subject = {
     title: string;
     score: number;

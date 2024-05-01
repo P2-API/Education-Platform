@@ -1,9 +1,9 @@
-enum JobFlexibility {
+export enum JobFlexibility {
     flexible = 1,
     strict = 2,
 }
 
-enum Geography {
+export enum Geography {
     //A
     //B
     "Ballerup" = 1,
@@ -86,7 +86,7 @@ enum Geography {
     "uoplyst" = 1000,
 }
 
-enum Institution {
+export enum Institution {
     "Aalborg Universitet" = 1,
     "Aarhus Maskinmesterskole" = 2,
     "Aarhus Universitet" = 3,
@@ -147,7 +147,7 @@ enum Institution {
     "?" = 1000,
 }
 
-enum DegreeType {
+export enum DegreeType {
     "Akademisk overbygningsuddannelse" = 1,
     "Bacheloruddannelse" = 2,
     "Erhvervsakademiuddannelse" = 3,
