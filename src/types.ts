@@ -12,110 +12,99 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
+type Subject = {
+    title: string;
+    score: number;
+}
+
+type Industry = {
+    title: string;
+    share: number;
+}
+
+type HoursSpentDoing = {
+    withManyStudents: number;
+    withFewStudents: number;
+    withSupervision: number;
+}
+
+type StudentFeedback = {
+    socialEnvironment: number;
+    academicEnvironment: number;
+    groupEngagement: number;
+    loneliness: number;
+    stress: number;
+    teacherEvaluation: number;
+    satisfaction: number;
+}
+
+type AcademicWorkload = {
+    lectures: number;
+    literature: number;
+    studentJob: number;
+}
+
+type DegreeContents = {
+    teaching: number;
+    exams: number;
+    internship: number;
+    internationalStay: number;
+}
+
+type DegreeStructure = {
+    contents: DegreeContents;
+    teachingMethods: string[];
+}
+
+type Salary = {
+    lower_quartile: number;
+    median: number;
+    upper_quartile: number;
+    projected_direction: string;
+}
+
+type Unemployment = {
+    newGraduate: number;
+    experienced: number;
+    projectedNewGraduate: number;
+    projectedExperienced: number;
+}
+
+type JobWorkSchedule = {
+    working_hours: number;
+    fixed_hours: number;
+    flexible_hours: number;
+    self_schedule: number;
+    variable_schedule: number;
+    night_and_evening_shifts: number;
+}
+
+type Salaries = {
+    newGraduate: Salary;
+    experienced: Salary;
+}
+
+type JobData = {
+    salaries: Salaries;
+    workSchedule: JobWorkSchedule;
+    degree_relevance: number;  
+    degree_prepares_for_job: number;  
+    national_jobs: number;
+}
 
 export type Uddannelse = {
     title: string;  // udelukke
     degree_type: string; // filter 
-    geography: string;  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
-    institutions: string[]; // filter/quiz hænger sammen med ovenstående / Hvor vigtig er det
-    subjects: [ // Filter / Quiz
-        {
-            title: string;
-            score: number;
-        },
-        {
-            title: string;
-            score: number;
-        },
-        {
-            title: string;
-            score: number;
-        },
-    ]
-    industries: [ // ?
-        {
-            title: string;
-            share: number;
-        },
-        {
-            title: string;
-            share: number;
-        },
-        {
-            title: string;
-            share: number;
-        },
-    ];
-    hours: { // Filter / Quiz 
-        with_many_students: number;
-        with_few_students: number;
-        with_supervision: number;
-    };
-    student_feedback: { // quiz
-        social_environment: number;
-        academic_environment: number;
-        group_engagement: number;
-        loneliness: number;
-        stress: number;
-        teacher_evaluation: number;
-        satisfaction: number;
-    };
-    academic_workload: { // quiz
-        lectures: number;
-        literature: number;
-        student_job: number;
-    };
-    degree_structure: { // quiz
-        contents: {
-            teaching: number;
-            exams: number;
-            internship: number;
-            international_stay: number;
-        };
-        teaching_method: {
-            methods: string[];
-        };
-    };
+    geography: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
+    institutions: Institution; // filter/quiz hænger sammen med ovenstående / Hvor vigtig er det
+    subjects: Subject[] // Filter / Quiz
+    industries: Industry[];
+    hours: HoursSpentDoing; // Filter / Quiz 
+    student_feedback: StudentFeedback; // quiz
+    academic_workload: AcademicWorkload; // quiz
+    degree_structure: DegreeStructure; // quiz
     dropout_rate: number;
-    job_data: {
-        salary: { // filter
-            new_graduate: {
-                lower_quartile: number;
-                median: number;
-                upper_quartile: number;
-                projected_direction: string;
-            };
-            experienced: {
-                lower_quartile: number;
-                median: number;
-                upper_quartile: number;
-                projected_direction: string;
-            };
-        };
-        unemployment: { // filter og quiz
-            new_graduate: number;
-            experienced: number;
-            projected_new_graduate: number;
-            projected_experienced: number;
-        };
-        work_schedule: { // quiz 
-            fixed_hours: number;
-            flexible_hours: number;
-            self_schedule: number;
-            variable_schedule: number;
-            night_and_evening_shifts: number;
-        };
-        working_hours: number; // quiz
-        job_importance: { // quiz
-            [key: string]: string;
-        };
-        job_skills: {
-            [key: string]: string;
-        };
-        degree_relevance: number; // quiz 
-        degree_prepares_for_job: number; // quiz 
-        national_jobs: number; // quiz
-    };
+    job_data: JobData;
 };
 
 
@@ -164,6 +153,37 @@ export type QuizAnswers = {
     variable_schedule_priority?: number; ///////
 
     night_and_evening_shifts_priority?: number;
-
-
 }
+
+type MinimumMaximum = {
+    minimum: number;
+    maximum: number;
+}
+
+type SalaryFilters = {
+    newGraduate: MinimumMaximum;
+    experienced: MinimumMaximum;
+}
+
+type UnenploymentFilters = {
+    newGraduate: number;
+    experienced: number;
+}
+
+
+export type TableFilters = {
+    wantedDegreeTypes: string[];
+    canStudyInGeoraphies: Geography[];
+    canStudyAtInstitution: Institution[];
+    hasSubjects: string[];
+    hasIndustries: string[];
+    hasFormsOfEducation: string[];
+    acceptableDropOutRate: number;
+    wantedSalary: SalaryFilters;
+    unemployment: UnenploymentFilters;
+    jobFlexibility: JobFlexibility;
+    wantedWorkingHours: MinimumMaximum;
+    wantedDegreeRelevance: number;
+    canWorkInternationally: boolean;
+}
+
