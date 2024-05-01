@@ -87,6 +87,7 @@ type Salaries = {
 type JobData = {
     salaries: Salaries;
     workSchedule: JobWorkSchedule;
+    unemployment: Unemployment;
     degree_relevance: number;  
     degree_prepares_for_job: number;  
     national_jobs: number;
