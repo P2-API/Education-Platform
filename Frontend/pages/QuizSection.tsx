@@ -199,7 +199,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                 <Typography mt={1}>
                                     {currentQuestion.question}
                                 </Typography>
-                                <Slider onChange={(e, value) => SetSliderValue(Number(value))}
+                                <Slider onChange={(_e, value) => SetSliderValue(Number(value))}
                                     aria-label="discrete-slider-custom"
                                     defaultValue={3}
                                     value={sliderValue}
