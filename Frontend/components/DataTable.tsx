@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import { Uddannelse } from "../../src/types";
+import { Institution, Geography} from "../../src/enums";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -28,28 +29,36 @@ const MaterialReactDataTable = () => {
       },
       {
         accessorKey: "degree_type",
-        header: "Gradtype", // Change to your language's translation for "degree_type"
+        header: "Type", // Change to your language's translation for "degree_type"
         size: 150,
       },
       {
         accessorKey: "geography",
         header: "Geografi", // Change to your language's translation for "geography"
         size: 110,
+        Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
+            const geographyNames = row.original.geography.map((location: number) => Geography[location])
+            console.log("geographyNames", geographyNames)
+            return (
+              // map 
+              <ul style={{width: "250px", height: "65px", justifyContent: "center", overflowY: "scroll", paddingBottom: "0px"}} >
+                {geographyNames.map((location: string) => (
+                  <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={location}>{location}</p>
+                ))}
+              </ul>
+            );
+          },
       },
       {
         accessorKey: "institutions",
-        header: "Uddannelsessteder",
+        header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
-          const institutions: string[] = row.original.institutions; // Access the institutions data from row.original
-          console.log("institutions", institutions)
+          const institutionName = Institution[row.original.institutions];
+          console.log(row.original.institutions)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
-              {institutions.map((institution: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={institution}>{institution}</p>
-              ))}
-            </ul>
+            <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
           );
-        },
+      },
       },
       {
         accessorKey: "subjects",
@@ -59,9 +68,9 @@ const MaterialReactDataTable = () => {
           const subjects: string[] = row.original.subjects.map((subject) => subject.title)
           console.log("subjects", subjects)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
-              {subjects.map((subject: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>{subject}</p>
+            <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px"}}>
+              {subjects.map((subject: string, index: number) => (
+                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>{index + 1}.{subject}</p>
               ))}
             </ul>
           );
@@ -75,7 +84,7 @@ const MaterialReactDataTable = () => {
           const industries: string[] = row.original.industries.map((industry) => industry.title)
           console.log("subjects", industries)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px",}}>
               {industries.map((industry: string) => (
                 <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={industry}>{industry}</p>
               ))}
@@ -86,7 +95,7 @@ const MaterialReactDataTable = () => {
       {
         accessorKey: "hours",
         header: "Undervisningsfordeling",
-        size: 180,
+        size: 200,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
           const hoursNumbers: number[] = Object.values(row.original.hours);
@@ -109,10 +118,10 @@ const MaterialReactDataTable = () => {
   const data: Uddannelse[] = [
     {
       rank: 1,
-      title: "Computer Science",
-      degree_type: "Professionsbachelor",
-      geography: "Denmark",
-      institutions: ["Aarhus University", "Copenhagen University", "Aalborg Universitet", "VIA Viborg"], // Array of strings
+      title: "Datalogi",
+      degree_type: "Universitetsuddannelse",
+      geography: [1,2,3,4,5],
+      institutions: 3,
       subjects: [
         {
           title: "Matematik",
