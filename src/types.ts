@@ -96,6 +96,7 @@ type JobData = {
 }
 
 export type Uddannelse = {
+    rank: number | null;
     title: string;  // udelukke
     degree_type: string; // filter 
     geography: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
