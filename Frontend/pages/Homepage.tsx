@@ -1,4 +1,3 @@
-import TableSection from "./TableSection";
 import HeroSection from "./HeroSection";
 import BasicModal from "./QuizSection";
 
@@ -15,7 +14,6 @@ const Homepage = () => {
     <>
       <HeroSection tableRef={tableRef} />
       <BasicModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} />
     </>
   );
 };
