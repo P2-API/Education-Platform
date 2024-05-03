@@ -1,9 +1,153 @@
+import { Uddannelse } from "types"
+
 export enum JobFlexibility {
     flexible = 1,
     strict = 2,
 }
 
+export const CityToGeography = (county: County) =>{
+    switch (county) {
+        case County['Ballerup']:
+        case County['Bornholm']:
+        case County['Brøndby']:
+        case County['Frederiksberg']:
+        case County['Hillerød']:
+        case County['København']:
+        case County['Lyngby-Taarbæk']:
+        case County['Rudersdal']:
+            return Geography['Hovedstaden']
+        case County['Aarhus']:
+        case County['Hedensted']:
+        case County['Herning']:
+        case County['Holstebro']:
+        case County['Horsens']:
+        case County['Ikast-Brande']:
+        case County['Lemvig']:
+        case County['Norddjurs']:
+        case County['Silkeborg']:
+        case County['Skive']:
+        case County['Syddjurs']:
+        case County['Viborg']:
+            return Geography['Midtjylland']
+        case County['Aalborg']:
+        case County['Frederikshavn']:
+        case County['Hjørring']:
+        case County['Mariagerfjord']:
+        case County['Thisted']:
+            return Geography['Nordjylland']
+        case County['Guldborgsund']:
+        case County['Holbæk']: 
+        case County['Kalundborg']:
+        case County['Køge']:
+        case County['Næstved']:
+        case County['Roskilde']: 
+        case County['Slagelse']:
+        case County['Vordingborg']:
+            return Geography['Sjælland']
+        case County['Aabenraa']:
+        case County['Ærø']:
+        case County['Esbjerg']:
+        case County['Faaborg-Midtfyn']:
+        case County['Fredericia']: 
+        case County['Haderslev']:
+        case County['Kolding']:
+        case County['Odense']:
+        case County['Sønderborg']:
+        case County['Svendborg']:
+        case County['Tønder']:
+        case County['Vejle']:
+            return Geography['Syddanmark']
+        default:
+            return Geography['Ukendt']
+
+    }
+}
+
 export enum Geography {
+    "Nordjylland" = 1,
+    "Midtjylland" = 2,
+    "Hovedstaden" = 3,
+    "Sjælland" = 4,
+    "Syddanmark" = 5,
+
+    "Ukendt" = 1000,
+    "Uoplyst" = 1000,
+}
+
+export enum Institution {
+    "Aalborg Universitet" = 1,
+    "Aarhus Maskinmesterskole" = 2,
+    "Aarhus Universitet" = 3,
+    "Arkitektskolen Aarhus" = 4,
+    "Copenhagen Business School - Handelshøjskolen" = 5,
+    "Dalum Landbrugsskole" = 6,
+    "Danmarks Medie- og Journalisthøjskole" = 7,
+    "Danmarks Tekniske Universitet" = 8,
+    "Den Danske Filmskole" = 9,
+    "Den Danske Scenekunstskole" = 10,
+    "Den Frie Lærerskole" = 11,
+    "Designskolen Kolding" = 12,
+    "Det Fynske Kunstakademi" = 13,
+    "Det Jyske Kunstakademi" = 14,
+    "Det Jyske Musikkonservatorium" = 15,
+    "Det Kgl. Danske Musikkonservatorium" = 16,
+    "Det Kongelige Akademi - Arkitektur, Design, Konservering" = 17,
+    "Det Kongelige Danske Kunstakademi - Billedkunstskolerne" = 18,
+    "Diakonissestiftelsen" = 19,
+    "EUC Nordvest" = 20,
+    "Erhvervsakademi Aarhus" = 21,
+    "Erhvervsakademi Dania" = 22,
+    "Erhvervsakademi MidtVest" = 23,
+    "Erhvervsakademi SydVest" = 24,
+    "Erhvervsakademiet Copenhagen Business Academy" = 25,
+    "Forfatterskolen" = 26,
+    "Fredericia Maskinmesterskole" = 27,
+    "IBA Erhvervsakademi Kolding" = 28,
+    "IT-Universitetet i København" = 29,
+    "Kriminalforsorgens Uddannelsescenter" = 30,
+    "Københavns Erhvervsakademi (KEA)" = 31,
+    "Københavns Professionshøjskole" = 32,
+    "Københavns Universitet" = 33,
+    "MARTEC - Maritime and Polytechnic College" = 34,
+    "Marstal Navigationsskole" = 35,
+    "Maskinmesterskolen København" = 36,
+    "Møgelkær Fængsel" = 37,
+    "Nyborg Søfartsskole" = 38,
+    "Politiskolen" = 39,
+    "Politiskolen, Uddannelsescenter Vest (UCV)" = 40,
+    "Professionshøjskolen Absalon" = 41,
+    "Professionshøjskolen UC Syddanmark" = 42,
+    "Professionshøjskolen University College Nordjylland" = 43,
+    "Professionshøjskolen VIA University College" = 44,
+    "Roskilde Universitet" = 45,
+    "Rytmisk Musikkonservatorium" = 46,
+    "Skoleskibet Georg Stage" = 47,
+    "Svendborg International Maritime Academy, SIMAC" = 48,
+    "Svendborg Søfartsskole" = 49,
+    "Syddansk Musikkonservatorium" = 50,
+    "Syddansk Universitet" = 51,
+    "TietgenSkolen" = 52,
+    "UCL Erhvervsakademi og Professionshøjskole" = 53,
+    "Uddannelsen på landsplan" = 54,
+    "Vildtforvaltningsskolen, Kalø" = 55,
+    "Zealand Sjællands Erhvervsakademi" = 56,
+    
+    "?" = 1000,
+}
+
+export enum DegreeType {
+    "Akademisk overbygningsuddannelse" = 1,
+    "Bacheloruddannelse" = 2,
+    "Erhvervsakademiuddannelse" = 3,
+    "Kandidatuddannelse" = 4,
+    "Kunstnerisk uddannelse" = 5,
+    "Politi og forsvar" = 6,
+    "Professionsbacheloruddannelse" = 7,
+
+    "Andre uddannelser" = 1000,
+}
+
+export enum County {
     //A
     //B
     "Ballerup" = 1,
@@ -82,79 +226,6 @@ export enum Geography {
 
 
     //Andet
-    "ukendt" = 1000,
-    "uoplyst" = 1000,
-}
-
-export enum Institution {
-    "Aalborg Universitet" = 1,
-    "Aarhus Maskinmesterskole" = 2,
-    "Aarhus Universitet" = 3,
-    "Arkitektskolen Aarhus" = 4,
-    "Copenhagen Business School - Handelshøjskolen" = 5,
-    "Dalum Landbrugsskole" = 6,
-    "Danmarks Medie- og Journalisthøjskole" = 7,
-    "Danmarks Tekniske Universitet" = 8,
-    "Den Danske Filmskole" = 9,
-    "Den Danske Scenekunstskole" = 10,
-    "Den Frie Lærerskole" = 11,
-    "Designskolen Kolding" = 12,
-    "Det Fynske Kunstakademi" = 13,
-    "Det Jyske Kunstakademi" = 14,
-    "Det Jyske Musikkonservatorium" = 15,
-    "Det Kgl. Danske Musikkonservatorium" = 16,
-    "Det Kongelige Akademi - Arkitektur, Design, Konservering" = 17,
-    "Det Kongelige Danske Kunstakademi - Billedkunstskolerne" = 18,
-    "Diakonissestiftelsen" = 19,
-    "EUC Nordvest" = 20,
-    "Erhvervsakademi Aarhus" = 21,
-    "Erhvervsakademi Dania" = 22,
-    "Erhvervsakademi MidtVest" = 23,
-    "Erhvervsakademi SydVest" = 24,
-    "Erhvervsakademiet Copenhagen Business Academy" = 25,
-    "Forfatterskolen" = 26,
-    "Fredericia Maskinmesterskole" = 27,
-    "IBA Erhvervsakademi Kolding" = 28,
-    "IT-Universitetet i København" = 29,
-    "Kriminalforsorgens Uddannelsescenter" = 30,
-    "Københavns Erhvervsakademi (KEA)" = 31,
-    "Københavns Professionshøjskole" = 32,
-    "Københavns Universitet" = 33,
-    "MARTEC - Maritime and Polytechnic College" = 34,
-    "Marstal Navigationsskole" = 35,
-    "Maskinmesterskolen København" = 36,
-    "Møgelkær Fængsel" = 37,
-    "Nyborg Søfartsskole" = 38,
-    "Politiskolen" = 39,
-    "Politiskolen, Uddannelsescenter Vest (UCV)" = 40,
-    "Professionshøjskolen Absalon" = 41,
-    "Professionshøjskolen UC Syddanmark" = 42,
-    "Professionshøjskolen University College Nordjylland" = 43,
-    "Professionshøjskolen VIA University College" = 44,
-    "Roskilde Universitet" = 45,
-    "Rytmisk Musikkonservatorium" = 46,
-    "Skoleskibet Georg Stage" = 47,
-    "Svendborg International Maritime Academy, SIMAC" = 48,
-    "Svendborg Søfartsskole" = 49,
-    "Syddansk Musikkonservatorium" = 50,
-    "Syddansk Universitet" = 51,
-    "TietgenSkolen" = 52,
-    "UCL Erhvervsakademi og Professionshøjskole" = 53,
-    "Uddannelsen på landsplan" = 54,
-    "Vildtforvaltningsskolen, Kalø" = 55,
-    "Zealand Sjællands Erhvervsakademi" = 56,
-    
-    "?" = 1000,
-}
-
-export enum DegreeType {
-    "Akademisk overbygningsuddannelse" = 1,
-    "Bacheloruddannelse" = 2,
-    "Erhvervsakademiuddannelse" = 3,
-    "Kandidatuddannelse" = 4,
-    "Kunstnerisk uddannelse" = 5,
-    "Politi og forsvar" = 6,
-    "Professionsbacheloruddannelse" = 7,
-
-    "Andre uddannelser" = 1000,
+    "Ukendt" = 1000,
+    "Uoplyst" = 1000,
 }

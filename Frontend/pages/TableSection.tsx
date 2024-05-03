@@ -1,5 +1,5 @@
 import MaterialReactDataTable from "../components/DataTable";
-import { DegreeType } from "../../src/enums";
+import { DegreeType, Institution } from "../../src/enums";
 import { MultiSelectAutoComplete } from "../components/Filters";
 
 import React from 'react';
@@ -15,7 +15,7 @@ type TableSectionProps = {
 
 const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen }) => {
     const degreeTypes = Object.values(DegreeType).filter(value => typeof value === 'string');    
-    //const 
+    const institutes = Object.values(Institution).filter(value => typeof value === 'string');
     
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>
@@ -30,9 +30,9 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                             <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre</h2>
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
-                        <div style={{ padding: "1em", }}>
+                        <div style={{ padding: "1em", display: "grid", gap: "1em" }}>
                             <MultiSelectAutoComplete collection={degreeTypes} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
-                            <p>Filter efter uddannelsessted</p>
+                            <MultiSelectAutoComplete collection={institutes} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted"/>
                             <p>Filter efter uddannelsesniveau</p>
                             <p>Filter efter uddannelsesvarighed</p>
                             <p>Filter efter uddannelsespris</p>

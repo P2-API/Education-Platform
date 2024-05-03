@@ -12,7 +12,7 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
-import { Geography, Institution, JobFlexibility } from "enums";
+import { Geography, County, Institution, JobFlexibility } from "enums";
 
 type Subject = {
     title: string;
@@ -99,7 +99,8 @@ export type Uddannelse = {
     rank: number | null;
     title: string;  // udelukke
     degree_type: string; // filter 
-    geography: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
+    counties: County[];
+    geographies: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
     institutions: Institution; // filter/quiz hænger sammen med ovenstående / Hvor vigtig er det
     subjects: Subject[] // Filter / Quiz
     industries: Industry[];
@@ -190,4 +191,5 @@ export type TableFilters = {
     wantedDegreeRelevance: number;
     canWorkInternationally: boolean;
 }
+
 
