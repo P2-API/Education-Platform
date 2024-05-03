@@ -30,20 +30,7 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", }}>
-                            <Autocomplete
-                                multiple
-                                id="tags-outlined"
-                                options={degreeTypes}
-                                getOptionLabel={(option) => option.toString()}
-                                filterSelectedOptions
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Filtrer efter uddannelsestype"
-                                        placeholder="Uddannelsestype"
-                                    />
-                                )}
-                            />
+                            
                             <p>Filter efter uddannelsessted</p>
                             <p>Filter efter uddannelsesniveau</p>
                             <p>Filter efter uddannelsesvarighed</p>
@@ -67,3 +54,29 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
 };
 
 export default TableSection;
+
+type MultiSelectAutoCompleteProps = {
+    collection: string[];
+    selectLabel: string;
+    selectPlaceholder: string;
+}
+
+const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder }) => {
+    
+    return(
+        <Autocomplete
+            multiple
+            id="tags-outlined"
+            options={collection}
+            getOptionLabel={(option) => option.toString()}
+            filterSelectedOptions
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={selectLabel}
+                    placeholder={selectPlaceholder}
+                />
+            )}
+        />
+    );
+}
