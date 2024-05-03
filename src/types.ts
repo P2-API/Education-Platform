@@ -90,12 +90,13 @@ type JobData = {
     salaries: Salaries;
     workSchedule: JobWorkSchedule;
     unemployment: Unemployment;
-    degree_relevance: number;  
-    degree_prepares_for_job: number;  
+    degree_relevance: number;
+    degree_prepares_for_job: number;
     national_jobs: number;
 }
 
 export type Uddannelse = {
+    rank: number | null;
     title: string;  // udelukke
     degree_type: string; // filter 
     geography: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det

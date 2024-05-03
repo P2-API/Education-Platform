@@ -1,0 +1,290 @@
+{
+    "First":
+    {
+        "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/samfundsvidenskabeligekandidatuddannelser/oevrigesamfundsvidenskab/organisational-innovation-and-entrepreneurship",
+        "title": "Organisational Innovation and Entrepreneurship",
+        "degree_type": "Kandidatuddannelse",
+        "geography": ["Frederiksberg"],
+        "institutions": "Copenhagen Business School - Handelshøjskolen",
+        "hours": {
+            "with_supervision": 13,
+            "with_few_students": 36,
+            "with_many_students": 103
+        },
+        "industries": 
+        [
+            {
+                "title": "Information og kommunikation",
+                "share": 22
+            },
+            {
+                "title": "Videnservice",
+                "share": 18
+            },
+            {
+                "title": "Handel",
+                "share": 18
+            }
+        ],
+        "student_feedback": {
+            "social_environment": 4.35,
+            "academic_environment": 4.3,
+            "group_engagement": 4.3,
+            "loneliness": 3.56,
+            "stress": 3.44,
+            "teacher_evaluation_avg": 3.8775,
+            "satisfaction": 4.28
+        },
+        "academic_workload": {
+            "lectures_percent": 44,
+            "literature": 15.5,
+            "student_job_percent": 81
+        },
+        "degree_structure": {
+            "contents": {
+                "teaching": 75,
+                "exams_percent": 25,
+                "internship_percent": 0,
+                "international_stay_percent": 0
+            },
+            "teaching_method": {
+                "methods": [
+                    "Projektarbejde (både individuelt og i grupper)",	
+                    "Selvstudie (forberedelse, læsning, hjemmeopgaver)",	
+                    "Forelæsninger",	
+                    "Gruppearbejde (læsegruppe, studiegruppe)",	
+                    "Klasseundervisning (holdundervisning)"
+                ]
+            }
+        },
+        "dropout_rate": 4,
+        "job_data": {
+            "salary": {
+                "new_graduate": {
+                    "lower_quartile": 30.65,
+                    "median": 38.55,
+                    "upper_quartile": 47.04
+                },
+                "experienced": {
+                    "lower_quartile": 47.65,
+                    "median": 60.07,
+                    "upper_quartile": 78.01
+                }
+            },
+            "unemployment": {
+                "new_graduate_percent": 9,
+                "experienced_percent": 0
+            },
+            "work_schedule": {
+                "fixed_hours_percent": 27,
+                "flexible_hours_percent": 50,
+                "self_schedule_percent": 23,
+                "variable_schedule_percent": 0,
+                "night_and_evening_shifts_percent": 0
+            },
+            "working_hours": 37,
+            "job_skills": [
+                "Kreative og innovative kompetencer",
+                "Strategiske kompetencer",
+                "Tilegnelse af ny viden",
+                "Analytiske kompetencer",
+                "Evnen til at samarbejde"
+            ],
+            "degree_relevance": 3.24,
+            "degree_prepares_for_job": 3.55, 
+            "national_jobs": 80
+        }
+    },
+    "Second":
+    {
+        "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/historie",
+        "title": "Historie",
+        "degree_type": "Kandidatuddannelse",
+        "geography": ["København"],
+        "institutions": "Københavns Universitet",
+        "hours": {
+            "with_supervision": 7,
+            "with_few_students": 112,
+            "with_many_students": 0
+        },
+        "industries": 
+        [
+            {
+                "title": "Undervisning",
+                "share": 39
+            },
+            {
+                "title": "Offentlig administration, forsvar og politi",
+                "share": 13
+            },
+            {
+                "title": "Kultur og fritid",
+                "share": 36
+            }
+        ],
+        "student_feedback": {
+            "social_environment": 3.7,
+            "academic_environment": 3.97,
+            "group_engagement": 3.95,
+            "loneliness": 3.26,
+            "stress": 3.59,
+            "teacher_evaluation_avg": 3.99,
+            "satisfaction": 3.92
+        },
+        "academic_workload": {
+            "lectures_percent": 26,
+            "literature": 14.5,
+            "student_job_percent": 83
+        },
+        "degree_structure": {
+            "contents": {
+                "teaching": 75,
+                "exams_percent": 25,
+                "internship_percent": 0,
+                "international_stay_percent": 0
+            },
+            "teaching_method": {
+                "methods": [
+                    "Selvstudie (forberedelse, læsning, hjemmeopgaver)",	
+                    "Klasseundervisning (holdundervisning)",	
+                    "Forelæsninger",	
+                    "Faglig vejledning fra din underviser",
+                    "Projektarbejde (både individuelt og i grupper)"
+                ]
+            }
+        },
+        "dropout_rate": 5,
+        "job_data": {
+            "salary": {
+                "new_graduate": {
+                    "lower_quartile": 31.05,
+                    "median": 1.024305556,
+                    "upper_quartile": 35.45
+                },
+                "experienced": {
+                    "lower_quartile": 34.65,
+                    "median": 43.95,
+                    "upper_quartile": 49.15
+                }
+            },
+            "unemployment": {
+                "new_graduate_percent": 21,
+                "experienced_percent": 4
+            },
+            "work_schedule": {
+                "fixed_hours_percent": 30,
+                "flexible_hours_percent": 4,
+                "self_schedule_percent": 16,
+                "variable_schedule_percent": 9,
+                "night_and_evening_shifts_percent": 0
+            },
+            "working_hours": 39,
+            "job_skills": [
+                "Tilegnelse af ny viden",
+                "Analytiske kompetencer",
+                "Formidlingsevner",
+                "Min evne til at arbejde struktureret og overholde deadlines",
+                "Anvendelse af teori og metode inden for mit fagområde"
+            ],
+            "degree_relevance": 3.49,
+            "degree_prepares_for_job": 3.65, 
+            "national_jobs": 95
+        }
+    },
+    "Third":
+    {
+        "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/dansk",
+        "title": "Dansk",
+        "degree_type": "Kandidatuddannelse",
+        "geography": ["Aarhus"],
+        "institutions": "Aarhus Universitet",
+        "hours": {
+            "with_supervision": 6,
+            "with_few_students": 124,
+            "with_many_students": 8
+        },
+        "industries": 
+        [
+            {
+                "title": "Undervisning",
+                "share": 63
+            },
+            {
+                "title": "Videnservice",
+                "share": 6
+            },
+            {
+                "title": "Information og kommunikation",
+                "share": 5
+            }
+        ],
+        "student_feedback": {
+            "social_environment": 4.02,
+            "academic_environment": 4.07,
+            "group_engagement": 3.49,
+            "loneliness": 3.52,
+            "stress": 3.59,
+            "teacher_evaluation_avg": 4.1375,
+            "satisfaction": 4.24
+        },
+        "academic_workload": {
+            "lectures_percent": 38,
+            "literature": 10,
+            "student_job_percent": 81
+        },
+        "degree_structure": {
+            "contents": {
+                "teaching": 62.5,
+                "exams_percent": 25,
+                "internship_percent": 12.5,
+                "international_stay_percent": 0
+            },
+            "teaching_method": {
+                "methods": [
+                    "Klasseundervisning (holdundervisning)",	
+                    "Selvstudie (forberedelse, læsning, hjemmeopgaver)",	
+                    "Forelæsninger",	
+                    "Gruppearbejde (læsegruppe, studiegruppe)",	
+                    "Projektarbejde (både individuelt og i grupper)"
+                ]
+            }
+        },
+        "dropout_rate": 6,
+        "job_data": {
+            "salary": {
+                "new_graduate": {
+                    "lower_quartile": 25.05,
+                    "median": 31.15,
+                    "upper_quartile": 35.09
+                },
+                "experienced": {
+                    "lower_quartile": 33.85,
+                    "median": 44.05,
+                    "upper_quartile": 48.08
+                }
+            },
+            "unemployment": {
+                "new_graduate_percent": 23,
+                "experienced_percent": 3
+            },
+            "work_schedule": {
+                "fixed_hours_percent": 21,
+                "flexible_hours_percent": 52,
+                "self_schedule_percent": 16,
+                "variable_schedule_percent": 2,
+                "night_and_evening_shifts_percent": 0
+            },
+            "working_hours": 36,
+            "job_skills": [
+                "Formidlingsevner",
+                "Tilegnelse af ny viden",
+                "Min evne til at arbejde struktureret og overholde deadlines",
+                "Anvendelse af teori og metode inden for mit fagområde",
+                "Analytiske kompetencer"
+            ],
+            "degree_relevance": 3.91,
+            "degree_prepares_for_job": 4.02, 
+            "national_jobs": 93
+        }
+    }
+}

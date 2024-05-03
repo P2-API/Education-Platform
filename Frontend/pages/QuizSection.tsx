@@ -187,6 +187,8 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                 <Box height={"100%"}>
                     <Box sx={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 0, height: "500px" }}>
                         <div style={{ height: "100%" }}>
+                            <button className="red-button" style={{ borderRadius: 5, position: "absolute", top: 10, left: 10 }} onClick={() => setIsModalOpen(false)}>Luk quiz</button>
+
                             <div style={{ textAlign: "center", padding: "4em", paddingTop: 0, paddingBottom: 0, height: "70%", alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                 <Typography id="modal-modal-title" variant="h3" component="h2">
                                     UddannelsesQuiz
@@ -197,7 +199,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                 <Typography mt={1}>
                                     {currentQuestion.question}
                                 </Typography>
-                                <Slider onChange={(e, value) => SetSliderValue(Number(value))}
+                                <Slider onChange={(_e, value) => SetSliderValue(Number(value))}
                                     aria-label="discrete-slider-custom"
                                     defaultValue={3}
                                     value={sliderValue}
@@ -208,13 +210,14 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                     valueLabelDisplay="auto"
                                 />
                                 <div style={{ display: 'flex', gap: '2em', justifyContent: 'center' }}>
-                                    <Button onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
+                                    <Button variant='contained' onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
                                         Tilbage
                                     </Button>
-                                    <Button onClick={HandleNextQuestion}>
-                                        Næste
+                                    <Button variant='contained' onClick={HandleNextQuestion}>
+                                        {currentQuestionIndex === questions.length - 1 ? 'Afslut quiz' : 'Næste'}
                                     </Button>
                                 </div>
+
                             </div>
                             <LinearProgressWithLabel sx={{ marginTop: "5em" }} value={getProgress()} />
 
