@@ -1,9 +1,10 @@
 import MaterialReactDataTable from "../components/DataTable";
-import { DegreeType } from "../../src/enums"
+import { DegreeType } from "../../src/enums";
+import { MultiSelectAutoComplete } from "../components/Filters";
 
+import React from 'react';
 import Paper from '@mui/material/Paper';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+
 
 
 
@@ -30,7 +31,7 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", }}>
-                            
+                            <MultiSelectAutoComplete collection={degreeTypes} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
                             <p>Filter efter uddannelsessted</p>
                             <p>Filter efter uddannelsesniveau</p>
                             <p>Filter efter uddannelsesvarighed</p>
@@ -55,28 +56,4 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
 
 export default TableSection;
 
-type MultiSelectAutoCompleteProps = {
-    collection: string[];
-    selectLabel: string;
-    selectPlaceholder: string;
-}
 
-const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder }) => {
-    
-    return(
-        <Autocomplete
-            multiple
-            id="tags-outlined"
-            options={collection}
-            getOptionLabel={(option) => option.toString()}
-            filterSelectedOptions
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label={selectLabel}
-                    placeholder={selectPlaceholder}
-                />
-            )}
-        />
-    );
-}
