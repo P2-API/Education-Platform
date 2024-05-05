@@ -8,7 +8,7 @@ const PORT = 1337;
 server.use(cors()); // Enable CORS
 
 server.get("/", (request: Request, response: Response) => { 
-    response.status(200).send("Hello World");
+    response.status(200).send("Hello Worlds");
 }); 
 
 server.get("/server", (request: Request, response: Response) => {
