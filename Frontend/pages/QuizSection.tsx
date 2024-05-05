@@ -194,7 +194,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                     UddannelsesQuiz
                                 </Typography>
                                 <Typography variant="h6" component="h3" mt={2}>
-                                    {"Question " + (currentQuestionIndex + 1)}
+                                    {"Question " + (currentQuestionIndex + 1)} 
                                 </Typography>
                                 <Typography mt={1}>
                                     {currentQuestion.question}

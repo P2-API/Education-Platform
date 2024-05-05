@@ -3,6 +3,8 @@ import Lottie from "lottie-react";
 import animationData from "../assets/animation.json";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useMediaQuery } from "@mui/material";
+import { toast } from 'sonner'
+import {useServer} from "@backend/server/useServer";
 
 
 type HeroSectionProps = {
@@ -13,6 +15,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
 
   const useMargin = useMediaQuery("(min-width: 1179px)");
   const centerHero = useMediaQuery("(max-width: 925px)");
+
+  const { greetServer } = useServer();
+
+  const serverGreetsWithToast = async () => {
+    const response = await greetServer();
+    toast.info(response);
+  };
 
 
 
@@ -141,6 +150,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
           >
             Gå til uddannelser
           </button>
+          <button className="primary-button" style={{backgroundColor: "blue"}} onClick={serverGreetsWithToast}>Snak med server</button>
+
         </div>
       </div>
 

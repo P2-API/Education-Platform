@@ -1,16 +1,22 @@
 import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
 
-// configures dotenv to work in your application
-const app: Express = express();
+const server: Express = express();
 
-const PORT = 3000
-app.get("/", (request: Request, response: Response) => { 
+const PORT = 1337;
+
+server.use(cors()); // Enable CORS
+
+server.get("/", (request: Request, response: Response) => { 
     response.status(200).send("Hello World");
 }); 
 
-app.listen(PORT, () => { 
+server.get("/server", (request: Request, response: Response) => {
+    response.status(200).send("Hello from the server!");
+});
+
+server.listen(PORT, () => { 
     console.log("Server running at PORT: ", PORT); 
 }).on("error", (error) => {
-    // gracefully handle error
     throw new Error(error.message);
 });
