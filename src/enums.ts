@@ -1,4 +1,4 @@
-import { Uddannelse, MinimumMaximum } from "types"
+import { MinimumMaximum } from "types"
 
 export enum JobFlexibility {
     flexible = 1,
@@ -145,20 +145,22 @@ export enum Institution {
 
 export const DegreeTypeToDuration = (degreeType: DegreeType): MinimumMaximum => {
     switch (degreeType) {
-        case DegreeType['Akademisk overbygningsuddannelse']:
-            return {minimum: 1, maximum: 1};
-        case DegreeType['Bacheloruddannelse']:
-            return {minimum: 3, maximum: 3};;
-        case DegreeType['Erhvervsakademiuddannelse']:
-            return {minimum: 2.5, maximum: 2.5};
-        case DegreeType['Kandidatuddannelse']:
-            return {minimum: 2, maximum: 2};;
+        case DegreeType["Akademisk overbygningsuddannelse"]:
+            return {minimum: 12, maximum: 12};
+        case DegreeType.Bacheloruddannelse:
+            return {minimum: 36, maximum: 36};
+        case DegreeType.Erhvervsakademiuddannelse:
+            return {minimum: 30, maximum: 30};
+        case DegreeType.Kandidatuddannelse:
+            return {minimum: 24, maximum: 24};
         case DegreeType['Kunstnerisk uddannelse']:
-            return {minimum: 3, maximum: 3};;
+            return {minimum: 36, maximum: 36};
         case DegreeType['Politi og forsvar']:
-            return {minimum: 0.3, maximum: 3};;
+            return {minimum: 4, maximum: 36};
         case DegreeType['Professionsbacheloruddannelse']:
-            return {minimum: 1.5, maximum: 1.5};;
+            return {minimum: 18, maximum: 18};
+        case DegreeType['Andre uddannelser']:
+            return {minimum: 4, maximum: 36}
                 
         default:
             return {minimum: -1, maximum: -1};;

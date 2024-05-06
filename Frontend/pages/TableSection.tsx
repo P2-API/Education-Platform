@@ -1,6 +1,7 @@
 import MaterialReactDataTable from "../components/DataTable";
-import { DegreeType, Institution } from "../../src/enums";
-import { MultiSelectAutoComplete } from "../components/Filters";
+import { DegreeType, DegreeTypeToDuration, Geography, Institution } from "../../src/enums";
+import { MultiSelectAutoComplete, MinimumDistanceSlider } from "../components/Filters";
+import { MinimumMaximum } from "types";
 
 import React from 'react';
 import Paper from '@mui/material/Paper';
@@ -16,8 +17,35 @@ type TableSectionProps = {
 
 
 const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen }) => {
-    const degreeTypes = Object.values(DegreeType).filter(value => typeof value === 'string');    
-    const institutes = Object.values(Institution).filter(value => typeof value === 'string');
+    // Enum Lists
+    const degreeTypeKeys: (keyof typeof DegreeType)[] = Object.keys(DegreeType)
+    .filter(key => isNaN(Number(key))) as (keyof typeof DegreeType)[];
+    const degreeTypes: DegreeType[] = degreeTypeKeys.map(key => DegreeType[key]); 
+
+    const institutionKeys: (keyof typeof Institution)[] = Object.keys(Institution)
+    .filter(key => isNaN(Number(key))) as (keyof typeof Institution)[];
+    const institutes: Institution[] = institutionKeys.map(key => Institution[key]); 
+
+    const geographyKeys: (keyof typeof Geography)[] = Object.keys(Geography)
+    .filter(key => isNaN(Number(key))) as (keyof typeof Geography)[];
+    const geographies: Geography[] = geographyKeys.map(key => Geography[key]); 
+
+    const degreeTypesString = degreeTypeKeys.map(value => value.toString());
+    const institutesString = institutionKeys.map(value => value.toString());
+    const geographiesString = geographyKeys.map(value => value.toString());
+
+    // Education Duration Slider
+    let educationDurationMin = DegreeTypeToDuration(degreeTypes[0]).minimum;
+    let educationDurationMax = DegreeTypeToDuration(degreeTypes[0]).maximum;
+    degreeTypes.forEach((degreeType) => {
+        let newDuration = DegreeTypeToDuration(degreeType);
+        if (newDuration.minimum != -1){
+            educationDurationMin = Math.min(educationDurationMin, newDuration.minimum); 
+            educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
+        }        
+    });
+
+    const educationDurationRange: MinimumMaximum = {minimum: educationDurationMin, maximum: educationDurationMax}
     
 
     return (
@@ -34,11 +62,11 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", display: "grid", gap: "1em" }}>
-                            <MultiSelectAutoComplete collection={degreeTypes} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
-                            <MultiSelectAutoComplete collection={institutes} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted"/>
-                            
-                            <p>Filter efter uddannelsesvarighed</p>
-                            <p>Filter efter uddannelsespris</p>
+                            <MultiSelectAutoComplete collection={degreeTypesString} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
+                            <MultiSelectAutoComplete collection={institutesString} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted"/>
+                            <MultiSelectAutoComplete collection={geographiesString} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune"/>
+                            <MinimumDistanceSlider initialState={educationDurationRange} sliderRange={educationDurationRange} minimumDistance={1}/>
+                            <p>Filter efter uddannelsespris</p> 
                             <p>Filter efter uddannelsesstart</p>
                             <p>Filter efter uddannelsesform</p>
                             <p>Filter efter uddannelsesindhold</p>

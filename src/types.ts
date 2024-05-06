@@ -101,7 +101,7 @@ export type Education = {
     title: string;  // udelukke
     degree_type: string; // filter 
     counties: County[];
-    geographies: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
+    geographies: Geography[];  // filter/quiz hænger sammen med nedenstående / Hvor vigtig er det
     institutions: Institution; // filter/quiz hænger sammen med ovenstående / Hvor vigtig er det
     subjects: Subject[] // Filter / Quiz
     industries: Industry[];

@@ -2,6 +2,10 @@ import React from 'react';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+
+import { MinimumMaximum } from 'types';
 
 type MultiSelectAutoCompleteProps = {
     collection: string[];
@@ -26,5 +30,53 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
                 />
             )}
         />
+    );
+}
+
+type MinimumDistanceSliderProps = {
+    initialState: MinimumMaximum;
+    sliderRange: MinimumMaximum;
+    minimumDistance: number;
+}
+
+
+function valuetext(value: number) {
+    return `${value} months`;
+}
+  
+export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({initialState, sliderRange, minimumDistance}) => {
+    const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
+
+    const handleChange1 = (
+        event: Event,
+        newValue: number | number[],
+        activeThumb: number,
+    ) => {
+    if (!Array.isArray(newValue)) {
+        return;
+    }
+
+    if (activeThumb === 0) {
+        setValue1([Math.min(newValue[0], value1[1] - minimumDistance), value1[1]]);
+    } 
+    else {
+        setValue1([value1[0], Math.max(newValue[1], value1[0] + minimumDistance)]);
+    }
+    };
+
+    return (
+        <Box sx={{ width: 300 }}>
+            <p>Filter efter uddannelsesvarighed i måneder</p>
+            <Slider
+                getAriaLabel={() => 'Minimum distance'}
+                value={value1}
+                onChange={handleChange1}
+                valueLabelDisplay="auto"
+                getAriaValueText={valuetext}
+                disableSwap
+                min={sliderRange.minimum}
+                max={sliderRange.maximum}
+            />
+        </Box>
     );
 }
