@@ -1,3 +1,40 @@
+//added lidt flere filer til ignore for at undgå at uploade unødvendige filer
+# Ignore node_modules directory
+node_modules/
+
+# Ignore built files and directories for the server
+/build/
+/dist/
+*.js
+*.js.map
+
+# Ignore built files and directories for the front-end
+/public/build/
+/client/build/
+/client/dist/
+*.js
+*.js.map
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Ignore any log files
+*.log
+
+# Ignore any user-specific files
+.DS_Store
+.vscode/
+.idea/
+*.sublime-*
+
+# Ignore npm's package-lock files
+package-lock.json
+
+
+
+
 # Logs
 logs
 *.log
