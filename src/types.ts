@@ -160,17 +160,17 @@ export type QuizAnswers = {
     night_and_evening_shifts_priority?: number;
 }
 
-type MinimumMaximum = {
+export type MinimumMaximum = {
     minimum: number;
     maximum: number;
 }
 
-type SalaryFilters = {
+export type SalaryFilters = {
     newGraduate: MinimumMaximum;
     experienced: MinimumMaximum;
 }
 
-type UnenploymentFilters = {
+export type UnenploymentFilters = {
     newGraduate: number;
     experienced: number;
 }

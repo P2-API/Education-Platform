@@ -1,11 +1,11 @@
-import { Uddannelse } from "types"
+import { Uddannelse, MinimumMaximum } from "types"
 
 export enum JobFlexibility {
     flexible = 1,
     strict = 2,
 }
 
-export const CityToGeography = (county: County) =>{
+export const CountyToGeography = (county: County): Geography =>{
     switch (county) {
         case County['Ballerup']:
         case County['Bornholm']:
@@ -61,6 +61,14 @@ export const CityToGeography = (county: County) =>{
             return Geography['Ukendt']
 
     }
+}
+
+export const CountiesToGeography = (counties: County[]): Geography[] => {
+    let geographies: Geography[] = [];
+    counties.forEach(county => {
+        geographies.push(CountyToGeography(county));
+    });
+    return geographies;
 }
 
 export enum Geography {
@@ -133,6 +141,28 @@ export enum Institution {
     "Zealand Sjællands Erhvervsakademi" = 56,
     
     "?" = 1000,
+}
+
+export const DegreeTypeToDuration = (degreeType: DegreeType): MinimumMaximum => {
+    switch (degreeType) {
+        case DegreeType['Akademisk overbygningsuddannelse']:
+            return {minimum: 1, maximum: 1};
+        case DegreeType['Bacheloruddannelse']:
+            return {minimum: 3, maximum: 3};;
+        case DegreeType['Erhvervsakademiuddannelse']:
+            return {minimum: 2.5, maximum: 2.5};
+        case DegreeType['Kandidatuddannelse']:
+            return {minimum: 2, maximum: 2};;
+        case DegreeType['Kunstnerisk uddannelse']:
+            return {minimum: 3, maximum: 3};;
+        case DegreeType['Politi og forsvar']:
+            return {minimum: 0.3, maximum: 3};;
+        case DegreeType['Professionsbacheloruddannelse']:
+            return {minimum: 1.5, maximum: 1.5};;
+                
+        default:
+            return {minimum: -1, maximum: -1};;
+    }
 }
 
 export enum DegreeType {

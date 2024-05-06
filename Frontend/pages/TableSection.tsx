@@ -13,10 +13,13 @@ type TableSectionProps = {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+
+
 const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen }) => {
     const degreeTypes = Object.values(DegreeType).filter(value => typeof value === 'string');    
     const institutes = Object.values(Institution).filter(value => typeof value === 'string');
     
+
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>
             <div ref={tableRef} id="table" style={{ marginTop: "9vh", backgroundColor: "white" }} />
@@ -33,7 +36,7 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen })
                         <div style={{ padding: "1em", display: "grid", gap: "1em" }}>
                             <MultiSelectAutoComplete collection={degreeTypes} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
                             <MultiSelectAutoComplete collection={institutes} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted"/>
-                            <p>Filter efter uddannelsesniveau</p>
+                            
                             <p>Filter efter uddannelsesvarighed</p>
                             <p>Filter efter uddannelsespris</p>
                             <p>Filter efter uddannelsesstart</p>
