@@ -192,4 +192,20 @@ export type TableFilters = {
     canWorkInternationally: boolean;
 }
 
+export type UserImputs = {
+    quizAnswers: QuizAnswers,
+    filters: TableFilters
+}
+
+export type objectiveType = {
+    direction: number,
+    name: string,
+    vars: { name: string, coef: number }[]
+} 
+
+export type SubjectToType = {
+    name: string,
+    vars: { name: string, coef: number }[],
+    bnds: { type: number, ub: number, lb: number }
+}[]
 
