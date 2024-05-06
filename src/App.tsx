@@ -1,10 +1,14 @@
 import Homepage from "@frontend/pages/Homepage";
 import Navbar from "@frontend/components/Navbar";
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from "sonner";
 
 function App() {
   return (
+    
     <div style={{ height: "100vh"}}>
+    <Toaster richColors />
+
       <Navbar />
 
       <div

@@ -74,11 +74,11 @@ type Unemployment = {
 
 type JobWorkSchedule = {
     working_hours: number;
-    fixed_hours: number;
-    flexible_hours: number;
-    self_schedule: number;
-    variable_schedule: number;
-    night_and_evening_shifts: number;
+    fixed_hours_percent: number;
+    flexible_hours_percent: number;
+    self_schedule_percent: number;
+    variable_schedule_percent: number;
+    night_and_evening_shifts_percent: number;
 }
 
 type Salaries = {
@@ -95,7 +95,8 @@ type JobData = {
     national_jobs: number;
 }
 
-export type Uddannelse = {
+export type Education = {
+    url: string;
     rank: number | null;
     title: string;  // udelukke
     degree_type: string; // filter 
@@ -192,4 +193,20 @@ export type TableFilters = {
     canWorkInternationally: boolean;
 }
 
+export type UserImputs = {
+    quizAnswers: QuizAnswers,
+    filters: TableFilters
+}
+
+export type objectiveType = {
+    direction: number,
+    name: string,
+    vars: { name: string, coef: number }[]
+} 
+
+export type SubjectToType = {
+    name: string,
+    vars: { name: string, coef: number }[],
+    bnds: { type: number, ub: number, lb: number }
+}[]
 
