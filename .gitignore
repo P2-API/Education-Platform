@@ -33,8 +33,8 @@ node_modules/
 # Ignore npm's package-lock files
 package-lock.json
 
-
-
+# Ignore coverage temp files?
+/coverage/
 
 # Logs
 logs
