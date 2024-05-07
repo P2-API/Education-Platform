@@ -38,7 +38,7 @@ const MaterialReactDataTable = () => {
         size: 110,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
             const geographyNames = row.original.geography.map((location: number) => Geography[location])
-            console.log("geographyNames", geographyNames)
+            //console.log("geographyNames", geographyNames)
             return (
               // map 
               <ul style={{width: "250px", height: "65px", justifyContent: "center", overflowY: "scroll", paddingBottom: "0px"}} >
@@ -54,7 +54,7 @@ const MaterialReactDataTable = () => {
         header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const institutionName = Institution[row.original.institutions];
-          console.log(row.original.institutions)
+          //console.log(row.original.institutions)
           return (
             <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
           );
@@ -66,7 +66,7 @@ const MaterialReactDataTable = () => {
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const subjects: string[] = row.original.subjects.map((subject) => subject.title)
-          console.log("subjects", subjects)
+          //console.log("subjects", subjects)
           return (
             <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px"}}>
               {subjects.map((subject: string, index: number) => (
@@ -82,7 +82,7 @@ const MaterialReactDataTable = () => {
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const industries: string[] = row.original.industries.map((industry) => industry.title)
-          console.log("subjects", industries)
+          //console.log("subjects", industries)
           return (
             <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px",}}>
               {industries.map((industry: string) => (
@@ -99,8 +99,8 @@ const MaterialReactDataTable = () => {
         Cell: ({ row }: { row: MRT_Row<Uddannelse> }) => {
           const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
           const hoursNumbers: number[] = Object.values(row.original.hours);
-          console.log("hoursNumbers", hoursNumbers)
-          console.log("hoursTitles", hoursTitles)
+          //console.log("hoursNumbers", hoursNumbers)
+          //console.log("hoursTitles", hoursTitles)
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               {hoursTitles.map((title: string, index: number) => (
