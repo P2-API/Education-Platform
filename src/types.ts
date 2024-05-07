@@ -98,13 +98,13 @@ type JobData = {
 export type Education = {
     url: string;
     rank: number | null;
-    title: string;  // udelukke
-    degree_type: string; // filter 
-    counties: County[];
-    geographies: Geography[];  // filter/quiz hænger sammen med nedenstående  / Hvor vigtig er det
-    institutions: Institution; // filter/quiz hænger sammen med ovenstående / Hvor vigtig er det
-    subjects: Subject[] // Filter / Quiz
-    industries: Industry[];
+    title: string;
+    degree_type: string; // filter = wantedDegreeTypes: string[];
+    counties: County[]; 
+    geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
+    institutions: Institution; // filter = canStudyAtInstitution: Institution[];
+    subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority?: number;
+    industries: Industry[]; // LP filter = hasIndustries: string[];
     hours: HoursSpentDoing; // Filter / Quiz 
     student_feedback: StudentFeedback; // quiz
     academic_workload: AcademicWorkload; // quiz
@@ -115,10 +115,10 @@ export type Education = {
 
 
 export type QuizAnswers = {
-    geography_priority?: number;   // 1
-    institution_priority?: number; // 1
+ 
+    subjects_priority?: number; 
 
-    subjects_priority?: number;
+    industries_priority?: number;
 
     academic_environment_priority?: number;
 
@@ -133,7 +133,6 @@ export type QuizAnswers = {
 
     lectures_priority?: number;
     literature_priority?: number;
-
     teaching_priority?: number;
 
     dislike_exam_priority?: number;
@@ -141,7 +140,6 @@ export type QuizAnswers = {
     internship_priority?: number;
 
     international_stay_priority?: number;
-
     work_internationally_priority?: number;
 
     starting_salary_priority?: number;
@@ -181,7 +179,7 @@ export type TableFilters = {
     wantedDegreeTypes: string[];
     canStudyInGeoraphies: Geography[];
     canStudyAtInstitution: Institution[];
-    hasSubjects: string[];
+    hasSubjects: string[]; 
     hasIndustries: string[];
     hasFormsOfEducation: string[];
     acceptableDropOutRate: number;
