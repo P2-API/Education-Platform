@@ -104,59 +104,59 @@ export type Education = {
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
     subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority?: number;
-    industries: Industry[]; // LP filter = hasIndustries: string[];
-    hours: HoursSpentDoing; // Filter / Quiz 
-    student_feedback: StudentFeedback; // quiz
-    academic_workload: AcademicWorkload; // quiz
-    degree_structure: DegreeStructure; // quiz
-    dropout_rate: number;
-    job_data: JobData;
+    industries: Industry[]; // LP filter = hasIndustries: string[]; Quiz = industries_priority?: number;
+    hours: HoursSpentDoing; // quiz = high_workload_acceptance_priority?: number; 
+    student_feedback: StudentFeedback; // quiz = academic_environment_priority?: number; social_environment_priority?: number; group_engagement_priority?: number; loneliness_priority?: number; stress_priority?: number; teaching_priority?: number; 
+    academic_workload: AcademicWorkload; // quiz = number; student_job_priority?: number; lectures_priority?: number; literature_priority?: number;
+    degree_structure: DegreeStructure; // filter = hasFormsOfEducation: string[]; / quiz = dislike_exam_priority?: number; internship_priority?: number; international_stay_priority?: number;
+    dropout_rate: number; 
+    job_data: JobData; /* filter = canWorkInternationally: boolean; / LP filters = wantedSalary: SalaryFilters, unemployment: UnenploymentFilters, jobFlexibility: JobFlexibility; wantedWorkingHours: MinimumMaximum; 
+                        / quiz = starting_salary_priority?: number; experienced_salary_priority?: number; unemployment_priority?: number; degree_relevance_priority?: number; fixed_hours_priority?: number; flexible_hours_priority?: number;
+                        self_schedule_priority?: number; variable_schedule_priority?: number; night_and_evening_shifts_priority?: number; work_nationally_priority?: number;*/
 };
 
 
 export type QuizAnswers = {
  
-    subjects_priority?: number; 
+    subjects_priority?: number; // in use
 
-    industries_priority?: number;
+    industries_priority?: number; // in use
 
-    academic_environment_priority?: number;
+    academic_environment_priority?: number; // in use
 
-    social_environment_priority?: number;
-    group_engagement_priority?: number;
-    loneliness_priority?: number;
+    social_environment_priority?: number; // in use
+    group_engagement_priority?: number; // in use
+    loneliness_priority?: number; // in use 
 
-    stress_priority?: number;
-    high_workload_acceptance_priority?: number; ///
+    stress_priority?: number; // in use 
+    high_workload_acceptance_priority?: number; // in use
 
-    student_job_priority?: number;
+    student_job_priority?: number; // in use
 
-    lectures_priority?: number;
-    literature_priority?: number;
-    teaching_priority?: number;
+    lectures_priority?: number; // in use
+    literature_priority?: number; // in use
+    teaching_priority?: number; // in use
 
-    dislike_exam_priority?: number;
+    dislike_exam_priority?: number; // in use
 
-    internship_priority?: number;
+    internship_priority?: number; // in use 
 
-    international_stay_priority?: number;
-    work_internationally_priority?: number;
+    international_stay_priority?: number; // in use
+    work_nationally_priority?: number; // in use
 
-    starting_salary_priority?: number;
-    general_salary_priority?: number;
-    experienced_salary_priority?: number;
-    ////////////////
-    unemployment_priority?: number;
+    starting_salary_priority?: number; // in use
+    experienced_salary_priority?: number; // in use
+    
+    unemployment_priority?: number; // in use
 
-    degree_relevance_priority?: number;
+    degree_relevance_priority?: number; // in use
 
+    fixed_hours_priority?: number; // in use
+    flexible_hours_priority?: number; // in use
+    self_schedule_priority?: number; // in use 
+    variable_schedule_priority?: number; // in use
 
-    fixed_hours_priority?: number;    /////// 
-    flexible_hours_priority?: number; ///////
-    self_schedule_priority?: number; ///////
-    variable_schedule_priority?: number; ///////
-
-    night_and_evening_shifts_priority?: number;
+    night_and_evening_shifts_priority?: number; // in use 
 }
 
 export type MinimumMaximum = {
@@ -176,19 +176,17 @@ export type UnenploymentFilters = {
 
 
 export type TableFilters = {
-    wantedDegreeTypes: string[];
-    canStudyInGeoraphies: Geography[];
-    canStudyAtInstitution: Institution[];
-    hasSubjects: string[]; 
-    hasIndustries: string[];
-    hasFormsOfEducation: string[];
-    acceptableDropOutRate: number;
-    wantedSalary: SalaryFilters;
-    unemployment: UnenploymentFilters;
-    jobFlexibility: JobFlexibility;
-    wantedWorkingHours: MinimumMaximum;
-    wantedDegreeRelevance: number;
-    canWorkInternationally: boolean;
+    wantedDegreeTypes: string[]; //in use
+    canStudyInGeoraphies: Geography[]; //in use
+    canStudyAtInstitution: Institution[]; //in use
+    hasSubjects: string[]; // in use / LP filter
+    hasIndustries: string[]; // in use / LP filter
+    hasFormsOfEducation: string[]; // in use
+    wantedSalary: SalaryFilters; // in use / LP filter
+    unemployment: UnenploymentFilters; // in use / LP filter
+    jobFlexibility: JobFlexibility; // in use / LP filter
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter
+    canWorkInternationally: boolean; //in use
 }
 
 export type UserImputs = {
