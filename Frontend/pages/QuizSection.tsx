@@ -48,14 +48,14 @@ type QuizModalProperties = {
 const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen }) => {
     const questions = [
         {
-            positiveReferencedAnswers: ["geography_priority", "institution_priority"],
-            negativeReferencedAnswers: [],
-            question: "Hvor vigtigt er det for dig, at du studerer tæt på din nuværende bopæl?",
-        },
-        {
             positiveReferencedAnswers: ["subjects_priority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at uddannelsens faglige indhold er spændende?",
+        },
+        {
+            positiveReferencedAnswers: ["industries_priority"],
+            negativeReferencedAnswers: [],
+            question: "Hvor vigtigt er det for dig, at uddanelsen passer til dine ønskede brancher?",
         },
         {
             positiveReferencedAnswers: ["social_environment_priority", "group_engagement_priority"],
