@@ -1,9 +1,16 @@
 import * as fs from "fs"
+import axios from 'axios';
+
 import { Education } from "../../src/types"
 import * as csvParse from 'csv-parse'
 import { CountyToGeography, County, Institution } from "../../src/enums";
 
 const header = ["Titel"];
+
+const csvURL = "https://ufm.dk/uddannelse/statistik-og-analyser/uddannelseszoom/ufm_samlet_23mar2024.csv";
+const csvFilePath = "../../src/education-csv.csv";
+
+const tsObjectWritePath = "../../src/debug/tsObject.ts"
 
 const parseOptions: csvParse.Options = {
     columns: true,
@@ -120,10 +127,26 @@ function removeDuplicates(educations: Education[]) {
     // TODO: Lav en ting der fikser når der er flere ens uddannelser så de skal kombineres.
 }
 
-export function import_csv(CSVReadPath, WritePath) {
+export function importCSV(WritePath = tsObjectWritePath, CSVReadPath = csvFilePath): Education[] {
+    
     var educations: Education[] = [];
     const file = fs.readFileSync(CSVReadPath, 'utf-8');
     
     educations = csvParser(file);
     fs.writeFileSync(WritePath, `import { Education } from "../../src/types"\nimport { CountyToGeography, County, Institution } from "../../src/enums"\n\nexport let educations: Education[] = ${JSON.stringify(educations, null, 4)};\n`);
+    return educations;
 } 
+
+async function downloadFile(url: string, filePath: string) {
+    try {
+        const response = await axios.get(url, { responseType: 'arraybuffer' });
+        fs.writeFileSync(filePath, response.data);
+        console.log("File downloaded successfully!");
+    } catch (error) {
+        console.error("Error downloading file:", error);
+    }
+}
+
+export const GetCSVFromURL = async () =>{
+    await downloadFile(csvURL, csvFilePath)
+}

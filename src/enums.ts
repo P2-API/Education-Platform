@@ -261,3 +261,13 @@ export enum County {
     "Ukendt" = 1000,
     "Uoplyst" = 1000,
 }
+
+export enum Subject{
+    "Matematik" = 1,
+    "Dansk" = 2,
+    "Fysik" = 3,
+    "Kemi" = 4,
+    "Biologi" = 5,
+    "Historie" = 6,
+    "Idræt" = 7,
+}

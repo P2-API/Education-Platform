@@ -37,14 +37,11 @@ type MinimumDistanceSliderProps = {
     initialState: MinimumMaximum;
     sliderRange: MinimumMaximum;
     minimumDistance: number;
-}
-
-
-function valuetext(value: number) {
-    return `${value} months`;
+    description: string;
+    getValueText: (value: number) => string;
 }
   
-export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({initialState, sliderRange, minimumDistance}) => {
+export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({initialState, sliderRange, minimumDistance, description, getValueText}) => {
     const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
 
     const handleChange1 = (
@@ -66,13 +63,14 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ini
 
     return (
         <Box sx={{ width: 300 }}>
-            <p>Filter efter uddannelsesvarighed i måneder</p>
+            <p>{description}</p>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
                 value={value1}
                 onChange={handleChange1}
                 valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
+                getAriaValueText={getValueText}
+                valueLabelFormat={getValueText}
                 disableSwap
                 min={sliderRange.minimum}
                 max={sliderRange.maximum}

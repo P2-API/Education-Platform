@@ -47,21 +47,36 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen, p
     });
 
     const educationDurationRange: MinimumMaximum = {minimum: educationDurationMin, maximum: educationDurationMax};
+    const getValueTextDuration = (value: number) => {return `${value} måneder`;}
 
     // Possible Educations
-    let newGraduateSalaryMin = possibleEducations[0].job_data.salaries.newGraduate.lower_quartile;
-    let experiencedSalaryMin = possibleEducations[0].job_data.salaries.experienced.lower_quartile;
-    let newGraduateSalaryMax = possibleEducations[0].job_data.salaries.newGraduate.upper_quartile;
-    let experiencedSalaryMax = possibleEducations[0].job_data.salaries.experienced.upper_quartile;
-    possibleEducations.forEach((education) =>{
-        newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.job_data.salaries.newGraduate.lower_quartile);
-        experiencedSalaryMin = Math.min(experiencedSalaryMin, education.job_data.salaries.experienced.lower_quartile);
-        newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.job_data.salaries.newGraduate.upper_quartile);
-        experiencedSalaryMax = Math.max(experiencedSalaryMax, education.job_data.salaries.experienced.upper_quartile);
-    });
+    let newGraduateSalaryMin: number;
+    let experiencedSalaryMin: number;
+    let newGraduateSalaryMax: number;
+    let experiencedSalaryMax: number;
 
-    const newGraduateSalaryRange: MinimumMaximum = {minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax};
-    const experiencedSalaryRange: MinimumMaximum = {minimum: experiencedSalaryMin, maximum: experiencedSalaryMax};
+    let newGraduateSalaryRange: MinimumMaximum = {minimum: -1, maximum: -1};
+    let experiencedSalaryRange: MinimumMaximum = {minimum: -1, maximum: -1};
+
+    if (possibleEducations.length > 0) {
+        newGraduateSalaryMin = possibleEducations[0].job_data.salaries.newGraduate.lower_quartile;
+        experiencedSalaryMin = possibleEducations[0].job_data.salaries.experienced.lower_quartile;
+        newGraduateSalaryMax = possibleEducations[0].job_data.salaries.newGraduate.upper_quartile;
+        experiencedSalaryMax = possibleEducations[0].job_data.salaries.experienced.upper_quartile;
+        possibleEducations.forEach((education) =>{
+            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.job_data.salaries.newGraduate.lower_quartile);
+            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.job_data.salaries.experienced.lower_quartile);
+            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.job_data.salaries.newGraduate.upper_quartile);
+            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.job_data.salaries.experienced.upper_quartile);
+        });
+        newGraduateSalaryRange = {minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax};
+        experiencedSalaryRange = {minimum: experiencedSalaryMin, maximum: experiencedSalaryMax};
+    }
+    
+    const getValueTextSalary = (value: number) => {return `${value}k kr.`}
+
+    // Misc
+
 
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>
@@ -80,7 +95,32 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef, setIsModalOpen, p
                             <MultiSelectAutoComplete collection={degreeTypesString} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype"/>
                             <MultiSelectAutoComplete collection={institutesString} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted"/>
                             <MultiSelectAutoComplete collection={geographiesString} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune"/>
-                            <MinimumDistanceSlider initialState={educationDurationRange} sliderRange={educationDurationRange} minimumDistance={1}/>
+                            <MultiSelectAutoComplete collection={geographiesString} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune"/>
+                            <MinimumDistanceSlider 
+                                initialState={educationDurationRange} 
+                                sliderRange={educationDurationRange} 
+                                minimumDistance={1} 
+                                description="Filtrer efter uddannelsesvarighed i måneder" 
+                                getValueText={getValueTextDuration}
+                            />
+                            {(possibleEducations.length > 0) &&(
+                                <MinimumDistanceSlider
+                                    initialState={newGraduateSalaryRange}
+                                    sliderRange={newGraduateSalaryRange}
+                                    minimumDistance={1}
+                                    description="Filtrer efter nyuddannedes løn i tusinde"
+                                    getValueText={getValueTextSalary}
+                                />
+                            )}
+                            {(possibleEducations.length > 0) &&(
+                                <MinimumDistanceSlider
+                                    initialState={experiencedSalaryRange}
+                                    sliderRange={experiencedSalaryRange}
+                                    minimumDistance={1}
+                                    description="Filtrer efter erfarenes løn i tusinde"
+                                    getValueText={getValueTextSalary}
+                                />
+                            )}
                             
                             <p>Filter efter uddannelsesstart</p>
                             <p>Filter efter uddannelsesform</p>
