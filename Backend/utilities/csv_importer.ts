@@ -147,6 +147,7 @@ async function downloadFile(url: string, filePath: string) {
     }
 }
 
-export const GetCSVFromURL = async () =>{
-    await downloadFile(csvURL, csvFilePath)
+export const GetEducationsOnServerStart = (): Education[] =>{
+    downloadFile(csvURL, csvFilePath);
+    return importCSV()
 }

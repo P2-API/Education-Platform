@@ -2,14 +2,13 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
 import { Education } from "../../src/types"
-import { GetCSVFromURL, importCSV } from '../utilities/csv_importer';
+import { GetEducationsOnServerStart, importCSV } from '../utilities/csv_importer';
 
 const server: Express = express();
 
 const PORT = 1337;
 
-await GetCSVFromURL();
-export const educations: Education[] = importCSV();
+export const educations: Education[] = GetEducationsOnServerStart();
 
 
 
@@ -24,7 +23,7 @@ server.get("/server", (request: Request, response: Response) => {
 });
 
 server.get("/get_educations", (request: Request, response: Response) =>{
-    
+
 })
 
 server.listen(PORT, () => { 
