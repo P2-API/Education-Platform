@@ -8,9 +8,14 @@ const server: Express = express();
 
 const PORT = 1337;
 
-export const educations: Education[] = GetEducationsOnServerStart();
 
 
+let educations: Education[];
+const getEducations = async () =>{
+    educations = await GetEducationsOnServerStart()
+}
+
+getEducations();
 
 server.use(cors()); // Enable CORS
 

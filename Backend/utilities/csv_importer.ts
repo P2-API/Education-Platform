@@ -8,9 +8,9 @@ import { CountyToGeography, County, Institution } from "../../src/enums";
 const header = ["Titel"];
 
 const csvURL = "https://ufm.dk/uddannelse/statistik-og-analyser/uddannelseszoom/ufm_samlet_23mar2024.csv";
-const csvFilePath = "../../src/education-csv.csv";
+const csvFilePath = "./src/education-csv.csv";
 
-const tsObjectWritePath = "../../src/debug/tsObject.ts"
+const tsObjectWritePath = "./src/debug/tsObject.ts"
 
 const parseOptions: csvParse.Options = {
     columns: true,
@@ -147,7 +147,7 @@ async function downloadFile(url: string, filePath: string) {
     }
 }
 
-export const GetEducationsOnServerStart = (): Education[] =>{
-    downloadFile(csvURL, csvFilePath);
+export const GetEducationsOnServerStart = async (): Promise<Education[]> =>{
+    await downloadFile(csvURL, csvFilePath);
     return importCSV()
 }
