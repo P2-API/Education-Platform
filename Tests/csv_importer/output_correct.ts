@@ -34,12 +34,14 @@ export let educations: Education[] = [
             "withFewStudents": 36,
             "withSupervision": 103
         },
-        "student_feedback": {
+        "social_feedback": {
             "socialEnvironment": 4.35,
-            "academicEnvironment": 4.3,
             "groupEngagement": 4.3,
             "loneliness": 3.56,
             "stress": 3.44,
+        },
+        "academic_feedback": {
+            "academicEnvironment": 4.3,
             "teacherEvaluation": 3.8775,
             "satisfaction": 4.28
         },
@@ -130,12 +132,14 @@ export let educations: Education[] = [
             "withFewStudents": 112,
             "withSupervision": 0
         },
-        "student_feedback": {
+        "social_feedback": {
             "socialEnvironment": 3.7,
-            "academicEnvironment": 3.97,
             "groupEngagement": 3.49,
             "loneliness": 3.26,
             "stress": 3.59,
+        },
+        "academic_feedback": {
+            "academicEnvironment": 3.97,
             "teacherEvaluation": 3.99,
             "satisfaction": 3.92
         },
@@ -226,12 +230,14 @@ export let educations: Education[] = [
             "withFewStudents": 124,
             "withSupervision": 8
         },
-        "student_feedback": {
+        "social_feedback": {
             "socialEnvironment": 4.02,
-            "academicEnvironment": 4.07,
             "groupEngagement": 4.03,
             "loneliness": 3.52,
             "stress": 3.64,
+        },
+        "academic_feedback": {
+            "academicEnvironment": 4.07,
             "teacherEvaluation": 4.1375,
             "satisfaction": 4.24
         },
