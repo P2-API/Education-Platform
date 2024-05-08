@@ -26,8 +26,8 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
 
     return (
 
-        <div style={{ display: "flex", height: "80vh" }}>
-            <div style={{ width: "402px", height: "100%", minWidth: "402px", marginRight: "1em" }}>
+        <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
+            <div style={{ width: "30%", height: "100%", minWidth: "402px", marginRight: "1em" }}>
                 <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
                     <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                         <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre (scroll ned)</h2>

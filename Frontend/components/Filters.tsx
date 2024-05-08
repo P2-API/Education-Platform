@@ -64,7 +64,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
 
     return (
         <Box sx={{}}>
-            <p style={{ marginBottom: 0 }}  >{description}</p>
+            <p style={{}}  >{description}</p>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
                 value={value1}
@@ -72,7 +72,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
                 valueLabelDisplay="auto"
                 getAriaValueText={getValueText}
                 valueLabelFormat={getValueText}
-                sx={{ width: "95%", marginX: "0.5em" }}
+                sx={{ width: "94.5%", marginLeft: "10px" }}
                 disableSwap
                 min={sliderRange.minimum}
                 max={sliderRange.maximum}
