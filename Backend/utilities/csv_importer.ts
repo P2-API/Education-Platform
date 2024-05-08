@@ -30,7 +30,7 @@ function csvParser(csvData: string): Education[] {
             "url": values[2],
             "rank": null,
             "title": values[4],
-            "degree_type": values[6],
+            "degreeType": values[6],
             "counties": [County[values[11]]],
             "geographies": [CountyToGeography(County[values[11]])],
             "institutions": Institution[values[9]],
@@ -63,23 +63,23 @@ function csvParser(csvData: string): Education[] {
                 teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
             },*/
-            social_feedback: {
+            socialFeedback: {
                 socialEnvironment: Number(String(values[70]).replace(",", ".")),
                 groupEngagement: Number(String(values[62]).replace(",", ".")),
                 loneliness: Number(String(values[112]).replace(",", ".")),
                 stress: Number(String(values[121]).replace(",", "."))
             },
-            academic_feedback: {
+            academicFeedback: {
                 academicEnvironment: Number(String(values[58]).replace(",", ".")),
                 teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
             },
-            academic_workload: {
+            academicWorkload: {
                 lectures: Number(String(values[72]).replace(",", ".")),
                 literature: Number(String(values[74]).replace(",", ".")),
                 studentJob: Number(String(values[76]).replace(",", "."))
             },
-            degree_structure: {
+            degreeStructure: {
                 contents: {
                     teaching: Number(String(values[85]).replace(",", ".")),
                     exams: Number(String(values[81]).replace(",", ".")),
@@ -94,7 +94,7 @@ function csvParser(csvData: string): Education[] {
                     values[108]
                 ]
             },
-            dropout_rate: Number(values[16]),
+            dropoutRate: Number(values[16]),
             job_data: {
                 salaries: {
                     newGraduate: {
