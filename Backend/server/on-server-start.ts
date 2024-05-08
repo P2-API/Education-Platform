@@ -6,12 +6,12 @@ import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../
 let educations: Education[] = [];
 
 export const onStart = () => {
-    console.log("onStart");
+    //console.log("onStart");
     cacheEducations();    
 }
 
 const cacheEducations = async () => {
-    console.log("cacheEducations");
+    //console.log("cacheEducations");
     educations = await GetEducationsOnServerStart();
     caclulateBasedOnEducations();
 }
@@ -21,7 +21,7 @@ export const getCachedEducations = (): Education[] => {
 }
 
 const caclulateBasedOnEducations = () => {
-    console.log("caclulateBasedOnEducations");
+    //console.log("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
     calculateMinMaxDegreeDuration();
@@ -41,7 +41,7 @@ let geographies: Geography[];
 let geographiesString: string[];
 
 const caclulateEnumTypes = () => {
-    console.log("calculateEnumTypes");
+    //console.log("calculateEnumTypes");
 
     degreeTypeKeys = Object.keys(DegreeType).filter(key => isNaN(Number(key))) as (keyof typeof DegreeType)[];
     degreeTypes = degreeTypeKeys.map(key => DegreeType[key]);
@@ -95,7 +95,7 @@ export const getGeographiesAsString = (): string[] => {
 let educationDurationRange: MinimumMaximum;
 
 const calculateMinMaxDegreeDuration = () => {
-    console.log("caclulateMinMaxDegreeDuration");
+    //console.log("caclulateMinMaxDegreeDuration");
 
     let educationDurationMin = DegreeTypeToDuration(degreeTypes[0]).minimum;
     let educationDurationMax = DegreeTypeToDuration(degreeTypes[0]).maximum;
@@ -117,7 +117,7 @@ let newGraduateSalaryRange: MinimumMaximum;
 let experiencedSalaryRange: MinimumMaximum;
 
 const calclulateSalaryRanges = () => {
-    console.log("calculateSalaryRanges");
+    //console.log("calculateSalaryRanges");
 
     let newGraduateSalaryMin = 0 //educations[0].job_data.salaries.newGraduate.lower_quartile;
     let experiencedSalaryMin = 0 //educations[0].job_data.salaries.experienced.lower_quartile;
