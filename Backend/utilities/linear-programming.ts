@@ -6,9 +6,11 @@ export class LPclass implements LP{
   name: string;
   objective: Types.objectiveType;
   subjectTo: Types.SubjectToType;
+  solverInstance: GLPK;
   constructor(solver:GLPK){
+    this.solverInstance = solver;
     this.name = "Optimal education";
-    this.objective = {direction: solver.GLP_MAX, name: "Optimal Education", vars: []};
+    this.objective = {direction: this.solverInstance.GLP_MAX, name: "Optimal Education", vars: []};
     this.subjectTo = [];
   }
   addObjectiveFunction(quizAnswers:Types.QuizAnswers, filters:Types.TableFilters):void{
@@ -57,8 +59,14 @@ export class LPclass implements LP{
                   {name: "workNationally", coef:quizAnswers.workNationallyPriority})
   
   }
-  addConstraints(filters:Types.TableFilters):void{
-    
+  addConstraints(filters:Types.TableFilters):void{ // normalized values are between 0 and 1 are assumed
+    // default filters
+    this.objective.vars.forEach((variable)=>{
+      this.subjectTo.push({name:variable.name,vars:[{name:variable.name, coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:1, lb:0}})
+    })
+    // user defined LP filters
+    this.subjectTo.push({name:"startingSalary", vars:[{name:"startingSalary", coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:filters.wantedSalary.newGraduate.maximum, lb:filters.wantedSalary.newGraduate.minimum}})
+    //!!!implementations of remaining filters are missing!!!//
   }
 }
 
