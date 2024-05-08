@@ -142,7 +142,35 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
     ]
 
 
-    const [quizAnswerState, SetQuizAnwerState] = React.useState<QuizAnswers>();
+    const [quizAnswerState, SetQuizAnwerState] = React.useState<QuizAnswers>(
+        {
+            subjects_priority: 0,
+            industries_priority: 0,
+            social_environment_priority: 0,
+            group_engagement_priority: 0,
+            loneliness_priority: 0,
+            academic_environment_priority: 0,
+            stress_priority: 0,
+            high_workload_acceptance_priority: 0,
+            student_job_priority: 0,
+            teaching_priority: 0,
+            lectures_priority: 0,
+            literature_priority: 0,
+            dislike_exam_priority: 0,
+            internship_priority: 0,
+            international_stay_priority: 0,
+            work_nationally_priority: 0,
+            starting_salary_priority: 0,
+            experienced_salary_priority: 0,
+            unemployment_priority: 0,
+            degree_relevance_priority: 0,
+            flexible_hours_priority: 0,
+            self_schedule_priority: 0,
+            fixed_hours_priority: 0,
+            variable_schedule_priority: 0,
+            night_and_evening_shifts_priority: 0,
+        }
+    );
 
     const HandlePrevQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex - 1)
@@ -194,7 +222,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                     UddannelsesQuiz
                                 </Typography>
                                 <Typography variant="h6" component="h3" mt={2}>
-                                    {"Question " + (currentQuestionIndex + 1)} 
+                                    {"Question " + (currentQuestionIndex + 1)}
                                 </Typography>
                                 <Typography mt={1}>
                                     {currentQuestion.question}
@@ -210,9 +238,9 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                     valueLabelDisplay="auto"
                                 />
                                 <div style={{ display: 'flex', gap: '2em', justifyContent: 'center' }}>
-                                    <Button variant='contained' onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
+                                    <button className='primary-button-blue' onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
                                         Tilbage
-                                    </Button>
+                                    </button>
                                     <Button variant='contained' onClick={HandleNextQuestion}>
                                         {currentQuestionIndex === questions.length - 1 ? 'Afslut quiz' : 'Næste'}
                                     </Button>

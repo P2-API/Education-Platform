@@ -45,6 +45,39 @@ body {
   color: #ffffff;
   cursor: pointer;
 }
+.primary-button-blue {
+  border-radius: 0.5em;
+  border: none;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background: linear-gradient(180deg, #006eff 10%, #4242cb 100%);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.primary-button-blue:hover {
+  background: linear-gradient(180deg, #006eff 10%, #4242cb 100%);
+}
+
+.primary-button-blue:active {
+  scale: 0.99;
+}
+
+.primary-button-blue:disabled {
+  background: linear-gradient(180deg, rgb(147, 141, 141) 10%, #a09e9e 100%);
+  cursor: default;
+}
+
+.primary-button-blue:disabled:hover {
+  background: linear-gradient(180deg, rgb(147, 141, 141) 10%, #a09e9e 100%);
+}
+
+.primary-button-blue:disabled:active {
+  scale: 1;
+}
+
 
 .red-button {
   background: linear-gradient(180deg, rgb(209, 41, 41) 10%, #c00808 100%);
@@ -72,6 +105,7 @@ body {
   scale: 0.99;
 
 }
+
 
 .red-button:hover {
   background: linear-gradient(180deg, rgb(153, 39, 39) 10%, #9a0707 100%);

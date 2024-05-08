@@ -120,45 +120,45 @@ export type Education = {
 
 export type QuizAnswers = {
 
-    subjects_priority?: number; // in use
+    subjects_priority: number; // in use
 
-    industries_priority?: number; // in use
+    industries_priority: number; // in use
 
-    academic_environment_priority?: number; // in use
+    academic_environment_priority: number; // in use
 
-    social_environment_priority?: number; // in use
-    group_engagement_priority?: number; // in use
-    loneliness_priority?: number; // in use 
+    social_environment_priority: number; // in use
+    group_engagement_priority: number; // in use
+    loneliness_priority: number; // in use 
 
-    stress_priority?: number; // in use 
-    high_workload_acceptance_priority?: number; // in use
+    stress_priority: number; // in use 
+    high_workload_acceptance_priority: number; // in use
 
-    student_job_priority?: number; // in use
+    student_job_priority: number; // in use
 
-    lectures_priority?: number; // in use
-    literature_priority?: number; // in use
-    teaching_priority?: number; // in use
+    lectures_priority: number; // in use
+    literature_priority: number; // in use
+    teaching_priority: number; // in use
 
-    dislike_exam_priority?: number; // in use
+    dislike_exam_priority: number; // in use
 
-    internship_priority?: number; // in use 
+    internship_priority: number; // in use 
 
-    international_stay_priority?: number; // in use
-    work_nationally_priority?: number; // in use
+    international_stay_priority: number; // in use
+    work_nationally_priority: number; // in use
 
-    starting_salary_priority?: number; // in use
-    experienced_salary_priority?: number; // in use
+    starting_salary_priority: number; // in use
+    experienced_salary_priority: number; // in use
 
-    unemployment_priority?: number; // in use
+    unemployment_priority: number; // in use
 
-    degree_relevance_priority?: number; // in use
+    degree_relevance_priority: number; // in use
 
-    fixed_hours_priority?: number; // in use
-    flexible_hours_priority?: number; // in use
-    self_schedule_priority?: number; // in use 
-    variable_schedule_priority?: number; // in use
+    fixed_hours_priority: number; // in use
+    flexible_hours_priority: number; // in use
+    self_schedule_priority: number; // in use 
+    variable_schedule_priority: number; // in use
 
-    night_and_evening_shifts_priority?: number; // in use 
+    night_and_evening_shifts_priority: number; // in use 
 }
 
 export type MinimumMaximum = {
