@@ -7,7 +7,7 @@ let educations: Education[] = [];
 
 export const onStart = () => {
     //console.log("onStart");
-    cacheEducations();    
+    cacheEducations();
 }
 
 const cacheEducations = async () => {
@@ -106,7 +106,7 @@ const calculateMinMaxDegreeDuration = () => {
             educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
         }
     });
-    educationDurationRange = {minimum: educationDurationMin, maximum: educationDurationMax}
+    educationDurationRange = { minimum: educationDurationMin, maximum: educationDurationMax }
 }
 
 const getEducationDurationRange = (): MinimumMaximum => {
@@ -124,19 +124,19 @@ const calclulateSalaryRanges = () => {
     let newGraduateSalaryMax = 0 //educations[0].job_data.salaries.newGraduate.upper_quartile;
     let experiencedSalaryMax = 0 //educations[0].job_data.salaries.experienced.upper_quartile;
 
-    
+
 
     educations.forEach((education) => {
-        const salaries = education.job_data.salaries;
-        if ((Number.isNaN(salaries.newGraduate.lower_quartile) 
-            || Number.isNaN(salaries.newGraduate.upper_quartile)
-            || Number.isNaN(salaries.experienced.lower_quartile)
-            || Number.isNaN(salaries.experienced.upper_quartile)) == false        
-        ){
-            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.job_data.salaries.newGraduate.lower_quartile);
-            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.job_data.salaries.experienced.lower_quartile);
-            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.job_data.salaries.newGraduate.upper_quartile);
-            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.job_data.salaries.experienced.upper_quartile);            
+        const salaries = education.jobData.salaries;
+        if ((Number.isNaN(salaries.newGraduate.lowerQuartile)
+            || Number.isNaN(salaries.newGraduate.upperQuartile)
+            || Number.isNaN(salaries.experienced.lowerQuartile)
+            || Number.isNaN(salaries.experienced.upperQuartile)) == false
+        ) {
+            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.jobData.salaries.newGraduate.lowerQuartile);
+            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.jobData.salaries.experienced.lowerQuartile);
+            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.jobData.salaries.newGraduate.upperQuartile);
+            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.jobData.salaries.experienced.upperQuartile);
         }
     });
     newGraduateSalaryRange = { minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax };

@@ -477,7 +477,7 @@ const MaterialReactDataTable = () => {
 
     },
     enableRowVirtualization: true,
-    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px" } },
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 8 }, //optionally customize the row virtualizer

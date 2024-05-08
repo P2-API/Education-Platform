@@ -8,6 +8,7 @@ import { TableSectionDataFromServer } from "types";
 // Step 2: Create a context
 
 const TableSectionDataContext = createContext<TableSectionDataFromServer | undefined>(undefined);
+
 export { TableSectionDataContext };
 
 const Homepage = () => {
@@ -29,6 +30,9 @@ const Homepage = () => {
   console.log("rendering");
 
   // Step 3: Wrap the components with Context.Provider
+
+  console.log("data", data)
+
   return (
     <TableSectionDataContext.Provider value={data}>
       <HeroSection tableRef={tableRef} />

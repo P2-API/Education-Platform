@@ -20,6 +20,10 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
 
     const data = useContext(TableSectionDataContext);
 
+    if (!data) {
+        return <div>Loading...</div>;
+    }
+
     return (
 
         <div style={{ display: "flex", padding: "1em", height: "80%" }}>
@@ -30,37 +34,34 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                         <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                     </div>
                     <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%" }}>
-                        {(data != undefined) && (
-                            <>
-                                <MultiSelectAutoComplete collection={data?.degreeTypesString} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype" />
-                                <MultiSelectAutoComplete collection={data?.institutesString} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted" />
-                                <MultiSelectAutoComplete collection={data?.geographiesString} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
-                                <MultiSelectAutoComplete collection={data?.geographiesString} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
-                                <MinimumDistanceSlider
-                                    initialState={data?.educationDurationRange}
-                                    sliderRange={data?.educationDurationRange}
-                                    minimumDistance={1}
-                                    description="Filtrer efter uddannelsesvarighed i måneder"
-                                    getValueText={getValueTextDuration}
-                                />
-                                <MinimumDistanceSlider
-                                    initialState={data?.newGraduateSalaryRange}
-                                    sliderRange={data?.newGraduateSalaryRange}
-                                    minimumDistance={1}
-                                    description="Filtrer efter nyuddannedes løn i tusinde"
-                                    getValueText={getValueTextSalary}
-                                />
+                        <>
+                            <MultiSelectAutoComplete collection={data?.degreeTypesString ?? []} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype" />
+                            <MultiSelectAutoComplete collection={data?.institutesString ?? []} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted" />
+                            <MultiSelectAutoComplete collection={data?.geographiesString ?? []} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
+                            <MultiSelectAutoComplete collection={data?.geographiesString ?? []} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
+                            <MinimumDistanceSlider
+                                initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
+                                sliderRange={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
+                                minimumDistance={1}
+                                description="Filtrer efter uddannelsesvarighed i måneder"
+                                getValueText={getValueTextDuration}
+                            />
+                            <MinimumDistanceSlider
+                                initialState={data?.newGraduateSalaryRange ?? { minimum: 0, maximum: 0 }}
+                                sliderRange={data?.newGraduateSalaryRange ?? { minimum: 0, maximum: 0 }}
+                                minimumDistance={1}
+                                description="Filtrer efter nyuddannedes løn i tusinde"
+                                getValueText={getValueTextSalary}
+                            />
 
-                                <MinimumDistanceSlider
-                                    initialState={data?.experiencedSalaryRange}
-                                    sliderRange={data?.experiencedSalaryRange}
-                                    minimumDistance={1}
-                                    description="Filtrer efter erfarenes løn i tusinde"
-                                    getValueText={getValueTextSalary}
-                                />
-                            </>
-
-                        )}
+                            <MinimumDistanceSlider
+                                initialState={data?.experiencedSalaryRange ?? { minimum: 0, maximum: 0 }}
+                                sliderRange={data?.experiencedSalaryRange ?? { minimum: 0, maximum: 0 }}
+                                minimumDistance={1}
+                                description="Filtrer efter erfarenes løn i tusinde"
+                                getValueText={getValueTextSalary}
+                            />
+                        </>
 
                         <p>Filter efter uddannelsesstart</p>
                         <p>Filter efter uddannelsesform</p>
