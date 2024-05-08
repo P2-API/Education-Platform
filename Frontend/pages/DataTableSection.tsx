@@ -26,14 +26,14 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
 
     return (
 
-        <div style={{ display: "flex", padding: "1em", height: "80%" }}>
-            <div style={{ width: "30%", height: "100%", minWidth: "302px" }}>
-                <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, overflowY: "scroll" }}>
+        <div style={{ display: "flex", height: "80vh" }}>
+            <div style={{ width: "402px", height: "100%", minWidth: "402px", marginRight: "1em" }}>
+                <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
                     <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                         <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre (scroll ned)</h2>
                         <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                     </div>
-                    <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%" }}>
+                    <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
                         <>
                             <MultiSelectAutoComplete collection={data?.degreeTypesString ?? []} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype" />
                             <MultiSelectAutoComplete collection={data?.institutesString ?? []} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted" />

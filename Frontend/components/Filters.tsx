@@ -14,11 +14,12 @@ type MultiSelectAutoCompleteProps = {
 }
 
 export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder }) => {
-    
-    return(
+
+    return (
         <Autocomplete
             multiple
             id="tags-outlined"
+            sx={{ width: "100%" }}
             options={collection}
             getOptionLabel={(option) => option.toString()}
             filterSelectedOptions
@@ -40,8 +41,8 @@ type MinimumDistanceSliderProps = {
     description: string;
     getValueText: (value: number) => string;
 }
-  
-export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({initialState, sliderRange, minimumDistance, description, getValueText}) => {
+
+export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, minimumDistance, description, getValueText }) => {
     const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
 
     const handleChange1 = (
@@ -49,21 +50,21 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ini
         newValue: number | number[],
         activeThumb: number,
     ) => {
-    if (!Array.isArray(newValue)) {
-        return;
-    }
+        if (!Array.isArray(newValue)) {
+            return;
+        }
 
-    if (activeThumb === 0) {
-        setValue1([Math.min(newValue[0], value1[1] - minimumDistance), value1[1]]);
-    } 
-    else {
-        setValue1([value1[0], Math.max(newValue[1], value1[0] + minimumDistance)]);
-    }
+        if (activeThumb === 0) {
+            setValue1([Math.min(newValue[0], value1[1] - minimumDistance), value1[1]]);
+        }
+        else {
+            setValue1([value1[0], Math.max(newValue[1], value1[0] + minimumDistance)]);
+        }
     };
 
     return (
-        <Box sx={{ width: 300 }}>
-            <p>{description}</p>
+        <Box sx={{}}>
+            <p style={{ marginBottom: 0 }}  >{description}</p>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
                 value={value1}
@@ -71,6 +72,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ini
                 valueLabelDisplay="auto"
                 getAriaValueText={getValueText}
                 valueLabelFormat={getValueText}
+                sx={{ width: "95%", marginX: "0.5em" }}
                 disableSwap
                 min={sliderRange.minimum}
                 max={sliderRange.maximum}

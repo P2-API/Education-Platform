@@ -55,10 +55,10 @@ export default function BasicTabs(props: TabsProps) {
 
 
     return (
-        <Box sx={{ width: '100%', padding: 0 }}>
+        <Box sx={{ width: '100%', height: "100%", padding: 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "center", paddingTop: "58px" }}>
-                <Tabs sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px" }} label="Uddannelser" {...a11yProps(0)} />
+                <Tabs sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px", height: "100%" }} label="Uddannelser" {...a11yProps(0)} />
                     <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px" }} label="Visualisering" {...a11yProps(1)} />
                 </Tabs>
             </Box>
