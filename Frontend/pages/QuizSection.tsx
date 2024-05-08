@@ -241,9 +241,9 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                     <button className='primary-button-blue' onClick={HandlePrevQuestion} disabled={currentQuestionIndex == 0}>
                                         Tilbage
                                     </button>
-                                    <Button variant='contained' onClick={HandleNextQuestion}>
+                                    <button className='primary-button-blue' onClick={HandleNextQuestion}>
                                         {currentQuestionIndex === questions.length - 1 ? 'Afslut quiz' : 'Næste'}
-                                    </Button>
+                                    </button>
                                 </div>
 
                             </div>
