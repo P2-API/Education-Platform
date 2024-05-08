@@ -30,12 +30,15 @@ type HoursSpentDoing = {
     withSupervision: number;
 }
 
-type StudentFeedback = {
+type SocialFeedback = {
     socialEnvironment: number;
-    academicEnvironment: number;
     groupEngagement: number;
     loneliness: number;
     stress: number;
+}
+
+type AcademicFeedback = {
+    academicEnvironment: number;
     teacherEvaluation: number;
     satisfaction: number;
 }
@@ -100,13 +103,14 @@ export type Education = {
     rank: number | null;
     title: string;
     degree_type: string; // filter = wantedDegreeTypes: string[];
-    counties: County[]; 
+    counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
     subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority?: number;
     industries: Industry[]; // LP filter = hasIndustries: string[];
     hours: HoursSpentDoing; // Filter / Quiz 
-    student_feedback: StudentFeedback; // quiz
+    social_feedback: SocialFeedback;
+    academic_feedback: AcademicFeedback; // quiz
     academic_workload: AcademicWorkload; // quiz
     degree_structure: DegreeStructure; // quiz
     dropout_rate: number;
@@ -115,8 +119,8 @@ export type Education = {
 
 
 export type QuizAnswers = {
- 
-    subjects_priority?: number; 
+
+    subjects_priority?: number;
 
     industries_priority?: number;
 
@@ -179,7 +183,7 @@ export type TableFilters = {
     wantedDegreeTypes: string[];
     canStudyInGeoraphies: Geography[];
     canStudyAtInstitution: Institution[];
-    hasSubjects: string[]; 
+    hasSubjects: string[];
     hasIndustries: string[];
     hasFormsOfEducation: string[];
     acceptableDropOutRate: number;
@@ -200,7 +204,7 @@ export type objectiveType = {
     direction: number,
     name: string,
     vars: { name: string, coef: number }[]
-} 
+}
 
 export type SubjectToType = {
     name: string,
