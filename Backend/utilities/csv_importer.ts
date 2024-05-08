@@ -10,6 +10,7 @@ const header = ["Titel"];
 const csvURL = "https://ufm.dk/uddannelse/statistik-og-analyser/uddannelseszoom/ufm_samlet_23mar2024.csv";
 const csvFilePath = "./src/education-csv.csv";
 
+// File path for writing not being used anymore
 const tsObjectWritePath = "./src/debug/tsObject.ts"
 
 const parseOptions: csvParse.Options = {
@@ -53,7 +54,7 @@ function csvParser(csvData: string): Education[] {
                 withFewStudents: Number(values[20]),
                 withSupervision: Number(values[21])
             },
-            "student_feedback": {
+            /*"student_feedback": {
                 socialEnvironment: Number(String(values[70]).replace(",", ".")),
                 academicEnvironment: Number(String(values[58]).replace(",", ".")),
                 groupEngagement: Number(String(values[62]).replace(",", ".")),
@@ -61,8 +62,19 @@ function csvParser(csvData: string): Education[] {
                 stress: Number(String(values[121]).replace(",", ".")),
                 teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
+            },*/
+            social_feedback: {
+                socialEnvironment: Number(String(values[70]).replace(",", ".")),
+                groupEngagement: Number(String(values[62]).replace(",", ".")),
+                loneliness: Number(String(values[112]).replace(",", ".")),
+                stress: Number(String(values[121]).replace(",", "."))
             },
-            "academic_workload": {
+            academic_feedback: {
+                academicEnvironment: Number(String(values[58]).replace(",", ".")),
+                teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
+                satisfaction: Number(String(values[130]).replace(",", "."))
+            },
+            academic_workload: {
                 lectures: Number(String(values[72]).replace(",", ".")),
                 literature: Number(String(values[74]).replace(",", ".")),
                 studentJob: Number(String(values[76]).replace(",", "."))
@@ -127,13 +139,13 @@ function removeDuplicates(educations: Education[]) {
     // TODO: Lav en ting der fikser når der er flere ens uddannelser så de skal kombineres.
 }
 
-export function importCSV(WritePath = tsObjectWritePath, CSVReadPath = csvFilePath): Education[] {
+export function importCSV(/*WritePath = tsObjectWritePath,*/ CSVReadPath = csvFilePath): Education[] {
     
     var educations: Education[] = [];
     const file = fs.readFileSync(CSVReadPath, 'utf-8');
     
     educations = csvParser(file);
-    fs.writeFileSync(WritePath, `import { Education } from "../../src/types"\nimport { CountyToGeography, County, Institution } from "../../src/enums"\n\nexport let educations: Education[] = ${JSON.stringify(educations, null, 4)};\n`);
+    //fs.writeFileSync(WritePath, `import { Education } from "../../src/types"\nimport { CountyToGeography, County, Institution } from "../../src/enums"\n\nexport let educations: Education[] = ${JSON.stringify(educations, null, 4)};\n`);
     return educations;
 } 
 

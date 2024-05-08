@@ -107,16 +107,17 @@ export type Education = {
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
     subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority?: number;
-    industries: Industry[]; // LP filter = hasIndustries: string[];
-    hours: HoursSpentDoing; // Filter / Quiz 
-    social_feedback: SocialFeedback;
-    academic_feedback: AcademicFeedback; // quiz
-    academic_workload: AcademicWorkload; // quiz
-    degree_structure: DegreeStructure; // quiz
-    dropout_rate: number;
-    job_data: JobData;
+    industries: Industry[]; // LP filter = hasIndustries: string[]; Quiz = industries_priority?: number;
+    hours: HoursSpentDoing; // quiz = high_workload_acceptance_priority?: number; 
+    social_feedback: SocialFeedback; // quiz = number; social_environment_priority?: number; group_engagement_priority?: number; loneliness_priority?: number; stress_priority?: number;
+    academic_feedback: AcademicFeedback;// quiz = academic_environment_priority?:  teaching_priority?: number; 
+    academic_workload: AcademicWorkload; // quiz = number; student_job_priority?: number; lectures_priority?: number; literature_priority?: number;
+    degree_structure: DegreeStructure; // filter = hasFormsOfEducation: string[]; / quiz = dislike_exam_priority?: number; internship_priority?: number; international_stay_priority?: number;
+    dropout_rate: number; 
+    job_data: JobData; /* filter = canWorkInternationally: boolean; / LP filters = wantedSalary: SalaryFilters, unemployment: UnenploymentFilters, jobFlexibility: JobFlexibility; wantedWorkingHours: MinimumMaximum; 
+                        / quiz = starting_salary_priority?: number; experienced_salary_priority?: number; unemployment_priority?: number; degree_relevance_priority?: number; fixed_hours_priority?: number; flexible_hours_priority?: number;
+                        self_schedule_priority?: number; variable_schedule_priority?: number; night_and_evening_shifts_priority?: number; work_nationally_priority?: number;*/
 };
-
 
 export type QuizAnswers = {
 
