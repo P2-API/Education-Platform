@@ -93,12 +93,12 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
             question: "Hvor vigtigt er det for dig, at du kommer i praktik?",
         },
         {
-            positiveReferencedAnswers: ["work_internationally_priority", "international_stay_priority"],
-            negativeReferencedAnswers: [],
+            positiveReferencedAnswers: ["international_stay_priority"],
+            negativeReferencedAnswers: ["work_nationally_priority"],
             question: "Hvor vigtigt er det for dig, at du kan arbejde eller studere internationalt?",
         },
         {
-            positiveReferencedAnswers: ["starting_salary_priority", "general_salary_priority", "experienced_salary_priority"],
+            positiveReferencedAnswers: ["starting_salary_priority", "experienced_salary_priority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at der er høj løn på dine mulige jobs efter studiet?",
         },

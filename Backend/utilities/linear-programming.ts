@@ -1,34 +1,26 @@
-import { GLPK, LP, Result} from 'glpk.js/dist/glpk';
+import {GLPK, LP, Result} from 'glpk.js/dist/glpk';
+import {UserImputs, objectiveType, SubjectToType, TableFilters, QuizAnswers} from '../../src/types'
 import GLPKConstructor from 'glpk.js/dist/glpk';
-
-export type LPsettings = {
-  minimize: boolean, 
-  objectiveCoefficients: number[], 
-  constraints: {coefficients: number[], operator: string, value: number}[]
-}
-export type objectiveType = {
-  direction: number,
-  name: string,
-  vars: { name: string, coef: number }[]
-} 
-export type SubjectToType = {
-  name: string,
-  vars: { name: string, coef: number }[],
-  bnds: { type: number, ub: number, lb: number }
-}[]
 
 export class LPclass implements LP{
   name: string;
   objective: objectiveType;
   subjectTo: SubjectToType;
   constructor(){
-    this.name = "";
-    this.objective = {direction: 0, name: "", vars: []};
+    this.name = "Optimal education";
+    this.objective = {direction: 1, name: "", vars: []};
     this.subjectTo = [];
   }
-  addObjectiveFunction(settings:LPsettings):void{
+  addObjectiveFunction(quizAnswers:QuizAnswers):void{
+    let key:string;
+    let value:number;
+    for([key, value] of Object.entries(quizAnswers)){
+      this.objective.vars.push({name:key, coef:value})
+    }
+   
   }
-  addConstraints(settings:LPsettings):void{
+  addConstraints(filters:TableFilters):void{
+    
   }
 }
 
@@ -37,19 +29,21 @@ export class LPsolver{
   constructor(){
     this.solver = GLPKConstructor();
   }
-  solve(settings:LPsettings):Result{
-    const lp:LP = this.setUpLP(settings);
+  solve(userImputs:UserImputs):Result{
+    const lp:LP = this.setUpLP(userImputs);
     return this.solver.solve(lp);
   }
-  setUpLP(settings:LPsettings):LP{
+  setUpLP(userImputs:UserImputs):LP{
     const lp = new LPclass()
-    lp.addObjectiveFunction(settings);
-    lp.addConstraints(settings);
+    lp.addObjectiveFunction(userImputs.quizAnswers);
+    lp.addConstraints(userImputs.filters);
     return lp;
   }
 }
 
-export function findOptimalSolution(settings: LPsettings):Result{
+export function findOptimalSolution(userImputs:UserImputs):Result{
   const solver = new LPsolver();
-  return solver.solve(settings);
+  return solver.solve(userImputs);
 }
+
+const solver = new LPsolver();
