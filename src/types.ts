@@ -102,7 +102,7 @@ export type Education = {
     url: string;
     rank: number | null;
     title: string;
-    degree_type: string; // filter = wantedDegreeTypes: string[];
+    degreeType: string; // filter = wantedDegreeTypes: string[];
     counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
