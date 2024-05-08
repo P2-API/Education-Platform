@@ -129,6 +129,10 @@ function csvParser(csvData: string): Education[] {
                 national_jobs: Number(String(values[180]).replace(",", "."))
             }
         };
+        
+        for (const property in education) if (Number.isNaN(property) || property == null || property == undefined) continue;
+
+        // This no run if property be bye bye
         educations.push(education);
     }
 
