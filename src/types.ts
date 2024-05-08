@@ -14,88 +14,88 @@ Klasseundervisning/forelæsning/underviservejledning
 
 import { Geography, County, Institution, JobFlexibility } from "enums";
 
-type Subject = {
+export type Subject = {
     title: string;
     score: number;
 }
 
-type Industry = {
+export type Industry = {
     title: string;
     share: number;
 }
 
-type HoursSpentDoing = {
+export type HoursSpentDoing = {
     withManyStudents: number;
     withFewStudents: number;
     withSupervision: number;
 }
 
-type SocialFeedback = {
+export type SocialFeedback = {
     socialEnvironment: number;
     groupEngagement: number;
     loneliness: number;
     stress: number;
 }
 
-type AcademicFeedback = {
+export type AcademicFeedback = {
     academicEnvironment: number;
     teacherEvaluation: number;
     satisfaction: number;
 }
 
-type AcademicWorkload = {
+export type AcademicWorkload = {
     lectures: number;
     literature: number;
     studentJob: number;
 }
 
-type DegreeContents = {
+export type DegreeContents = {
     teaching: number;
     exams: number;
     internship: number;
     internationalStay: number;
 }
 
-type DegreeStructure = {
+export type DegreeStructure = {
     contents: DegreeContents;
     teachingMethods: string[];
 }
 
-type Salary = {
-    lower_quartile: number;
+export type Salary = {
+    lowerQuartile: number;
     median: number;
-    upper_quartile: number;
-    projected_direction: string;
+    upperQuartile: number;
+    projectedDirection: string;
 }
 
-type Unemployment = {
+export type Unemployment = {
     newGraduate: number;
     experienced: number;
     projectedNewGraduate: number;
     projectedExperienced: number;
 }
 
-type JobWorkSchedule = {
-    working_hours: number;
-    fixed_hours_percent: number;
-    flexible_hours_percent: number;
-    self_schedule_percent: number;
-    variable_schedule_percent: number;
-    night_and_evening_shifts_percent: number;
+export type JobWorkSchedule = {
+    workingHours: number;
+    fixedHoursPercent: number;
+    flexibleHoursPercent: number;
+    selfSchedulePercent: number;
+    variableSchedulePercent: number;
+    nightAndEveningShiftsPercent: number;
 }
 
-type Salaries = {
+export type Salaries = {
     newGraduate: Salary;
     experienced: Salary;
 }
 
-type JobData = {
+export type JobData = {
     salaries: Salaries;
     workSchedule: JobWorkSchedule;
     unemployment: Unemployment;
-    degree_relevance: number;
-    degree_prepares_for_job: number;
-    national_jobs: number;
+    degreeRelevance: number;
+    degreePreparesForJob: number;
+    nationalJobs: number;
 }
 
 export type Education = {
@@ -106,60 +106,60 @@ export type Education = {
     counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
-    subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority?: number;
-    industries: Industry[]; // LP filter = hasIndustries: string[]; Quiz = industries_priority?: number;
-    hours: HoursSpentDoing; // quiz = high_workload_acceptance_priority?: number; 
-    social_feedback: SocialFeedback; // quiz = number; social_environment_priority?: number; group_engagement_priority?: number; loneliness_priority?: number; stress_priority?: number;
-    academic_feedback: AcademicFeedback;// quiz = academic_environment_priority?:  teaching_priority?: number; 
-    academic_workload: AcademicWorkload; // quiz = number; student_job_priority?: number; lectures_priority?: number; literature_priority?: number;
-    degree_structure: DegreeStructure; // filter = hasFormsOfEducation: string[]; / quiz = dislike_exam_priority?: number; internship_priority?: number; international_stay_priority?: number;
-    dropout_rate: number; 
-    job_data: JobData; /* filter = canWorkInternationally: boolean; / LP filters = wantedSalary: SalaryFilters, unemployment: UnenploymentFilters, jobFlexibility: JobFlexibility; wantedWorkingHours: MinimumMaximum; 
-                        / quiz = starting_salary_priority?: number; experienced_salary_priority?: number; unemployment_priority?: number; degree_relevance_priority?: number; fixed_hours_priority?: number; flexible_hours_priority?: number;
-                        self_schedule_priority?: number; variable_schedule_priority?: number; night_and_evening_shifts_priority?: number; work_nationally_priority?: number;*/
+    subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority: number;
+    industries: Industry[]; // LP filter = hasIndustries: string[]; Quiz = industries_priority: number;
+    hours: HoursSpentDoing; // quiz = high_workload_acceptance_priority: number; 
+    socialFeedback: SocialFeedback; // quiz = social_environment_priority: number; group_engagement_priority: number; loneliness_priority: number; stress_priority: number;
+    academicFeedback: AcademicFeedback;// quiz = academic_environment_priority:  teaching_priority: number; 
+    academicWorkload: AcademicWorkload; // quiz = student_job_priority: number; lectures_priority: number; literature_priority: number;
+    degreeStructure: DegreeStructure; // filter = hasFormsOfEducation: string[]; / quiz = dislike_exam_priority: number; internship_priority: number; international_stay_priority: number;
+    dropoutRate: number; 
+    jobData: JobData; /* filter = canWorkInternationally: boolean; / LP filters = wantedSalary: SalaryFilters, unemployment: UnenploymentFilters, jobFlexibility: JobFlexibility; wantedWorkingHours: MinimumMaximum; 
+                        / quiz = starting_salary_priority: number; experienced_salary_priority: number; unemployment_priority: number; degree_relevance_priority: number; fixed_hours_priority: number; flexible_hours_priority: number;
+                        self_schedule_priority: number; variable_schedule_priority: number; night_and_evening_shifts_priority: number; work_nationally_priority: number;*/
 };
 
 export type QuizAnswers = {
 
-    subjects_priority: number; // in use
+    subjectsPriority: number; // in use
 
-    industries_priority: number; // in use
+    industriesPriority: number; // in use
 
-    academic_environment_priority: number; // in use
+    academicEnvironmentPriority: number; // in use
 
-    social_environment_priority: number; // in use
-    group_engagement_priority: number; // in use
-    loneliness_priority: number; // in use 
+    socialEnvironmentPriority: number; // in use
+    groupEngagementPriority: number; // in use
+    lonelinessPriority: number; // in use 
 
-    stress_priority: number; // in use 
-    high_workload_acceptance_priority: number; // in use
+    stressPriority: number; // in use 
+    highWorkloadAcceptancePriority: number; // in use
 
-    student_job_priority: number; // in use
+    studentJobPriority: number; // in use
 
-    lectures_priority: number; // in use
-    literature_priority: number; // in use
-    teaching_priority: number; // in use
+    lecturesPriority: number; // in use
+    literaturePriority: number; // in use
+    teachingPriority: number; // in use
 
-    dislike_exam_priority: number; // in use
+    dislikeExamPriority: number; // in use
 
-    internship_priority: number; // in use 
+    internshipPriority: number; // in use 
 
-    international_stay_priority: number; // in use
-    work_nationally_priority: number; // in use
+    internationalStayPriority: number; // in use
+    workNationallyPriority: number; // in use
 
-    starting_salary_priority: number; // in use
-    experienced_salary_priority: number; // in use
+    startingSalaryPriority: number; // in use
+    experiencedSalaryPriority: number; // in use
 
-    unemployment_priority: number; // in use
+    unemploymentPriority: number; // in use
 
-    degree_relevance_priority: number; // in use
+    degreeRelevancePriority: number; // in use
 
-    fixed_hours_priority: number; // in use
-    flexible_hours_priority: number; // in use
-    self_schedule_priority: number; // in use 
-    variable_schedule_priority: number; // in use
+    fixedHoursPriority: number; // in use
+    flexibleHoursPriority: number; // in use
+    selfSchedulePriority: number; // in use 
+    variableSchedulePriority: number; // in use
 
-    night_and_evening_shifts_priority: number; // in use 
+    nightAndEveningShiftsPriority: number; // in use 
 }
 
 export type MinimumMaximum = {
