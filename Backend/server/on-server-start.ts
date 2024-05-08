@@ -6,10 +6,12 @@ import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../
 let educations: Education[] = [];
 
 export const onStart = () => {
+    console.log("onStart");
     cacheEducations();    
 }
 
 const cacheEducations = async () => {
+    console.log("cacheEducations");
     educations = await GetEducationsOnServerStart();
     caclulateBasedOnEducations();
 }
@@ -19,6 +21,8 @@ export const getCachedEducations = (): Education[] => {
 }
 
 const caclulateBasedOnEducations = () => {
+    console.log("caclulateBasedOnEducations");
+
     caclulateEnumTypes();
     calculateMinMaxDegreeDuration();
     calclulateSalaryRanges();
@@ -37,6 +41,8 @@ let geographies: Geography[];
 let geographiesString: string[];
 
 const caclulateEnumTypes = () => {
+    console.log("calculateEnumTypes");
+
     degreeTypeKeys = Object.keys(DegreeType).filter(key => isNaN(Number(key))) as (keyof typeof DegreeType)[];
     degreeTypes = degreeTypeKeys.map(key => DegreeType[key]);
     degreeTypesString = degreeTypeKeys.map(value => value.toString());
@@ -89,6 +95,8 @@ export const getGeographiesAsString = (): string[] => {
 let educationDurationRange: MinimumMaximum;
 
 const calculateMinMaxDegreeDuration = () => {
+    console.log("caclulateMinMaxDegreeDuration");
+
     let educationDurationMin = DegreeTypeToDuration(degreeTypes[0]).minimum;
     let educationDurationMax = DegreeTypeToDuration(degreeTypes[0]).maximum;
     degreeTypes.forEach((degreeType) => {
@@ -109,18 +117,31 @@ let newGraduateSalaryRange: MinimumMaximum;
 let experiencedSalaryRange: MinimumMaximum;
 
 const calclulateSalaryRanges = () => {
-    let newGraduateSalaryMin = educations[0].job_data.salaries.newGraduate.lower_quartile;
-    let experiencedSalaryMin = educations[0].job_data.salaries.experienced.lower_quartile;
-    let newGraduateSalaryMax = educations[0].job_data.salaries.newGraduate.upper_quartile;
-    let experiencedSalaryMax = educations[0].job_data.salaries.experienced.upper_quartile;
+    console.log("calculateSalaryRanges");
+
+    let newGraduateSalaryMin = 0 //educations[0].job_data.salaries.newGraduate.lower_quartile;
+    let experiencedSalaryMin = 0 //educations[0].job_data.salaries.experienced.lower_quartile;
+    let newGraduateSalaryMax = 0 //educations[0].job_data.salaries.newGraduate.upper_quartile;
+    let experiencedSalaryMax = 0 //educations[0].job_data.salaries.experienced.upper_quartile;
+
+    
+
     educations.forEach((education) => {
-        newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.job_data.salaries.newGraduate.lower_quartile);
-        experiencedSalaryMin = Math.min(experiencedSalaryMin, education.job_data.salaries.experienced.lower_quartile);
-        newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.job_data.salaries.newGraduate.upper_quartile);
-        experiencedSalaryMax = Math.max(experiencedSalaryMax, education.job_data.salaries.experienced.upper_quartile);
+        const salaries = education.job_data.salaries;
+        if ((Number.isNaN(salaries.newGraduate.lower_quartile) 
+            || Number.isNaN(salaries.newGraduate.upper_quartile)
+            || Number.isNaN(salaries.experienced.lower_quartile)
+            || Number.isNaN(salaries.experienced.upper_quartile)) == false        
+        ){
+            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.job_data.salaries.newGraduate.lower_quartile);
+            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.job_data.salaries.experienced.lower_quartile);
+            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.job_data.salaries.newGraduate.upper_quartile);
+            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.job_data.salaries.experienced.upper_quartile);            
+        }
     });
     newGraduateSalaryRange = { minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax };
     experiencedSalaryRange = { minimum: experiencedSalaryMin, maximum: experiencedSalaryMax };
+    console.log(experiencedSalaryRange, newGraduateSalaryRange);
 }
 
 export const getNewGraduateSalaryRange = (): MinimumMaximum => {
