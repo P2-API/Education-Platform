@@ -4,12 +4,16 @@ import QuizModal from "./QuizModal";
 import * as React from "react";
 import { useRef } from "react";
 
+import { useServer } from "@backend/server/useServer";
+import { Education, TableSectionDataFromServer } from "types";
+
+
+
 const Homepage = () => {
   const tableRef = useRef<HTMLDivElement>(null);
 
   // Quiz States
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-
 
 
   return (
