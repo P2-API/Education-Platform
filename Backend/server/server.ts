@@ -1,21 +1,15 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
-import { Education } from "../../src/types"
-import { GetEducationsOnServerStart, importCSV } from '../utilities/csv_importer';
+import { onStart, getTableSectionData } from './on-server-start';
+import { MinimumMaximum } from '../../src/types';
 
 const server: Express = express();
 
 const PORT = 1337;
 
 
-
-let educations: Education[];
-const getEducations = async () =>{
-    educations = await GetEducationsOnServerStart()
-}
-
-getEducations();
+onStart();
 
 server.use(cors()); // Enable CORS
 
@@ -27,9 +21,9 @@ server.get("/server", (request: Request, response: Response) => {
     response.status(200).send("Hello from the server!");
 });
 
-server.get("/get_educations", (request: Request, response: Response) =>{
-
-})
+server.get("/get_table_section_data", (request: Request, response: Response) =>{
+    response.status(200).send(getTableSectionData());
+});
 
 server.listen(PORT, () => { 
     console.log("Server running at PORT: ", PORT); 
