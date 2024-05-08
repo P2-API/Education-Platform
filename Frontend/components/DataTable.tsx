@@ -480,8 +480,8 @@ const MaterialReactDataTable = () => {
     muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px" } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
-    rowVirtualizerOptions: { overscan: 5 }, //optionally customize the row virtualizer
-    columnVirtualizerOptions: { overscan: 2 }, //optionally customize the column virtualizer
+    rowVirtualizerOptions: { overscan: 8 }, //optionally customize the row virtualizer
+    columnVirtualizerOptions: { overscan: 17 }, //optionally customize the column virtualizer
 
   });
 

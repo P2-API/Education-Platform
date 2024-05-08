@@ -30,7 +30,7 @@ function csvParser(csvData: string): Education[] {
             "url": values[2],
             "rank": null,
             "title": values[4],
-            "degree_type": values[6],
+            "degreeType": values[6],
             "counties": [County[values[11]]],
             "geographies": [CountyToGeography(County[values[11]])],
             "institutions": Institution[values[9]],
@@ -63,23 +63,23 @@ function csvParser(csvData: string): Education[] {
                 teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
             },*/
-            social_feedback: {
+            socialFeedback: {
                 socialEnvironment: Number(String(values[70]).replace(",", ".")),
                 groupEngagement: Number(String(values[62]).replace(",", ".")),
                 loneliness: Number(String(values[112]).replace(",", ".")),
                 stress: Number(String(values[121]).replace(",", "."))
             },
-            academic_feedback: {
+            academicFeedback: {
                 academicEnvironment: Number(String(values[58]).replace(",", ".")),
                 teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
             },
-            academic_workload: {
+            academicWorkload: {
                 lectures: Number(String(values[72]).replace(",", ".")),
                 literature: Number(String(values[74]).replace(",", ".")),
                 studentJob: Number(String(values[76]).replace(",", "."))
             },
-            degree_structure: {
+            degreeStructure: {
                 contents: {
                     teaching: Number(String(values[85]).replace(",", ".")),
                     exams: Number(String(values[81]).replace(",", ".")),
@@ -94,29 +94,29 @@ function csvParser(csvData: string): Education[] {
                     values[108]
                 ]
             },
-            dropout_rate: Number(values[16]),
-            job_data: {
+            dropoutRate: Number(values[16]),
+            jobData: {
                 salaries: {
                     newGraduate: {
-                        lower_quartile: parseFloat(String(values[40]).replace(",", ".")),
+                        lowerQuartile: parseFloat(String(values[40]).replace(",", ".")),
                         median: parseFloat(String(values[39]).replace(",", ".")),
-                        upper_quartile: parseFloat(String(values[41]).replace(",", ".")),
-                        projected_direction: ""
+                        upperQuartile: parseFloat(String(values[41]).replace(",", ".")),
+                        projectedDirection: ""
                     },
                     experienced: {
-                        lower_quartile: parseFloat(String(values[50]).replace(",", ".")),
+                        lowerQuartile: parseFloat(String(values[50]).replace(",", ".")),
                         median: parseFloat(String(values[49]).replace(",", ".")),
-                        upper_quartile: parseFloat(String(values[51]).replace(",", ".")),
-                        projected_direction: ""
+                        upperQuartile: parseFloat(String(values[51]).replace(",", ".")),
+                        projectedDirection: ""
                     }
                 },
                 workSchedule: {
-                    working_hours: Number(values[154]),
-                    fixed_hours_percent: Number(values[145]),
-                    flexible_hours_percent: Number(values[147]),
-                    self_schedule_percent: Number(values[149]),
-                    variable_schedule_percent: Number(values[148]),
-                    night_and_evening_shifts_percent: Number(values[146])
+                    workingHours: Number(values[154]),
+                    fixedHoursPercent: Number(values[145]),
+                    flexibleHoursPercent: Number(values[147]),
+                    selfSchedulePercent: Number(values[149]),
+                    variableSchedulePercent: Number(values[148]),
+                    nightAndEveningShiftsPercent: Number(values[146])
                 },
                 unemployment: {
                     newGraduate: Number(values[35]),
@@ -124,11 +124,15 @@ function csvParser(csvData: string): Education[] {
                     projectedNewGraduate: 0,
                     projectedExperienced: 0
                 },
-                degree_relevance: Number(String(values[172]).replace(",", ".")),
-                degree_prepares_for_job: Number(String(values[176]).replace(",", ".")),
-                national_jobs: Number(String(values[180]).replace(",", "."))
+                degreeRelevance: Number(String(values[172]).replace(",", ".")),
+                degreePreparesForJob: Number(String(values[176]).replace(",", ".")),
+                nationalJobs: Number(String(values[180]).replace(",", "."))
             }
         };
+        
+        for (const property in education) if (Number.isNaN(property) || property == null || property == undefined) continue;
+
+        // This no run if property be bye bye
         educations.push(education);
     }
 

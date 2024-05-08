@@ -1,35 +1,40 @@
 import TableSection from "./TableSection";
 import HeroSection from "./HeroSection";
-import BasicModal from "./QuizSection";
-import * as React from "react";
-import { useRef } from "react";
-
+import QuizModal from "./QuizModal";
+import { createContext, useState, useRef, useEffect } from "react";
 import { useServer } from "@backend/server/useServer";
-import { Education, TableSectionDataFromServer } from "types";
+import { TableSectionDataFromServer } from "types";
 
+// Step 2: Create a context
 
+const TableSectionDataContext = createContext<TableSectionDataFromServer | undefined>(undefined);
+export { TableSectionDataContext };
 
 const Homepage = () => {
   const tableRef = useRef<HTMLDivElement>(null);
 
   // Quiz States
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [tableSectionData, setTableSectionData] = React.useState<TableSectionDataFromServer>()
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState<TableSectionDataFromServer>();
 
+  // Fetch data from server
   const { getTableSectionData } = useServer();
-  
-  const asyncUpdateTableSectionData = async () =>{
-    setTableSectionData(await getTableSectionData());
-  }
-  asyncUpdateTableSectionData(); 
 
+  useEffect(() => {
+    getTableSectionData().then((data) => {
+      setData(data);
+    });
+  }, []); // Empty dependency array ensures the effect runs only once
+
+  console.log("rendering");
+
+  // Step 3: Wrap the components with Context.Provider
   return (
-    <>
-
+    <TableSectionDataContext.Provider value={data}>
       <HeroSection tableRef={tableRef} />
-      <BasicModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} data={tableSectionData}/>
-    </>
+      <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} />
+    </TableSectionDataContext.Provider>
   );
 };
 

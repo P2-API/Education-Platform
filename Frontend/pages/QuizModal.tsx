@@ -30,7 +30,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     return (
         <Box sx={{ width: "800px", height: "30%" }}>
             <Box sx={{ minWidth: "800px", textAlign: "center", height: "100%", display: "flex", flexDirection: "column", justifyContent: "end" }}>
-                <Typography sx={{ marginBottom: 2 }} variant="h5" color="black">{`${Math.round(
+                <Typography sx={{ marginBottom: 2, marginLeft: "20px" }} variant="h5" color="black">{`${Math.round(
                     props.value,
                 )}%`}</Typography>
                 <LinearProgress style={{ height: 10, borderRadius: 2, color: "primary.main", marginTop: 0 }} variant="determinate" {...props} />
@@ -227,7 +227,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
                                 <Typography mt={1}>
                                     {currentQuestion.question}
                                 </Typography>
-                                <Slider onChange={(_e, value) => SetSliderValue(Number(value))}
+                                <Slider sx={{ marginLeft: "4px" }} onChange={(_e, value) => SetSliderValue(Number(value))}
                                     aria-label="discrete-slider-custom"
                                     defaultValue={3}
                                     value={sliderValue}
