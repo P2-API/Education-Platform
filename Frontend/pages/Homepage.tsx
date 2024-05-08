@@ -1,6 +1,6 @@
 import TableSection from "./TableSection";
 import HeroSection from "./HeroSection";
-import BasicModal from "./QuizSection";
+import QuizModal from "./QuizModal";
 import * as React from "react";
 import { useRef } from "react";
 
@@ -16,8 +16,8 @@ const Homepage = () => {
     <>
 
       <HeroSection tableRef={tableRef} />
-      <BasicModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} possibleEducations={[]}/>
+      <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} possibleEducations={[]} />
     </>
   );
 };

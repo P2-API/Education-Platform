@@ -4,7 +4,7 @@ import animationData from "../assets/animation.json";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useMediaQuery } from "@mui/material";
 import { toast } from 'sonner'
-import {useServer} from "@backend/server/useServer";
+import { useServer } from "@backend/server/useServer";
 
 
 type HeroSectionProps = {
@@ -150,7 +150,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ tableRef }) => {
           >
             Gå til uddannelser
           </button>
-          <button className="primary-button" style={{backgroundColor: "blue"}} onClick={serverGreetsWithToast}>Snak med server</button>
+          <button className="primary-button" style={{ backgroundColor: "blue" }} onClick={serverGreetsWithToast}>Snak med server</button>
 
         </div>
       </div>
