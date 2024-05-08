@@ -1,19 +1,33 @@
 const axios = require('axios');
+const response = (fetchHtml("https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi"));
+//const html = fetchHtml("https://www.ug.edu.gh/");
+console.log(getHeadlinerText("https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi"));
 
 
-export function getHeadlinerText(html: string) {
+async function getHeadliner(url: string) {
+    const response = await fetchHtml(url);
+    if (response === "Error fetching the URL") {
+        return "Error fetching the URL";
+    }
+    console.log(response.data);
+    const headlinerText = getHeadlinerText(response.data);
+    //const describingText = getDescribingText(response.data);
+    return {headlinerText};
+}
+
+function getHeadlinerText(html: string) {
     // Your implementation here
     const headlinerText = filterHtmlHelperFirstTagOnly(html, "field-item even");
     console.log(headlinerText);
     return headlinerText;
 }
 
-export function getDescribingText(html: string) {
+function getDescribingText(html: string) {
     // Your implementation here
     return html;
 }
 
-export function fetchHtml(url: string) {
+function fetchHtml(url: string) {
     try {
         return axios.get(url);
     } catch (error) {
@@ -32,10 +46,16 @@ function filterHtmlHelper(html: string, className: string) {
 }
 
 function filterHtmlHelperFirstTagOnly(html: string, className: string) {
-    const regex = new RegExp(`<[^>]*class=["'].*?\\b${className}\\b.*?["'][^>]*>(.*?)</[^>]*>`);
+    const regex = new RegExp(`<div[^>]*class=["'].*?\\b${className}\\b.*?["'][^>]*>(.*?)</div>`);
     const match = html.match(regex);
     if (match === null) {
         return "No match found";
     }
-    return match[0];
+    const textRegex = /<[^>]*>(.*?)<\/[^>]*>/;
+    const textMatch = match[1].match(textRegex);
+    if (textMatch === null) {
+        return "No text found";
+    }
+    return textMatch[1];
 }
+
