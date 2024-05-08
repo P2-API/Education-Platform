@@ -6,7 +6,7 @@ export let educations: Education[] = [
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/samfundsvidenskabeligekandidatuddannelser/oevrigesamfundsvidenskab/organisational-innovation-and-entrepreneurship",
         "rank": null,
         "title": "Organisational Innovation and Entrepreneurship",
-        "degree_type": "Kandidatuddannelse",
+        "degreeType": "Kandidatuddannelse",
         "counties": [
             7
         ],
@@ -34,23 +34,23 @@ export let educations: Education[] = [
             "withFewStudents": 36,
             "withSupervision": 103
         },
-        "social_feedback": {
+        "socialFeedback": {
             "socialEnvironment": 4.35,
             "groupEngagement": 4.3,
             "loneliness": 3.56,
             "stress": 3.44,
         },
-        "academic_feedback": {
+        "academicFeedback": {
             "academicEnvironment": 4.3,
             "teacherEvaluation": 3.8775,
             "satisfaction": 4.28
         },
-        "academic_workload": {
+        "academicWorkload": {
             "lectures": 44,
             "literature": 15.5,
             "studentJob": 81
         },
-        "degree_structure": {
+        "degreeStructure": {
             "contents": {
                 "teaching": 75,
                 "exams": 25,
@@ -65,29 +65,29 @@ export let educations: Education[] = [
                 "Klasseundervisning (holdundervisning)"
             ]
         },
-        "dropout_rate": 4,
-        "job_data": {
+        "dropoutRate": 4,
+        "jobData": {
             "salaries": {
                 "newGraduate": {
-                    "lower_quartile": 30.65,
+                    "lowerQuartile": 30.65,
                     "median": 38.55,
-                    "upper_quartile": 47.04,
-                    "projected_direction": ""
+                    "upperQuartile": 47.04,
+                    "projectedDirection": ""
                 },
                 "experienced": {
-                    "lower_quartile": 47.65,
+                    "lowerQuartile": 47.65,
                     "median": 60.07,
-                    "upper_quartile": 78.01,
-                    "projected_direction": ""
+                    "upperQuartile": 78.01,
+                    "projectedDirection": ""
                 }
             },
             "workSchedule": {
-                "working_hours": 37,
-                "fixed_hours_percent": 27,
-                "flexible_hours_percent": 50,
-                "self_schedule_percent": 23,
-                "variable_schedule_percent": 0,
-                "night_and_evening_shifts_percent": 0
+                "workingHours": 37,
+                "fixedHoursPercent": 27,
+                "flexibleHoursPercent": 50,
+                "selfSchedulePercent": 23,
+                "variableSchedulePercent": 0,
+                "nightAndEveningShiftsPercent": 0
             },
             "unemployment": {
                 "newGraduate": 9,
@@ -95,16 +95,16 @@ export let educations: Education[] = [
                 "projectedNewGraduate": 0,
                 "projectedExperienced": 0
             },
-            "degree_relevance": 3.24,
-            "degree_prepares_for_job": 3.55,
-            "national_jobs": 80
+            "degreeRelevance": 3.24,
+            "degreePreparesForJob": 3.55,
+            "nationalJobs": 80
         }
     },
     {
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/historie",
         "rank": null,
         "title": "Historie",
-        "degree_type": "Kandidatuddannelse",
+        "degreeType": "Kandidatuddannelse",
         "counties": [
             21
         ],
@@ -132,23 +132,23 @@ export let educations: Education[] = [
             "withFewStudents": 112,
             "withSupervision": 0
         },
-        "social_feedback": {
+        "socialFeedback": {
             "socialEnvironment": 3.7,
             "groupEngagement": 3.49,
             "loneliness": 3.26,
             "stress": 3.59,
         },
-        "academic_feedback": {
+        "academicFeedback": {
             "academicEnvironment": 3.97,
             "teacherEvaluation": 3.99,
             "satisfaction": 3.92
         },
-        "academic_workload": {
+        "academicWorkload": {
             "lectures": 26,
             "literature": 14.5,
             "studentJob": 83
         },
-        "degree_structure": {
+        "degreeStructure": {
             "contents": {
                 "teaching": 75,
                 "exams": 25,
@@ -163,29 +163,29 @@ export let educations: Education[] = [
                 "Projektarbejde (både individuelt og i grupper)"
             ]
         },
-        "dropout_rate": 5,
-        "job_data": {
+        "dropoutRate": 5,
+        "jobData": {
             "salaries": {
                 "newGraduate": {
-                    "lower_quartile": 1.024305556,
+                    "lowerQuartile": 1.024305556,
                     "median": 31.05,
-                    "upper_quartile": 35.45,
-                    "projected_direction": ""
+                    "upperQuartile": 35.45,
+                    "projectedDirection": ""
                 },
                 "experienced": {
-                    "lower_quartile": 34.65,
+                    "lowerQuartile": 34.65,
                     "median": 43.95,
-                    "upper_quartile": 49.15,
-                    "projected_direction": ""
+                    "upperQuartile": 49.15,
+                    "projectedDirection": ""
                 }
             },
             "workSchedule": {
-                "working_hours": 39,
-                "fixed_hours_percent": 30,
-                "flexible_hours_percent": 44,
-                "self_schedule_percent": 16,
-                "variable_schedule_percent": 9,
-                "night_and_evening_shifts_percent": 0
+                "workingHours": 39,
+                "fixedHoursPercent": 30,
+                "flexibleHoursPercent": 44,
+                "selfSchedulePercent": 16,
+                "variableSchedulePercent": 9,
+                "nightAndEveningShiftsPercent": 0
             },
             "unemployment": {
                 "newGraduate": 21,
@@ -193,16 +193,16 @@ export let educations: Education[] = [
                 "projectedNewGraduate": 0,
                 "projectedExperienced": 0
             },
-            "degree_relevance": 3.49,
-            "degree_prepares_for_job": 3.65,
-            "national_jobs": 95
+            "degreeRelevance": 3.49,
+            "degreePreparesForJob": 3.65,
+            "nationalJobs": 95
         }
     },
     {
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/dansk",
         "rank": null,
         "title": "Dansk",
-        "degree_type": "Kandidatuddannelse",
+        "degreeType": "Kandidatuddannelse",
         "counties": [
             46
         ],
@@ -230,23 +230,23 @@ export let educations: Education[] = [
             "withFewStudents": 124,
             "withSupervision": 8
         },
-        "social_feedback": {
+        "socialFeedback": {
             "socialEnvironment": 4.02,
             "groupEngagement": 4.03,
             "loneliness": 3.52,
             "stress": 3.64,
         },
-        "academic_feedback": {
+        "academicFeedback": {
             "academicEnvironment": 4.07,
             "teacherEvaluation": 4.1375,
             "satisfaction": 4.24
         },
-        "academic_workload": {
+        "academicWorkload": {
             "lectures": 38,
             "literature": 10,
             "studentJob": 81
         },
-        "degree_structure": {
+        "degreeStructure": {
             "contents": {
                 "teaching": 62.5,
                 "exams": 25,
@@ -261,29 +261,29 @@ export let educations: Education[] = [
                 "Projektarbejde (både individuelt og i grupper)"
             ]
         },
-        "dropout_rate": 6,
-        "job_data": {
+        "dropoutRate": 6,
+        "jobData": {
             "salaries": {
                 "newGraduate": {
-                    "lower_quartile": 25.05,
+                    "lowerQuartile": 25.05,
                     "median": 31.15,
-                    "upper_quartile": 35.09,
-                    "projected_direction": ""
+                    "upperQuartile": 35.09,
+                    "projectedDirection": ""
                 },
                 "experienced": {
-                    "lower_quartile": 33.85,
+                    "lowerQuartile": 33.85,
                     "median": 44.05,
-                    "upper_quartile": 48.08,
-                    "projected_direction": ""
+                    "upperQuartile": 48.08,
+                    "projectedDirection": ""
                 }
             },
             "workSchedule": {
-                "working_hours": 36,
-                "fixed_hours_percent": 21,
-                "flexible_hours_percent": 53,
-                "self_schedule_percent": 16,
-                "variable_schedule_percent": 2,
-                "night_and_evening_shifts_percent": 0
+                "workingHours": 36,
+                "fixedHoursPercent": 21,
+                "flexibleHoursPercent": 53,
+                "selfSchedulePercent": 16,
+                "variableSchedulePercent": 2,
+                "nightAndEveningShiftsPercent": 0
             },
             "unemployment": {
                 "newGraduate": 23,
@@ -291,9 +291,9 @@ export let educations: Education[] = [
                 "projectedNewGraduate": 0,
                 "projectedExperienced": 0
             },
-            "degree_relevance": 3.91,
-            "degree_prepares_for_job": 4.02,
-            "national_jobs": 93
+            "degreeRelevance": 3.91,
+            "degreePreparesForJob": 4.02,
+            "nationalJobs": 93
         }
     }
 ];
