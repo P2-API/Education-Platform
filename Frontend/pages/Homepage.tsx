@@ -1,8 +1,13 @@
 import TableSection from "./TableSection";
 import HeroSection from "./HeroSection";
-import BasicModal from "./QuizSection";
+import QuizModal from "./QuizModal";
 import * as React from "react";
 import { useRef } from "react";
+
+import { useServer } from "@backend/server/useServer";
+import { Education, TableSectionDataFromServer } from "types";
+
+
 
 const Homepage = () => {
   const tableRef = useRef<HTMLDivElement>(null);
@@ -11,13 +16,12 @@ const Homepage = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
 
-
   return (
     <>
 
       <HeroSection tableRef={tableRef} />
-      <BasicModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} possibleEducations={[]}/>
+      <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} possibleEducations={[]} />
     </>
   );
 };
