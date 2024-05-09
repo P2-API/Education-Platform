@@ -225,3 +225,7 @@ export type SubjectToType = {
     bnds: { type: number, ub: number, lb: number }
 }[]
 
+export type EducationGroup = {
+    title: string,
+    url: string
+}
