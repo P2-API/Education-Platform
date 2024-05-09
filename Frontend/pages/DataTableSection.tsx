@@ -1,31 +1,56 @@
 import MaterialReactDataTable from "../components/DataTable";
-import { MultiSelectAutoComplete, MinimumDistanceSlider } from "../components/Filters";
+import { MultiSelectAutoComplete, MinimumDistanceSlider } from "../components/FilterComponents";
 import { useContext } from "react";
 import { TableSectionDataContext } from "./Homepage";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
-
-
+import { MinimumMaximum } from "types";
 
 type DataTableSectionProps = {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-
+export type FilterProps = {
+    degreeTypes: string[];
+    institutes: string[];
+    geographies: string[];
+    educationDuration: MinimumMaximum;
+    newGraduateSalary: MinimumMaximum;
+    experiencedSalary: MinimumMaximum;
+};
 
 const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) => {
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
-
     const data = useContext(TableSectionDataContext);
+
+    // make a react state that keeps track of all filters and their values
+    const [filters, setFilters] = useState<FilterProps>({
+        degreeTypes: [],
+        institutes: [],
+        geographies: [],
+        educationDuration: { minimum: 0, maximum: 0 },
+        newGraduateSalary: { minimum: 0, maximum: 0 },
+        experiencedSalary: { minimum: 0, maximum: 0 }
+    });
+
 
     if (!data) {
         return <div>Loading...</div>;
     }
 
-    return (
+    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement;
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [target.name]: target.value
+        }));
+    }
 
+    console.log("filters", filters)
+
+    return (
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
             <div style={{ width: "30%", height: "100%", minWidth: "402px", marginRight: "1em" }}>
                 <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
@@ -35,16 +60,38 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                     </div>
                     <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
                         <>
-                            <MultiSelectAutoComplete collection={data?.degreeTypesString ?? []} selectLabel="Filtrer efter uddannelsestype" selectPlaceholder="Uddannelsestype" />
-                            <MultiSelectAutoComplete collection={data?.institutesString ?? []} selectLabel="Filtrer efter uddannelsessted" selectPlaceholder="Uddannelsessted" />
-                            <MultiSelectAutoComplete collection={data?.geographiesString ?? []} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
-                            <MultiSelectAutoComplete collection={data?.geographiesString ?? []} selectLabel="Filtrer efter kommune" selectPlaceholder="Kommune" />
+                            <MultiSelectAutoComplete
+                                value={filters.degreeTypes}
+                                collection={data?.degreeTypesString ?? []}
+                                selectLabel="Filtrer efter uddannelsestype"
+                                selectPlaceholder="Uddannelsestype"
+                                setFilters={setFilters}
+                                identifier="degreeTypes"
+                            />
+                            <MultiSelectAutoComplete
+                                value={filters.institutes}
+                                collection={data?.institutesString ?? []}
+                                selectLabel="Filtrer efter uddannelsessted"
+                                selectPlaceholder="Uddannelsessted"
+                                setFilters={setFilters}
+                                identifier="institutes"
+                            />
+                            <MultiSelectAutoComplete
+                                value={filters.geographies}
+                                collection={data?.geographiesString ?? []}
+                                selectLabel="Filtrer efter geografi"
+                                selectPlaceholder="Geografi"
+                                setFilters={setFilters}
+                                identifier="geographies"
+                            />
                             <MinimumDistanceSlider
                                 initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
                                 sliderRange={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
                                 minimumDistance={1}
                                 description="Filtrer efter uddannelsesvarighed i måneder"
                                 getValueText={getValueTextDuration}
+                                setFilters={setFilters}
+                                identifier="educationDuration"
                             />
                             <MinimumDistanceSlider
                                 initialState={data?.newGraduateSalaryRange ?? { minimum: 0, maximum: 0 }}
@@ -52,6 +99,8 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                                 minimumDistance={1}
                                 description="Filtrer efter nyuddannedes løn i tusinde"
                                 getValueText={getValueTextSalary}
+                                setFilters={setFilters}
+                                identifier="newGraduateSalary"
                             />
 
                             <MinimumDistanceSlider
@@ -60,26 +109,23 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                                 minimumDistance={1}
                                 description="Filtrer efter erfarenes løn i tusinde"
                                 getValueText={getValueTextSalary}
+                                setFilters={setFilters}
+                                identifier="experiencedSalary"
                             />
+
                         </>
 
                         <p>Filter efter uddannelsesstart</p>
                         <p>Filter efter uddannelsesform</p>
                         <p>Filter efter uddannelsesindhold</p>
                     </div>
-
-
                 </Paper>
             </div>
 
             <div style={{ width: "70%" }}>
                 <MaterialReactDataTable />
-
             </div>
-        </div >
+        </div>
     );
 };
-
 export default DataTableSection;
-
-
