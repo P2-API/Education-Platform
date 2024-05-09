@@ -125,7 +125,7 @@ export type QuizAnswers = {
 
     industriesPriority: number; // in use
 
-    academicEnvironmentPriority: number; // in use
+    academicEnvironmentPriority: number; // in use 
 
     socialEnvironmentPriority: number; // in use
     groupEngagementPriority: number; // in use
@@ -181,16 +181,10 @@ export type TableSectionDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];
-    degreeTypes: DegreeType[];
-    degreeTypesString: string[];
 
     institutionKeys: (keyof typeof Institution)[];
-    institutes: Institution[];
-    institutesString: string[];
 
     geographyKeys: (keyof typeof Geography)[];
-    geographies: Geography[];
-    geographiesString: string[];
 
     educationDurationRange: MinimumMaximum;
 
@@ -202,13 +196,13 @@ export type TableFilters = {
     wantedDegreeTypes: string[]; //in use
     canStudyInGeoraphies: Geography[]; //in use
     canStudyAtInstitution: Institution[]; //in use
-    hasSubjects: string[]; // in use / LP filter
-    hasIndustries: string[]; // in use / LP filter
+    hasSubjects: string[]; // in use 
+    hasIndustries: string[]; // in use
     hasFormsOfEducation: string[]; // in use
     wantedSalary: SalaryFilters; // in use / LP filter
-    unemployment: UnenploymentFilters; // in use / LP filter
-    jobFlexibility: JobFlexibility; // in use / LP filter
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter
+    unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
+    jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
     canWorkInternationally: boolean; //in use
 }
 
