@@ -62,7 +62,7 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                         <>
                             <MultiSelectAutoComplete
                                 value={filters.degreeTypes}
-                                collection={data?.degreeTypesString ?? []}
+                                collection={data?.degreeTypeKeys ?? []}
                                 selectLabel="Filtrer efter uddannelsestype"
                                 selectPlaceholder="Uddannelsestype"
                                 setFilters={setFilters}
@@ -70,7 +70,7 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                             />
                             <MultiSelectAutoComplete
                                 value={filters.institutes}
-                                collection={data?.institutesString ?? []}
+                                collection={data?.institutionKeys ?? []}
                                 selectLabel="Filtrer efter uddannelsessted"
                                 selectPlaceholder="Uddannelsessted"
                                 setFilters={setFilters}
@@ -78,7 +78,7 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                             />
                             <MultiSelectAutoComplete
                                 value={filters.geographies}
-                                collection={data?.geographiesString ?? []}
+                                collection={data?.geographyKeys ?? []}
                                 selectLabel="Filtrer efter geografi"
                                 selectPlaceholder="Geografi"
                                 setFilters={setFilters}

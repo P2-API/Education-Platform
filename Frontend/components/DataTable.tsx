@@ -363,7 +363,7 @@ const MaterialReactDataTable = () => {
       degree_type: "Universitets-uddannelse",
       counties: [1, 2, 3],
       geographies: [1, 2],
-      institutions: 3,
+      institutions: Institution["Aalborg Universitet"],
       subjects: [
         {
           title: "Matematik",
