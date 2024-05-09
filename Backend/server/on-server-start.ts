@@ -7,12 +7,15 @@ let educations: Education[] = [];
 
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
+let subjectKeys: string[];
 let institutionKeys: (keyof typeof Institution)[];
 let geographyKeys: (keyof typeof Geography)[];
 
-
 let minimumEducation: Education;
 let maximumEducation: Education;
+
+let newGraduateSalaryRange: MinimumMaximum;
+let experiencedSalaryRange: MinimumMaximum;
 
 export const onStart = () => {
     //console.log("onStart");
@@ -33,9 +36,20 @@ const caclulateBasedOnEducations = () => {
     //console.log("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
+    calculateSubjectKeys();
     calculateMinimumAndMaximumEducation();
     calculateMinMaxDegreeDuration();
     calclulateSalaryRanges();
+}
+
+// I don't know if this is what it is meant to do
+const calculateSubjectKeys = () => {
+    educations.forEach((education) => {
+        education.subjects.forEach((subject) => {
+            if (!subjectKeys.includes(subject.title)) 
+                subjectKeys.push(subject.title);
+        })
+    })
 }
 
 const caclulateEnumTypes = () => {
@@ -46,6 +60,10 @@ const caclulateEnumTypes = () => {
     institutionKeys = Object.keys(Institution) as (keyof typeof Institution)[];
 
     geographyKeys = Object.keys(Geography) as (keyof typeof Geography)[];
+}
+
+export const getSubjectKeys = () => {
+    return subjectKeys;
 }
 
 export const getDegreeTypeKeys = () => {
@@ -101,9 +119,6 @@ const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 
-let newGraduateSalaryRange: MinimumMaximum;
-let experiencedSalaryRange: MinimumMaximum;
-
 const calclulateSalaryRanges = () => {
     //console.log("calculateSalaryRanges");
 
@@ -142,6 +157,8 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         educations: educations,
 
         degreeTypeKeys: degreeTypeKeys,
+        
+        subjectKeys: subjectKeys,
 
         institutionKeys: institutionKeys,
 
@@ -149,7 +166,10 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
 
         educationDurationRange: educationDurationRange,
 
-        newGraduateSalaryRange: newGraduateSalaryRange,
-        experiencedSalaryRange: experiencedSalaryRange,
+        minimumValueEducation: minimumEducation,
+        maximumValueEducation: maximumEducation
+
+        //newGraduateSalaryRange: newGraduateSalaryRange,
+        //experiencedSalaryRange: experiencedSalaryRange,
     }
 }
