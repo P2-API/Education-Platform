@@ -1,10 +1,12 @@
-import { Education, MinimumMaximum, TableSectionDataFromServer } from "../../src/types";
+import { Education, EducationGroup, MinimumMaximum, TableSectionDataFromServer } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../src/enums";
 
+import * as fs from "fs"; 
+import { educationToEducationGroup } from "../utilities/custom_type_conversion";
 
 let educations: Education[] = [];
-
+let educationGroups: EducationGroup[] = [];
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
 let subjectKeys: string[];
@@ -26,6 +28,19 @@ const cacheEducations = async () => {
     //console.log("cacheEducations");
     educations = await GetEducationsOnServerStart();
     caclulateBasedOnEducations();
+    groupEducations();
+    console.log("Grouped Educations: ", educationGroups.length);
+    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
+}
+
+function groupEducations() {
+    educations.forEach((education) => {
+        var alreadyGrouped = false;
+        educationGroups.forEach((groupedEducation) => {
+            if (groupedEducation.title == education.title) alreadyGrouped = true;
+        })
+        if (!alreadyGrouped) educationGroups.push(educationToEducationGroup(education));
+    })
 }
 
 export const getCachedEducations = (): Education[] => {

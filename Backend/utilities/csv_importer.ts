@@ -94,13 +94,13 @@ function csvParser(csvData: string): Education[] {
                         lowerQuartile: parseFloat(String(values[40]).replace(",", ".")),
                         median: parseFloat(String(values[39]).replace(",", ".")),
                         upperQuartile: parseFloat(String(values[41]).replace(",", ".")),
-                        projectedDirection: ""
+                        projectedDirection: "example direction"
                     },
                     experienced: {
                         lowerQuartile: parseFloat(String(values[50]).replace(",", ".")),
                         median: parseFloat(String(values[49]).replace(",", ".")),
                         upperQuartile: parseFloat(String(values[51]).replace(",", ".")),
-                        projectedDirection: ""
+                        projectedDirection: "example direction"
                     }
                 },
                 workSchedule: {
@@ -122,19 +122,14 @@ function csvParser(csvData: string): Education[] {
                 nationalJobs: Number(String(values[180]).replace(",", "."))
             }
         };
-        
-        // TODO: Remove duplicates before this
-        let answer = recursivelyCheckForMissingProperties(education);     
-        console.log(answer);           
-        if (answer) {
+           
+        if (recursivelyCheckForMissingProperties(education)) {
             continue;
         } 
         
         // This no run if property be bye bye
         educations.push(education);
     }
-    console.log(educations.length);
-    console.log("count:",falseCounter);
     return educations;
 }
 
@@ -157,8 +152,7 @@ export function removeSemicolonsBetweenQuotes(input: string): string {
 
     return result;
 }
-var falseCounter = 0;
-let nesting = 0;
+
 const recursivelyCheckForMissingProperties = (object: object): boolean => {
     for (const key in object){ // loop through keys in the object 
         if (typeof object[key] === 'object' && object[key] !== null){ // check if keys value is an object
@@ -174,31 +168,21 @@ const recursivelyCheckForMissingProperties = (object: object): boolean => {
             }
         }
     }
-    console.log("recursivelyCheckForMissingProperties false");
-    nesting--;
     return false; // no "missing" value found
 }
 
-function isAMissingProperty(property: any): boolean
-{    
-    if ((typeof property === 'number' && Number.isNaN(property)) || property == null || property == undefined) {
-        console.log(property);
+function isAMissingProperty(property: any): boolean {    
+    if ((typeof property === 'number' && Number.isNaN(property)) || (typeof property === 'string' && property == "") || property == null || property == undefined) {
         return true;
     }    
     return false;
 }
 
-function removeDuplicates(educations: Education[]) {
-    // TODO: Lav en ting der fikser når der er flere ens uddannelser så de skal kombineres.
-}
-
-export function importCSV(/*WritePath = tsObjectWritePath,*/ CSVReadPath = csvFilePath): Education[] {
-    
+export function importCSV(CSVReadPath = csvFilePath): Education[] {
     var educations: Education[] = [];
     const file = fs.readFileSync(CSVReadPath, 'utf-8');
     
     educations = csvParser(file);
-    //fs.writeFileSync(WritePath, `import { Education } from "../../src/types"\nimport { CountyToGeography, County, Institution } from "../../src/enums"\n\nexport let educations: Education[] = ${JSON.stringify(educations, null, 4)};\n`);
     return educations;
 } 
 
