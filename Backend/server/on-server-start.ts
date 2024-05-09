@@ -33,9 +33,8 @@ const caclulateBasedOnEducations = () => {
     //console.log("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
-    calculateMinimumAndMaximumEducation();
+    calculateMinimumAndMaximumEducation(educations);
     calculateMinMaxDegreeDuration();
-    calclulateSalaryRanges();
 }
 
 const caclulateEnumTypes = () => {
@@ -60,24 +59,45 @@ export const getGeographyKeys = () => {
     return geographyKeys;
 }
 
-const calculateMinimumAndMaximumEducation = () => {
-    minimumEducation = { ...educations[0] }; // creates a copy of the first education
-    maximumEducation = { ...educations[0] };
+export const calculateMinimumAndMaximumEducation = (educations: Education[]) => {
+    minimumEducation = { // creates a copy of the first education
+        ...educations[0],
+        title: "minimum education"
+    }; 
+    maximumEducation = { 
+        ...educations[0],
+        title: "maximum education"
+     };
     educations.forEach((education) =>{
-        recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
-        recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max);
+        cals++;
+        console.log(education.title, cals);
+        minimumEducation = recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min) as Education; // recursively finds the minimum of all properties
+        maximumEducation = recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max) as Education;
     });
+    console.log(minimumEducation);
 };
 
-const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number) => {
+let cals = 0;
+
+const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number): object => {
     for (const key in object2){ // run the body of the for loop for all keys in object2
         if (typeof object2[key] === 'number'){ // if the key is a number call the function 'func'
+            //if (func.name == "min") console.log(key, "was", object1[key], object2[key], "became", func(object1[key], object2[key]), func.name);
             object1[key] = func(object1[key], object2[key]);
         }
         else if (typeof object2[key] === 'object' && object2[key] !== null){ // else if the key is an object call this same function recursively
-            recursivelyCallFunctionOnAllNumberProperties(object1[key], object2[key], func);
-        } 
+            object1[key] = recursivelyCallFunctionOnAllNumberProperties(object1[key], object2[key], func);
+        }  
     }
+    return object1;
+}
+
+export const getMinimumEducation = (): Education => {
+    return minimumEducation;
+}
+
+export const getMaximumEducation = (): Education => {
+    return maximumEducation;
 }
 
 let educationDurationRange: MinimumMaximum;
@@ -101,42 +121,6 @@ const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 
-let newGraduateSalaryRange: MinimumMaximum;
-let experiencedSalaryRange: MinimumMaximum;
-
-const calclulateSalaryRanges = () => {
-    //console.log("calculateSalaryRanges");
-
-    let newGraduateSalaryMin = 0 //educations[0].job_data.salaries.newGraduate.lower_quartile;
-    let experiencedSalaryMin = 0 //educations[0].job_data.salaries.experienced.lower_quartile;
-    let newGraduateSalaryMax = 0 //educations[0].job_data.salaries.newGraduate.upper_quartile;
-    let experiencedSalaryMax = 0 //educations[0].job_data.salaries.experienced.upper_quartile;
-
-    educations.forEach((education) => {
-        const salaries = education.jobData.salaries;
-        if ((Number.isNaN(salaries.newGraduate.lowerQuartile)
-            || Number.isNaN(salaries.newGraduate.upperQuartile)
-            || Number.isNaN(salaries.experienced.lowerQuartile)
-            || Number.isNaN(salaries.experienced.upperQuartile)) == false
-        ) {
-            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.jobData.salaries.newGraduate.lowerQuartile);
-            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.jobData.salaries.experienced.lowerQuartile);
-            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.jobData.salaries.newGraduate.upperQuartile);
-            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.jobData.salaries.experienced.upperQuartile);
-        }
-    });
-    newGraduateSalaryRange = { minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax };
-    experiencedSalaryRange = { minimum: experiencedSalaryMin, maximum: experiencedSalaryMax };
-}
-
-export const getNewGraduateSalaryRange = (): MinimumMaximum => {
-    return newGraduateSalaryRange;
-}
-
-export const getExperiencedSalaryRange = (): MinimumMaximum => {
-    return experiencedSalaryRange;
-}
-
 export const getTableSectionData = (): TableSectionDataFromServer => {
     return {
         educations: educations,
@@ -149,7 +133,7 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
 
         educationDurationRange: educationDurationRange,
 
-        newGraduateSalaryRange: newGraduateSalaryRange,
-        experiencedSalaryRange: experiencedSalaryRange,
+        minimumValueEducation: minimumEducation,
+        maximumValueEducation: maximumEducation,
     }
 }
