@@ -4,16 +4,16 @@ import { CountyToGeography, County, Institution } from "../../src/enums"
 export let educations: Education[] = [
     {
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/samfundsvidenskabeligekandidatuddannelser/oevrigesamfundsvidenskab/organisational-innovation-and-entrepreneurship",
-        "rank": null,
+        "rank": 0,
         "title": "Organisational Innovation and Entrepreneurship",
         "degreeType": "Kandidatuddannelse",
         "counties": [
-            7
+            "Frederiksberg"
         ],
         "geographies": [
-            3
+            "Hovedstaden"
         ],
-        "institutions": 5,
+        "institutions": "Copenhagen Business School - Handelshøjskolen",
         "subjects": [],
         "industries": [
             {
@@ -102,16 +102,16 @@ export let educations: Education[] = [
     },
     {
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/historie",
-        "rank": null,
+        "rank": 0,
         "title": "Historie",
         "degreeType": "Kandidatuddannelse",
         "counties": [
-            21
+            "København"
         ],
         "geographies": [
-            3
+            "Hovedstaden"
         ],
-        "institutions": 33,
+        "institutions": "Københavns Universitet",
         "subjects": [],
         "industries": [
             {
@@ -200,16 +200,16 @@ export let educations: Education[] = [
     },
     {
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/dansk",
-        "rank": null,
+        "rank": 0,
         "title": "Dansk",
         "degreeType": "Kandidatuddannelse",
         "counties": [
-            46
+            "Aarhus"
         ],
         "geographies": [
-            2
+            "Midtjylland"
         ],
-        "institutions": 3,
+        "institutions": "Aarhus Universitet",
         "subjects": [],
         "industries": [
             {

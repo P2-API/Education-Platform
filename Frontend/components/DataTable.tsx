@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import { Education } from "../../src/types";
-import { Institution, Geography } from "../../src/enums";
+import { Institution, County, Geography, DegreeType } from "../../src/enums";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -28,7 +28,7 @@ const MaterialReactDataTable = () => {
         maxSize: 200,
       },
       {
-        accessorKey: "degree_type",
+        accessorKey: "degreeType",
         header: "Type", // Change to your language's translation for "degree_type"
         size: 160,
       },
@@ -111,14 +111,14 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "student_feedback",
+        accessorKey: "socialFeedback",
         header: "Socialt miljø 1 til 5",
         size: 160,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const socialEnvironment = row.original.student_feedback.socialEnvironment;
-          const groupEngagement = row.original.student_feedback.groupEngagement;
-          const loneliness = row.original.student_feedback.loneliness;
-          const stress = row.original.student_feedback.stress;
+          const socialEnvironment = row.original.socialFeedback.socialEnvironment;
+          const groupEngagement = row.original.socialFeedback.groupEngagement;
+          const loneliness = row.original.socialFeedback.loneliness;
+          const stress = row.original.socialFeedback.stress;
           //console.log("hoursNumbers", hoursNumbers)
           //console.log("hoursTitles", hoursTitles)
           return (
@@ -131,33 +131,33 @@ const MaterialReactDataTable = () => {
           );
         }
       },
-      /*       {
-              accessorKey: "student_feedback",
-              header: "Fagligt miljø 1 til 5",
-              size: 200,
-              Cell: ({ row }: { row: MRT_Row<Education> }) => {
-                const academicEnvironment = row.original.student_feedback.academicEnvironment;
-                const teacherEvaluation = row.original.student_feedback.teacherEvaluation;
-                const satisfaction = row.original.student_feedback.satisfaction;
-                //console.log("hoursNumbers", hoursNumbers)
-                //console.log("hoursTitles", hoursTitles)
-                return (
-                  <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
-                    <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment} </p>
-                    <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Lærerevaluering: {teacherEvaluation} </p>
-                    <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Tilfredshed: {satisfaction} </p>
-                  </ul>
-                );
-              }
-            }, */
       {
-        accessorKey: "academic_workload",
+        accessorKey: "academicFeedback",
+        header: "Fagligt miljø 1 til 5",
+        size: 200,
+        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+          const academicEnvironment = row.original.academicFeedback.academicEnvironment;
+          const teacherEvaluation = row.original.academicFeedback.teacherEvaluation;
+          const satisfaction = row.original.academicFeedback.satisfaction;
+          //console.log("hoursNumbers", hoursNumbers)
+          //console.log("hoursTitles", hoursTitles)
+          return (
+            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment} </p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Lærerevaluering: {teacherEvaluation} </p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Tilfredshed: {satisfaction} </p>
+            </ul>
+          );
+        }
+      },
+      {
+        accessorKey: "academicWorkload",
         header: "Arbejdsbyrde",
         size: 160,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lectures = row.original.academic_workload.lectures;
-          const literature = row.original.academic_workload.literature;
-          const studentJob = row.original.academic_workload.studentJob;
+          const lectures = row.original.academicWorkload.lectures;
+          const literature = row.original.academicWorkload.literature;
+          const studentJob = row.original.academicWorkload.studentJob;
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Forelæsninger: {lectures} timer</p>
@@ -168,14 +168,14 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "degree_structure.contents",
+        accessorKey: "degreeStructure.contents",
         header: "Uddannelsesstruktur",
         size: 180,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const teaching = row.original.degree_structure.contents.teaching;
-          const exams = row.original.degree_structure.contents.exams;
-          const internship = row.original.degree_structure.contents.internship;
-          const internationalStay = row.original.degree_structure.contents.internationalStay;
+          const teaching = row.original.degreeStructure.contents.teaching;
+          const exams = row.original.degreeStructure.contents.exams;
+          const internship = row.original.degreeStructure.contents.internship;
+          const internationalStay = row.original.degreeStructure.contents.internationalStay;
           return (
             <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "80px", scrollbarWidth: "thin" }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Undervisning: {teaching}%</p>
@@ -187,11 +187,11 @@ const MaterialReactDataTable = () => {
         },
       },
       {
-        accessorKey: "degree_structure.teachingMethods",
+        accessorKey: "degreeStructure.teachingMethods",
         header: "Undervisningsform",
         size: 160,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const teachingMethods = row.original.degree_structure.teachingMethods;
+          const teachingMethods = row.original.degreeStructure.teachingMethods;
           console.log("teachingMethods", teachingMethods)
           return (
             <ul style={{ padding: 0, overflowX: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
@@ -203,24 +203,24 @@ const MaterialReactDataTable = () => {
         },
       },
       {
-        accessorKey: "dropout_rate",
+        accessorKey: "dropoutRate",
         header: "Dropout-rate",
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const dropoutRate = row.original.dropout_rate;
+          const dropoutRate = row.original.dropoutRate;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{dropoutRate * 100}%</p>
           );
         }
       },
       {
-        accessorKey: "job_data.salaries.newGraduate",
+        accessorKey: "jobData.salaries.newGraduate",
         header: "Løn som nyuddannet",
         size: 200,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lower_quartile = row.original.job_data.salaries.newGraduate.lower_quartile;
-          const median = row.original.job_data.salaries.newGraduate.median;
-          const upper_quartile = row.original.job_data.salaries.newGraduate.upper_quartile;
+          const lower_quartile = row.original.jobData.salaries.newGraduate.lowerQuartile;
+          const median = row.original.jobData.salaries.newGraduate.median;
+          const upper_quartile = row.original.jobData.salaries.newGraduate.upperQuartile;
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -240,13 +240,13 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "job_data.salaries.experienced",
+        accessorKey: "jobData.salaries.experienced",
         header: "Løn som erfaren",
         size: 200,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lower_quartile = row.original.job_data.salaries.experienced.lower_quartile;
-          const median = row.original.job_data.salaries.experienced.median;
-          const upper_quartile = row.original.job_data.salaries.experienced.upper_quartile;
+          const lower_quartile = row.original.jobData.salaries.experienced.lowerQuartile;
+          const median = row.original.jobData.salaries.experienced.median;
+          const upper_quartile = row.original.jobData.salaries.experienced.upperQuartile;
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -266,12 +266,12 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "job_data.unemployment",
+        accessorKey: "jobData.unemployment",
         header: "Arbejdsløshed",
         size: 160,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const newGraduate = row.original.job_data.unemployment.newGraduate;
-          const experienced = row.original.job_data.unemployment.experienced;
+          const newGraduate = row.original.jobData.unemployment.newGraduate;
+          const experienced = row.original.jobData.unemployment.experienced;
           return (
             <ul style={{ padding: 0, width: "250px", height: "40px", scrollbarWidth: "thin", marginRight: "1.5em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -287,13 +287,13 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "job_data.workSchedule",
+        accessorKey: "jobData.workSchedule",
         header: "Arbejdstid (job)",
         size: 180,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const working_hours = row.original.job_data.workSchedule.working_hours;
-          const flexible_hours = row.original.job_data.workSchedule.flexible_hours_percent + row.original.job_data.workSchedule.self_schedule_percent + row.original.job_data.workSchedule.variable_schedule_percent;
-          const fixed_hours = row.original.job_data.workSchedule.fixed_hours_percent;
+          const working_hours = row.original.jobData.workSchedule.workingHours;
+          const flexible_hours = row.original.jobData.workSchedule.flexibleHoursPercent + row.original.jobData.workSchedule.selfSchedulePercent + row.original.jobData.workSchedule.variableSchedulePercent;
+          const fixed_hours = row.original.jobData.workSchedule.fixedHoursPercent;
           const flexible_hours_percent = flexible_hours / (flexible_hours + fixed_hours);
 
           return (
@@ -315,36 +315,36 @@ const MaterialReactDataTable = () => {
         }
       },
       {
-        accessorKey: "job_data.degree_relevance",
+        accessorKey: "jobData.degreeRelevance",
         header: "Job relevans",
         size: 120,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 
-          const degree_relevance = row.original.job_data.degree_relevance;
+          const degree_relevance = row.original.jobData.degreeRelevance;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{degree_relevance}</p>
           );
         }
       },
       {
-        accessorKey: "job_data.degree_prepares_for_job",
+        accessorKey: "jobData.degreePreparesForJob",
         header: "Job forberedende",
         size: 140,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 
-          const degree_prepares_for_job = row.original.job_data.degree_prepares_for_job;
+          const degree_prepares_for_job = row.original.jobData.degreePreparesForJob;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{degree_prepares_for_job}</p>
           );
         }
       },
       {
-        accessorKey: "job_data.national_jobs",
+        accessorKey: "jobData.nationalJobs",
         header: "Internationalt job",
         size: 140,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 
-          const national_jobs = row.original.job_data.national_jobs;
+          const national_jobs = row.original.jobData.nationalJobs;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "3em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{Math.floor((1 - national_jobs) * 100)}%</p>
           );
@@ -360,10 +360,10 @@ const MaterialReactDataTable = () => {
       url: "https://www.sdu.dk/da/uddannelse/bachelor/datalogi",
       rank: 1,
       title: "Datalogi",
-      degree_type: "Universitets-uddannelse",
-      counties: [1, 2, 3],
-      geographies: [1, 2],
-      institutions: 3,
+      degreeType: DegreeType["Kandidatuddannelse"],
+      counties: [County.Ballerup],
+      geographies: [Geography.Nordjylland],
+      institutions: Institution["Aalborg Universitet"],
       subjects: [
         {
           title: "Matematik",
@@ -397,21 +397,23 @@ const MaterialReactDataTable = () => {
         withFewStudents: 60,
         withSupervision: 10,
       },
-      student_feedback: {
-        socialEnvironment: 4.1,
-        academicEnvironment: 4.8,
-        groupEngagement: 3.9,
-        loneliness: 1.2,
-        stress: 0.5,
-        teacherEvaluation: 4.2,
+      socialFeedback: {
+        socialEnvironment: 4.2,
+        groupEngagement: 4.5,
+        loneliness: 2.1,
+        stress: 3.8,
+      },
+      academicFeedback: {
+        academicEnvironment: 4.1,
+        teacherEvaluation: 4.8,
         satisfaction: 4.7,
       },
-      academic_workload: {
+      academicWorkload: {
         lectures: 20,
         literature: 13,
         studentJob: 5,
       },
-      degree_structure: {
+      degreeStructure: {
         contents: {
           teaching: 40,
           exams: 30,
@@ -420,29 +422,29 @@ const MaterialReactDataTable = () => {
         },
         teachingMethods: ["Projektarbejde", "Klasseundervisning", "Selvstudie"],
       },
-      dropout_rate: 0.31,
-      job_data: {
+      dropoutRate: 0.31,
+      jobData: {
         salaries: {
           newGraduate: {
-            lower_quartile: 32.2,
+            lowerQuartile: 32.2,
             median: 38.2,
-            upper_quartile: 41.4,
-            projected_direction: "up",
+            upperQuartile: 41.4,
+            projectedDirection: "up",
           },
           experienced: {
-            lower_quartile: 40.2,
+            lowerQuartile: 40.2,
             median: 49.2,
-            upper_quartile: 61.4,
-            projected_direction: "up",
+            upperQuartile: 61.4,
+            projectedDirection: "up",
           },
         },
         workSchedule: {
-          working_hours: 38,
-          fixed_hours_percent: 0.79,
-          flexible_hours_percent: 0.11,
-          self_schedule_percent: 0.5,
-          variable_schedule_percent: 0.5,
-          night_and_evening_shifts_percent: 0.0,
+          workingHours: 38,
+          fixedHoursPercent: 0.79,
+          flexibleHoursPercent: 0.11,
+          selfSchedulePercent: 0.5,
+          variableSchedulePercent: 0.5,
+          nightAndEveningShiftsPercent: 0.0,
         },
         unemployment: {
           newGraduate: 0.03,
@@ -450,9 +452,9 @@ const MaterialReactDataTable = () => {
           projectedNewGraduate: 0.02,
           projectedExperienced: 0.01,
         },
-        degree_relevance: 4.5,
-        degree_prepares_for_job: 4.2,
-        national_jobs: 0.92
+        degreeRelevance: 4.5,
+        degreePreparesForJob: 4.2,
+        nationalJobs: 0.92
       }
     },
   ];
@@ -477,7 +479,7 @@ const MaterialReactDataTable = () => {
 
     },
     enableRowVirtualization: true,
-    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", } },
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden" } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 8 }, //optionally customize the row virtualizer

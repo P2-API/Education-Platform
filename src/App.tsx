@@ -5,9 +5,9 @@ import { Toaster } from "sonner";
 
 function App() {
   return (
-    
-    <div style={{ height: "100vh"}}>
-    <Toaster richColors />
+
+    <div style={{ height: "100vh" }}>
+      <Toaster richColors />
 
       <Navbar />
 

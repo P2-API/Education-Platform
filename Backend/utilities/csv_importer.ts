@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { Education } from "../../src/types"
 import * as csvParse from 'csv-parse'
-import { CountyToGeography, County, Institution } from "../../src/enums";
+import { CountyToGeography, County, Institution, Geography } from "../../src/enums";
 
 const header = ["Titel"];
 
@@ -24,11 +24,13 @@ function csvParser(csvData: string): Education[] {
     const educations: Education[] = [];
     
     for (let i = 1; i < lines.length - 1; i++) {
-        const values = lines[i].split(';');
+
+        //Hvis char " er fundet, så køre indtil man finder " igen, fjern alle ; der er mellem dem
+        const values = removeSemicolonsBetweenQuotes(lines[i]).split(';');
 
         const education: Education = {
             "url": values[2],
-            "rank": null,
+            "rank": 0,
             "title": values[4],
             "degreeType": values[6],
             "counties": [County[values[11]]],
@@ -54,15 +56,6 @@ function csvParser(csvData: string): Education[] {
                 withFewStudents: Number(values[20]),
                 withSupervision: Number(values[21])
             },
-            /*"student_feedback": {
-                socialEnvironment: Number(String(values[70]).replace(",", ".")),
-                academicEnvironment: Number(String(values[58]).replace(",", ".")),
-                groupEngagement: Number(String(values[62]).replace(",", ".")),
-                loneliness: Number(String(values[112]).replace(",", ".")),
-                stress: Number(String(values[121]).replace(",", ".")),
-                teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
-                satisfaction: Number(String(values[130]).replace(",", "."))
-            },*/
             socialFeedback: {
                 socialEnvironment: Number(String(values[70]).replace(",", ".")),
                 groupEngagement: Number(String(values[62]).replace(",", ".")),
@@ -130,13 +123,69 @@ function csvParser(csvData: string): Education[] {
             }
         };
         
-        for (const property in education) if (Number.isNaN(property) || property == null || property == undefined) continue;
-
+        // TODO: Remove duplicates before this
+        let answer = recursivelyCheckForMissingProperties(education);     
+        console.log(answer);           
+        if (answer) {
+            continue;
+        } 
+        
         // This no run if property be bye bye
         educations.push(education);
     }
-
+    console.log(educations.length);
+    console.log("count:",falseCounter);
     return educations;
+}
+
+export function removeSemicolonsBetweenQuotes(input: string): string {
+    let insideQuotes = false;
+    let result = '';
+
+    for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+        
+        if (char === '"') {
+            insideQuotes = !insideQuotes;
+            result += char;
+        } else if (char === ';' && insideQuotes) {
+            continue;
+        } else {
+            result += char;
+        }
+    }
+
+    return result;
+}
+var falseCounter = 0;
+let nesting = 0;
+const recursivelyCheckForMissingProperties = (object: object): boolean => {
+    for (const key in object){ // loop through keys in the object 
+        if (typeof object[key] === 'object' && object[key] !== null){ // check if keys value is an object
+            let answer = recursivelyCheckForMissingProperties(object[key]); // call for nested object
+            if (answer) {
+                return true;
+            }
+        } 
+        else {
+            let answer = isAMissingProperty(object[key]); // else check if the keys value is "missing"
+            if (answer){ 
+                return true;  
+            }
+        }
+    }
+    console.log("recursivelyCheckForMissingProperties false");
+    nesting--;
+    return false; // no "missing" value found
+}
+
+function isAMissingProperty(property: any): boolean
+{    
+    if ((typeof property === 'number' && Number.isNaN(property)) || property == null || property == undefined) {
+        console.log(property);
+        return true;
+    }    
+    return false;
 }
 
 function removeDuplicates(educations: Education[]) {
