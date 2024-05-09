@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { load } from 'cheerio';
+import OpenAI from 'openai';
 
-getPersonalizedMessage("https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi")
+const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
-async function getPersonalizedMessage(url: string) {
+translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
+//getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
+
+export async function getPersonalizedMessage(url: string) {
     try {
         const response = await fetchHtml(url);
         if (response === "Error fetching the URL") {
@@ -19,6 +23,8 @@ async function getPersonalizedMessage(url: string) {
         if (!describingText) {
             return "Error extracting describing text";
         }
+
+        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug gerne data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
 
         const preferences = {
             academic_environment_priority: 5,
@@ -48,7 +54,7 @@ async function getPersonalizedMessage(url: string) {
             work_internationally_priority: 4,
         };
 
-        const message = await sendMessageToChatGPT(headlinerText, describingText, preferences);
+        const message = await sendMessageToChatGPT(headlinerText, describingText, preferences, promptString);
         console.log('Response from ChatGPT:', message);
         return { message };
     } catch (error) {
@@ -97,35 +103,45 @@ function fetchHtml(url: string) {
     }
 }
 
+async function sendMessageToChatGPT(headlinerText: string, describingText: string, preferences: Record<string, number>, promptString: string) {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+            role: "system",
+            content: ("dette er data omkring uddanelsen" + headlinerText + describingText).replace(/\s+/g, ' ').trim() +
+            ' | ' +
+            "dette data er omkring brugeren" + JSON.stringify(preferences).replace(/"/g, ''),
+        },
+        { 
+            role: "user", 
+            content: promptString },
+      ],
+      model: "gpt-3.5-turbo-0125",
+      response_format: { type: "json_object" },
+      temperature: 0.2,
+    });
 
-async function sendMessageToChatGPT(headlinerText: string, describingText: string, preferences: Record<string, number>): Promise<string> {
-    const apiKey = process.env.OPENAI_API_KEY; // Use environment variable for API key
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
+    //console.log(completion.choices[0].message.content);
+    return completion.choices[0].message.content;
+}
+  
 
-    const command = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst";
+async function translateTextToEnglishChatGPT(text: string) {
+    const completion = await openai.chat.completions.create({
+        messages: [
+            {   role: "system", 
+                content: text 
+            },
+            { 
+                role: "user", 
+                content: "translate the text to english, pls give the translationed text back in a JSON string." 
+            },
+        ],
+        model: "gpt-3.5-turbo-0125",
+        response_format: { type: "json_object" },
+        temperature: 0.1,
+    });
 
-    try {
-        const response = await axios.post(apiUrl, {
-            model: 'text-davinci-003',
-            messages: [
-                { role: 'system', content: headlinerText },
-                { role: 'system', content: describingText },
-                { role: 'user', content: command },
-                { role: 'user', content: JSON.stringify(preferences) } // Convert object to string
-            ],
-            max_tokens: 150,
-            stop: ['\n', ''],
-            temperature: 0.7
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            }
-        });
-
-        return response.data.choices[0].message.content;
-    } catch (error) {
-        console.error('Error sending message to ChatGPT API:', error);
-        throw new Error('Error sending message to ChatGPT API');
-    }
+    console.log(completion.choices[0].message.content);
+    return completion.choices[0].message.content;
 }
