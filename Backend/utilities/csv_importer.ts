@@ -181,7 +181,7 @@ const recursivelyCheckForMissingProperties = (object: object): boolean => {
 
 function isAMissingProperty(property: any): boolean
 {    
-    if ((Number.isNaN(property) && typeof property === 'number') || property == null || property == undefined) {
+    if ((typeof property === 'number' && Number.isNaN(property)) || property == null || property == undefined) {
         console.log(property);
         return true;
     }    
