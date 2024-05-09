@@ -14,11 +14,6 @@ Klasseundervisning/forelæsning/underviservejledning
 
 import { Geography, County, Institution, DegreeType, JobFlexibility } from "enums";
 
-export type Subject = {
-    title: string;
-    score: number;
-}
-
 export type Industry = {
     title: string;
     share: number;
@@ -102,7 +97,7 @@ export type Education = {
     url: string;
     rank: number | null;
     title: string;
-    degreeType: string; // filter = wantedDegreeTypes: string[];
+    degreeType: DegreeType; // filter = wantedDegreeTypes: string[];
     counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
@@ -113,7 +108,7 @@ export type Education = {
     academicFeedback: AcademicFeedback;// quiz = academic_environment_priority:  teaching_priority: number; 
     academicWorkload: AcademicWorkload; // quiz = student_job_priority: number; lectures_priority: number; literature_priority: number;
     degreeStructure: DegreeStructure; // filter = hasFormsOfEducation: string[]; / quiz = dislike_exam_priority: number; internship_priority: number; international_stay_priority: number;
-    dropoutRate: number; 
+    dropoutRate: number;
     jobData: JobData; /* filter = canWorkInternationally: boolean; / LP filters = wantedSalary: SalaryFilters, unemployment: UnenploymentFilters, jobFlexibility: JobFlexibility; wantedWorkingHours: MinimumMaximum; 
                         / quiz = starting_salary_priority: number; experienced_salary_priority: number; unemployment_priority: number; degree_relevance_priority: number; fixed_hours_priority: number; flexible_hours_priority: number;
                         self_schedule_priority: number; variable_schedule_priority: number; night_and_evening_shifts_priority: number; work_nationally_priority: number;*/
@@ -177,10 +172,17 @@ export type UnenploymentFilters = {
     experienced: number;
 }
 
+export type Subject = {
+    title: string;
+    score: number;
+}
+
 export type TableSectionDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];
+
+    subjectKeys: string[];
 
     institutionKeys: (keyof typeof Institution)[];
 
@@ -193,13 +195,13 @@ export type TableSectionDataFromServer = {
 }
 
 export type TableFilters = {
-    wantedDegreeTypes: string[]; //in use
-    canStudyInGeoraphies: Geography[]; //in use
-    canStudyAtInstitution: Institution[]; //in use
+    wantedDegreeTypes: string[]; //in use               // Done
+    canStudyInGeoraphies: Geography[]; //in use         // Done
+    canStudyAtInstitution: Institution[]; //in use      // Done
     hasSubjects: string[]; // in use 
-    hasIndustries: string[]; // in use
+    hasIndustries: string[]; // in use                  // Done
     hasFormsOfEducation: string[]; // in use
-    wantedSalary: SalaryFilters; // in use / LP filter
+    wantedSalary: SalaryFilters; // in use / LP filter  // Done
     unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
     jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
     wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)

@@ -5,7 +5,7 @@ import { TableSectionDataContext } from "./Homepage";
 
 import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
-import { MinimumMaximum } from "types";
+import { MinimumMaximum, Subject } from "types";
 
 type DataTableSectionProps = {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +15,7 @@ export type FilterProps = {
     degreeTypes: string[];
     institutes: string[];
     geographies: string[];
+    subjects: string[];
     educationDuration: MinimumMaximum;
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
@@ -28,6 +29,7 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
     // make a react state that keeps track of all filters and their values
     const [filters, setFilters] = useState<FilterProps>({
         degreeTypes: [],
+        subjects: [],
         institutes: [],
         geographies: [],
         educationDuration: { minimum: 0, maximum: 0 },
@@ -67,6 +69,14 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ setIsModalOpen }) =
                                 selectPlaceholder="Uddannelsestype"
                                 setFilters={setFilters}
                                 identifier="degreeTypes"
+                            />
+                            <MultiSelectAutoComplete
+                                value={filters.subjects}
+                                collection={data?.subjectKeys ?? []}
+                                selectLabel="Filtrer efter interesse"
+                                selectPlaceholder="Fag"
+                                setFilters={setFilters}
+                                identifier="subjects"
                             />
                             <MultiSelectAutoComplete
                                 value={filters.institutes}
