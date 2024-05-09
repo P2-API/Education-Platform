@@ -22,33 +22,16 @@ const MaterialReactDataTable = () => {
       },
       {
         accessorKey: "title",
-        header: "Education", // Change to your language's translation for "Education"
+        header: "Education",
         minSize: 130,
         size: 150,
         maxSize: 200,
       },
       {
         accessorKey: "degreeType",
-        header: "Type", // Change to your language's translation for "degree_type"
+        header: "Type",
         size: 160,
       },
-      /* {
-        accessorKey: "geography",
-        header: "Geografi", // Change to your language's translation for "geography"
-        size: 110,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const geographyNames = row.original.geographies.map((location: number) => Geography[location])
-          //console.log("geographyNames", geographyNames)
-          return (
-            // map 
-            <ul style={{ width: "250px , height: "65px", justgeographyNames.map((location: string) => (ifyContent: "center", overflowY: "scroll", paddingBottom: "0px" }} >
-              {geographyNames.map((location: string) => (
-                <p className="noselect" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={location}>{location}</p>
-              ))}
-            </ul>
-          );
-        },
-      }, */
       {
         accessorKey: "institutions",
         header: "Uddannelsessted",
@@ -60,6 +43,22 @@ const MaterialReactDataTable = () => {
           );
         },
       },
+      {
+        accessorKey: "geography",
+        header: "Geografi",
+        size: 120,
+        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+          const geography = row.original.geographies;
+          return (
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", scrollbarWidth: "thin", alignItems: "center" }}>
+              {geography.map((geo: string) => (
+                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={geo}>{geo}</p>
+              ))}
+            </ul>
+          );
+        }
+      },
+
       {
         accessorKey: "subjects",
         header: "Fag", // Change to your language's translation for "subjects"
@@ -362,7 +361,7 @@ const MaterialReactDataTable = () => {
       title: "Datalogi",
       degreeType: DegreeType["Kandidatuddannelse"],
       counties: [County.Ballerup],
-      geographies: [Geography.Nordjylland],
+      geographies: [Geography.Nordjylland, Geography.Syddanmark, Geography.Hovedstaden],
       institutions: Institution["Aalborg Universitet"],
       subjects: [
         {
