@@ -213,7 +213,7 @@ export const CountiesToGeography = (counties: County[]): Geography[] => {
     return geographies;
 }
 
-export const DegreeTypeToDuration = (degreeType: DegreeType): MinimumMaximum => {
+export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): MinimumMaximum => {
     switch (degreeType) {
         case DegreeType["Akademisk overbygningsuddannelse"]:
             return {minimum: 12, maximum: 12};

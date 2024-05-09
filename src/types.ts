@@ -181,16 +181,10 @@ export type TableSectionDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];
-    degreeTypes: DegreeType[];
-    degreeTypesString: string[];
 
     institutionKeys: (keyof typeof Institution)[];
-    institutes: Institution[];
-    institutesString: string[];
 
     geographyKeys: (keyof typeof Geography)[];
-    geographies: Geography[];
-    geographiesString: string[];
 
     educationDurationRange: MinimumMaximum;
 

@@ -5,6 +5,15 @@ import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../
 
 let educations: Education[] = [];
 
+
+let degreeTypeKeys: (keyof typeof DegreeType)[];
+let institutionKeys: (keyof typeof Institution)[];
+let geographyKeys: (keyof typeof Geography)[];
+
+
+let minimumEducation: Education;
+let maximumEducation: Education;
+
 export const onStart = () => {
     //console.log("onStart");
     cacheEducations();
@@ -29,72 +38,27 @@ const caclulateBasedOnEducations = () => {
     calclulateSalaryRanges();
 }
 
-let degreeTypeKeys: (keyof typeof DegreeType)[];
-let degreeTypes: DegreeType[];
-let degreeTypesString: string[];
-
-let institutionKeys: (keyof typeof Institution)[];
-let institutes: Institution[];
-let institutesString: string[];
-
-let geographyKeys: (keyof typeof Geography)[];
-let geographies: Geography[];
-let geographiesString: string[];
-
 const caclulateEnumTypes = () => {
     //console.log("calculateEnumTypes");
 
-    degreeTypeKeys = Object.keys(DegreeType).filter(key => isNaN(Number(key))) as (keyof typeof DegreeType)[];
-    degreeTypes = degreeTypeKeys.map(key => DegreeType[key]);
-    degreeTypesString = degreeTypeKeys.map(value => value.toString());
+    degreeTypeKeys = Object.keys(DegreeType) as (keyof typeof DegreeType)[];
 
-    institutionKeys = Object.keys(Institution).filter(key => isNaN(Number(key))) as (keyof typeof Institution)[];
-    institutes = institutionKeys.map(key => Institution[key]);
-    institutesString = institutionKeys.map(value => value.toString());
+    institutionKeys = Object.keys(Institution) as (keyof typeof Institution)[];
 
-    geographyKeys = Object.keys(Geography).filter(key => isNaN(Number(key))) as (keyof typeof Geography)[];
-    const geographies: Geography[] = geographyKeys.map(key => Geography[key]);
-    geographiesString = geographyKeys.map(value => value.toString());
+    geographyKeys = Object.keys(Geography) as (keyof typeof Geography)[];
 }
 
 export const getDegreeTypeKeys = () => {
     return degreeTypeKeys;
 }
 
-export const getDegreeTypes = (): DegreeType[] => {
-    return degreeTypes;
-}
-
-export const getDegreeTypesAsString = (): string[] => {
-    return degreeTypesString;
-}
-
 export const getInstitutionKeys = () => {
     return institutionKeys;
-}
-
-export const getInstitutes = (): Institution[] => {
-    return institutes;
-}
-
-export const getInstitutesAsString = (): string[] => {
-    return institutesString;
 }
 
 export const getGeographyKeys = () => {
     return geographyKeys;
 }
-
-export const getGeographies = (): Geography[] => {
-    return geographies;
-}
-
-export const getGeographiesAsString = (): string[] => {
-    return geographiesString;
-}
-
-let minimumEducation: Education;
-let maximumEducation: Education;
 
 const calculateMinimumAndMaximumEducation = () => {
     minimumEducation = { ...educations[0] }; // creates a copy of the first education
@@ -121,9 +85,9 @@ let educationDurationRange: MinimumMaximum;
 const calculateMinMaxDegreeDuration = () => {
     //console.log("caclulateMinMaxDegreeDuration");
 
-    let educationDurationMin = DegreeTypeToDuration(degreeTypes[0]).minimum;
-    let educationDurationMax = DegreeTypeToDuration(degreeTypes[0]).maximum;
-    degreeTypes.forEach((degreeType) => {
+    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
+    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum;
+    degreeTypeKeys.forEach((degreeType) => {
         let newDuration = DegreeTypeToDuration(degreeType);
         if (newDuration.minimum != -1) {
             educationDurationMin = Math.min(educationDurationMin, newDuration.minimum);
@@ -178,16 +142,10 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         educations: educations,
 
         degreeTypeKeys: degreeTypeKeys,
-        degreeTypes: degreeTypes,
-        degreeTypesString: degreeTypesString,
 
         institutionKeys: institutionKeys,
-        institutes: institutes,
-        institutesString: institutesString,
 
         geographyKeys: geographyKeys,
-        geographies: geographies,
-        geographiesString: geographiesString,
 
         educationDurationRange: educationDurationRange,
 
