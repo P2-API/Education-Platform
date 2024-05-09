@@ -125,7 +125,7 @@ export type QuizAnswers = {
 
     industriesPriority: number; // in use
 
-    academicEnvironmentPriority: number; // in use
+    academicEnvironmentPriority: number; // in use 
 
     socialEnvironmentPriority: number; // in use
     groupEngagementPriority: number; // in use

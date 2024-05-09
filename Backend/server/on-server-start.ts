@@ -24,6 +24,7 @@ const caclulateBasedOnEducations = () => {
     //console.log("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
+    calculateMinimumAndMaximumEducation();
     calculateMinMaxDegreeDuration();
     calclulateSalaryRanges();
 }
@@ -92,6 +93,29 @@ export const getGeographiesAsString = (): string[] => {
     return geographiesString;
 }
 
+let minimumEducation: Education;
+let maximumEducation: Education;
+
+const calculateMinimumAndMaximumEducation = () => {
+    minimumEducation = { ...educations[0] }; // creates a copy of the first education
+    maximumEducation = { ...educations[0] };
+    educations.forEach((education) =>{
+        recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
+        recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max);
+    });
+};
+
+const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number) => {
+    for (const key in object2){ // run the body of the for loop for all keys in object2
+        if (typeof object2[key] === 'number'){ // if the key is a number call the function 'func'
+            object1[key] = func(object1[key], object2[key]);
+        }
+        else if (typeof object2[key] === 'object' && object2[key] !== null){ // else if the key is an object call this same function recursively
+            recursivelyCallFunctionOnAllNumberProperties(object1[key], object2[key], func);
+        } 
+    }
+}
+
 let educationDurationRange: MinimumMaximum;
 
 const calculateMinMaxDegreeDuration = () => {
@@ -124,8 +148,6 @@ const calclulateSalaryRanges = () => {
     let newGraduateSalaryMax = 0 //educations[0].job_data.salaries.newGraduate.upper_quartile;
     let experiencedSalaryMax = 0 //educations[0].job_data.salaries.experienced.upper_quartile;
 
-
-
     educations.forEach((education) => {
         const salaries = education.jobData.salaries;
         if ((Number.isNaN(salaries.newGraduate.lowerQuartile)
@@ -141,7 +163,6 @@ const calclulateSalaryRanges = () => {
     });
     newGraduateSalaryRange = { minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax };
     experiencedSalaryRange = { minimum: experiencedSalaryMin, maximum: experiencedSalaryMax };
-    console.log(experiencedSalaryRange, newGraduateSalaryRange);
 }
 
 export const getNewGraduateSalaryRange = (): MinimumMaximum => {
