@@ -1,6 +1,6 @@
 // Make a csv turn into json.
 import { test, expect } from "vitest";
-import { importCSV } from "../../Backend/utilities/csv_importer"
+import { importCSV, removeSemicolonsBetweenQuotes } from "../../Backend/utilities/csv_importer"
 import * as correctAnswer from "./output_correct"
 
 // Run the test 
@@ -12,4 +12,12 @@ test('csv imported correctly', () => {
     const educationsCorrect = correctAnswer.educations;
 
     expect(educations).toStrictEqual(educationsCorrect);
+})
+
+test('stray semicolons removed', () => {
+    
+    const input = 'Some; "value; with"; semicolons; inside; "quotes; like; this;"';
+    const output = removeSemicolonsBetweenQuotes(input);
+    const expectedOutput = 'Some; "value with"; semicolons; inside; "quotes like this"';
+    expect(output).toBe(expectedOutput);
 })

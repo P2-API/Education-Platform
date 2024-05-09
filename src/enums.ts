@@ -147,7 +147,7 @@ export enum SubjectTitle {
     Idræt = "Idræt",
 }
 
-export const CountyToGeography = (county: County): Geography =>{
+export const CountyToGeography = (county: County): Geography => {
     switch (county) {
         case County['Ballerup']:
         case County['Bornholm']:
@@ -179,11 +179,11 @@ export const CountyToGeography = (county: County): Geography =>{
         case County['Thisted']:
             return Geography['Nordjylland']
         case County['Guldborgsund']:
-        case County['Holbæk']: 
+        case County['Holbæk']:
         case County['Kalundborg']:
         case County['Køge']:
         case County['Næstved']:
-        case County['Roskilde']: 
+        case County['Roskilde']:
         case County['Slagelse']:
         case County['Vordingborg']:
             return Geography['Sjælland']
@@ -191,7 +191,7 @@ export const CountyToGeography = (county: County): Geography =>{
         case County['Ærø']:
         case County['Esbjerg']:
         case County['Faaborg-Midtfyn']:
-        case County['Fredericia']: 
+        case County['Fredericia']:
         case County['Haderslev']:
         case County['Kolding']:
         case County['Odense']:
@@ -217,23 +217,23 @@ export const CountiesToGeography = (counties: County[]): Geography[] => {
 export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): MinimumMaximum => {
     switch (degreeType) {
         case DegreeType["Akademisk overbygningsuddannelse"]:
-            return {minimum: 12, maximum: 12};
+            return { minimum: 12, maximum: 12 };
         case DegreeType.Bacheloruddannelse:
-            return {minimum: 36, maximum: 36};
+            return { minimum: 36, maximum: 36 };
         case DegreeType.Erhvervsakademiuddannelse:
-            return {minimum: 30, maximum: 30};
+            return { minimum: 30, maximum: 30 };
         case DegreeType.Kandidatuddannelse:
-            return {minimum: 24, maximum: 24};
+            return { minimum: 24, maximum: 24 };
         case DegreeType['Kunstnerisk uddannelse']:
-            return {minimum: 36, maximum: 36};
+            return { minimum: 36, maximum: 36 };
         case DegreeType['Politi og forsvar']:
-            return {minimum: 4, maximum: 36};
+            return { minimum: 4, maximum: 36 };
         case DegreeType['Professionsbacheloruddannelse']:
-            return {minimum: 18, maximum: 18};
+            return { minimum: 18, maximum: 18 };
         case DegreeType['Andre uddannelser']:
-            return {minimum: 4, maximum: 36}
-                
+            return { minimum: 4, maximum: 36 }
+
         default:
-            return {minimum: -1, maximum: -1};;
+            return { minimum: -1, maximum: -1 };;
     }
 }
