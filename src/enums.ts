@@ -137,7 +137,7 @@ export enum County {
     Uoplyst = "Uoplyst",
 }
 
-export enum Subject {
+export enum SubjectTitle {
     Matematik = "Matematik",
     Dansk = "Dansk",
     Fysik = "Fysik",
@@ -166,6 +166,7 @@ export const CountyToGeography = (county: County): Geography =>{
         case County['Ikast-Brande']:
         case County['Lemvig']:
         case County['Norddjurs']:
+        case County['Randers']:
         case County['Silkeborg']:
         case County['Skive']:
         case County['Syddjurs']:

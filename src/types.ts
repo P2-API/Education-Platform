@@ -102,7 +102,7 @@ export type Education = {
     url: string;
     rank: number | null;
     title: string;
-    degreeType: string; // filter = wantedDegreeTypes: string[];
+    degreeType: DegreeType; // filter = wantedDegreeTypes: string[];
     counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
     institutions: Institution; // filter = canStudyAtInstitution: Institution[];
@@ -188,8 +188,8 @@ export type TableSectionDataFromServer = {
 
     educationDurationRange: MinimumMaximum;
 
-    newGraduateSalaryRange: MinimumMaximum;
-    experiencedSalaryRange: MinimumMaximum;
+    minimumValueEducation: Education;
+    maximumValueEducation: Education;
 }
 
 export type TableFilters = {
