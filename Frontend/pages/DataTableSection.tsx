@@ -1,6 +1,6 @@
-import MaterialReactDataTable from "../components/DataTable";
+import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React from "react";
-import FilterBoxComponent from "../components/FilterBoxComponent";
+import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
 
 const DataTableSection: React.FC = () => {
 

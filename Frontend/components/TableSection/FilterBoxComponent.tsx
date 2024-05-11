@@ -3,8 +3,8 @@ import Paper from '@mui/material/Paper';
 import { useContext } from "react";
 import { useState } from "react";
 import { TableSectionDataContext, ModalContext } from "@frontend/pages/Homepage";
-import { MultiSelectAutoComplete, MinimumDistanceSlider } from "../components/FilterInputComponents";
-import { MinimumMaximum } from "../../src/types";
+import { MultiSelectAutoComplete, MinimumDistanceSlider } from "./FilterInputComponents";
+import { MinimumMaximum } from "@src/types"
 
 export type FilterProps = {
     degreeTypes: string[];

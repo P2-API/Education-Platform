@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
-import { Education } from "../../src/types";
-import { Institution, County, Geography, DegreeType } from "../../src/enums";
+import { Education } from "@src/types"
+import { Institution, County, Geography, DegreeType } from "../../../src/enums"
 import {
   MaterialReactTable,
   useMaterialReactTable,
