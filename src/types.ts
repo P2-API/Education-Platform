@@ -190,8 +190,8 @@ export type TableSectionDataFromServer = {
 
     educationDurationRange: MinimumMaximum;
 
-    newGraduateSalaryRange: MinimumMaximum;
-    experiencedSalaryRange: MinimumMaximum;
+    minimumValueEducation: Education;
+    maximumValueEducation: Education;
 }
 
 export type TableFilters = {
@@ -225,3 +225,7 @@ export type SubjectToType = {
     bnds: { type: number, ub: number, lb: number }
 }[]
 
+export type EducationGroup = {
+    title: string,
+    url: string
+}
