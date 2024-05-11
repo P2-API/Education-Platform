@@ -1,7 +1,6 @@
 import React from 'react';
 import VisualisationSettingsBox from "@frontend/components/VisualisationSection/VisualisationSettingsBox"
 import Visualisation from "@frontend/components/VisualisationSection/Visualisation"
-import { Education } from '@src/types';
 
 interface VisualisationSectionProps {
 
