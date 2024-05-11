@@ -3,6 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
+import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React from 'react';
 
 type TabPanelProps = {
@@ -58,7 +59,7 @@ export default function BasicTabs() {
                 <DataTableSection />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Visualisering
+                <VisualisationSection />
             </CustomTabPanel>
 
         </Box>

@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "CommonJS",
     "skipLibCheck": true,
+    "outDir": "dist",
     "esModuleInterop": true,
     /* Bundler mode */
     "moduleResolution": "node",
@@ -25,7 +26,6 @@
       "@src/*": ["./*"]
     },
   },
-
   "include": [
     "src"
   ],
