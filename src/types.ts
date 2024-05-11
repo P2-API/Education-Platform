@@ -12,7 +12,7 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
-import { Geography, County, Institution, DegreeType, JobFlexibility } from "enums";
+import { Geography, County, Institution, DegreeType, JobFlexibility } from "./enums";
 
 export type Industry = {
     title: string;

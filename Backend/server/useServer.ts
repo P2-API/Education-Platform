@@ -1,4 +1,4 @@
-import { Education, TableSectionDataFromServer } from "types";
+import { TableSectionDataFromServer } from "types";
 
 
 const useServer = () => {
@@ -10,7 +10,7 @@ const useServer = () => {
         return data;
     }
 
-    const getTableSectionData = async (): Promise<TableSectionDataFromServer> =>{
+    const getTableSectionData = async (): Promise<TableSectionDataFromServer> => {
         const response = await fetch("http://localhost:1337/get_table_section_data");
         const tableSectionData: TableSectionDataFromServer = await response.json();
         return tableSectionData;
@@ -28,7 +28,7 @@ const useServer = () => {
 
     // write more functions here 
     // write more functions here 
-    return { greetServer, updateRanking, getTableSectionData};
+    return { greetServer, updateRanking, getTableSectionData };
 }
 
 export { useServer };

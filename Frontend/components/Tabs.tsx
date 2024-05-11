@@ -38,20 +38,12 @@ function a11yProps(index: number) {
     };
 }
 
-type TabsProps = {
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-
-export default function BasicTabs(props: TabsProps) {
-    const { setIsModalOpen } = props;
+export default function BasicTabs() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
-
-
 
 
     return (
@@ -63,7 +55,7 @@ export default function BasicTabs(props: TabsProps) {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <DataTableSection setIsModalOpen={setIsModalOpen} />
+                <DataTableSection />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 Visualisering
