@@ -460,9 +460,34 @@ const MaterialReactDataTable = () => {
 
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
 
+  const DetailPanelContent = () => {
+    return (
+      <div style={{ padding: "1rem", height: "100%", width: "100%", overflowY: "scroll", scrollbarWidth: "thin" }}>
+        <p>Detail Panel Content</p>
+      </div>
+    );
+  };
+
   const table = useMaterialReactTable({
     columns,
     data, //10,000 rows
+    enableExpandAll: false,
+    renderDetailPanel: () => <DetailPanelContent />,
+    muiTableBodyRowProps: ({ row }) => ({
+      onClick: () => {
+        row.toggleExpanded();
+        // if expanded, change background color of row
+        if (row.getIsExpanded()) {
+          // change style of row
+
+        }
+      },
+      sx: {
+        cursor: 'pointer',
+        backgroundColor: row.getIsExpanded() ? "#f0f0f0" : "white",
+      },
+    }),
+    positionExpandColumn: "last",
     enableBottomToolbar: false,
     enableColumnResizing: false,
     enableGlobalFilter: false,

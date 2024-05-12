@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Paper } from '@mui/material';
 import Plot from 'react-plotly.js';
 
