@@ -1,5 +1,9 @@
 import { TableSectionDataFromServer } from "types";
 
+export type PCAData = {
+    x_axis: string[];
+    y_axis: string[];
+}
 
 const useServer = () => {
 
@@ -25,10 +29,21 @@ const useServer = () => {
         // return the result
     }
 
+    const getPCAData = async (PCA_request: PCAData) => {
+        const response = await fetch("http://localhost:1337/PCA_request", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ PCA_request })
+        });
 
-    // write more functions here 
-    // write more functions here 
-    return { greetServer, updateRanking, getTableSectionData };
+        return response
+    }
+
+    // write more functions here
+
+    return { greetServer, updateRanking, getTableSectionData, getPCAData };
 }
 
 export { useServer };
