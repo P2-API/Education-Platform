@@ -12,7 +12,7 @@ const education1: Education =
     degreeType: DegreeType['Kunstnerisk uddannelse'],
     counties: [County.Randers, County.Guldborgsund],
     geographies: [Geography.Midtjylland],
-    institutions: [Institution['Aalborg Universitet']],
+    institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
             title: SubjectTitle.Dansk,
@@ -103,7 +103,7 @@ const education2: Education =
     degreeType: DegreeType['Kunstnerisk uddannelse'],
     counties: [County.Randers, County.Guldborgsund],
     geographies: [Geography.Midtjylland],
-    institutions: [Institution['Aalborg Universitet']],
+    institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
             title: SubjectTitle.Dansk,
@@ -194,7 +194,7 @@ const minimumEducation: Education =
     degreeType: DegreeType['Kunstnerisk uddannelse'],
     counties: [County.Randers, County.Guldborgsund],
     geographies: [Geography.Midtjylland],
-    institutions: [Institution['Aalborg Universitet']],
+    institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
             title: SubjectTitle.Dansk,
@@ -285,7 +285,7 @@ const maximumEducation: Education =
     degreeType: DegreeType['Kunstnerisk uddannelse'],
     counties: [County.Randers, County.Guldborgsund],
     geographies: [Geography.Midtjylland],
-    institutions: [Institution['Aalborg Universitet']],
+    institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
             title: SubjectTitle.Dansk,

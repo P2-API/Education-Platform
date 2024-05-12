@@ -93,20 +93,20 @@ export const getGeographyKeys = () => {
 }
 
 export const calculateMinimumAndMaximumEducation = (educations: Education[]) => {
-    minimumEducation = { // creates a copy of the first education
-        ...educations[0],
-        title: "minimum education"
-    }; 
-    maximumEducation = { 
-        ...educations[0],
-        title: "maximum education"
-     };
+    minimumEducation = deepCopy(educations[0]);
+    minimumEducation.title = "minimum education";
+    maximumEducation = deepCopy(educations[0]);
+    maximumEducation.title = "maximum education";
 
     educations.forEach((education) =>{
-        minimumEducation = recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min) as Education; // recursively finds the minimum of all properties
-        maximumEducation = recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max) as Education;
+        runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
+        runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
     });
 };
+
+function deepCopy<T>(obj: T): T {
+    return JSON.parse(JSON.stringify(obj));
+}
 
 const runAndAssignFunctionForEducation = (assignTo: Education, compare: Education, func: (number1: number, number2: number) => number) => {
     assignTo.rank = func(assignTo.rank ? assignTo.rank : -1, compare.rank ? compare.rank : -1);
@@ -215,18 +215,6 @@ const runAndAssignFunctionForEducationJobDataUnemployment = (assignTo: Unemploym
     assignTo.experienced = func(assignTo.experienced, compare.experienced);
     assignTo.projectedNewGraduate = func(assignTo.projectedNewGraduate, compare.projectedNewGraduate);
     assignTo.projectedExperienced = func(assignTo.projectedExperienced, compare.projectedExperienced);
-}
-
-const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number): object => {
-    for (const key in object2){ // run the body of the for loop for all keys in object2
-        if (typeof object2[key] === 'number'){ // if the key is a number call the function 'func'
-            object1[key] = func(object1[key], object2[key]);
-        }
-        else if (typeof object2[key] === 'object' && object2[key] !== null){ // else if the key is an object call this same function recursively
-            object1[key] = recursivelyCallFunctionOnAllNumberProperties(object1[key], object2[key], func);
-        }  
-    }
-    return object1;
 }
 
 export const getMinimumEducation = (): Education => {
