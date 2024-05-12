@@ -93,24 +93,15 @@ export const getGeographyKeys = () => {
 }
 
 export const calculateMinimumAndMaximumEducation = (educations: Education[]) => {
-    minimumEducation = { // creates a copy of the first education
-        ...educations[0],
-        title: "minimum education"
-    }; 
-    maximumEducation = { 
-        ...educations[0],
-        title: "maximum education"
-     };
+    let minimumEducationCopy = { ...educations[0], title: "minimum education" }; // creates a copy of the first education
+    let maximumEducationCopy = { ...educations[1], title: "maximum education" };
     educations.forEach((education) =>{
-        cals++;
-        console.log(education.title, cals);
-        minimumEducation = recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min) as Education; // recursively finds the minimum of all properties
-        maximumEducation = recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max) as Education;
+        minimumEducationCopy = recursivelyCallFunctionOnAllNumberProperties(minimumEducationCopy, education, Math.min) as Education; // recursively finds the minimum of all properties
+        maximumEducationCopy = recursivelyCallFunctionOnAllNumberProperties(maximumEducationCopy, education, Math.max) as Education;
     });
-    console.log(minimumEducation);
+    minimumEducation = minimumEducationCopy;
+    maximumEducation = maximumEducationCopy;
 };
-
-let cals = 0;
 
 const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number): object => {
     for (const key in object2){ // run the body of the for loop for all keys in object2
