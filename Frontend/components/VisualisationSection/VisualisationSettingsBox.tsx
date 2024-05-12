@@ -15,8 +15,8 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "4em", padding: "1em", height: "100%", overflowY: "auto" }}>
-                <p style={{ fontSize: "0.9em" }}>
+            <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
+                <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
                     En PCA analyser tager adskillige faktorer i betragtning og reducerer dimensionenen/antallet af akser, så man kan
                     visualisere data på en mere overskuelig måde.
                     <br></br>
@@ -42,6 +42,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
                     setFilters={() => console.log("hello")}
                     identifier="y_axis"
                 />
+                <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>
             </div>
         </Paper>
     );
