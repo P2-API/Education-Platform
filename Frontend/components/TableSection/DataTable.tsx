@@ -39,7 +39,7 @@ const MaterialReactDataTable = () => {
           const institutionName = Institution[row.original.institutions];
           //console.log(row.original.institutions)
           return (
-            <p className="" style={{ cursor: "default", overflowX: "scroll", scrollbarWidth: "none", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
+            <p className="" style={{ cursor: "default",  margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
           );
         },
       },
@@ -50,7 +50,7 @@ const MaterialReactDataTable = () => {
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const geography = row.original.geographies;
           return (
-            <ul style={{ padding: 0, width: "250px", justifyContent: "center", scrollbarWidth: "thin", alignItems: "center" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", alignItems: "center" }}>
               {geography.map((geo: string) => (
                 <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={geo}>{geo}</p>
               ))}
@@ -101,7 +101,7 @@ const MaterialReactDataTable = () => {
           //console.log("hoursNumbers", hoursNumbers)
           //console.log("hoursTitles", hoursTitles)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px",}}>
               {hoursTitles.map((title: string, index: number) => (
                 <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={title}>{title}: {hoursNumbers[index]}%</p>
               ))}
@@ -121,7 +121,7 @@ const MaterialReactDataTable = () => {
           //console.log("hoursNumbers", hoursNumbers)
           //console.log("hoursTitles", hoursTitles)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "80px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "80px",  }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Socialt Miljø: {socialEnvironment} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Gruppeengagement: {groupEngagement} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Ensomhed: {loneliness} </p>
@@ -141,7 +141,7 @@ const MaterialReactDataTable = () => {
           //console.log("hoursNumbers", hoursNumbers)
           //console.log("hoursTitles", hoursTitles)
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Lærerevaluering: {teacherEvaluation} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Tilfredshed: {satisfaction} </p>
@@ -158,7 +158,7 @@ const MaterialReactDataTable = () => {
           const literature = row.original.academicWorkload.literature;
           const studentJob = row.original.academicWorkload.studentJob;
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Forelæsninger: {lectures} timer</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Litteratur: {literature} timer</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Studiejob: {studentJob} timer</p>
@@ -176,7 +176,7 @@ const MaterialReactDataTable = () => {
           const internship = row.original.degreeStructure.contents.internship;
           const internationalStay = row.original.degreeStructure.contents.internationalStay;
           return (
-            <ul style={{ padding: 0, overflowY: "scroll", width: "250px", justifyContent: "center", height: "80px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "80px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Undervisning: {teaching}%</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Eksamen {exams}%</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Praktik: {internship}%</p>
@@ -191,9 +191,8 @@ const MaterialReactDataTable = () => {
         size: 160,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const teachingMethods = row.original.degreeStructure.teachingMethods;
-          console.log("teachingMethods", teachingMethods)
           return (
-            <ul style={{ padding: 0, overflowX: "scroll", width: "250px", justifyContent: "center", height: "60px", scrollbarWidth: "thin" }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px",  }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>1. {teachingMethods[0]} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>2. {teachingMethods[1]} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>3. {teachingMethods[2]} </p>
@@ -503,11 +502,11 @@ const MaterialReactDataTable = () => {
 
     },
     enableRowVirtualization: true,
-    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden" } },
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden"} },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
-    rowVirtualizerOptions: { overscan: 8 }, //optionally customize the row virtualizer
-    columnVirtualizerOptions: { overscan: 17 }, //optionally customize the column virtualizer
+    rowVirtualizerOptions: { overscan: 7 }, //optionally customize the row virtualizer
+    columnVirtualizerOptions: { overscan: 18}, //optionally customize the column virtualizer
 
   });
 
