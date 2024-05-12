@@ -1,4 +1,4 @@
-import { MinimumMaximum } from "types"
+import { MinimumMaximum } from "./types"
 
 export enum JobFlexibility {
     flexible = "flexible",

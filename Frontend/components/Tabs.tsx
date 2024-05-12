@@ -3,6 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
+import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React from 'react';
 
 type TabPanelProps = {
@@ -38,20 +39,12 @@ function a11yProps(index: number) {
     };
 }
 
-type TabsProps = {
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-
-export default function BasicTabs(props: TabsProps) {
-    const { setIsModalOpen } = props;
+export default function BasicTabs() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
-
-
 
 
     return (
@@ -63,10 +56,10 @@ export default function BasicTabs(props: TabsProps) {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <DataTableSection setIsModalOpen={setIsModalOpen} />
+                <DataTableSection />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Visualisering
+                <VisualisationSection />
             </CustomTabPanel>
 
         </Box>
