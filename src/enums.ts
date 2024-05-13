@@ -1,8 +1,8 @@
 import { MinimumMaximum } from "./types"
 
 export enum JobFlexibility {
-    flexible = "flexible",
-    strict = "strict",
+    Fleksibel = "Fleksibel",
+    Streng = "Streng",
 }
 
 export enum Geography {

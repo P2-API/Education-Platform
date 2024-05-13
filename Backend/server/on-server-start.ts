@@ -68,6 +68,8 @@ export const caclulateEnumTypes = () => {
     subjectKeys = Object.keys(SubjectTitle) as (keyof typeof SubjectTitle)[];
 
     formOfEducationKeys = Object.keys(FormOfEducation) as (keyof typeof FormOfEducation)[];
+
+    jobFlexibilityKeys = Object.keys(JobFlexibility) as (keyof typeof JobFlexibility)[];
 }
 
 export const getSubjectKeys = () => {
