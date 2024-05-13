@@ -34,14 +34,14 @@ export enum Institution {
     "Det Kgl. Danske Musikkonservatorium" = "Det Kgl. Danske Musikkonservatorium",
     "Det Kongelige Akademi - Arkitektur, Design, Konservering" = "Det Kongelige Akademi - Arkitektur, Design, Konservering",
     "Det Kongelige Danske Kunstakademi - Billedkunstskolerne" = "Det Kongelige Danske Kunstakademi - Billedkunstskolerne",
-    "Diakonissestiftelsen" = "Diakonissestiftelsen",
+    Diakonissestiftelsen = "Diakonissestiftelsen",
     "EUC Nordvest" = "EUC Nordvest",
     "Erhvervsakademi Aarhus" = "Erhvervsakademi Aarhus",
     "Erhvervsakademi Dania" = "Erhvervsakademi Dania",
     "Erhvervsakademi MidtVest" = "Erhvervsakademi MidtVest",
     "Erhvervsakademi SydVest" = "Erhvervsakademi SydVest",
     "Erhvervsakademiet Copenhagen Business Academy" = "Erhvervsakademiet Copenhagen Business Academy",
-    "Forfatterskolen" = "Forfatterskolen",
+    Forfatterskolen = "Forfatterskolen",
     "Fredericia Maskinmesterskole" = "Fredericia Maskinmesterskole",
     "IBA Erhvervsakademi Kolding" = "IBA Erhvervsakademi Kolding",
     "IT-Universitetet i København" = "IT-Universitetet i København",
@@ -54,7 +54,7 @@ export enum Institution {
     "Maskinmesterskolen København" = "Maskinmesterskolen København",
     "Møgelkær Fængsel" = "Møgelkær Fængsel",
     "Nyborg Søfartsskole" = "Nyborg Søfartsskole",
-    "Politiskolen" = "Politiskolen",
+    Politiskolen = "Politiskolen",
     "Politiskolen, Uddannelsescenter Vest (UCV)" = "Politiskolen, Uddannelsescenter Vest (UCV)",
     "Professionshøjskolen Absalon" = "Professionshøjskolen Absalon",
     "Professionshøjskolen UC Syddanmark" = "Professionshøjskolen UC Syddanmark",
@@ -67,7 +67,7 @@ export enum Institution {
     "Svendborg Søfartsskole" = "Svendborg Søfartsskole",
     "Syddansk Musikkonservatorium" = "Syddansk Musikkonservatorium",
     "Syddansk Universitet" = "Syddansk Universitet",
-    "TietgenSkolen" = "TietgenSkolen",
+    TietgenSkolen = "TietgenSkolen",
     "UCL Erhvervsakademi og Professionshøjskole" = "UCL Erhvervsakademi og Professionshøjskole",
     "Uddannelsen på landsplan" = "Uddannelsen på landsplan",
     "Vildtforvaltningsskolen, Kalø" = "Vildtforvaltningsskolen, Kalø",
@@ -77,12 +77,12 @@ export enum Institution {
 
 export enum DegreeType {
     "Akademisk overbygningsuddannelse" = "Akademisk overbygningsuddannelse",
-    "Bacheloruddannelse" = "Bacheloruddannelse",
-    "Erhvervsakademiuddannelse" = "Erhvervsakademiuddannelse",
-    "Kandidatuddannelse" = "Kandidatuddannelse",
+    Bacheloruddannelse = "Bacheloruddannelse",
+    Erhvervsakademiuddannelse = "Erhvervsakademiuddannelse",
+    Kandidatuddannelse = "Kandidatuddannelse",
     "Kunstnerisk uddannelse" = "Kunstnerisk uddannelse",
     "Politi og forsvar" = "Politi og forsvar",
-    "Professionsbacheloruddannelse" = "Professionsbacheloruddannelse",
+    Professionsbacheloruddannelse = "Professionsbacheloruddannelse",
     "Andre uddannelser" = "Andre uddannelser",
 }
 
@@ -237,4 +237,16 @@ export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): Min
         default:
             throw "Degree type not handled!";
     }
+}
+
+export enum FormOfEducation {
+    "E-læring (eksempelvis fjernundervisning)" = "E-læring (eksempelvis fjernundervisning)",
+    "Faglig vejledning fra din underviser" = "Faglig vejledning fra din underviser",
+    Forelæsninger = "Forelæsninger",
+    "Gruppearbejde (læsegruppe, studiegruppe)" = "Gruppearbejde (læsegruppe, studiegruppe)",
+    "Klasseundervisning (holdundervisning)" = "Klasseundervisning (holdundervisning)",
+    "Praktik (herunder klinik eller projektorienteret forløb hos en offentlig eller privat virksomhed" = "Praktik (herunder klinik eller projektorienteret forløb hos en offentlig eller privat virksomhed",
+    "Projektarbejde (både individuelt og i grupper)" = "Projektarbejde (både individuelt og i grupper)",
+    "Selvstudie (forberedelse, læsning, hjemmeopgaver)" = "Selvstudie (forberedelse, læsning, hjemmeopgaver)",
+    "Øvelsestimer (herunder værksteds- og laboratoriearbejde)" = "Øvelsestimer (herunder værksteds- og laboratoriearbejde)"
 }

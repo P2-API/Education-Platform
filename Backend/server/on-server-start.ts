@@ -1,6 +1,6 @@
-import { AcademicFeedback, AcademicWorkload, DegreeContents, DegreeStructure, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
-import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle } from "../../src/enums";
+import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
 import * as fs from "fs"; 
 import { educationToEducationGroup } from "../utilities/custom_type_conversion";
@@ -13,6 +13,8 @@ let degreeTypeKeys: (keyof typeof DegreeType)[];
 let subjectKeys: (keyof typeof SubjectTitle)[];
 let institutionKeys: (keyof typeof Institution)[];
 let geographyKeys: (keyof typeof Geography)[];
+let formOfEducationKeys: (keyof typeof FormOfEducation)[];
+
 
 let minimumEducation: Education;
 let maximumEducation: Education;
@@ -62,6 +64,8 @@ export const caclulateEnumTypes = () => {
     geographyKeys = Object.keys(Geography) as (keyof typeof Geography)[];
 
     subjectKeys = Object.keys(SubjectTitle) as (keyof typeof SubjectTitle)[];
+
+    formOfEducationKeys = Object.keys(FormOfEducation) as (keyof typeof FormOfEducation)[];
 }
 
 export const getSubjectKeys = () => {
@@ -242,6 +246,8 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         institutionKeys: institutionKeys,
 
         geographyKeys: geographyKeys,
+
+        formOfEducationKeys: formOfEducationKeys,
 
         educationDurationRange: educationDurationRange,
 
