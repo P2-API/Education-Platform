@@ -12,4 +12,4 @@ test("Calculate the minimum and maximum duration of a degree", () => {
     caclulateEnumTypes();
     const duration: MinimumMaximum = calculateMinMaxDegreeDuration();
     expect(duration).toStrictEqual(expectedDuration);
-})
+});

@@ -4,6 +4,7 @@ import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle 
 
 import * as fs from "fs"; 
 import { educationToEducationGroup } from "../utilities/custom_type_conversion";
+import deepCopy from "../utilities/deep-copy";
 
 let educations: Education[] = [];
 let educationGroups: EducationGroup[] = [];
@@ -15,9 +16,6 @@ let geographyKeys: (keyof typeof Geography)[];
 
 let minimumEducation: Education;
 let maximumEducation: Education;
-
-let newGraduateSalaryRange: MinimumMaximum;
-let experiencedSalaryRange: MinimumMaximum;
 
 export const onStart = () => {
     //console.log("onStart");
@@ -93,10 +91,6 @@ export const calculateMinimumAndMaximumEducation = (educations: Education[]) => 
         runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
     });
 };
-
-export const deepCopy = <T>(obj: T): T => {
-    return JSON.parse(JSON.stringify(obj));
-}
 
 const runAndAssignFunctionForEducation = (assignTo: Education, compare: Education, func: (number1: number, number2: number) => number) => {
     assignTo.rank = func(assignTo.rank ? assignTo.rank : -1, compare.rank ? compare.rank : -1);

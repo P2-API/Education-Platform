@@ -9,4 +9,4 @@ test("County To Geography", () => {
     expect(CountyToGeography(County.Vordingborg)).toBe(Geography.Sjælland);
     expect(CountyToGeography(County.Ærø)).toBe(Geography.Syddanmark);
     expect(CountyToGeography("Not Real" as County)).toBe(Geography.Ukendt);
-})
+});
