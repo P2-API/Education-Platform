@@ -1,6 +1,6 @@
 import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
-import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
+import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation, JobFlexibility } from "../../src/enums";
 
 import * as fs from "fs"; 
 import { educationToEducationGroup } from "../utilities/custom_type_conversion";
@@ -9,11 +9,13 @@ import deepCopy from "../utilities/deep-copy";
 let educations: Education[] = [];
 let educationGroups: EducationGroup[] = [];
 
+
 let degreeTypeKeys: (keyof typeof DegreeType)[];
 let subjectKeys: (keyof typeof SubjectTitle)[];
 let institutionKeys: (keyof typeof Institution)[];
 let geographyKeys: (keyof typeof Geography)[];
 let formOfEducationKeys: (keyof typeof FormOfEducation)[];
+let jobFlexibilityKeys: (keyof typeof JobFlexibility)[];
 
 
 let minimumEducation: Education;
@@ -240,14 +242,11 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         educations: educations,
 
         degreeTypeKeys: degreeTypeKeys,
-        
         subjectKeys: subjectKeys,
-
         institutionKeys: institutionKeys,
-
         geographyKeys: geographyKeys,
-
         formOfEducationKeys: formOfEducationKeys,
+        jobFlexibilityKeys: jobFlexibilityKeys,
 
         educationDurationRange: educationDurationRange,
 

@@ -12,6 +12,7 @@ export type FilterProps = {
     geographies: string[];
     subjects: string[];
     formsOfEducation: string[];
+    jobFlexibilities: string[];
     educationDuration: MinimumMaximum;
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
@@ -30,6 +31,7 @@ const FilterBoxComponent = ({ }) => {
         institutes: [],
         geographies: [],
         formsOfEducation: [],
+        jobFlexibilities: [],
         educationDuration: { minimum: 0, maximum: 0 },
         newGraduateSalary: { minimum: 0, maximum: 0 },
         experiencedSalary: { minimum: 0, maximum: 0 }
@@ -100,6 +102,14 @@ const FilterBoxComponent = ({ }) => {
                         selectPlaceholder="Undervisningsform"
                         setFilters={setFilters}
                         identifier="formsOfEducation"
+                    />
+                    <MultiSelectAutoComplete
+                        value={filters.jobFlexibilities}
+                        collection={data?.jobFlexibilityKeys ?? []}
+                        selectLabel="Filtrer efter fleksibilitet i muligt arbejde efter uddannelse"
+                        selectPlaceholder="Fleksibilitet"
+                        setFilters={setFilters}
+                        identifier="jobFlexibilities"
                     />
                     <MinimumDistanceSlider
                         initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}

@@ -181,14 +181,11 @@ export type TableSectionDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];
-
     subjectKeys: string[];
-
     institutionKeys: (keyof typeof Institution)[];
-
     geographyKeys: (keyof typeof Geography)[];
-
     formOfEducationKeys: (keyof typeof FormOfEducation)[];
+    jobFlexibilityKeys: (keyof typeof JobFlexibility)[];
 
     educationDurationRange: MinimumMaximum;
 
@@ -197,13 +194,13 @@ export type TableSectionDataFromServer = {
 }
 
 export type TableFilters = {
-    wantedDegreeTypes: string[]; //in use               // Done
-    canStudyInGeoraphies: Geography[]; //in use         // Done
-    canStudyAtInstitution: Institution[]; //in use      // Done
-    hasSubjects: string[]; // in use                    // Done
-    hasIndustries: string[]; // in use                  // Done
-    hasFormsOfEducation: string[]; // in use
-    wantedSalary: SalaryFilters; // in use / LP filter  // Done
+    wantedDegreeTypes: string[]; //in use                   // Done
+    canStudyInGeoraphies: Geography[]; //in use             // Done
+    canStudyAtInstitution: Institution[]; //in use          // Done
+    hasSubjects: string[]; // in use                        // Done
+    hasIndustries: string[]; // in use                      // Done
+    hasFormsOfEducation: string[]; // in use                // Done
+    wantedSalary: SalaryFilters; // in use / LP filter      // Done
     unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
     jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
     wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
