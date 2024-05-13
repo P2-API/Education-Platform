@@ -4,9 +4,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { FilterProps } from '@frontend/pages/DataTableSection';
+import { FilterProps } from "./FilterBoxComponent"
 
-import { MinimumMaximum } from 'types';
+import { MinimumMaximum } from "../../../src/types";
 type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;

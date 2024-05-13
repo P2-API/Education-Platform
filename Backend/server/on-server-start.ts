@@ -1,10 +1,12 @@
-import { Education, MinimumMaximum, TableSectionDataFromServer } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, DegreeStructure, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../src/enums";
 
+import * as fs from "fs"; 
+import { educationToEducationGroup } from "../utilities/custom_type_conversion";
 
 let educations: Education[] = [];
-
+let educationGroups: EducationGroup[] = [];
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
 let subjectKeys: string[];
@@ -26,6 +28,19 @@ const cacheEducations = async () => {
     //console.log("cacheEducations");
     educations = await GetEducationsOnServerStart();
     caclulateBasedOnEducations();
+    groupEducations();
+    console.log("Grouped Educations: ", educationGroups.length);
+    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
+}
+
+function groupEducations() {
+    educations.forEach((education) => {
+        var alreadyGrouped = false;
+        educationGroups.forEach((groupedEducation) => {
+            if (groupedEducation.title == education.title) alreadyGrouped = true;
+        })
+        if (!alreadyGrouped) educationGroups.push(educationToEducationGroup(education));
+    })
 }
 
 export const getCachedEducations = (): Education[] => {
@@ -36,10 +51,9 @@ const caclulateBasedOnEducations = () => {
     //console.log("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
+    calculateMinimumAndMaximumEducation(educations);
     calculateSubjectKeys();
-    calculateMinimumAndMaximumEducation();
     calculateMinMaxDegreeDuration();
-    calclulateSalaryRanges();
 }
 
 // I don't know if this is what it is meant to do
@@ -78,24 +92,137 @@ export const getGeographyKeys = () => {
     return geographyKeys;
 }
 
-const calculateMinimumAndMaximumEducation = () => {
-    minimumEducation = { ...educations[0] }; // creates a copy of the first education
-    maximumEducation = { ...educations[0] };
+export const calculateMinimumAndMaximumEducation = (educations: Education[]) => {
+    minimumEducation = deepCopy(educations[0]);
+    minimumEducation.title = "minimum education";
+    maximumEducation = deepCopy(educations[0]);
+    maximumEducation.title = "maximum education";
+
     educations.forEach((education) =>{
-        recursivelyCallFunctionOnAllNumberProperties(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
-        recursivelyCallFunctionOnAllNumberProperties(maximumEducation, education, Math.max);
+        runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
+        runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
     });
 };
 
-const recursivelyCallFunctionOnAllNumberProperties = (object1: object, object2: object, func: (number1: number, number2: number) => number) => {
-    for (const key in object2){ // run the body of the for loop for all keys in object2
-        if (typeof object2[key] === 'number'){ // if the key is a number call the function 'func'
-            object1[key] = func(object1[key], object2[key]);
+function deepCopy<T>(obj: T): T {
+    return JSON.parse(JSON.stringify(obj));
+}
+
+const runAndAssignFunctionForEducation = (assignTo: Education, compare: Education, func: (number1: number, number2: number) => number) => {
+    assignTo.rank = func(assignTo.rank ? assignTo.rank : -1, compare.rank ? compare.rank : -1);
+    runAndAssignFunctionForEducationSubject(assignTo.subjects, compare.subjects, func);
+    runAndAssignFunctionForEducationIndustry(assignTo.industries, compare.industries, func);
+    runAndAssignFunctionForEducationHours(assignTo.hours, compare.hours, func);
+    runAndAssignFunctionForEducationSocialFeedback(assignTo.socialFeedback, compare.socialFeedback, func);
+    runAndAssignFunctionForEducationAcademicFeedback(assignTo.academicFeedback, compare.academicFeedback, func);
+    runAndAssignFunctionForEducationAcademicWorkload(assignTo.academicWorkload, compare.academicWorkload, func);
+    runAndAssignFunctionForEducationDegreeStructureContents(assignTo.degreeStructure.contents, compare.degreeStructure.contents, func);
+    assignTo.dropoutRate = func(assignTo.dropoutRate, compare.dropoutRate);
+    runAndAssignFunctionForEducationJobData(assignTo.jobData, compare.jobData, func);
+}
+
+const runAndAssignFunctionForEducationSubject = (assignTo: Subject[], compare: Subject[], func: (number1: number, number2: number) => number) => {
+    compare.forEach(compareSubject => {
+        let exists = false;
+        assignTo.forEach(assignSubject => {
+            if (assignSubject.title == compareSubject.title) {
+                exists = true;
+                assignSubject.score = func(assignSubject.score, compareSubject.score);
+            }
+        })
+
+        if (exists == false) {
+            assignTo.push(compareSubject);
         }
-        else if (typeof object2[key] === 'object' && object2[key] !== null){ // else if the key is an object call this same function recursively
-            recursivelyCallFunctionOnAllNumberProperties(object1[key], object2[key], func);
-        } 
-    }
+    })
+}
+
+const runAndAssignFunctionForEducationIndustry = (assignTo: Industry[], compare: Industry[], func: (number1: number, number2: number) => number) => {
+    compare.forEach(compareIndustry => {
+        let exists = false;
+        assignTo.forEach(assignIndustry => {
+            if (assignIndustry.title == compareIndustry.title) {
+                exists = true;
+                assignIndustry.share = func(assignIndustry.share, compareIndustry.share);
+            }
+        })
+
+        if (exists == false) {
+            assignTo.push(compareIndustry);
+        }
+    })
+}
+
+const runAndAssignFunctionForEducationHours = (assignTo: HoursSpentDoing, compare: HoursSpentDoing, func: (number1: number, number2: number) => number) => {
+    assignTo.withManyStudents = func(assignTo.withManyStudents, compare.withManyStudents);
+    assignTo.withFewStudents = func(assignTo.withFewStudents, compare.withFewStudents);
+    assignTo.withSupervision = func(assignTo.withSupervision, compare.withSupervision);
+}
+
+const runAndAssignFunctionForEducationSocialFeedback = (assignTo: SocialFeedback, compare: SocialFeedback, func: (number1: number, number2: number) => number) => {
+    assignTo.socialEnvironment = func(assignTo.socialEnvironment, compare.socialEnvironment);
+    assignTo.groupEngagement = func(assignTo.groupEngagement, compare.groupEngagement);
+    assignTo.loneliness = func(assignTo.loneliness, compare.loneliness);
+    assignTo.stress = func(assignTo.stress, compare.stress);
+}
+
+const runAndAssignFunctionForEducationAcademicFeedback = (assignTo: AcademicFeedback, compare: AcademicFeedback, func: (number1: number, number2: number) => number) => {
+    assignTo.academicEnvironment = func(assignTo.academicEnvironment, compare.academicEnvironment);
+    assignTo.teacherEvaluation = func(assignTo.teacherEvaluation, compare.teacherEvaluation);
+    assignTo.satisfaction = func(assignTo.satisfaction, compare.satisfaction);
+}
+
+const runAndAssignFunctionForEducationAcademicWorkload = (assignTo: AcademicWorkload, compare: AcademicWorkload, func: (number1: number, number2: number) => number) => {
+    assignTo.lectures = func(assignTo.lectures, compare.lectures);
+    assignTo.literature = func(assignTo.literature, compare.literature);
+    assignTo.studentJob = func(assignTo.studentJob, compare.studentJob);
+}
+
+const runAndAssignFunctionForEducationDegreeStructureContents = (assignTo: DegreeContents, compare: DegreeContents, func: (number1: number, number2: number) => number) => {
+    assignTo.teaching = func(assignTo.teaching, compare.teaching);
+    assignTo.exams = func(assignTo.exams, compare.exams);
+    assignTo.internship = func(assignTo.internship, compare.internship);
+    assignTo.internationalStay = func(assignTo.internationalStay, compare.internationalStay);
+}
+
+const runAndAssignFunctionForEducationJobData = (assignTo: JobData, compare: JobData, func: (number1: number, number2: number) => number) => {
+    runAndAssignFunctionForEducationJobDataSalaries(assignTo.salaries.newGraduate, compare.salaries.newGraduate, func);
+    runAndAssignFunctionForEducationJobDataSalaries(assignTo.salaries.experienced, compare.salaries.experienced, func);
+    runAndAssignFunctionForEducationJobDataWorkSchedule(assignTo.workSchedule, compare.workSchedule, func);
+    runAndAssignFunctionForEducationJobDataUnemployment(assignTo.unemployment, compare.unemployment, func);
+    assignTo.degreeRelevance = func(assignTo.degreeRelevance, compare.degreeRelevance);
+    assignTo.degreePreparesForJob = func(assignTo.degreePreparesForJob, compare.degreePreparesForJob);
+    assignTo.nationalJobs = func(assignTo.nationalJobs, compare.nationalJobs);
+}
+
+const runAndAssignFunctionForEducationJobDataSalaries = (assignTo: Salary, compare: Salary, func: (number1: number, number2: number) => number) => {
+    assignTo.lowerQuartile = func(assignTo.lowerQuartile, compare.lowerQuartile);
+    assignTo.median = func(assignTo.median, compare.median);
+    assignTo.upperQuartile = func(assignTo.upperQuartile, compare.upperQuartile);
+}
+
+const runAndAssignFunctionForEducationJobDataWorkSchedule = (assignTo: JobWorkSchedule, compare: JobWorkSchedule, func: (number1: number, number2: number) => number) => {
+    assignTo.workingHours = func(assignTo.workingHours, compare.workingHours);
+    assignTo.fixedHoursPercent = func(assignTo.fixedHoursPercent, compare.fixedHoursPercent);
+    assignTo.flexibleHoursPercent = func(assignTo.flexibleHoursPercent, compare.flexibleHoursPercent);
+    assignTo.selfSchedulePercent = func(assignTo.selfSchedulePercent, compare.selfSchedulePercent);
+    assignTo.variableSchedulePercent = func(assignTo.variableSchedulePercent, compare.variableSchedulePercent);
+    assignTo.nightAndEveningShiftsPercent = func(assignTo.nightAndEveningShiftsPercent, compare.nightAndEveningShiftsPercent);
+}
+
+const runAndAssignFunctionForEducationJobDataUnemployment = (assignTo: Unemployment, compare: Unemployment, func: (number1: number, number2: number) => number) => {
+    assignTo.newGraduate = func(assignTo.newGraduate, compare.newGraduate);
+    assignTo.experienced = func(assignTo.experienced, compare.experienced);
+    assignTo.projectedNewGraduate = func(assignTo.projectedNewGraduate, compare.projectedNewGraduate);
+    assignTo.projectedExperienced = func(assignTo.projectedExperienced, compare.projectedExperienced);
+}
+
+export const getMinimumEducation = (): Education => {
+    return minimumEducation;
+}
+
+export const getMaximumEducation = (): Education => {
+    return maximumEducation;
 }
 
 let educationDurationRange: MinimumMaximum;
@@ -119,39 +246,6 @@ const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 
-const calclulateSalaryRanges = () => {
-    //console.log("calculateSalaryRanges");
-
-    let newGraduateSalaryMin = 0 //educations[0].job_data.salaries.newGraduate.lower_quartile;
-    let experiencedSalaryMin = 0 //educations[0].job_data.salaries.experienced.lower_quartile;
-    let newGraduateSalaryMax = 0 //educations[0].job_data.salaries.newGraduate.upper_quartile;
-    let experiencedSalaryMax = 0 //educations[0].job_data.salaries.experienced.upper_quartile;
-
-    educations.forEach((education) => {
-        const salaries = education.jobData.salaries;
-        if ((Number.isNaN(salaries.newGraduate.lowerQuartile)
-            || Number.isNaN(salaries.newGraduate.upperQuartile)
-            || Number.isNaN(salaries.experienced.lowerQuartile)
-            || Number.isNaN(salaries.experienced.upperQuartile)) == false
-        ) {
-            newGraduateSalaryMin = Math.min(newGraduateSalaryMin, education.jobData.salaries.newGraduate.lowerQuartile);
-            experiencedSalaryMin = Math.min(experiencedSalaryMin, education.jobData.salaries.experienced.lowerQuartile);
-            newGraduateSalaryMax = Math.max(newGraduateSalaryMax, education.jobData.salaries.newGraduate.upperQuartile);
-            experiencedSalaryMax = Math.max(experiencedSalaryMax, education.jobData.salaries.experienced.upperQuartile);
-        }
-    });
-    newGraduateSalaryRange = { minimum: newGraduateSalaryMin, maximum: newGraduateSalaryMax };
-    experiencedSalaryRange = { minimum: experiencedSalaryMin, maximum: experiencedSalaryMax };
-}
-
-export const getNewGraduateSalaryRange = (): MinimumMaximum => {
-    return newGraduateSalaryRange;
-}
-
-export const getExperiencedSalaryRange = (): MinimumMaximum => {
-    return experiencedSalaryRange;
-}
-
 export const getTableSectionData = (): TableSectionDataFromServer => {
     return {
         educations: educations,
@@ -167,9 +261,6 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         educationDurationRange: educationDurationRange,
 
         minimumValueEducation: minimumEducation,
-        maximumValueEducation: maximumEducation
-
-        //newGraduateSalaryRange: newGraduateSalaryRange,
-        //experiencedSalaryRange: experiencedSalaryRange,
+        maximumValueEducation: maximumEducation,
     }
 }

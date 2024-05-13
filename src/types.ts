@@ -12,7 +12,7 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
-import { Geography, County, Institution, DegreeType, JobFlexibility } from "enums";
+import { Geography, County, Institution, DegreeType, JobFlexibility } from "./enums";
 
 export type Industry = {
     title: string;
@@ -225,3 +225,7 @@ export type SubjectToType = {
     bnds: { type: number, ub: number, lb: number }
 }[]
 
+export type EducationGroup = {
+    title: string,
+    url: string
+}

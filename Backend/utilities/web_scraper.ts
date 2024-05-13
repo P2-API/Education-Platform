@@ -1,11 +1,48 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 import OpenAI from 'openai';
+//import TextRazor from 'textrazor';
+//import { EducationGroup } from "../../src/types";
 
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
-translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
+//translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
+getSubjectsFromUgText("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0");
+
+
+async function getSubjectsFromUgText(url: string) {
+    try {
+        const response = await fetchHtml(url);
+        if (response === "Error fetching the URL") {
+            return "Error fetching the URL";
+        }
+
+        const headlinerText = getHeadlinerText(response.data);
+        if (!headlinerText) {
+            return "Error extracting headliner text";
+        }
+
+        const describingText = getDescribingText(response.data);
+        if (!describingText) {
+            return "Error extracting describing text";
+        }
+
+        const englishText = await translateTextToEnglishChatGPT(headlinerText + describingText);
+        if (!englishText) {
+            return "Error translating text";
+        }
+
+        extractKeywordsFromText(englishText).then((keywords) => {
+            console.log('Keywords:', keywords);
+        });
+        
+    } catch (error) {
+        console.error('Error:', error);
+        return "An error occurred while processing the request.";
+    }
+
+}
 
 export async function getPersonalizedMessage(url: string) {
     try {
@@ -145,3 +182,38 @@ async function translateTextToEnglishChatGPT(text: string) {
     console.log(completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
+async function extractKeywordsFromText(text: string): Promise<string[]> {
+    const apiKey = 'ee38eb1dffc5d19af37965711c0f6533e65a5297e9deaeb4fc495563'; // Replace 'YOUR_API_KEY' with your actual TextRazor API key
+    const apiUrl = 'https://api.textrazor.com/';
+    const options = {
+        apiKey: apiKey,
+        text: text,
+        extractors: ['entities', 'topics'], // Specify the extractors you want to use
+        languageOverride: 'eng', // Override the language detection if needed
+      };
+
+    try {
+        const response = await axios.post(apiUrl, options, { 
+            headers: {
+              'X-TextRazor-Key': apiKey
+            }
+        })
+
+        if (response.data.response && response.data.response.topics) {
+            // Extract keywords from topics
+            const word_list: string[] = response.data.response.topics.slice(0, 10).map((topic: any) => (
+                topic.label
+            ));
+
+            return word_list; // Return the word list
+        } else {
+            console.error('No topics found in response');
+            return []; // Return an empty array if no topics found
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        return []; // Return an empty array if there's an error
+    }
+}
+
