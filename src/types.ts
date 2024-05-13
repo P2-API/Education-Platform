@@ -194,17 +194,17 @@ export type TableSectionDataFromServer = {
 }
 
 export type TableFilters = {
-    wantedDegreeTypes: string[]; //in use                       // Done
-    canStudyInGeoraphies: Geography[]; //in use                 // Done
-    canStudyAtInstitution: Institution[]; //in use              // Done
-    hasSubjects: string[]; // in use                            // Done
-    hasIndustries: string[]; // in use                          // Done
-    hasFormsOfEducation: string[]; // in use                    // Done
-    wantedSalary: SalaryFilters; // in use / LP filter          // Done
-    unemployment: UnenploymentFilters; // in use / LP filter            (!!!remember to inplement in LPsolver!!!)
-    jobFlexibility: JobFlexibility; // in use / LP filter       // Done (!!!remember to implement in LPsolver!!!)
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter   // Done (!!!remember to implement in LPsolver!!!)
-    canWorkInternationally: boolean; //in use                   // Done
+    wantedDegreeTypes: string[]; //in use               
+    canStudyInGeoraphies: Geography[]; //in use         
+    canStudyAtInstitution: Institution[]; //in use      
+    hasSubjects: string[]; // in use / LP filter        
+    hasIndustries: string[]; // in use / LP filter      
+    hasFormsOfEducation: string[]; // in use
+    wantedSalary: SalaryFilters; // in use / LP filter  
+    unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
+    jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
+    canWorkInternationally: boolean; //in use
 }
 
 export type UserImputs = {
@@ -227,4 +227,9 @@ export type SubjectToType = {
 export type EducationGroup = {
     title: string,
     url: string
+}
+
+export type RankedEducationsType = {
+    upperhalf: Education[],
+    lowerhalf: Education[]
 }

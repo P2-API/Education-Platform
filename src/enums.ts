@@ -73,6 +73,7 @@ export enum Institution {
     "Vildtforvaltningsskolen, Kalø" = "Vildtforvaltningsskolen, Kalø",
     "Zealand Sjællands Erhvervsakademi" = "Zealand Sjællands Erhvervsakademi",
     "?" = "?",
+    "" = "",
 }
 
 export enum DegreeType {
@@ -84,6 +85,7 @@ export enum DegreeType {
     "Politi og forsvar" = "Politi og forsvar",
     Professionsbacheloruddannelse = "Professionsbacheloruddannelse",
     "Andre uddannelser" = "Andre uddannelser",
+    "" = "",
 }
 
 export enum County {
