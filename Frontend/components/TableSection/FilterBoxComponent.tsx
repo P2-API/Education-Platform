@@ -17,6 +17,8 @@ export type FilterProps = {
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
     wantedWorkingHours: MinimumMaximum;
+    newGraduateUnemployment: MinimumMaximum;
+    experiencedUnemployment: MinimumMaximum;
     canWorkInternationally: boolean;
 };
 
@@ -38,6 +40,8 @@ const FilterBoxComponent = ({ }) => {
         newGraduateSalary: { minimum: 0, maximum: 0 },
         experiencedSalary: { minimum: 0, maximum: 0 },
         wantedWorkingHours: { minimum: 0, maximum: 0},
+        newGraduateUnemployment: { minimum: 0, maximum: 0},
+        experiencedUnemployment: { minimum: 0, maximum: 0},
         canWorkInternationally: false,
     });
 
@@ -51,17 +55,27 @@ const FilterBoxComponent = ({ }) => {
         maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
     };
 
-    // Value packing for working hours
+    // Value packing for working hours slider
     const wantedWorkingHoursRange: MinimumMaximum = {
         minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
         maximum: data?.maximumValueEducation?.jobData.workSchedule.workingHours ?? 1,
+    }
+
+    // Value packing for unemployment sliders
+    const newGraduateUnemploymentRange: MinimumMaximum = {
+        minimum: data?.minimumValueEducation?.jobData.unemployment.newGraduate ?? 0,
+        maximum: data?.maximumValueEducation?.jobData.unemployment.newGraduate ?? 1,
+    }
+    const experiencedUnemploymentRange: MinimumMaximum = {
+        minimum: data?.minimumValueEducation?.jobData.unemployment.experienced ?? 0,
+        maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
     }
 
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
-
+    const getValueTextUnemployment = (value: number) => { return `${value} ledige` }
 
 
     return (
@@ -139,7 +153,6 @@ const FilterBoxComponent = ({ }) => {
                         setFilters={setFilters}
                         identifier="newGraduateSalary"
                     />
-
                     <MinimumDistanceSlider
                         initialState={experiencedSalaryRange}
                         sliderRange={experiencedSalaryRange}
@@ -157,6 +170,24 @@ const FilterBoxComponent = ({ }) => {
                         getValueText={getValueTextJobHours}
                         setFilters={setFilters}
                         identifier="wantedWorkingHours"
+                    />
+                    <MinimumDistanceSlider
+                        initialState={newGraduateUnemploymentRange}
+                        sliderRange={newGraduateUnemploymentRange}
+                        minimumDistance={1}
+                        description="Filtrer efter nyuddannedes arbejdsløshed"
+                        getValueText={getValueTextUnemployment}
+                        setFilters={setFilters}
+                        identifier="newGraduateUnemployment"
+                    />
+                    <MinimumDistanceSlider
+                        initialState={experiencedUnemploymentRange}
+                        sliderRange={experiencedUnemploymentRange}
+                        minimumDistance={1}
+                        description="Filtrer efter erfarenes arbejdsløshed"
+                        getValueText={getValueTextUnemployment}
+                        setFilters={setFilters}
+                        identifier="experiencedUnemployment"
                     />
                     <CheckmarkToggleButton
                         initialState={false}
