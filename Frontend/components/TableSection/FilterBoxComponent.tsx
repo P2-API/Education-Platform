@@ -16,6 +16,7 @@ export type FilterProps = {
     educationDuration: MinimumMaximum;
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
+    wantedWorkingHours: MinimumMaximum;
 };
 
 const FilterBoxComponent = ({ }) => {
@@ -34,23 +35,30 @@ const FilterBoxComponent = ({ }) => {
         jobFlexibilities: [],
         educationDuration: { minimum: 0, maximum: 0 },
         newGraduateSalary: { minimum: 0, maximum: 0 },
-        experiencedSalary: { minimum: 0, maximum: 0 }
+        experiencedSalary: { minimum: 0, maximum: 0 },
+        wantedWorkingHours: { minimum: 0, maximum: 0},
     });
 
     // Value packing for salary sliders
     const newGraduateSalaryRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation.jobData.salaries.newGraduate.lowerQuartile ?? 0,
-        maximum: data?.maximumValueEducation.jobData.salaries.newGraduate.upperQuartile ?? 1
+        minimum: data?.minimumValueEducation?.jobData.salaries.newGraduate.lowerQuartile ?? 0,
+        maximum: data?.maximumValueEducation?.jobData.salaries.newGraduate.upperQuartile ?? 1
     };
     const experiencedSalaryRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation.jobData.salaries.experienced.lowerQuartile ?? 0,
-        maximum: data?.maximumValueEducation.jobData.salaries.experienced.upperQuartile ?? 1
+        minimum: data?.minimumValueEducation?.jobData.salaries.experienced.lowerQuartile ?? 0,
+        maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
     };
+
+    // Value packing for working hours
+    const wantedWorkingHoursRange: MinimumMaximum = {
+        minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
+        maximum: data?.maximumValueEducation?.jobData.workSchedule.workingHours ?? 1,
+    }
 
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
-
+    const getValueTextJobHours = (value: number) => { return `${value} timer` }
 
 
 
@@ -139,11 +147,19 @@ const FilterBoxComponent = ({ }) => {
                         setFilters={setFilters}
                         identifier="experiencedSalary"
                     />
+                    <MinimumDistanceSlider
+                        initialState={wantedWorkingHoursRange}
+                        sliderRange={wantedWorkingHoursRange}
+                        minimumDistance={1}
+                        description="Filtrer efter arbejdstimer i muligt arbejde efter uddannelse"
+                        getValueText={getValueTextJobHours}
+                        setFilters={setFilters}
+                        identifier="wantedWorkingHours"
+                    />
 
                 </>
 
                 <p>Filter efter uddannelsesstart</p>
-                <p>Filter efter uddannelsesform</p>
                 <p>Filter efter uddannelsesindhold</p>
             </div>
         </Paper>
