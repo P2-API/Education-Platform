@@ -12,7 +12,7 @@ Klasseundervisning/forelæsning/underviservejledning
 
 */
 
-import { Geography, County, Institution, DegreeType, JobFlexibility } from "./enums";
+import { Geography, County, Institution, DegreeType, JobFlexibility, FormOfEducation } from "./enums";
 
 export type Industry = {
     title: string;
@@ -181,12 +181,11 @@ export type TableSectionDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];
-
     subjectKeys: string[];
-
     institutionKeys: (keyof typeof Institution)[];
-
     geographyKeys: (keyof typeof Geography)[];
+    formOfEducationKeys: (keyof typeof FormOfEducation)[];
+    jobFlexibilityKeys: (keyof typeof JobFlexibility)[];
 
     educationDurationRange: MinimumMaximum;
 

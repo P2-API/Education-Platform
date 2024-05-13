@@ -1,10 +1,10 @@
 import { describe, it, expect, test } from 'vitest';
 
 import { getMinimumEducation, getMaximumEducation, calculateMinimumAndMaximumEducation } from '../../Backend/server/on-server-start';
-import { Education, MinimumMaximum } from '../../src/types';
+import { Education } from '../../src/types';
 import { County, DegreeType, Geography, Institution, SubjectTitle } from '../../src/enums';
 
-const education1: Education = 
+export const education1: Education = 
 { 
     title: "education1",  
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -374,5 +374,5 @@ test("Calculate Minimum And Maximum Education", () => {
 
     expect(getMinimumEducation()).toStrictEqual(minimumEducation);
     expect(getMaximumEducation()).toStrictEqual(maximumEducation);
-})
+});
 
