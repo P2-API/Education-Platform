@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { useContext } from "react";
 import { useState } from "react";
 import { TableSectionDataContext, ModalContext } from "@frontend/pages/Homepage";
-import { MultiSelectAutoComplete, MinimumDistanceSlider } from "./FilterInputComponents";
+import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
 import { MinimumMaximum } from "@src/types"
 
 export type FilterProps = {
@@ -17,6 +17,7 @@ export type FilterProps = {
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
     wantedWorkingHours: MinimumMaximum;
+    canWorkInternationally: boolean;
 };
 
 const FilterBoxComponent = ({ }) => {
@@ -37,6 +38,7 @@ const FilterBoxComponent = ({ }) => {
         newGraduateSalary: { minimum: 0, maximum: 0 },
         experiencedSalary: { minimum: 0, maximum: 0 },
         wantedWorkingHours: { minimum: 0, maximum: 0},
+        canWorkInternationally: false,
     });
 
     // Value packing for salary sliders
@@ -156,11 +158,13 @@ const FilterBoxComponent = ({ }) => {
                         setFilters={setFilters}
                         identifier="wantedWorkingHours"
                     />
-
+                    <CheckmarkToggleButton
+                        initialState={false}
+                        description="Har internationale arbejdsmuligheder"
+                        setFilters={setFilters}
+                        identifier="canWorkInternationally"
+                    />
                 </>
-
-                <p>Filter efter uddannelsesstart</p>
-                <p>Filter efter uddannelsesindhold</p>
             </div>
         </Paper>
     )

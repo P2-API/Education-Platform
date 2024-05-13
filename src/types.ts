@@ -203,7 +203,7 @@ export type TableFilters = {
     wantedSalary: SalaryFilters; // in use / LP filter          // Done
     unemployment: UnenploymentFilters; // in use / LP filter            (!!!remember to inplement in LPsolver!!!)
     jobFlexibility: JobFlexibility; // in use / LP filter       // Done (!!!remember to implement in LPsolver!!!)
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter           (!!!remember to implement in LPsolver!!!)
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter   // Done (!!!remember to implement in LPsolver!!!)
     canWorkInternationally: boolean; //in use
 }
 

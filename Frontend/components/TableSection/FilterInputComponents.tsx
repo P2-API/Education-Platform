@@ -4,8 +4,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { FilterProps } from "./FilterBoxComponent"
+import CheckIcon from '@mui/icons-material/Check';
+import ToggleButton from '@mui/material/ToggleButton';
 
+import { FilterProps } from "./FilterBoxComponent"
 import { MinimumMaximum } from "../../../src/types";
 type MultiSelectAutoCompleteProps = {
     collection: string[];
@@ -122,4 +124,35 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             />
         </Box>
     );
+}
+
+type CheckmarkToggleButtonProps = {
+    initialState: boolean;
+    description: string;
+
+    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    identifier: string;
+}
+
+export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ initialState, description, setFilters, identifier }) => {
+    const [selected, setSelected] = React.useState(initialState);
+
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <ToggleButton
+            value="check"
+            selected={selected}
+            onChange={() => {
+                setSelected(!selected)
+                setFilters((prevFilters) => ({
+                    ...prevFilters,
+                    [identifier]: [selected]
+                }));
+            }}
+            >
+                <CheckIcon />
+            </ToggleButton>
+            <p style={{ marginLeft: '8px' }}>{description}</p>
+        </Box>
+      );
 }
