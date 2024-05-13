@@ -1,6 +1,6 @@
 import { AcademicFeedback, AcademicWorkload, DegreeContents, DegreeStructure, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
-import { DegreeType, Institution, Geography, DegreeTypeToDuration } from "../../src/enums";
+import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle } from "../../src/enums";
 
 import * as fs from "fs"; 
 import { educationToEducationGroup } from "../utilities/custom_type_conversion";
@@ -9,7 +9,7 @@ let educations: Education[] = [];
 let educationGroups: EducationGroup[] = [];
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
-let subjectKeys: string[];
+let subjectKeys: (keyof typeof SubjectTitle)[];
 let institutionKeys: (keyof typeof Institution)[];
 let geographyKeys: (keyof typeof Geography)[];
 
@@ -52,28 +52,18 @@ const caclulateBasedOnEducations = () => {
 
     caclulateEnumTypes();
     calculateMinimumAndMaximumEducation(educations);
-    calculateSubjectKeys();
     calculateMinMaxDegreeDuration();
 }
 
-// I don't know if this is what it is meant to do
-const calculateSubjectKeys = () => {
-    educations.forEach((education) => {
-        education.subjects.forEach((subject) => {
-            if (!subjectKeys.includes(subject.title)) 
-                subjectKeys.push(subject.title);
-        })
-    })
-}
-
-const caclulateEnumTypes = () => {
+export const caclulateEnumTypes = () => {
     //console.log("calculateEnumTypes");
-
     degreeTypeKeys = Object.keys(DegreeType) as (keyof typeof DegreeType)[];
 
     institutionKeys = Object.keys(Institution) as (keyof typeof Institution)[];
 
     geographyKeys = Object.keys(Geography) as (keyof typeof Geography)[];
+
+    subjectKeys = Object.keys(SubjectTitle) as (keyof typeof SubjectTitle)[];
 }
 
 export const getSubjectKeys = () => {
@@ -104,7 +94,7 @@ export const calculateMinimumAndMaximumEducation = (educations: Education[]) => 
     });
 };
 
-function deepCopy<T>(obj: T): T {
+export const deepCopy = <T>(obj: T): T => {
     return JSON.parse(JSON.stringify(obj));
 }
 
@@ -227,7 +217,7 @@ export const getMaximumEducation = (): Education => {
 
 let educationDurationRange: MinimumMaximum;
 
-const calculateMinMaxDegreeDuration = () => {
+export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
     //console.log("caclulateMinMaxDegreeDuration");
 
     let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
@@ -240,6 +230,7 @@ const calculateMinMaxDegreeDuration = () => {
         }
     });
     educationDurationRange = { minimum: educationDurationMin, maximum: educationDurationMax }
+    return educationDurationRange;
 }
 
 const getEducationDurationRange = (): MinimumMaximum => {

@@ -138,13 +138,22 @@ export enum County {
 }
 
 export enum SubjectTitle {
-    Matematik = "Matematik",
-    Dansk = "Dansk",
-    Fysik = "Fysik",
-    Kemi = "Kemi",
+    Billedkunst = "Billedkunst",
     Biologi = "Biologi",
+    Dansk = "Dansk",
+    Engelsk = "Engelsk",
+    Filosofi = "Filosofi",
+    Fysik = "Fysik",
+    Geografi = "Geografi",
     Historie = "Historie",
     Idræt = "Idræt",
+    Kemi = "Kemi",
+    Matematik = "Matematik",
+    Musik = "Musik",
+    Naturfag = "Naturfag",
+    Psykologi = "Psykologi",
+    Samfundsfag = "Samfundsfag",
+    Økonomi = "Økonomi",
 }
 
 export const CountyToGeography = (county: County): Geography => {
@@ -206,14 +215,6 @@ export const CountyToGeography = (county: County): Geography => {
     }
 }
 
-export const CountiesToGeography = (counties: County[]): Geography[] => {
-    let geographies: Geography[] = [];
-    counties.forEach(county => {
-        geographies.push(CountyToGeography(county));
-    });
-    return geographies;
-}
-
 export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): MinimumMaximum => {
     switch (degreeType) {
         case DegreeType["Akademisk overbygningsuddannelse"]:
@@ -234,6 +235,6 @@ export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): Min
             return { minimum: 4, maximum: 36 }
 
         default:
-            return { minimum: -1, maximum: -1 };;
+            throw "Degree type not handled!";
     }
 }
