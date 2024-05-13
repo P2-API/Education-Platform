@@ -33,6 +33,15 @@ const FilterBoxComponent = ({ }) => {
         experiencedSalary: { minimum: 0, maximum: 0 }
     });
 
+    // Value packing for salary sliders
+    const newGraduateSalaryRange: MinimumMaximum = {
+        minimum: data?.minimumValueEducation.jobData.salaries.newGraduate.lowerQuartile ?? 0,
+        maximum: data?.maximumValueEducation.jobData.salaries.newGraduate.upperQuartile ?? 1
+    };
+    const experiencedSalaryRange: MinimumMaximum = {
+        minimum: data?.minimumValueEducation.jobData.salaries.experienced.lowerQuartile ?? 0,
+        maximum: data?.maximumValueEducation.jobData.salaries.experienced.upperQuartile ?? 1
+    };
 
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
@@ -42,6 +51,7 @@ const FilterBoxComponent = ({ }) => {
 
 
     return (
+
         <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre (scroll ned)</h2>
@@ -91,8 +101,8 @@ const FilterBoxComponent = ({ }) => {
                         identifier="educationDuration"
                     />
                     <MinimumDistanceSlider
-                        initialState={data?.newGraduateSalaryRange ?? { minimum: 0, maximum: 0 }}
-                        sliderRange={data?.newGraduateSalaryRange ?? { minimum: 0, maximum: 0 }}
+                        initialState={newGraduateSalaryRange}
+                        sliderRange={newGraduateSalaryRange}
                         minimumDistance={1}
                         description="Filtrer efter nyuddannedes løn i tusinde"
                         getValueText={getValueTextSalary}
@@ -101,8 +111,8 @@ const FilterBoxComponent = ({ }) => {
                     />
 
                     <MinimumDistanceSlider
-                        initialState={data?.experiencedSalaryRange ?? { minimum: 0, maximum: 0 }}
-                        sliderRange={data?.experiencedSalaryRange ?? { minimum: 0, maximum: 0 }}
+                        initialState={experiencedSalaryRange}
+                        sliderRange={experiencedSalaryRange}
                         minimumDistance={1}
                         description="Filtrer efter erfarenes løn i tusinde"
                         getValueText={getValueTextSalary}
