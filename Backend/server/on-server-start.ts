@@ -3,7 +3,7 @@ import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation, JobFlexibility } from "../../src/enums";
 
 import * as fs from "fs"; 
-import { educationToEducationGroup } from "../utilities/custom_type_conversion";
+import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 
 let educations: Education[] = [];
@@ -28,11 +28,11 @@ export const onStart = () => {
 
 const cacheEducations = async () => {
     //console.log("cacheEducations");
-    educations = await GetEducationsOnServerStart();
-    caclulateBasedOnEducations();
-    groupEducations();
+    educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
+    caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations
+    groupEducations(); // ?
     console.log("Grouped Educations: ", educationGroups.length);
-    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
+    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups)); 
 }
 
 function groupEducations() {

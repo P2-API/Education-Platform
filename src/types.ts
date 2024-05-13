@@ -204,7 +204,7 @@ export type TableFilters = {
     unemployment: UnenploymentFilters; // in use / LP filter            (!!!remember to inplement in LPsolver!!!)
     jobFlexibility: JobFlexibility; // in use / LP filter       // Done (!!!remember to implement in LPsolver!!!)
     wantedWorkingHours: MinimumMaximum; // in use / LP filter   // Done (!!!remember to implement in LPsolver!!!)
-    canWorkInternationally: boolean; //in use
+    canWorkInternationally: boolean; //in use                   // Done
 }
 
 export type UserImputs = {

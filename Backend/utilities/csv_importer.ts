@@ -3,7 +3,8 @@ import axios from 'axios';
 
 import { Education } from "../../src/types"
 import * as csvParse from 'csv-parse'
-import { CountyToGeography, County, Institution, Geography } from "../../src/enums";
+import { County, DegreeType, Institution, Geography } from "../../src/enums";
+import { countyToGeography } from "./custom-type-conversion";
 
 const header = ["Titel"];
 
@@ -32,9 +33,9 @@ function csvParser(csvData: string): Education[] {
             "url": values[2],
             "rank": 0,
             "title": values[4],
-            "degreeType": values[6],
+            "degreeType": DegreeType[values[6]],
             "counties": [County[values[11]]],
-            "geographies": [CountyToGeography(County[values[11]])],
+            "geographies": [countyToGeography(County[values[11]])],
             "institutions": Institution[values[9]],
             "subjects": [],
             "industries": [
