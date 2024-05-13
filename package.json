@@ -30,6 +30,7 @@
     "deepl-node": "^1.12.0",
     "express": "^4.19.2",
     "glpk.js": "^4.0.2",
+    "ldrs": "^1.0.1",
     "lottie-react": "^2.4.0",
     "material-react-table": "^2.13.0",
     "node-fetch": "^2.7.0",

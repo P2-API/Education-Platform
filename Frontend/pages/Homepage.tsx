@@ -15,6 +15,8 @@ export { TableSectionDataContext, ModalContext, TableSectionReferenceContext };
 
 const Homepage: React.FC = () => {
 
+    
+
   // Complete list of educations 
   const [data, setData] = useState<TableSectionDataFromServer>();
 
@@ -35,23 +37,21 @@ const Homepage: React.FC = () => {
     });
   }, []); // Empty dependency array ensures the effect runs only once
 
-
-
-
-  if (data === undefined) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <TableSectionDataContext.Provider value={data} >
-      <ModalContext.Provider value={{ showModal: isModalOpen, setShowModal: setIsModalOpen }}>
-        <TableSectionReferenceContext.Provider value={tableRef}>
-          <HeroSection />
-          <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-          <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} />
-        </TableSectionReferenceContext.Provider>
-      </ModalContext.Provider>
-    </TableSectionDataContext.Provider>
+    <>
+      { !data ? (              <HeroSection />
+) : (
+        <TableSectionDataContext.Provider value={data} >
+          <ModalContext.Provider value={{ showModal: isModalOpen, setShowModal: setIsModalOpen }}>
+            <TableSectionReferenceContext.Provider value={tableRef}>
+              <HeroSection />
+              <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+              <TableSection tableRef={tableRef} setIsModalOpen={setIsModalOpen} />
+            </TableSectionReferenceContext.Provider>
+          </ModalContext.Provider>
+        </TableSectionDataContext.Provider>
+      )}
+    </>
   );
 };
 
