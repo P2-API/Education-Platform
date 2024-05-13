@@ -194,16 +194,16 @@ export type TableSectionDataFromServer = {
 }
 
 export type TableFilters = {
-    wantedDegreeTypes: string[]; //in use                   // Done
-    canStudyInGeoraphies: Geography[]; //in use             // Done
-    canStudyAtInstitution: Institution[]; //in use          // Done
-    hasSubjects: string[]; // in use                        // Done
-    hasIndustries: string[]; // in use                      // Done
-    hasFormsOfEducation: string[]; // in use                // Done
-    wantedSalary: SalaryFilters; // in use / LP filter      // Done
-    unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
-    jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
+    wantedDegreeTypes: string[]; //in use                       // Done
+    canStudyInGeoraphies: Geography[]; //in use                 // Done
+    canStudyAtInstitution: Institution[]; //in use              // Done
+    hasSubjects: string[]; // in use                            // Done
+    hasIndustries: string[]; // in use                          // Done
+    hasFormsOfEducation: string[]; // in use                    // Done
+    wantedSalary: SalaryFilters; // in use / LP filter          // Done
+    unemployment: UnenploymentFilters; // in use / LP filter            (!!!remember to inplement in LPsolver!!!)
+    jobFlexibility: JobFlexibility; // in use / LP filter       // Done (!!!remember to implement in LPsolver!!!)
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter           (!!!remember to implement in LPsolver!!!)
     canWorkInternationally: boolean; //in use
 }
 
