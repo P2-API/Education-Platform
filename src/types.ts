@@ -94,6 +94,7 @@ export type JobData = {
 }
 
 export type Education = {
+    id: number,
     url: string;
     rank: number | null;
     title: string;
@@ -232,4 +233,9 @@ export type EducationGroup = {
 export type RankedEducationsType = {
     upperhalf: Education[],
     lowerhalf: Education[]
+}
+
+export type EducationVector = {
+    educationID: number,
+    coordinates: number[]
 }
