@@ -3,11 +3,12 @@ import Paper from '@mui/material/Paper';
 import { useContext, useState } from "react";
 import { TableSectionDataContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
-import { MinimumMaximum, RankingResult } from "@src/types"
+import { MinimumMaximum, FinalRankingType } from "@src/types"
 import { bouncy } from 'ldrs';
 import { QuizAnswers } from '@src/types';
 import QuizModal from "@frontend/pages/QuizModal"
 import { useServer } from '@backend/server/useServer';
+
 
 
 
@@ -20,7 +21,6 @@ export type FilterProps = {
     geographies: string[];
     subjects: string[];
     formsOfEducation: string[];
-    jobFlexibilities: string[];
     educationDuration: MinimumMaximum;
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
@@ -28,12 +28,13 @@ export type FilterProps = {
     newGraduateUnemployment: MinimumMaximum;
     experiencedUnemployment: MinimumMaximum;
     canWorkInternationally: boolean;
+    hasFlexibleJobSchedule: boolean;
 };
 
 type FilterBoxComponentProps = {
     isCalculating: Boolean;
     setIsCalculating: React.Dispatch<React.SetStateAction<boolean>>;
-    setRankedData: React.Dispatch<React.SetStateAction<RankingResult | null>>;
+    setRankedData: React.Dispatch<React.SetStateAction<FinalRankingType | null>>;
 }
 
 
@@ -45,7 +46,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
 
     // Obtain initial state from global context
     const data = useContext(TableSectionDataContext);
-
+    console.log("data", data)
     // Keep track of all filters
     const [filters, setFilters] = useState<FilterProps>({
         degreeTypes: [],
@@ -53,7 +54,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         institutes: [],
         geographies: [],
         formsOfEducation: [],
-        jobFlexibilities: [],
         educationDuration: { minimum: 0, maximum: 0 },
         newGraduateSalary: { minimum: 0, maximum: 0 },
         experiencedSalary: { minimum: 0, maximum: 0 },
@@ -61,34 +61,35 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         newGraduateUnemployment: { minimum: 0, maximum: 0 },
         experiencedUnemployment: { minimum: 0, maximum: 0 },
         canWorkInternationally: false,
+        hasFlexibleJobSchedule: false,
     });
     const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
         {
-            subjectsPriority: 0,
-            industriesPriority: 0,
-            socialEnvironmentPriority: 0,
-            groupEngagementPriority: 0,
-            lonelinessPriority: 0,
-            academicEnvironmentPriority: 0,
-            stressPriority: 0,
-            highWorkloadAcceptancePriority: 0,
-            studentJobPriority: 0,
-            teachingPriority: 0,
-            lecturesPriority: 0,
-            literaturePriority: 0,
-            dislikeExamPriority: 0,
-            internshipPriority: 0,
-            internationalStayPriority: 0,
-            workNationallyPriority: 0,
-            startingSalaryPriority: 0,
-            experiencedSalaryPriority: 0,
-            unemploymentPriority: 0,
-            degreeRelevancePriority: 0,
-            flexibleHoursPriority: 0,
-            selfSchedulePriority: 0,
-            fixedHoursPriority: 0,
-            variableSchedulePriority: 0,
-            nightAndEveningShiftsPriority: 0,
+            subjectsPriority: 3,
+            industriesPriority: 3,
+            socialEnvironmentPriority: 3,
+            groupEngagementPriority: 3,
+            lonelinessPriority: 3,
+            academicEnvironmentPriority: 3,
+            stressPriority: 3,
+            highWorkloadAcceptancePriority: 3,
+            studentJobPriority: 3,
+            teachingPriority: 3,
+            lecturesPriority: 3,
+            literaturePriority: 3,
+            dislikeExamPriority: 3,
+            internshipPriority: 3,
+            internationalStayPriority: 3,
+            workNationallyPriority: 3,
+            startingSalaryPriority: 3,
+            experiencedSalaryPriority: 3,
+            unemploymentPriority: 3,
+            degreeRelevancePriority: 3,
+            flexibleHoursPriority: 3,
+            selfSchedulePriority: 3,
+            fixedHoursPriority: 3,
+            variableSchedulePriority: 3,
+            nightAndEveningShiftsPriority: 3,
         }
     );
 
@@ -133,9 +134,9 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
-        const response = await updateRanking(filters, quizAnswerState);
-        const data = await response.json();
-        setRankedData(data);
+        const response = await updateRanking(filters, quizAnswerState, data?.educations ?? []);
+        const result = await response.json();
+        setRankedData(result);
         setIsCalculating(false);
     }
 
@@ -148,7 +149,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
             <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
-                {isCalculating ? (
+                {false ? (
                     <div style={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
                         <l-bouncy
                             size="70"
@@ -204,14 +205,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectPlaceholder="Undervisningsform"
                                     setFilters={setFilters}
                                     identifier="formsOfEducation"
-                                />
-                                <MultiSelectAutoComplete
-                                    value={filters.jobFlexibilities}
-                                    collection={data?.jobFlexibilityKeys ?? []}
-                                    selectLabel="Filtrer efter fleksibilitet i muligt arbejde efter uddannelse"
-                                    selectPlaceholder="Fleksibilitet"
-                                    setFilters={setFilters}
-                                    identifier="jobFlexibilities"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
@@ -272,6 +265,12 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Har internationale arbejdsmuligheder"
                                     setFilters={setFilters}
                                     identifier="canWorkInternationally"
+                                />
+                                <CheckmarkToggleButton
+                                    initialState={false}
+                                    description="Har fleksibelt arbejdstidsskema"
+                                    setFilters={setFilters}
+                                    identifier="hasFlexibleJobSchedule"
                                 />
                                 <span style={{ color: "#006eff" }} >Du har ramt bunden</span>
                             </>
