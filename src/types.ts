@@ -94,7 +94,6 @@ export type JobData = {
 }
 
 export type Education = {
-    id: number,
     url: string;
     rank: number | null;
     title: string;
