@@ -245,20 +245,37 @@ export type PCAData = {
 }
 
 export type IntermedietRankingType = {
-    upperhalf:{
+    upperhalf: {
         education: Education;
         similarity: number;
     }[],
-    lowerhalf:{
+    lowerhalf: {
         education: Education;
         similarity: number;
     }[]
 }
 
 export type FinalRankingType = {
-    ranking:{
+    ranking: {
         education: Education;
         score: number;
     }[]
-    index:number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
+    index: number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
 }
+
+
+export type FilterProps = {
+    degreeTypes: string[];
+    institutes: string[];
+    geographies: string[];
+    subjects: string[];
+    formsOfEducation: string[];
+    educationDuration: MinimumMaximum;
+    newGraduateSalary: MinimumMaximum;
+    experiencedSalary: MinimumMaximum;
+    wantedWorkingHours: MinimumMaximum;
+    newGraduateUnemployment: MinimumMaximum;
+    experiencedUnemployment: MinimumMaximum;
+    canWorkInternationally: boolean;
+    hasFlexibleJobSchedule: boolean;
+};
