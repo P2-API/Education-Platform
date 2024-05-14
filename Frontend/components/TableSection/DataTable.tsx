@@ -38,9 +38,9 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const institutionName = Institution[row.original.institutions];
-          //console.log(row.original.institutions)
+          // (row.original.institutions)
           return (
-            <p className="" style={{ cursor: "default",  margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
+            <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
           );
         },
       },
@@ -66,7 +66,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const subjects: string[] = row.original.subjects.map((subject) => subject.title)
-          //console.log("subjects", subjects)
+          // ("subjects", subjects)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
               {subjects.map((subject: string, index: number) => (
@@ -82,7 +82,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const industries: string[] = row.original.industries.map((industry) => industry.title)
-          //console.log("subjects", industries)
+          // ("subjects", industries)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               {industries.map((industry: string) => (
@@ -99,10 +99,10 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
           const hoursNumbers: number[] = Object.values(row.original.hours);
-          //console.log("hoursNumbers", hoursNumbers)
-          //console.log("hoursTitles", hoursTitles)
+          // ("hoursNumbers", hoursNumbers)
+          // ("hoursTitles", hoursTitles)
           return (
-            <ul style={{ padding: 0,  width: "250px", justifyContent: "center", height: "60px",}}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               {hoursTitles.map((title: string, index: number) => (
                 <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={title}>{title}: {hoursNumbers[index]}%</p>
               ))}
@@ -119,10 +119,10 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
           const groupEngagement = row.original.socialFeedback.groupEngagement;
           const loneliness = row.original.socialFeedback.loneliness;
           const stress = row.original.socialFeedback.stress;
-          //console.log("hoursNumbers", hoursNumbers)
-          //console.log("hoursTitles", hoursTitles)
+          // ("hoursNumbers", hoursNumbers)
+          // ("hoursTitles", hoursTitles)
           return (
-            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "80px",  }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "80px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Socialt Miljø: {socialEnvironment} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Gruppeengagement: {groupEngagement} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Ensomhed: {loneliness} </p>
@@ -139,8 +139,8 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
           const academicEnvironment = row.original.academicFeedback.academicEnvironment;
           const teacherEvaluation = row.original.academicFeedback.teacherEvaluation;
           const satisfaction = row.original.academicFeedback.satisfaction;
-          //console.log("hoursNumbers", hoursNumbers)
-          //console.log("hoursTitles", hoursTitles)
+          // ("hoursNumbers", hoursNumbers)
+          // ("hoursTitles", hoursTitles)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment} </p>
@@ -193,7 +193,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const teachingMethods = row.original.degreeStructure.teachingMethods;
           return (
-            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px",  }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>1. {teachingMethods[0]} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>2. {teachingMethods[1]} </p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>3. {teachingMethods[2]} </p>
@@ -503,11 +503,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
 
     },
     enableRowVirtualization: true,
-    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden"} },
+    muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden" } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 2 }, //optionally customize the row virtualizer
-    columnVirtualizerOptions: { overscan: 4}, //optionally customize the column virtualizer
+    columnVirtualizerOptions: { overscan: 4 }, //optionally customize the column virtualizer
 
   });
 

@@ -13,7 +13,7 @@ test('getHeadliner function retrieves correct headliner text', async () => {
     // Assert the result
     if (typeof result === "string") {
         // If the result is a string, it means there was an error fetching the URL
-        console.log("Error fetching the URL");
+        ("Error fetching the URL");
         expect(result).toBe("Error fetching the URL");
     } else {
         // If the result is an object, check the headlinerText property

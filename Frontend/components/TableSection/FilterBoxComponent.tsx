@@ -124,11 +124,9 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }
     // Quiz State
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    console.log("quizanswerstate", quizAnswerState)
-
     bouncy.register()
 
-    // Default values shown
+
 
     return (
         <>

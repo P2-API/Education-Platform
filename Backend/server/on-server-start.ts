@@ -2,7 +2,7 @@ import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, Educatio
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation, JobFlexibility } from "../../src/enums";
 
-import * as fs from "fs"; 
+import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 
@@ -22,17 +22,14 @@ let minimumEducation: Education;
 let maximumEducation: Education;
 
 export const onStart = () => {
-    //console.log("onStart");
     cacheEducations();
 }
 
 const cacheEducations = async () => {
-    //console.log("cacheEducations");
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
     caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations
     groupEducations(); // ?
-    console.log("Grouped Educations: ", educationGroups.length);
-    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups)); 
+    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
 }
 
 function groupEducations() {
@@ -50,7 +47,7 @@ export const getCachedEducations = (): Education[] => {
 }
 
 const caclulateBasedOnEducations = () => {
-    //console.log("caclulateBasedOnEducations");
+    // ("caclulateBasedOnEducations");
 
     caclulateEnumTypes();
     calculateMinimumAndMaximumEducation(educations);
@@ -58,7 +55,7 @@ const caclulateBasedOnEducations = () => {
 }
 
 export const caclulateEnumTypes = () => {
-    //console.log("calculateEnumTypes");
+    // ("calculateEnumTypes");
     degreeTypeKeys = Object.keys(DegreeType) as (keyof typeof DegreeType)[];
 
     institutionKeys = Object.keys(Institution) as (keyof typeof Institution)[];
@@ -94,7 +91,7 @@ export const calculateMinimumAndMaximumEducation = (educations: Education[]) => 
     maximumEducation = deepCopy(educations[0]);
     maximumEducation.title = "maximum education";
 
-    educations.forEach((education) =>{
+    educations.forEach((education) => {
         runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
         runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
     });
@@ -220,7 +217,7 @@ export const getMaximumEducation = (): Education => {
 let educationDurationRange: MinimumMaximum;
 
 export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
-    //console.log("caclulateMinMaxDegreeDuration");
+    // ("caclulateMinMaxDegreeDuration");
 
     let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
     let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum;

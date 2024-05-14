@@ -20,7 +20,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
         }
         const response = await getPCAData(PCA_request);
         const data = await response.text();
-        console.log(data);
+        (data);
         // add toast
         toast.info(data);
     }
@@ -49,7 +49,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
                     collection={[]}
                     selectLabel="1. Akse"
                     selectPlaceholder="1. Akse"
-                    setFilters={() => console.log("hello")}
+                    setFilters={() => ("hello")}
                     identifier="x_axis"
                 />
                 <MultiSelectAutoComplete
@@ -57,7 +57,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
                     collection={[]}
                     selectLabel="2. Akse"
                     selectPlaceholder="2. Akse"
-                    setFilters={() => console.log("hello")}
+                    setFilters={() => ("hello")}
                     identifier="y_axis"
                 />
                 <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>

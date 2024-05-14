@@ -9,6 +9,7 @@ export type RankingResult = [{
     EducationId: number;
     ranking: number;
 }]
+
 const useServer = () => {
 
 

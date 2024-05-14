@@ -34,9 +34,9 @@ async function getSubjectsFromUgText(url: string) {
         }
 
         extractKeywordsFromText(englishText).then((keywords) => {
-            console.log('Keywords:', keywords);
+            ('Keywords:', keywords);
         });
-        
+
     } catch (error) {
         console.error('Error:', error);
         return "An error occurred while processing the request.";
@@ -92,7 +92,7 @@ export async function getPersonalizedMessage(url: string) {
         };
 
         const message = await sendMessageToChatGPT(headlinerText, describingText, preferences, promptString);
-        console.log('Response from ChatGPT:', message);
+        ('Response from ChatGPT:', message);
         return { message };
     } catch (error) {
         console.error('Error:', error);
@@ -107,7 +107,7 @@ export async function getHeadliner(url: string) {
         return "Error fetching the URL";
     }
     const headlinerText = getHeadlinerText(response.data);
-    return {headlinerText};
+    return { headlinerText };
 }
 
 function getHeadlinerText(html: string) {
@@ -118,7 +118,7 @@ function getHeadlinerText(html: string) {
     } catch (error) {
         console.error(`Error filtering data: ${error}`);
     }
-    
+
 }
 
 export function getDescribingText(html: string) {
@@ -135,43 +135,45 @@ function fetchHtml(url: string) {
     try {
         return axios.get(url);
     } catch (error) {
-        console.log(error);
-        return"Error fetching the URL";
+        (error);
+        return "Error fetching the URL";
     }
 }
 
 async function sendMessageToChatGPT(headlinerText: string, describingText: string, preferences: Record<string, number>, promptString: string) {
     const completion = await openai.chat.completions.create({
-      messages: [
-        {
-            role: "system",
-            content: ("dette er data omkring uddanelsen" + headlinerText + describingText).replace(/\s+/g, ' ').trim() +
-            ' | ' +
-            "dette data er omkring brugeren" + JSON.stringify(preferences).replace(/"/g, ''),
-        },
-        { 
-            role: "user", 
-            content: promptString },
-      ],
-      model: "gpt-3.5-turbo-0125",
-      response_format: { type: "json_object" },
-      temperature: 0.2,
+        messages: [
+            {
+                role: "system",
+                content: ("dette er data omkring uddanelsen" + headlinerText + describingText).replace(/\s+/g, ' ').trim() +
+                    ' | ' +
+                    "dette data er omkring brugeren" + JSON.stringify(preferences).replace(/"/g, ''),
+            },
+            {
+                role: "user",
+                content: promptString
+            },
+        ],
+        model: "gpt-3.5-turbo-0125",
+        response_format: { type: "json_object" },
+        temperature: 0.2,
     });
 
-    //console.log(completion.choices[0].message.content);
+    // (completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
-  
+
 
 async function translateTextToEnglishChatGPT(text: string) {
     const completion = await openai.chat.completions.create({
         messages: [
-            {   role: "system", 
-                content: text 
+            {
+                role: "system",
+                content: text
             },
-            { 
-                role: "user", 
-                content: "translate the text to english, pls give the translationed text back in a JSON string." 
+            {
+                role: "user",
+                content: "translate the text to english, pls give the translationed text back in a JSON string."
             },
         ],
         model: "gpt-3.5-turbo-0125",
@@ -179,7 +181,7 @@ async function translateTextToEnglishChatGPT(text: string) {
         temperature: 0.1,
     });
 
-    console.log(completion.choices[0].message.content);
+    (completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
 async function extractKeywordsFromText(text: string): Promise<string[]> {
@@ -190,12 +192,12 @@ async function extractKeywordsFromText(text: string): Promise<string[]> {
         text: text,
         extractors: ['entities', 'topics'], // Specify the extractors you want to use
         languageOverride: 'eng', // Override the language detection if needed
-      };
+    };
 
     try {
-        const response = await axios.post(apiUrl, options, { 
+        const response = await axios.post(apiUrl, options, {
             headers: {
-              'X-TextRazor-Key': apiKey
+                'X-TextRazor-Key': apiKey
             }
         })
 

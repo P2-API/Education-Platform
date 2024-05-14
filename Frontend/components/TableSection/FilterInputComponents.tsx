@@ -104,8 +104,6 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
         }));
     };
 
-    console.log("value1", value1)
-
     return (
         <Box sx={{}}>
             <p style={{}}  >{description}</p>
@@ -138,22 +136,22 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
     const [selected, setSelected] = React.useState(initialState);
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center'     }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <ToggleButton
-            value="check"
-            selected={selected}
-            sx={{ height: "0px", width: "0px"}}
-            onChange={() => {
-                setSelected(!selected)
-                setFilters((prevFilters) => ({
-                    ...prevFilters,
-                    [identifier]: [selected]
-                }));
-            }}
+                value="check"
+                selected={selected}
+                sx={{ height: "0px", width: "0px" }}
+                onChange={() => {
+                    setSelected(!selected)
+                    setFilters((prevFilters) => ({
+                        ...prevFilters,
+                        [identifier]: [selected]
+                    }));
+                }}
             >
                 {selected && (<CheckIcon />)}
             </ToggleButton>
             <p style={{ marginLeft: '8px' }}>{description}</p>
         </Box>
-      );
+    );
 }

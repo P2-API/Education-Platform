@@ -16,14 +16,14 @@ const tsObjectWritePath = "./src/debug/tsObject.ts"
 
 const parseOptions: csvParse.Options = {
     columns: true,
-    trim: true 
+    trim: true
 };
 
 function csvParser(csvData: string): Education[] {
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
     const educations: Education[] = [];
-    
+
     for (let i = 1; i < lines.length - 1; i++) {
 
         //Hvis char " er fundet, så køre indtil man finder " igen, fjern alle ; der er mellem dem
@@ -65,7 +65,7 @@ function csvParser(csvData: string): Education[] {
             },
             academicFeedback: {
                 academicEnvironment: Number(String(values[58]).replace(",", ".")),
-                teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", ".")))/4,
+                teacherEvaluation: (Number(String(values[89]).replace(",", ".")) + Number(String(values[93]).replace(",", ".")) + Number(String(values[97]).replace(",", ".")) + Number(String(values[101]).replace(",", "."))) / 4,
                 satisfaction: Number(String(values[130]).replace(",", "."))
             },
             academicWorkload: {
@@ -77,7 +77,7 @@ function csvParser(csvData: string): Education[] {
                 contents: {
                     teaching: Number(String(values[85]).replace(",", ".")),
                     exams: Number(String(values[81]).replace(",", ".")),
-                    internship:Number(String(values[82]).replace(",", ".")),
+                    internship: Number(String(values[82]).replace(",", ".")),
                     internationalStay: Number(String(values[84]).replace(",", "."))
                 },
                 teachingMethods: [
@@ -123,11 +123,11 @@ function csvParser(csvData: string): Education[] {
                 nationalJobs: Number(String(values[180]).replace(",", "."))
             }
         };
-           
+
         if (recursivelyCheckForMissingProperties(education)) {
             continue;
-        } 
-        
+        }
+
         // This no run if property be bye bye
         educations.push(education);
     }
@@ -140,7 +140,7 @@ export function removeSemicolonsBetweenQuotes(input: string): string {
 
     for (let i = 0; i < input.length; i++) {
         const char = input[i];
-        
+
         if (char === '"') {
             insideQuotes = !insideQuotes;
             result += char;
@@ -155,49 +155,49 @@ export function removeSemicolonsBetweenQuotes(input: string): string {
 }
 
 const recursivelyCheckForMissingProperties = (object: object): boolean => {
-    for (const key in object){ // loop through keys in the object 
-        if (typeof object[key] === 'object' && object[key] !== null){ // check if keys value is an object
+    for (const key in object) { // loop through keys in the object 
+        if (typeof object[key] === 'object' && object[key] !== null) { // check if keys value is an object
             let answer = recursivelyCheckForMissingProperties(object[key]); // call for nested object
             if (answer) {
                 return true;
             }
-        } 
+        }
         else {
             let answer = isAMissingProperty(object[key]); // else check if the keys value is "missing"
-            if (answer){ 
-                return true;  
+            if (answer) {
+                return true;
             }
         }
     }
     return false; // no "missing" value found
 }
 
-function isAMissingProperty(property: any): boolean {    
+function isAMissingProperty(property: any): boolean {
     if ((typeof property === 'number' && Number.isNaN(property)) || (typeof property === 'string' && property == "") || property == null || property == undefined) {
         return true;
-    }    
+    }
     return false;
 }
 
 export function importCSV(CSVReadPath = csvFilePath): Education[] {
     var educations: Education[] = [];
     const file = fs.readFileSync(CSVReadPath, 'utf-8');
-    
+
     educations = csvParser(file);
     return educations;
-} 
+}
 
 async function downloadFile(url: string, filePath: string) {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         fs.writeFileSync(filePath, response.data);
-        console.log("File downloaded successfully!");
+        ("File downloaded successfully!");
     } catch (error) {
         console.error("Error downloading file:", error);
     }
 }
 
-export const GetEducationsOnServerStart = async (): Promise<Education[]> =>{
+export const GetEducationsOnServerStart = async (): Promise<Education[]> => {
     await downloadFile(csvURL, csvFilePath);
     return importCSV()
 }
