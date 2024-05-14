@@ -1,14 +1,4 @@
-import { QuizAnswers, TableSectionDataFromServer } from "types";
-
-export type PCAData = {
-    x_axis: string[];
-    y_axis: string[];
-}
-
-export type RankingResult = [{
-    EducationId: number;
-    ranking: number;
-}]
+import { QuizAnswers, TableSectionDataFromServer, PCAData, RankingStructure } from "types";
 
 const useServer = () => {
 

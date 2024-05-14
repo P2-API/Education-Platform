@@ -239,3 +239,13 @@ export type EducationVector = {
     educationID: number,
     coordinates: number[]
 }
+
+export type PCAData = {
+    x_axis: string[];
+    y_axis: string[];
+}
+
+export type RankingStructure = {
+    EducationId: number;
+    ranking: number;
+}[]
