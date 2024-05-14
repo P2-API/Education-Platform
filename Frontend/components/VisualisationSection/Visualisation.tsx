@@ -23,7 +23,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
         const xValues = [];
         const yValues = [];
         const text = []
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
             xValues.push(Math.random() * 10);
             yValues.push(Math.random() * 100);
             // generate random text for each point
@@ -87,28 +87,28 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
             <Plot
                 data={[
                     {
-                        x: data.x,
-                        y: data.y,
+                        x: data.y,
+                        y: data.x,
                         text: data.text,
                         mode: "markers",
-                        type: "scatter",
+                        type: "bar",
                         marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                         hovertemplate:
                             "<b>%{text}</b><br><br>" +
-                            "Løn: %{y}<br>" +
-                            "Uddannelsestype: %{x}<br>" +
+                            "Uddannelsestype: %{y}<br>" +
+                            "Løn: %{x}<br>" +
                             "<extra></extra>"
                     }
                 ]}
                 layout={{
-                    title: "PCA Analyse - Løn og uddannelsestype",
+                    title: "Bar - Løn og uddannelsestype",
                     xaxis: {
-                        title: "Uddannelsestype",
-                        range: [0, 10] // Set the range for x-axis
+                        title: "Løn (kr.)",
+                        range: [0, 100] // Set the range for x-axis
                     },
                     yaxis: {
-                        title: "Løn (kr.)",
-                        range: [0, 100] // Set the range for y-axis
+                        title: "Uddannelsestype",
+                        range: [0, 10] // Set the range for y-axis
                     },
                     hovermode: "closest",
                     hoverlabel: { bgcolor: "#FFF" },
@@ -134,28 +134,26 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                 <Plot
                     data={[
                         {
-                            x: data.x,
-                            y: data.y,
+                            r: data.y,
+                            theta: data.text,
                             text: data.text,
                             mode: "markers",
-                            type: "scatter",
+                            type: "scatterpolar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
-                                "Løn: %{y}<br>" +
-                                "Uddannelsestype: %{x}<br>" +
+                                "Løn: %{r}<br>" +
+                                "Uddannelsestype: %{theta}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "PCA Analyse - Løn og uddannelsestype",
-                        xaxis: {
-                            title: "Uddannelsestype",
-                            range: [0, 10] // Set the range for x-axis
-                        },
-                        yaxis: {
-                            title: "Løn (kr.)",
-                            range: [0, 100] // Set the range for y-axis
+                        title: "Radar - Løn og uddannelsestype",
+                        polar: {
+                            radialaxis: {
+                                visible: true,
+                                range: [0, 100]
+                            }
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },
