@@ -1,10 +1,5 @@
 import { MinimumMaximum } from "./types"
 
-export enum JobFlexibility {
-    Fleksibel = "Fleksibel",
-    Streng = "Streng",
-}
-
 export enum Geography {
     Nordjylland = "Nordjylland",
     Midtjylland = "Midtjylland",

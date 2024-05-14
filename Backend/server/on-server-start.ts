@@ -1,13 +1,15 @@
 import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
-import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation, JobFlexibility } from "../../src/enums";
+import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
+import { normilizesEducations } from "../utilities/normalization";
 
 let educations: Education[] = [];
 let educationGroups: EducationGroup[] = [];
+let normilizedEducations: Education[] = [];
 
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
@@ -15,7 +17,6 @@ let subjectKeys: (keyof typeof SubjectTitle)[];
 let institutionKeys: (keyof typeof Institution)[];
 let geographyKeys: (keyof typeof Geography)[];
 let formOfEducationKeys: (keyof typeof FormOfEducation)[];
-let jobFlexibilityKeys: (keyof typeof JobFlexibility)[];
 
 
 let minimumEducation: Education;
@@ -27,9 +28,19 @@ export const onStart = () => {
 
 const cacheEducations = async () => {
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
-    caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations
-    groupEducations(); // ?
-    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
+    caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations    
+}
+
+export const getCachedEducations = (): Education[] => {
+    return educations;
+}
+
+const caclulateBasedOnEducations = () => {
+    // ("caclulateBasedOnEducations");
+    groupEducations(); 
+    caclulateEnumTypes();
+    calculateMinimumAndMaximumEducation(educations);
+    calculateMinMaxDegreeDuration();
 }
 
 function groupEducations() {
@@ -39,19 +50,8 @@ function groupEducations() {
             if (groupedEducation.title == education.title) alreadyGrouped = true;
         })
         if (!alreadyGrouped) educationGroups.push(educationToEducationGroup(education));
-    })
-}
-
-export const getCachedEducations = (): Education[] => {
-    return educations;
-}
-
-const caclulateBasedOnEducations = () => {
-    // ("caclulateBasedOnEducations");
-
-    caclulateEnumTypes();
-    calculateMinimumAndMaximumEducation(educations);
-    calculateMinMaxDegreeDuration();
+    });
+    fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
 }
 
 export const caclulateEnumTypes = () => {
@@ -65,8 +65,6 @@ export const caclulateEnumTypes = () => {
     subjectKeys = Object.keys(SubjectTitle) as (keyof typeof SubjectTitle)[];
 
     formOfEducationKeys = Object.keys(FormOfEducation) as (keyof typeof FormOfEducation)[];
-
-    jobFlexibilityKeys = Object.keys(JobFlexibility) as (keyof typeof JobFlexibility)[];
 }
 
 export const getSubjectKeys = () => {
@@ -95,6 +93,8 @@ export const calculateMinimumAndMaximumEducation = (educations: Education[]) => 
         runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
         runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
     });
+
+    calculateBasedOnMinimumAndMaximumEducation();
 };
 
 const runAndAssignFunctionForEducation = (assignTo: Education, compare: Education, func: (number1: number, number2: number) => number) => {
@@ -214,6 +214,16 @@ export const getMaximumEducation = (): Education => {
     return maximumEducation;
 }
 
+const calculateBasedOnMinimumAndMaximumEducation = () => {
+    // ("calculateBasedOnMinimumAndMaximumEducation");
+    normilizesEducations(educations);
+}
+
+
+
+
+
+
 let educationDurationRange: MinimumMaximum;
 
 export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
@@ -245,7 +255,6 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
         institutionKeys: institutionKeys,
         geographyKeys: geographyKeys,
         formOfEducationKeys: formOfEducationKeys,
-        jobFlexibilityKeys: jobFlexibilityKeys,
 
         educationDurationRange: educationDurationRange,
 

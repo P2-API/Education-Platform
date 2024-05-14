@@ -2,8 +2,8 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
+import fs from 'fs';
 //import TextRazor from 'textrazor';
-//import { EducationGroup } from "../../src/types";
 
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
@@ -257,12 +257,12 @@ async function getAllText(url: string) {
         return "Error fetching the URL";
     }
 
-    const headlinerText = getHeadlinerText(response.data);
+    const headlinerText = await getHeadlinerText(response.data);
     if (!headlinerText) {
         return "Error extracting headliner text";
     }
 
-    const describingText = getDescribingText(response.data);
+    const describingText = await getDescribingText(response.data);
     if (!describingText) {
         return "Error extracting describing text";
     }
@@ -279,20 +279,13 @@ async function analyseSubjects(keywords: string[]) {
 
 async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
     return new Promise((resolve, reject) => {
+        // Create temporary input and output files
+        const inputFile = 'input.json';
+        const outputFile = 'output.json';
+        fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
+
         // Run the Python script as a child process
-        const pythonProcess = spawn('python', ['semanticanalyzer.py']);
-
-        // Send word_list to the Python script
-        const input: WordList = { words: wordList };
-        pythonProcess.stdin.write(JSON.stringify(input));
-        pythonProcess.stdin.end();
-
-        let outputData = '';
-
-        // Handle output from the Python script
-        pythonProcess.stdout.on('data', (data) => {
-            outputData += data.toString();
-        });
+        const pythonProcess = spawn('python', ['semanticanalyzer.py', inputFile, outputFile]);
 
         // Handle errors from the Python script
         pythonProcess.stderr.on('data', (data) => {
@@ -302,6 +295,8 @@ async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
         // Handle Python script exit
         pythonProcess.on('close', (code) => {
             if (code === 0) {
+                // Read output file and parse JSON
+                const outputData = fs.readFileSync(outputFile, 'utf8');
                 const rankings: Rankings = JSON.parse(outputData);
                 resolve(rankings);
             } else {
@@ -315,7 +310,4 @@ interface Rankings {
     [subject: string]: number;
 }
 
-interface WordList {
-    words: string[];
-}
 
