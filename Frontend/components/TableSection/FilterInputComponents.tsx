@@ -138,10 +138,11 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
     const [selected, setSelected] = React.useState(initialState);
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center'     }}>
             <ToggleButton
             value="check"
             selected={selected}
+            sx={{ height: "0px", width: "0px"}}
             onChange={() => {
                 setSelected(!selected)
                 setFilters((prevFilters) => ({
@@ -150,7 +151,7 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
                 }));
             }}
             >
-                <CheckIcon />
+                {selected && (<CheckIcon />)}
             </ToggleButton>
             <p style={{ marginLeft: '8px' }}>{description}</p>
         </Box>
