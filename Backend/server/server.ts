@@ -2,7 +2,9 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
 import { onStart, getTableSectionData } from './on-server-start';
-import { MinimumMaximum } from '../../src/types';
+import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
+import { Ranker } from "../utilities/ranking";
+import bodyParser from 'body-parser'; // Import the bodyParser package
 
 const server: Express = express();
 
@@ -10,9 +12,9 @@ const PORT = 1337;
 
 
 onStart();
-
 server.use(cors()); // Enable CORS
-server.use(express.json()); // Add this line to parse JSON requests
+server.use(express.json({ limit: '50mb' }));
+server.use(express.urlencoded({ limit: '50mb' }));
 
 
 server.get("/", (request: Request, response: Response) => {
@@ -39,11 +41,23 @@ server.post("/PCA_request", (request: Request, response: Response) => {
 
 server.post("/update_ranking", (request: Request, response: Response) => {
     const requestData = request.body;
-    const filterProps = requestData.filterProps;
-    const quizAnswers = requestData.quizAnswers;
+    const filterProps: TableFilters = requestData.filterProps;
+    const quizAnswers: QuizAnswers = requestData.quizAnswers;
+    const data = requestData.data;
+    console.log("filterProps", filterProps)
+    console.log("quizAnswers", quizAnswers)
+    console.log("data", data)
 
-    // calculate ranking function here: 
-    // const rankings = calculateRanking(filterProps, quizAnswers);
+    const userInput: UserImputs = {
+        quizAnswers: quizAnswers,
+        filters: filterProps,
+    }
+
+    const ranker = new Ranker();
+    const ranking = ranker.produceRanking(data, userInput);
+    console.log("rankking", ranking)
+
+
 
     // return the result below
     //response.status(200).send(rankings);
@@ -54,6 +68,7 @@ server.post("generate_personalized_message", (request: Request, response: Respon
     const requestData = request.body;
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
+
 
     // calculate personalized message function here: 
     // const personalizedMessage = calculatePersonalizedMessage(quizAnswers, filters);

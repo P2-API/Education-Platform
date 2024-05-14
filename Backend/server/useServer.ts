@@ -1,4 +1,4 @@
-import { QuizAnswers, TableSectionDataFromServer, PCAData, FinalRankingStructure } from "types";
+import { QuizAnswers, TableSectionDataFromServer, PCAData, Education } from "types";
 import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
 
 const useServer = () => {
@@ -20,14 +20,14 @@ const useServer = () => {
 
 
 
-    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers) => {
+    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers, data: Education[]) => {
 
         const response = await fetch("http://localhost:1337/update_ranking", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ filterProps, quizAnswers })
+            body: JSON.stringify({ filterProps, quizAnswers, data })
         });
 
         return response
