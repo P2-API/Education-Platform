@@ -1,10 +1,14 @@
-import { TableSectionDataFromServer } from "types";
+import { QuizAnswers, TableSectionDataFromServer } from "types";
 
 export type PCAData = {
     x_axis: string[];
     y_axis: string[];
 }
 
+export type RankingResult = [{
+    EducationId: number;
+    ranking: number;
+}]
 const useServer = () => {
 
 
@@ -22,11 +26,19 @@ const useServer = () => {
 
     // write more functions here
 
-    const updateRanking = async (someWeightStructure: string) => {
-        // Do some fetching to the server ( the server runs the ranking algorithm and returns the result)
-        // handle the result 
-        console.log(someWeightStructure);
-        // return the result
+
+
+    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers) => {
+
+        const response = await fetch("http://localhost:1337/update_ranking", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ filterProps, quizAnswers })
+        });
+
+        return response
     }
 
     const getPCAData = async (PCA_request: PCAData) => {
@@ -40,6 +52,7 @@ const useServer = () => {
 
         return response
     }
+
 
     // write more functions here
 
