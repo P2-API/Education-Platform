@@ -29,7 +29,7 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData = request.body;
     const data = requestData.PCA_request;
-    console.log("PCA_request received: ", data);
+    ("PCA_request received: ", data);
 
     // calculate PCA function here: 
     // const PCA_data = calculatePCA(requestData);
@@ -39,7 +39,7 @@ server.post("/PCA_request", (request: Request, response: Response) => {
 });
 
 server.listen(PORT, () => {
-    console.log("Server running at PORT: ", PORT);
+    ("Server running at PORT: ", PORT);
 }).on("error", (error) => {
     throw new Error(error.message);
 });

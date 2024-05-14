@@ -3,7 +3,6 @@ import BasicTabs from '../components/Tabs.tsx';
 
 type TableSectionProps = {
     tableRef: React.RefObject<HTMLDivElement>;
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 

@@ -94,6 +94,7 @@ export type JobData = {
 }
 
 export type Education = {
+    id: number,
     url: string;
     rank: number | null;
     title: string;
@@ -113,6 +114,11 @@ export type Education = {
                         / quiz = starting_salary_priority: number; experienced_salary_priority: number; unemployment_priority: number; degree_relevance_priority: number; fixed_hours_priority: number; flexible_hours_priority: number;
                         self_schedule_priority: number; variable_schedule_priority: number; night_and_evening_shifts_priority: number; work_nationally_priority: number;*/
 };
+
+export type RankingResult = [{
+    EducationId: number;
+    ranking: number;
+}]
 
 export type QuizAnswers = {
 
@@ -233,3 +239,18 @@ export type RankedEducationsType = {
     upperhalf: Education[],
     lowerhalf: Education[]
 }
+
+export type EducationVector = {
+    educationID: number,
+    coordinates: number[]
+}
+
+export type PCAData = {
+    x_axis: string[];
+    y_axis: string[];
+}
+
+export type RankingStructure = {
+    EducationId: number;
+    ranking: number;
+}[]
