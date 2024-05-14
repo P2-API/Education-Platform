@@ -1,5 +1,6 @@
-import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermedietRankingType } from "../../src/types"
+import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermedietRankingType, MinimumMaximum } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
+import {JobFlexibility,DegreeTypeToDuration} from "../../src/enums"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -16,7 +17,7 @@ export class Ranker {
     }
 
     changeToApropriateType(rankedEducations: IntermedietRankingType): FinalRankingType {
-        let finalRanking: FinalRankingType = { ranking: [], index: 0 }
+        const finalRanking: FinalRankingType = { ranking: [], index: 0 }
         rankedEducations.upperhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         finalRanking.index = finalRanking.ranking.length
         rankedEducations.lowerhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
@@ -41,7 +42,7 @@ export class Ranker {
         const normValue = 2;
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, weights);
         const educationVecotors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, weights);
-        let sortedEducations: IntermedietRankingType = { upperhalf: [], lowerhalf: [] };
+        const sortedEducations: IntermedietRankingType = { upperhalf: [], lowerhalf: [] };
 
         educationVecotors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
@@ -69,8 +70,8 @@ export class Ranker {
     }
 
     educationVector(education: Education, weights: QuizAnswers): EducationVector {
-        let weightedEducationVector: EducationVector = { education: education, coordinates: [] }; //the coordinates are calculated by multiplying the values of relevant education properties with the weight of the corresponding property
-        let coordinates = weightedEducationVector.coordinates
+        const weightedEducationVector: EducationVector = { education: education, coordinates: [] }; //the coordinates are calculated by multiplying the values of relevant education properties with the weight of the corresponding property
+        const coordinates = weightedEducationVector.coordinates
         //add subjects
         education.subjects.forEach((subject) => {
             coordinates.push(subject.score * weights.subjectsPriority)
@@ -108,7 +109,8 @@ export class Ranker {
             education.jobData.workSchedule.flexibleHoursPercent * weights.flexibleHoursPriority,
             education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority,
             education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority,
-            education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority)
+            education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority,
+            education.jobData.nationalJobs * weights.workNationallyPriority)
 
         return weightedEducationVector
     }
@@ -118,6 +120,17 @@ export class Ranker {
             (filters.canStudyInGeoraphies.length === 0)?true: filters.canStudyInGeoraphies.some((geography) => education.geographies.includes(geography)) &&
             (filters.canStudyAtInstitution.length === 0)?true:filters.canStudyAtInstitution.includes(education.institutions) &&
             filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
-            filters.canWorkInternationally ? (education.jobData.nationalJobs ? false : true):true
+            filters.canWorkInternationally?(education.jobData.nationalJobs > 0.8 ? false : true):true &&
+            (filters.jobFlexibility===JobFlexibility.Fleksibel)?(education.jobData.workSchedule.flexibleHoursPercent > 0.5?true:false):true &&
+            this.educationDurationFilterPassed(education, filters.educationDuration) &&
+            this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
+
+    }
+    educationDurationFilterPassed(education:Education,educationDurationFilter:MinimumMaximum):boolean{
+        const educationDuration:MinimumMaximum = DegreeTypeToDuration(education.degreeType)
+        return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
+    }
+    workingHoursFilterPassed(education:Education,workingHoursFilter:MinimumMaximum):boolean{
+        return education.jobData.workSchedule.workingHours >= workingHoursFilter.minimum && education.jobData.workSchedule.fixedHoursPercent <= workingHoursFilter.maximum
     }
 }
