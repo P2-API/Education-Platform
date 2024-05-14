@@ -197,13 +197,14 @@ export type TableFilters = {
     wantedDegreeTypes: string[]; //in use               
     canStudyInGeoraphies: Geography[]; //in use         
     canStudyAtInstitution: Institution[]; //in use      
-    hasSubjects: string[]; // in use / LP filter        
-    hasIndustries: string[]; // in use / LP filter      
+    hasSubjects: string[]; // in use      
+    hasIndustries: string[]; // in use       
     hasFormsOfEducation: string[]; // in use
     wantedSalary: SalaryFilters; // in use / LP filter  
-    unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
-    jobFlexibility: JobFlexibility; // in use / LP filter       (!!!remember to implement in LPsolver!!!)
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
+    unemployment: UnenploymentFilters; // in use / LP filter   
+    jobFlexibility: JobFlexibility; // in use     
+    wantedWorkingHours: MinimumMaximum; // in use
+    educationDuration: MinimumMaximum; // in use 
     canWorkInternationally: boolean; //in use
 }
 
