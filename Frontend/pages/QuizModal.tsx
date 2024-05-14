@@ -1,6 +1,3 @@
-
-
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
@@ -174,7 +171,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen,
 
         SetSliderValue(3);
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-        console.log(newAnswer)
+        console.log(newAnswer);
     }
 
     return (
