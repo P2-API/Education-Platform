@@ -8,22 +8,20 @@ import { TableSectionDataContext } from "./Homepage";
 
 
 const DataTableSection: React.FC = ({ }) => {
-    // Obtain state from global context
-    const data = useContext(TableSectionDataContext);
-    const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
-    console.log("rankeddata", rankedData)
+
+
     const [isCalculating, setisCalculating] = useState<boolean>(true);
+    const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
+
+    let data = useContext(TableSectionDataContext);
+
+
 
     useEffect(() => {
         if (data) {
             setisCalculating(false);
         }
     }, [data]);
-
-
-
-
-
 
     return (
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
@@ -32,7 +30,7 @@ const DataTableSection: React.FC = ({ }) => {
                 <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={setRankedData} />
             </div>
 
-            <div style={{ width: "69%" }}>
+            <div style={{ width: "69%", height: "100%", maxHeight: "60vh" }}>
                 <MaterialReactDataTable data={data?.educations ?? []} />
             </div>
         </div>

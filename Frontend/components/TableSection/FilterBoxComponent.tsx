@@ -1,13 +1,13 @@
 
 import Paper from '@mui/material/Paper';
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { TableSectionDataContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
 import { MinimumMaximum, FinalRankingType } from "@src/types"
 import { bouncy } from 'ldrs';
-import { QuizAnswers } from '@src/types';
 import QuizModal from "@frontend/pages/QuizModal"
 import { useServer } from '@backend/server/useServer';
+import { FiltersContext, QuizInfoContext } from '../Tabs';
 
 
 
@@ -15,21 +15,6 @@ import { useServer } from '@backend/server/useServer';
 
 
 
-export type FilterProps = {
-    degreeTypes: string[];
-    institutes: string[];
-    geographies: string[];
-    subjects: string[];
-    formsOfEducation: string[];
-    educationDuration: MinimumMaximum;
-    newGraduateSalary: MinimumMaximum;
-    experiencedSalary: MinimumMaximum;
-    wantedWorkingHours: MinimumMaximum;
-    newGraduateUnemployment: MinimumMaximum;
-    experiencedUnemployment: MinimumMaximum;
-    canWorkInternationally: boolean;
-    hasFlexibleJobSchedule: boolean;
-};
 
 type FilterBoxComponentProps = {
     isCalculating: Boolean;
@@ -44,54 +29,14 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
 
 
 
-    // Obtain initial state from global context
     const data = useContext(TableSectionDataContext);
-    console.log("data", data)
-    // Keep track of all filters
-    const [filters, setFilters] = useState<FilterProps>({
-        degreeTypes: [],
-        subjects: [],
-        institutes: [],
-        geographies: [],
-        formsOfEducation: [],
-        educationDuration: { minimum: 0, maximum: 0 },
-        newGraduateSalary: { minimum: 0, maximum: 0 },
-        experiencedSalary: { minimum: 0, maximum: 0 },
-        wantedWorkingHours: { minimum: 0, maximum: 0 },
-        newGraduateUnemployment: { minimum: 0, maximum: 0 },
-        experiencedUnemployment: { minimum: 0, maximum: 0 },
-        canWorkInternationally: false,
-        hasFlexibleJobSchedule: false,
-    });
-    const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
-        {
-            subjectsPriority: 3,
-            industriesPriority: 3,
-            socialEnvironmentPriority: 3,
-            groupEngagementPriority: 3,
-            lonelinessPriority: 3,
-            academicEnvironmentPriority: 3,
-            stressPriority: 3,
-            highWorkloadAcceptancePriority: 3,
-            studentJobPriority: 3,
-            teachingPriority: 3,
-            lecturesPriority: 3,
-            literaturePriority: 3,
-            dislikeExamPriority: 3,
-            internshipPriority: 3,
-            internationalStayPriority: 3,
-            workNationallyPriority: 3,
-            startingSalaryPriority: 3,
-            experiencedSalaryPriority: 3,
-            unemploymentPriority: 3,
-            degreeRelevancePriority: 3,
-            flexibleHoursPriority: 3,
-            selfSchedulePriority: 3,
-            fixedHoursPriority: 3,
-            variableSchedulePriority: 3,
-            nightAndEveningShiftsPriority: 3,
-        }
-    );
+    const filters = useContext(FiltersContext)?.filters;
+    const quizAnswerState = useContext(QuizInfoContext)?.quizData;
+    const setFilters = useContext(FiltersContext)?.setFilters;
+    const SetQuizAnswerState = useContext(QuizInfoContext)?.setQuizData;
+    const isModalOpen = useContext(QuizInfoContext)?.isQuizOpen;
+    const setIsModalOpen = useContext(QuizInfoContext)?.setIsQuizOpen;
+
 
 
     // Value packing for salary sliders
@@ -126,8 +71,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
     const getValueTextUnemployment = (value: number) => { return `${value}%` }
 
-    // Quiz State
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
     // rank degrees: 

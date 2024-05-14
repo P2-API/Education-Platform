@@ -2,25 +2,28 @@ import React, { useEffect } from 'react';
 import { Paper } from '@mui/material';
 import Plot from 'react-plotly.js';
 
-import { chartType } from '@frontend/pages/VisualisationSection';
+import { ChartType } from "./VisualisationSettingsBox"
 
 interface VisualisationProps {
-    chartType: chartType
+    chartType: ChartType
 }
 
-const Visualisation: React.FC<VisualisationProps> = () => {
 
+const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
+
+    console.log("chartType: ", chartType)
+    
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
         x: [1, 2, 3, 4, 5],
         y: [1, 2, 3, 4, 5],
         text: ["Point 1", "Point 2", "Point 3", "Point 4", "Point 5"]
-    });
-
+    }); 
+    
     const generateRandomData = () => {
         const xValues = [];
         const yValues = [];
         const text = []
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
             xValues.push(Math.random() * 10);
             yValues.push(Math.random() * 100);
             // generate random text for each point
@@ -29,39 +32,128 @@ const Visualisation: React.FC<VisualisationProps> = () => {
         setData({ x: xValues, y: yValues, text: text });
     };
 
-    useEffect(() => {
-        generateRandomData();
-    }, []);
+    const scatterPlot = (
+        <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
+        <button onClick={generateRandomData} >Randomize</button>
+        <div style={{ display: "grid", gap: "1em", height: "95%", }}>
+            <Plot
+                data={[
+                    {
+                        x: data.x,
+                        y: data.y,
+                        text: data.text,
+                        mode: "markers",
+                        type: "scatter",
+                        marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                        hovertemplate:
+                            "<b>%{text}</b><br><br>" +
+                            "Løn: %{y}<br>" +
+                            "Uddannelsestype: %{x}<br>" +
+                            "<extra></extra>"
+                    }
+                ]}
+                layout={{
+                    title: "PCA Analyse - Løn og uddannelsestype",
+                    xaxis: {
+                        title: "Uddannelsestype",
+                        range: [0, 10] // Set the range for x-axis
+                    },
+                    yaxis: {
+                        title: "Løn (kr.)",
+                        range: [0, 100] // Set the range for y-axis
+                    },
+                    hovermode: "closest",
+                    hoverlabel: { bgcolor: "#FFF" },
+                    autosize: true, // Enable automatic resizing
+                    transition: {
+                        duration: 500,
+                        easing: 'cubic-in-out'
+                    },
+                }}
+                config={{
+                    responsive: true,
+                }}
 
-    return (
+            />
+        </div>
+    </Paper >
+    );
+
+
+    const barPlot = (
+    <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
+        <button onClick={generateRandomData} >Randomize</button>
+        <div style={{ display: "grid", gap: "1em", height: "95%", }}>
+            <Plot
+                data={[
+                    {
+                        x: data.y,
+                        y: data.x,
+                        text: data.text,
+                        mode: "markers",
+                        type: "bar",
+                        marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                        hovertemplate:
+                            "<b>%{text}</b><br><br>" +
+                            "Uddannelsestype: %{y}<br>" +
+                            "Løn: %{x}<br>" +
+                            "<extra></extra>"
+                    }
+                ]}
+                layout={{
+                    title: "Bar - Løn og uddannelsestype",
+                    xaxis: {
+                        title: "Løn (kr.)",
+                        range: [0, 100] // Set the range for x-axis
+                    },
+                    yaxis: {
+                        title: "Uddannelsestype",
+                        range: [0, 10] // Set the range for y-axis
+                    },
+                    hovermode: "closest",
+                    hoverlabel: { bgcolor: "#FFF" },
+                    autosize: true, // Enable automatic resizing
+                    transition: {
+                        duration: 500,
+                        easing: 'cubic-in-out'
+                    },
+                }}
+                config={{
+                    responsive: true,
+                }}
+
+            />
+        </div>
+    </Paper >
+    );
+
+    const radarPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>
                 <Plot
                     data={[
                         {
-                            x: data.x,
-                            y: data.y,
+                            r: data.y,
+                            theta: data.text,
                             text: data.text,
                             mode: "markers",
-                            type: "scatter",
+                            type: "scatterpolar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
-                                "Løn: %{y}<br>" +
-                                "Uddannelsestype: %{x}<br>" +
+                                "Løn: %{r}<br>" +
+                                "Uddannelsestype: %{theta}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "PCA Analyse - Løn og uddannelsestype",
-                        xaxis: {
-                            title: "Uddannelsestype",
-                            range: [0, 10] // Set the range for x-axis
-                        },
-                        yaxis: {
-                            title: "Løn (kr.)",
-                            range: [0, 100] // Set the range for y-axis
+                        title: "Radar - Løn og uddannelsestype",
+                        polar: {
+                            radialaxis: {
+                                visible: true,
+                                range: [0, 100]
+                            }
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },
@@ -74,11 +166,25 @@ const Visualisation: React.FC<VisualisationProps> = () => {
                     config={{
                         responsive: true,
                     }}
-
+    
                 />
             </div>
         </Paper >
-    );
-};
+        );
+
+    useEffect(() => {
+        generateRandomData();
+    }, []);
+
+
+    return (
+        ((chartType == ChartType.scatter) && scatterPlot)
+        ||
+        ((chartType == ChartType.bar) && barPlot)
+        ||
+        ((chartType == ChartType.radar) && radarPlot)
+    )
+}
+
 
 export default Visualisation;

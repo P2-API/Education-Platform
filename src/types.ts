@@ -196,8 +196,8 @@ export type TableFilters = {
     wantedDegreeTypes: string[]; //in use               
     canStudyInGeoraphies: Geography[]; //in use         
     canStudyAtInstitution: Institution[]; //in use      
-    hasSubjects: string[]; // in use / LP filter        
-    hasIndustries: string[]; // in use / LP filter      
+    hasSubjects: string[]; // in use      
+    hasIndustries: string[]; // in use       
     hasFormsOfEducation: string[]; // in use
     wantedSalary: SalaryFilters; // in use / LP filter  
     unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
@@ -244,20 +244,37 @@ export type PCAData = {
 }
 
 export type IntermedietRankingType = {
-    upperhalf:{
+    upperhalf: {
         education: Education;
         similarity: number;
     }[],
-    lowerhalf:{
+    lowerhalf: {
         education: Education;
         similarity: number;
     }[]
 }
 
 export type FinalRankingType = {
-    ranking:{
+    ranking: {
         education: Education;
         score: number;
     }[]
-    index:number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
+    index: number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
 }
+
+
+export type FilterProps = {
+    degreeTypes: string[];
+    institutes: string[];
+    geographies: string[];
+    subjects: string[];
+    formsOfEducation: string[];
+    educationDuration: MinimumMaximum;
+    newGraduateSalary: MinimumMaximum;
+    experiencedSalary: MinimumMaximum;
+    wantedWorkingHours: MinimumMaximum;
+    newGraduateUnemployment: MinimumMaximum;
+    experiencedUnemployment: MinimumMaximum;
+    canWorkInternationally: boolean;
+    hasFlexibleJobSchedule: boolean;
+};
