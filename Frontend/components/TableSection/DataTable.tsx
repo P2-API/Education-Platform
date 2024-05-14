@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import { Education } from "@src/types"
-import { Institution, County, Geography, DegreeType } from "../../../src/enums"
+import { Institution } from "../../../src/enums"
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -19,11 +19,26 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
       {
         accessorKey: "rank",
         header: "Rang", // Change to your language's translation for "Rang"
-        size: 60,
+        size: 75,
+        sortingFn: (rowA, rowB) => {
+          return (rowA.original.rank ?? 0) - (rowB.original.rank ?? 0);
+        },
+        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+          const rank = row.original.rank;
+          if (rank == null || rank == undefined || rank == 0) {
+            return (
+              <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>-</p>
+            );
+          }
+
+          return (
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{row.original.rank}</p>
+          );
+        }
       },
       {
         accessorKey: "title",
-        header: "Education",
+        header: "Uddannelse",
         minSize: 130,
         size: 150,
         maxSize: 200,
@@ -48,7 +63,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "geography",
         header: "Geografi",
         size: 120,
-        sortingFn: (rowA, rowB, columnId) => {
+        sortingFn: (rowA, rowB) => {
           return rowA.original.geographies[0].localeCompare(rowB.original.geographies[0]);
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
@@ -83,13 +98,13 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "industries",
         header: "Brancher",
         size: 370,
-        sortingFn: (rowA, rowB, columnId) => {
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = 0;
           let rowBMedian = 0;
-          rowA.original.industries.forEach(rowAIndustry =>{
+          rowA.original.industries.forEach(rowAIndustry => {
             rowAMedian += rowAIndustry.share;
           })
-          rowB.original.industries.forEach(rowBIndustry =>{
+          rowB.original.industries.forEach(rowBIndustry => {
             rowBMedian += rowBIndustry.share;
           })
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -110,14 +125,23 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "hours",
         header: "Undervisningsfordeling",
         size: 180,
-        sortingFn: (rowA, rowB, columnId) => {
-          let rowAMedian = rowA.original.hours.withFewStudents + rowA.original.hours.withManyStudents + rowA.original.hours.withSupervision;
-          let rowBMedian = rowB.original.hours.withFewStudents + rowB.original.hours.withManyStudents + rowB.original.hours.withSupervision;
+        sortingFn: (rowA, rowB) => {
+          let KlasseUndervisningA = rowA.original.hours.withFewStudents;
+          let KlasseUndervisningB = rowB.original.hours.withFewStudents;
+          let totalHoursA = KlasseUndervisningA + rowA.original.hours.withManyStudents + rowA.original.hours.withSupervision;
+          let totalHoursB = KlasseUndervisningB + rowB.original.hours.withManyStudents + rowB.original.hours.withSupervision;
+          let rowAMedian = KlasseUndervisningA / totalHoursA;
+          let rowBMedian = KlasseUndervisningB / totalHoursB;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
           const hoursNumbers: number[] = Object.values(row.original.hours);
+          const totalHours = hoursNumbers.reduce((acc, curr) => acc + curr, 0);
+          hoursNumbers.forEach((hours, index) => {
+            hoursNumbers[index] = Math.round((hours / totalHours) * 100);
+          })
+
           // ("hoursNumbers", hoursNumbers)
           // ("hoursTitles", hoursTitles)
           return (
@@ -133,7 +157,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "socialFeedback",
         header: "Socialt miljø 1 til 5",
         size: 160,
-        sortingFn: (rowA, rowB, rowId) =>{
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.socialFeedback.socialEnvironment + rowA.original.socialFeedback.groupEngagement + rowA.original.socialFeedback.loneliness + rowA.original.socialFeedback.stress;
           let rowBMedian = rowB.original.socialFeedback.socialEnvironment + rowB.original.socialFeedback.groupEngagement + rowB.original.socialFeedback.loneliness + rowB.original.socialFeedback.stress;
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -159,7 +183,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "academicFeedback",
         header: "Fagligt miljø 1 til 5",
         size: 200,
-        sortingFn: (rowA, rowB, rowId) =>{
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.academicFeedback.academicEnvironment + rowA.original.academicFeedback.teacherEvaluation + rowA.original.academicFeedback.satisfaction;
           let rowBMedian = rowB.original.academicFeedback.academicEnvironment + rowB.original.academicFeedback.teacherEvaluation + rowB.original.academicFeedback.satisfaction;
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -172,9 +196,9 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
           // ("hoursTitles", hoursTitles)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment} </p>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Lærerevaluering: {teacherEvaluation} </p>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Tilfredshed: {satisfaction} </p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Fagligt Miljø: {academicEnvironment.toFixed(2)} </p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Lærerevaluering: {teacherEvaluation.toFixed(2)} </p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Tilfredshed: {satisfaction.toFixed(2)} </p>
             </ul>
           );
         }
@@ -183,20 +207,30 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "academicWorkload",
         header: "Arbejdsbyrde",
         size: 160,
-        sortingFn: (rowA, rowB, rowId) =>{
-          let rowAMedian = rowA.original.academicWorkload.lectures + rowA.original.academicWorkload.literature + rowA.original.academicWorkload.studentJob;
-          let rowBMedian = rowB.original.academicWorkload.lectures + rowB.original.academicWorkload.literature + rowB.original.academicWorkload.studentJob;
+        sortingFn: (rowA, rowB) => {
+          let rowAMedian = rowA.original.academicWorkload.lectures
+          let rowBMedian = rowB.original.academicWorkload.lectures
+          let totalHoursA = rowA.original.academicWorkload.lectures + rowA.original.academicWorkload.literature + rowA.original.academicWorkload.studentJob;
+          let totalHoursB = rowB.original.academicWorkload.lectures + rowB.original.academicWorkload.literature + rowB.original.academicWorkload.studentJob;
+          rowAMedian = rowAMedian / totalHoursA;
+          rowBMedian = rowBMedian / totalHoursB;
+
           return rowAMedian > rowBMedian ? -1 : 1;
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const lectures = row.original.academicWorkload.lectures;
           const literature = row.original.academicWorkload.literature;
           const studentJob = row.original.academicWorkload.studentJob;
+          const total = lectures + literature + studentJob;
+          const lecturesPercent = Math.round((lectures / total) * 100);
+          const literaturePercent = Math.round((literature / total) * 100);
+          const studentJobPercent = Math.round((studentJob / total) * 100);
+
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Forelæsninger: {lectures} timer</p>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Litteratur: {literature} timer</p>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Studiejob: {studentJob} timer</p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Forelæsninger: {lecturesPercent}%</p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Litteratur: {literaturePercent}%</p>
+              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Studiejob: {studentJobPercent}%</p>
             </ul>
           );
         }
@@ -205,22 +239,25 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "degreeStructure.contents",
         header: "Uddannelsesstruktur",
         size: 180,
-        sortingFn: (rowA, rowB, rowId) =>{
-          let rowAMedian = rowA.original.degreeStructure.contents.teaching + rowA.original.degreeStructure.contents.exams + rowA.original.degreeStructure.contents.internship + rowA.original.degreeStructure.contents.internationalStay;
-          let rowBMedian = rowB.original.degreeStructure.contents.teaching + rowB.original.degreeStructure.contents.exams + rowB.original.degreeStructure.contents.internship + rowB.original.degreeStructure.contents.internationalStay;
+        sortingFn: (rowA, rowB) => {
+          let rowAMedian = rowA.original.degreeStructure.contents.teaching
+          let rowBMedian = rowB.original.degreeStructure.contents.teaching
+          let totalHoursA = rowA.original.degreeStructure.contents.teaching + rowA.original.degreeStructure.contents.exams + rowA.original.degreeStructure.contents.internship + rowA.original.degreeStructure.contents.internationalStay;
+          let totalHoursB = rowB.original.degreeStructure.contents.teaching + rowB.original.degreeStructure.contents.exams + rowB.original.degreeStructure.contents.internship + rowB.original.degreeStructure.contents.internationalStay;
+          rowAMedian = rowAMedian / totalHoursA;
+          rowBMedian = rowBMedian / totalHoursB;
+
           return rowAMedian > rowBMedian ? -1 : 1;
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const teaching = row.original.degreeStructure.contents.teaching;
           const exams = row.original.degreeStructure.contents.exams;
           const internship = row.original.degreeStructure.contents.internship;
-          const internationalStay = row.original.degreeStructure.contents.internationalStay;
           return (
-            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "80px", }}>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Undervisning: {teaching}%</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Eksamen {exams}%</p>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Praktik: {internship}%</p>
-              <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Udlandsophold: {internationalStay}%</p>
             </ul>
           )
         },
@@ -247,7 +284,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const dropoutRate = row.original.dropoutRate;
           return (
-            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{dropoutRate * 100}%</p>
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{dropoutRate}%</p>
           );
         }
       },
@@ -255,7 +292,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "jobData.salaries.newGraduate",
         header: "Løn som nyuddannet",
         size: 200,
-        sortingFn: (rowA, rowB, rowId) =>{
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.jobData.salaries.newGraduate.lowerQuartile + rowA.original.jobData.salaries.newGraduate.median + rowA.original.jobData.salaries.newGraduate.upperQuartile;
           let rowBMedian = rowB.original.jobData.salaries.newGraduate.lowerQuartile + rowB.original.jobData.salaries.newGraduate.median + rowB.original.jobData.salaries.newGraduate.upperQuartile;
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -286,7 +323,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "jobData.salaries.experienced",
         header: "Løn som erfaren",
         size: 200,
-        sortingFn: (rowA, rowB, rowId) =>{
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.jobData.salaries.experienced.lowerQuartile + rowA.original.jobData.salaries.experienced.median + rowA.original.jobData.salaries.experienced.upperQuartile;
           let rowBMedian = rowB.original.jobData.salaries.experienced.lowerQuartile + rowB.original.jobData.salaries.experienced.median + rowB.original.jobData.salaries.experienced.upperQuartile;
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -317,7 +354,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "jobData.unemployment",
         header: "Arbejdsløshed",
         size: 160,
-        sortingFn: (rowA, rowB, rowId) =>{
+        sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.jobData.unemployment.newGraduate + rowA.original.jobData.unemployment.experienced;
           let rowBMedian = rowB.original.jobData.unemployment.newGraduate + rowB.original.jobData.unemployment.experienced;
           return rowAMedian > rowBMedian ? -1 : 1;
@@ -329,11 +366,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
             <ul style={{ padding: 0, width: "250px", height: "40px", scrollbarWidth: "thin", marginRight: "1.5em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Nyuddannede: </p>
-                <p style={{ margin: 0 }} >{newGraduate * 100}%</p>
+                <p style={{ margin: 0 }} >{newGraduate}%</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Erfarne: </p>
-                <p style={{ margin: 0 }} >{experienced * 100}%</p>
+                <p style={{ margin: 0 }} >{experienced}%</p>
               </div>
             </ul>
           );
@@ -343,9 +380,9 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "jobData.workSchedule",
         header: "Arbejdstid (job)",
         size: 180,
-        sortingFn: (rowA, rowB, rowId) =>{
-          let rowAMedian = rowA.original.jobData.workSchedule.workingHours + rowA.original.jobData.workSchedule.flexibleHoursPercent + rowA.original.jobData.workSchedule.fixedHoursPercent;
-          let rowBMedian = rowB.original.jobData.workSchedule.workingHours + rowB.original.jobData.workSchedule.flexibleHoursPercent + rowB.original.jobData.workSchedule.fixedHoursPercent;
+        sortingFn: (rowA, rowB) => {
+          let rowAMedian = rowA.original.jobData.workSchedule.workingHours
+          let rowBMedian = rowB.original.jobData.workSchedule.workingHours
           return rowAMedian > rowBMedian ? -1 : 1;
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
@@ -376,6 +413,9 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "jobData.degreeRelevance",
         header: "Job relevans",
         size: 120,
+        sortingFn: (rowA, rowB) => {
+          return rowA.original.jobData.degreeRelevance - rowB.original.jobData.degreeRelevance;
+        },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 
           const degree_relevance = row.original.jobData.degreeRelevance;
@@ -402,9 +442,13 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         size: 140,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 
-          const national_jobs = row.original.jobData.nationalJobs;
+          let national_jobs = row.original.jobData.nationalJobs;
+          if (national_jobs < 0) {
+            national_jobs = national_jobs / 10000;
+          }
+
           return (
-            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "3em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{Math.floor((1 - national_jobs) * 100)}%</p>
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "3em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{national_jobs}%</p>
           );
         }
       }
@@ -417,7 +461,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
 
   const DetailPanelContent = () => {
     return (
-      <div style={{ padding: "1rem", height: "100%", width: "100%", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{ height: "200px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         <p>Detail Panel Content</p>
       </div>
     );
@@ -444,22 +488,25 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
     }),
     positionExpandColumn: "last",
     enableBottomToolbar: false,
-    enableColumnResizing: false,
-    enableGlobalFilter: false,
+    enableColumnResizing: true, // enable column resizing
+    enableGlobalFilter: true,
     enableColumnVirtualization: true,
     enablePagination: false,
     enableStickyHeader: true,
     enableSorting: true,
+
     enableColumnPinning: true,
     enableColumnActions: false,
     initialState: {
       density: "compact",
       columnPinning: { left: ["rank"] },
 
+
     },
     enableRowVirtualization: true,
     muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden" } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
+    muiTableContainerProps: { sx: { scrollbarWidth: "thin", maxHeight: "73vh", } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 2 }, //optionally customize the row virtualizer
     columnVirtualizerOptions: { overscan: 4 }, //optionally customize the column virtualizer
