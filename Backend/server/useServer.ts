@@ -1,4 +1,4 @@
-import { QuizAnswers, TableSectionDataFromServer, PCAData, RankingStructure } from "types";
+import { QuizAnswers, TableSectionDataFromServer, PCAData, FinalRankingStructure } from "types";
 
 const useServer = () => {
 
