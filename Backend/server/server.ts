@@ -29,7 +29,6 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData = request.body;
     const data = requestData.PCA_request;
-    ("PCA_request received: ", data);
 
     // calculate PCA function here: 
     // const PCA_data = calculatePCA(requestData);
@@ -38,8 +37,34 @@ server.post("/PCA_request", (request: Request, response: Response) => {
     response.status(200).send("PCA_data received: " + JSON.stringify(requestData));
 });
 
+server.post("/update_ranking", (request: Request, response: Response) => {
+    const requestData = request.body;
+    const filterProps = requestData.filterProps;
+    const quizAnswers = requestData.quizAnswers;
+
+    // calculate ranking function here: 
+    // const rankings = calculateRanking(filterProps, quizAnswers);
+
+    // return the result below
+    //response.status(200).send(rankings);
+    response.status(200).send(JSON.stringify(requestData));
+});
+
+server.post("generate_personalized_message", (request: Request, response: Response) => {
+    const requestData = request.body;
+    const quizAnswers = requestData.quizAnswers;
+    const filters = requestData.filters;
+
+    // calculate personalized message function here: 
+    // const personalizedMessage = calculatePersonalizedMessage(quizAnswers, filters);
+
+    // return the result below
+    //response.status(200).send(personalizedMessage);
+    response.status(200).send(JSON.stringify(requestData));
+});
+
+
 server.listen(PORT, () => {
-    ("Server running at PORT: ", PORT);
 }).on("error", (error) => {
     throw new Error(error.message);
 });
