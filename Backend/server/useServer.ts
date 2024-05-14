@@ -1,13 +1,5 @@
-import { QuizAnswers, TableSectionDataFromServer } from "types";
+import { QuizAnswers, TableSectionDataFromServer, PCAData, RankingStructure } from "types";
 import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
-
-
-export type PCAData = {
-    x_axis: string[];
-    y_axis: string[];
-}
-
-
 
 const useServer = () => {
 
