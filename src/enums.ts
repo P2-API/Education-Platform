@@ -178,7 +178,7 @@ export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): Min
             return { minimum: 4, maximum: 36 }
 
         default:
-            throw "Degree type not handled!";
+            return { minimum: 4, maximum: 36 }
     }
 }
 
