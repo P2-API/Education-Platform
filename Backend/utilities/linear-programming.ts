@@ -49,13 +49,16 @@ export class LPclass implements LP{
     // jobData
     variables.push({name: "startingSalary", coef:quizAnswers.startingSalaryPriority},
                   {name: "experiencedSalary", coef:quizAnswers.experiencedSalaryPriority},
-                  {name: "unemployment", coef:quizAnswers.unemploymentPriority},
+                  {name: "unemploymentNewGraduate", coef:quizAnswers.unemploymentPriority},
+                  {name: "unemploymentExperienced", coef:quizAnswers.unemploymentPriority},
                   {name: "degreeRelevance", coef:quizAnswers.degreeRelevancePriority},
                   {name: "fixedHours", coef:quizAnswers.fixedHoursPriority},
                   {name: "flexibleHours", coef:quizAnswers.flexibleHoursPriority},
                   {name: "selfSchedule", coef:quizAnswers.selfSchedulePriority},
                   {name: "variableSchedule", coef:quizAnswers.variableSchedulePriority},
-                  {name: "nightAndEveningShifts", coef:quizAnswers.nightAndEveningShiftsPriority})
+                  {name: "nightAndEveningShifts", coef:quizAnswers.nightAndEveningShiftsPriority},
+                  {name: "nationalJobs", coef:quizAnswers.workNationallyPriority},
+                )
   }
   addConstraints(filters:Types.TableFilters):void{ // normalized values are between 0 and 1 are assumed
     // default filters
@@ -64,7 +67,9 @@ export class LPclass implements LP{
     })
     // user defined LP filters
     this.subjectTo.push({name:"startingSalary", vars:[{name:"startingSalary", coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:filters.wantedSalary.newGraduate.maximum, lb:filters.wantedSalary.newGraduate.minimum}})
-    //!!!implementations of remaining filters are missing!!!//
+    this.subjectTo.push({name:"experiencedSalary", vars:[{name:"experiencedSalary", coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:filters.wantedSalary.experienced.maximum, lb:filters.wantedSalary.experienced.minimum}})
+    this.subjectTo.push({name:"unemploymentNewGraduate", vars:[{name:"unemploymentNewGraduate", coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:filters.unemployment.newGraduate, lb:filters.unemployment.newGraduate}})
+    this.subjectTo.push({name:"unemploymentExperienced", vars:[{name:"unemploymentExperienced", coef:1}], bnds:{type:this.solverInstance.GLP_DB, ub:filters.unemployment.experienced, lb:filters.unemployment.experienced}})
   }
 }
 
@@ -94,7 +99,6 @@ export function findOptimalSolution(userImputs:Types.UserImputs):Types.Education
 function OptimalEducation(result:Result,filters:Types.TableFilters):Types.Education{
   const values = result.result.vars;
   const optimalEducation:Types.Education = {
-    id: 0, // irrelevant
     url: "", // irrelevant 
     rank: null, // irrelevant 
     title: "", // irrelevant 
@@ -138,8 +142,8 @@ function OptimalEducation(result:Result,filters:Types.TableFilters):Types.Educat
                           selfSchedulePercent: values["selfSchedule"],
                           variableSchedulePercent: values["variableSchedule"],
                           nightAndEveningShiftsPercent: values["nightAndEveningShifts"]},
-            unemployment: {newGraduate: values["unemployment"],
-                          experienced: values["unemployment"],
+            unemployment: {newGraduate: values["unemploymentNewGraduate"],
+                          experienced: values["unemploymentExperienced"],
                           projectedNewGraduate: 0, //irelevant
                           projectedExperienced: 0}, //irelevant
             degreeRelevance: values["degreeRelevance"],
