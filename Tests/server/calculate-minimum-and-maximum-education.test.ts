@@ -15,11 +15,11 @@ export const education1: Education =
     institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
-            title: SubjectTitle.Dansk,
+            title: SubjectTitle.Historie,
             score: 10
         },
         {
-            title: SubjectTitle.Biologi,
+            title: SubjectTitle.Arkitektur,
             score: -4
         }
     ],
@@ -106,11 +106,11 @@ const education2: Education =
     institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
-            title: SubjectTitle.Dansk,
+            title: SubjectTitle.Historie,
             score: 30
         },
         {
-            title: SubjectTitle.Biologi,
+            title: SubjectTitle.Arkitektur,
             score: 2
         }
     ],
@@ -197,11 +197,11 @@ const minimumEducation: Education =
     institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
-            title: SubjectTitle.Dansk,
+            title: SubjectTitle.Historie,
             score: 10
         },
         {
-            title: SubjectTitle.Biologi,
+            title: SubjectTitle.Arkitektur,
             score: -4
         }
     ],
@@ -288,11 +288,11 @@ const maximumEducation: Education =
     institutions: Institution['Aalborg Universitet'],
     subjects: [
         {
-            title: SubjectTitle.Dansk,
+            title: SubjectTitle.Historie,
             score: 30
         },
         {
-            title: SubjectTitle.Biologi,
+            title: SubjectTitle.Arkitektur,
             score: 2
         }
     ],

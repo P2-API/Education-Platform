@@ -1,15 +1,19 @@
 import React from 'react';
-import { Paper } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
-import { chartType } from '../../pages/VisualisationSection';
-import { PCAData, useServer } from '@backend/server/useServer';
+import { useServer } from '@backend/server/useServer';
+import { PCAData } from 'types'
 import { toast } from 'sonner';
 
-interface VisualisationSettingsBoxProps {
-    setChartType: React.Dispatch<React.SetStateAction<chartType>>
+export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
+
+type VisualisationSettingsBoxProps = {
+    chartType: ChartType,
+    setChartType: React.Dispatch<React.SetStateAction<ChartType>>
 }
 
-const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => {
+
+const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ chartType, setChartType }) => {
 
     const { getPCAData } = useServer();
 
@@ -25,13 +29,29 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = () => 
         toast.info(data);
     }
 
+    const handleChartChange = (event: SelectChangeEvent) => {
+        setChartType(event.target.value as ChartType);
+    };
 
 
     return (
         <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
-                <button className='primary-button' style={{ width: "150px", marginRight: "1em" }} onClick={calculatePCA} >Test server</button>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                <InputLabel id="select-graph">Graph</InputLabel>
+                <Select
+                    labelId="select-graph"
+                    id="select-graph"
+                    value={chartType}
+                    label="Chart"
+                    onChange={handleChartChange}
+                >
+                    <MenuItem value="scatter">Scatter</MenuItem>
+                    <MenuItem value="bar">Bar</MenuItem>
+                    <MenuItem value="radar">Radar</MenuItem>
+                </Select>
+                </FormControl>
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>

@@ -1,6 +1,7 @@
 import {GLPK, LP, Result} from 'glpk.js/dist/glpk';
 import * as Types from '../../src/types';
 import GLPKConstructor from 'glpk.js/dist/glpk';
+import {Institution, DegreeType, County, Geography} from '../../src/enums';
 
 export class LPclass implements LP{
   name: string;
@@ -27,7 +28,7 @@ export class LPclass implements LP{
     // hours
     variables.push({name: "withManyStudents", coef:quizAnswers.highWorkloadAcceptancePriority},
                   {name: "withFewStudents", coef:quizAnswers.highWorkloadAcceptancePriority},
-                  {name: "withManyLectures", coef:quizAnswers.highWorkloadAcceptancePriority},)
+                  {name: "withSupervision", coef:quizAnswers.highWorkloadAcceptancePriority},)
   
     // socialFeedback
     variables.push({name: "socialEnvironment", coef:quizAnswers.socialEnvironmentPriority},
@@ -36,7 +37,7 @@ export class LPclass implements LP{
                   {name: "stress", coef:quizAnswers.stressPriority})
     // academicFeedback
     variables.push({name: "academicEnvironment", coef:quizAnswers.academicEnvironmentPriority},
-                  {name: "teacherEvalutation", coef:quizAnswers.teachingPriority})
+                  {name: "teacherEvaluation", coef:quizAnswers.teachingPriority})
     // academicWorkload
     variables.push({name: "studentJob", coef:quizAnswers.studentJobPriority},
                   {name: "lectures", coef:quizAnswers.lecturesPriority},
@@ -46,8 +47,7 @@ export class LPclass implements LP{
                   {name: "internship", coef:quizAnswers.internshipPriority},
                   {name: "internationalStay", coef:quizAnswers.internationalStayPriority})
     // jobData
-    variables.push({name: "workNationally", coef:quizAnswers.workNationallyPriority},
-                  {name: "startingSalary", coef:quizAnswers.startingSalaryPriority},
+    variables.push({name: "startingSalary", coef:quizAnswers.startingSalaryPriority},
                   {name: "experiencedSalary", coef:quizAnswers.experiencedSalaryPriority},
                   {name: "unemployment", coef:quizAnswers.unemploymentPriority},
                   {name: "degreeRelevance", coef:quizAnswers.degreeRelevancePriority},
@@ -55,9 +55,7 @@ export class LPclass implements LP{
                   {name: "flexibleHours", coef:quizAnswers.flexibleHoursPriority},
                   {name: "selfSchedule", coef:quizAnswers.selfSchedulePriority},
                   {name: "variableSchedule", coef:quizAnswers.variableSchedulePriority},
-                  {name: "nightAndEveningShifts", coef:quizAnswers.nightAndEveningShiftsPriority},
-                  {name: "workNationally", coef:quizAnswers.workNationallyPriority})
-  
+                  {name: "nightAndEveningShifts", coef:quizAnswers.nightAndEveningShiftsPriority})
   }
   addConstraints(filters:Types.TableFilters):void{ // normalized values are between 0 and 1 are assumed
     // default filters
@@ -87,9 +85,81 @@ export class LPsolver{
   }
 }
 
-export function findOptimalSolution(userImputs:Types.UserImputs):Result{
+export function findOptimalSolution(userImputs:Types.UserImputs):Types.Education{
   const solver = new LPsolver();
-  return solver.solve(userImputs);
+  const result = solver.solve(userImputs);
+  return OptimalEducation(result, userImputs.filters);
+}
+  
+function OptimalEducation(result:Result,filters:Types.TableFilters):Types.Education{
+  const values = result.result.vars;
+  const optimalEducation:Types.Education = {
+    id: 0, // irrelevant
+    url: "", // irrelevant 
+    rank: null, // irrelevant 
+    title: "", // irrelevant 
+    degreeType: "" as DegreeType, // irrelevant 
+    counties: [] as County[], // irrelevant 
+    geographies: [] as Geography[], // irrelevant 
+    institutions: "" as Institution, // irrelevant
+    subjects: addSubjects(result, filters.hasSubjects), 
+    industries: addIndustries(result, filters.hasIndustries), 
+    hours: {withManyStudents: values["withManyStudents"],
+            withFewStudents: values["withFewStudents"],
+            withSupervision: values["withSupervision"]}, 
+    socialFeedback: {socialEnvironment: values["socialEnvironment"],
+                    groupEngagement: values["groupEngagement"],
+                    loneliness: values["loneliness"],
+                    stress: values["stress"]},
+    academicFeedback: {academicEnvironment: values["academicEnvironment"],
+                      teacherEvaluation: values["teacherEvaluation"],
+                      satisfaction: 0}, //irrelevant
+    academicWorkload: {lectures: values["lectures"],
+                      literature: values["literature"],
+                      studentJob: values["studentJob"]},
+    degreeStructure: {contents: {teaching: 0, //irrelevant
+                                exams: values["dislikeExam"],
+                                internship: values["internship"],
+                                internationalStay: values["internationalStay"]},
+                      teachingMethods: [] //irrelevant
+                      },
+    dropoutRate: 0, //irrelevant
+    jobData: {salaries: {newGraduate: {lowerQuartile: 0, //irrelevant
+                                      median: values["startingSalary"],
+                                      upperQuartile: 0, //irrelevant
+                                      projectedDirection: "" }, //irrelevant
+                        experienced: {lowerQuartile: 0, //irrelevant
+                                      median: values["experiencedSalary"],
+                                      upperQuartile: 0, //irrelevant
+                                      projectedDirection: ""}}, //irrelevant
+            workSchedule: {workingHours: 0, //irrelevant
+                          fixedHoursPercent: values["fixedHours"],
+                          flexibleHoursPercent: values["flexibleHours"],
+                          selfSchedulePercent: values["selfSchedule"],
+                          variableSchedulePercent: values["variableSchedule"],
+                          nightAndEveningShiftsPercent: values["nightAndEveningShifts"]},
+            unemployment: {newGraduate: values["unemployment"],
+                          experienced: values["unemployment"],
+                          projectedNewGraduate: 0, //irelevant
+                          projectedExperienced: 0}, //irelevant
+            degreeRelevance: values["degreeRelevance"],
+            degreePreparesForJob: 0, // irelevant
+            nationalJobs: 0} //irelevant 
+  };
+  function addSubjects(result:Result, FilterSubjects:string[]):Types.Subject[]{
+    const optimalSubjectsAndScores:Types.Subject[] = [];
+    FilterSubjects.forEach((subject) => {
+      optimalSubjectsAndScores.push({title: subject, score:result.result.vars[subject]})
+    })
+    return optimalSubjectsAndScores;
+  }
+  function addIndustries(result:Result, FilterIndustries:string[]):Types.Industry[]{
+    const optimalIndustries:Types.Industry[] = [];
+    FilterIndustries.forEach((industry) => {
+      optimalIndustries.push({title: industry, share:result.result.vars[industry]})
+    })
+    return optimalIndustries;
+  }
+  return optimalEducation;
 }
 
-const solver = new LPsolver();
