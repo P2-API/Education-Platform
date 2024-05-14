@@ -236,7 +236,7 @@ export type RankedEducationsType = {
 }
 
 export type EducationVector = {
-    educationID: number,
+    education: Education,
     coordinates: number[]
 }
 
@@ -245,10 +245,21 @@ export type PCAData = {
     y_axis: string[];
 }
 
-export type RankingStructure = {
+export type IntermedietRankingType = {
+    upperhalf:{
+        education: Education;
+        similarity: number;
+    }[],
+    lowerhalf:{
+        education: Education;
+        similarity: number;
+    }[]
+}
+
+export type FinalRankingType = {
     ranking:{
-        EducationId: number;
-        ranking: number;
-    }
+        education: Education;
+        score: number;
+    }[]
     index:number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
 }[]
