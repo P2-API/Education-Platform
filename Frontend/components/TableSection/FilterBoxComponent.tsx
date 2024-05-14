@@ -20,7 +20,6 @@ export type FilterProps = {
     geographies: string[];
     subjects: string[];
     formsOfEducation: string[];
-    jobFlexibilities: string[];
     educationDuration: MinimumMaximum;
     newGraduateSalary: MinimumMaximum;
     experiencedSalary: MinimumMaximum;
@@ -28,6 +27,7 @@ export type FilterProps = {
     newGraduateUnemployment: MinimumMaximum;
     experiencedUnemployment: MinimumMaximum;
     canWorkInternationally: boolean;
+    hasFlexibleJobSchedule: boolean;
 };
 
 type FilterBoxComponentProps = {
@@ -53,7 +53,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         institutes: [],
         geographies: [],
         formsOfEducation: [],
-        jobFlexibilities: [],
         educationDuration: { minimum: 0, maximum: 0 },
         newGraduateSalary: { minimum: 0, maximum: 0 },
         experiencedSalary: { minimum: 0, maximum: 0 },
@@ -61,6 +60,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         newGraduateUnemployment: { minimum: 0, maximum: 0 },
         experiencedUnemployment: { minimum: 0, maximum: 0 },
         canWorkInternationally: false,
+        hasFlexibleJobSchedule: false,
     });
     const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
         {
@@ -205,14 +205,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     setFilters={setFilters}
                                     identifier="formsOfEducation"
                                 />
-                                <MultiSelectAutoComplete
-                                    value={filters.jobFlexibilities}
-                                    collection={data?.jobFlexibilityKeys ?? []}
-                                    selectLabel="Filtrer efter fleksibilitet i muligt arbejde efter uddannelse"
-                                    selectPlaceholder="Fleksibilitet"
-                                    setFilters={setFilters}
-                                    identifier="jobFlexibilities"
-                                />
                                 <MinimumDistanceSlider
                                     initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
                                     sliderRange={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
@@ -272,6 +264,12 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Har internationale arbejdsmuligheder"
                                     setFilters={setFilters}
                                     identifier="canWorkInternationally"
+                                />
+                                <CheckmarkToggleButton
+                                    initialState={false}
+                                    description="Har fleksibelt arbejdstidsskema"
+                                    setFilters={setFilters}
+                                    identifier="hasFlexibleJobSchedule"
                                 />
                                 <span style={{ color: "#006eff" }} >Du har ramt bunden</span>
                             </>
