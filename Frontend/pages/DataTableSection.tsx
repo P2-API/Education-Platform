@@ -2,17 +2,16 @@ import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
-
+import { FinalRankingType } from "../../src/types";
 import { TableSectionDataContext } from "./Homepage";
-import { RankingResult } from "types";
 
 
 
 const DataTableSection: React.FC = ({ }) => {
     // Obtain state from global context
     const data = useContext(TableSectionDataContext);
-    const [rankedData, setRankedData] = useState<RankingResult | null>(null);
-
+    const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
+    console.log("rankeddata", rankedData)
     const [isCalculating, setisCalculating] = useState<boolean>(true);
 
     useEffect(() => {
