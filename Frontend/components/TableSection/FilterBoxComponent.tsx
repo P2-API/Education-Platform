@@ -75,7 +75,7 @@ const FilterBoxComponent = ({ }) => {
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
-    const getValueTextUnemployment = (value: number) => { return `${value} ledige` }
+    const getValueTextUnemployment = (value: number) => { return `${value}%` }
 
 
     return (
