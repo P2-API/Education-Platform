@@ -175,8 +175,6 @@ export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): Min
         case DegreeType['Professionsbacheloruddannelse']:
             return { minimum: 18, maximum: 18 };
         case DegreeType['Andre uddannelser']:
-            return { minimum: 4, maximum: 36 }
-
         default:
             return { minimum: 4, maximum: 36 }
     }
