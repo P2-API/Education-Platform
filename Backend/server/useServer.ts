@@ -1,4 +1,5 @@
 import { QuizAnswers, TableSectionDataFromServer, PCAData, FinalRankingStructure } from "types";
+import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
 
 const useServer = () => {
 

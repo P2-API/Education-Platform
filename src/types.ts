@@ -115,6 +115,11 @@ export type Education = {
                         self_schedule_priority: number; variable_schedule_priority: number; night_and_evening_shifts_priority: number; work_nationally_priority: number;*/
 };
 
+export type RankingResult = [{
+    EducationId: number;
+    ranking: number;
+}]
+
 export type QuizAnswers = {
 
     subjectsPriority: number; // in use
