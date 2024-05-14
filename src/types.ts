@@ -267,4 +267,4 @@ export type FinalRankingType = {
         score: number;
     }[]
     index:number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
-}[]
+}
