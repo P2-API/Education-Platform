@@ -1,13 +1,13 @@
 
 import Paper from '@mui/material/Paper';
-import { useContext } from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TableSectionDataContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
-import { MinimumMaximum } from "@src/types"
+import { MinimumMaximum, RankingResult } from "@src/types"
 import { bouncy } from 'ldrs';
 import { QuizAnswers } from '@src/types';
 import QuizModal from "@frontend/pages/QuizModal"
+import { useServer } from '@backend/server/useServer';
 
 
 
@@ -32,13 +32,18 @@ export type FilterProps = {
 
 type FilterBoxComponentProps = {
     isCalculating: Boolean;
+    setIsCalculating: React.Dispatch<React.SetStateAction<boolean>>;
+    setRankedData: React.Dispatch<React.SetStateAction<RankingResult | null>>;
 }
 
 
 
-const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }) => {
+const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, setIsCalculating, setRankedData }) => {
 
-    // Obtain state from global context
+
+
+
+    // Obtain initial state from global context
     const data = useContext(TableSectionDataContext);
 
     // Keep track of all filters
@@ -57,7 +62,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }
         experiencedUnemployment: { minimum: 0, maximum: 0 },
         canWorkInternationally: false,
     });
-
     const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
         {
             subjectsPriority: 0,
@@ -124,16 +128,27 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }
     // Quiz State
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+    // rank degrees: 
+    const { updateRanking } = useServer();
+    const rankDegrees = async () => {
+        setIsCalculating(true);
+        const response = await updateRanking(filters, quizAnswerState);
+        const data = await response.json();
+        setRankedData(data);
+        setIsCalculating(false);
+    }
+
+
+
+
     bouncy.register()
-
-
-
     return (
         <>
             <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
-                {!isCalculating ? (
+                {isCalculating ? (
                     <div style={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
                         <l-bouncy
                             size="70"
@@ -145,7 +160,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }
                 ) : (
                     <>
                         <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
-                            <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre (scroll ned)</h2>
+                            <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre</h2>
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
@@ -258,7 +273,12 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating }
                                     setFilters={setFilters}
                                     identifier="canWorkInternationally"
                                 />
+                                <span style={{ color: "#006eff" }} >Du har ramt bunden</span>
                             </>
+                        </div>
+                        <div style={{ height: "3.5em", position: "sticky", borderTop: "1px solid black", bottom: 0, zIndex: 2, padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
+                            <span style={{ textAlign: "left", paddingLeft: "0.5em" }}>Scroll ned</span>
+                            <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={rankDegrees}>Beregn</button>
                         </div>
                     </>
                 )
