@@ -1,7 +1,7 @@
 #added lidt flere filer til ignore for at undgå at uploade unødvendige filer
 
 # Ignore node_modules directory
-node_modules/
+node_modules/git 
 
 # Ignore built files and directories for the server
 /build/

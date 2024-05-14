@@ -1,19 +1,16 @@
 import { Education } from "../../src/types"
-import { CountyToGeography, County, Institution } from "../../src/enums"
+import { County, Institution, DegreeType, Geography } from "../../src/enums"
 
 export let educations: Education[] = [
     {
+        "id": 1,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/samfundsvidenskabeligekandidatuddannelser/oevrigesamfundsvidenskab/organisational-innovation-and-entrepreneurship",
         "rank": 0,
         "title": "Organisational Innovation and Entrepreneurship",
-        "degreeType": "Kandidatuddannelse",
-        "counties": [
-            "Frederiksberg"
-        ],
-        "geographies": [
-            "Hovedstaden"
-        ],
-        "institutions": "Copenhagen Business School - Handelshøjskolen",
+        "degreeType": DegreeType.Kandidatuddannelse,
+        "counties": [County.Frederiksberg],
+        "geographies": [Geography.Hovedstaden],
+        "institutions": Institution["Copenhagen Business School - Handelshøjskolen"],
         "subjects": [],
         "industries": [
             {
@@ -72,13 +69,13 @@ export let educations: Education[] = [
                     "lowerQuartile": 30.65,
                     "median": 38.55,
                     "upperQuartile": 47.04,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 },
                 "experienced": {
                     "lowerQuartile": 47.65,
                     "median": 60.07,
                     "upperQuartile": 78.01,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 }
             },
             "workSchedule": {
@@ -101,17 +98,14 @@ export let educations: Education[] = [
         }
     },
     {
+        "id": 2,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/historie",
         "rank": 0,
         "title": "Historie",
-        "degreeType": "Kandidatuddannelse",
-        "counties": [
-            "København"
-        ],
-        "geographies": [
-            "Hovedstaden"
-        ],
-        "institutions": "Københavns Universitet",
+        "degreeType": DegreeType.Kandidatuddannelse,
+        "counties": [County.København],
+        "geographies": [Geography.Hovedstaden],
+        "institutions": Institution["Københavns Universitet"],
         "subjects": [],
         "industries": [
             {
@@ -170,13 +164,13 @@ export let educations: Education[] = [
                     "lowerQuartile": 1.024305556,
                     "median": 31.05,
                     "upperQuartile": 35.45,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 },
                 "experienced": {
                     "lowerQuartile": 34.65,
                     "median": 43.95,
                     "upperQuartile": 49.15,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 }
             },
             "workSchedule": {
@@ -199,17 +193,14 @@ export let educations: Education[] = [
         }
     },
     {
+        "id": 3,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/dansk",
         "rank": 0,
         "title": "Dansk",
-        "degreeType": "Kandidatuddannelse",
-        "counties": [
-            "Aarhus"
-        ],
-        "geographies": [
-            "Midtjylland"
-        ],
-        "institutions": "Aarhus Universitet",
+        "degreeType": DegreeType.Kandidatuddannelse,
+        "counties": [County.Aarhus],
+        "geographies": [ Geography.Midtjylland],
+        "institutions": Institution["Aarhus Universitet"],
         "subjects": [],
         "industries": [
             {
@@ -268,13 +259,13 @@ export let educations: Education[] = [
                     "lowerQuartile": 25.05,
                     "median": 31.15,
                     "upperQuartile": 35.09,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 },
                 "experienced": {
                     "lowerQuartile": 33.85,
                     "median": 44.05,
                     "upperQuartile": 48.08,
-                    "projectedDirection": ""
+                    "projectedDirection": "example direction"
                 }
             },
             "workSchedule": {
