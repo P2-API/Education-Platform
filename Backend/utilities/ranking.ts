@@ -114,10 +114,10 @@ class Ranker{
     }
 
     filtersPassed(education: Education, filters: TableFilters) {
-        return  filters.wantedDegreeTypes.includes(education.degreeType) &&
-                filters.canStudyInGeoraphies.includes(education.geographies[0]) &&
-                filters.canStudyAtInstitution.includes(education.institutions) &&
-                filters.hasFormsOfEducation.every((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
-                filters.canWorkInternationally ? (education.jobData.nationalJobs ? false : true):true
+        return  (filters.wantedDegreeTypes.length === 0)?true:filters.wantedDegreeTypes.includes(education.degreeType) &&
+            (filters.canStudyInGeoraphies.length === 0)?true: filters.canStudyInGeoraphies.some((geography) => education.geographies.includes(geography)) &&
+            (filters.canStudyAtInstitution.length === 0)?true:filters.canStudyAtInstitution.includes(education.institutions) &&
+            filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
+            filters.canWorkInternationally ? (education.jobData.nationalJobs ? false : true):true
     }
 }
