@@ -1,8 +1,16 @@
 import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React from "react";
+import { useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
 
-const DataTableSection: React.FC = () => {
+import { TableSectionDataContext } from "./Homepage";
+
+
+
+const DataTableSection: React.FC = ({ }) => {
+    // Obtain state from global context
+    const data = useContext(TableSectionDataContext);
+
     const [isCalculating, setisCalculating] = React.useState<boolean>(true);
 
 
@@ -15,7 +23,7 @@ const DataTableSection: React.FC = () => {
             </div>
 
             <div style={{ width: "69%" }}>
-                <MaterialReactDataTable />
+                <MaterialReactDataTable data={data?.educations ?? []} />
             </div>
         </div>
     );

@@ -9,10 +9,11 @@ import {
   MRT_Row,
 } from "material-react-table";
 
-const MaterialReactDataTable = () => {
+type MaterialReactDataTableProps = {
+  data: Education[];
+}
 
-
-
+const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data }) => {
   const columns: MRT_ColumnDef<Education>[] = useMemo(
     () => [
       {
@@ -353,7 +354,7 @@ const MaterialReactDataTable = () => {
     []
   );
 
-  const data: Education[] = [
+  const haha: Education[] = [
     {
       url: "https://www.sdu.dk/da/uddannelse/bachelor/datalogi",
       rank: 1,
@@ -505,8 +506,8 @@ const MaterialReactDataTable = () => {
     muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", scrollbarWidth: "none", overflow: "hidden"} },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
     rowVirtualizerInstanceRef, //optional
-    rowVirtualizerOptions: { overscan: 7 }, //optionally customize the row virtualizer
-    columnVirtualizerOptions: { overscan: 18}, //optionally customize the column virtualizer
+    rowVirtualizerOptions: { overscan: 2 }, //optionally customize the row virtualizer
+    columnVirtualizerOptions: { overscan: 4}, //optionally customize the column virtualizer
 
   });
 

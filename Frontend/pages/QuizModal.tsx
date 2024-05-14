@@ -42,83 +42,85 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 type QuizModalProperties = {
     isModalOpen: boolean;
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setQuizAnswerState: React.Dispatch<React.SetStateAction<QuizAnswers>>;
+    quizAnswerState: QuizAnswers;
 }
 
-const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen }) => {
+const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen, setQuizAnswerState, quizAnswerState }) => {
     const questions = [
         {
-            positiveReferencedAnswers: ["subjects_priority"],
+            positiveReferencedAnswers: ["subjectsPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at uddannelsens faglige indhold er spændende?",
         },
         {
-            positiveReferencedAnswers: ["industries_priority"],
+            positiveReferencedAnswers: ["industriesPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at uddanelsen passer til dine ønskede brancher?",
         },
         {
-            positiveReferencedAnswers: ["social_environment_priority", "group_engagement_priority"],
-            negativeReferencedAnswers: ["loneliness_priority"],
+            positiveReferencedAnswers: ["socialEnvironmentPriority", "groupEngagementPriority"],
+            negativeReferencedAnswers: ["lonelinessPriority"],
             question: "Hvor vigtigt er det for dig, at man i høj grad er social på studiet (gruppearbejde m.m.)?",
         },
         {
-            positiveReferencedAnswers: ["academic_environment_priority"],
+            positiveReferencedAnswers: ["academicEnvironmentPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at der er et godt fagligt miljø på studiet?",
         },
         {
             positiveReferencedAnswers: [],
-            negativeReferencedAnswers: ["stress_priority", "high_workload_acceptance_priority"],
+            negativeReferencedAnswers: ["stressPriority", "highWorkloadAcceptancePriority"],
             question: "Hvor vigtigt er det for dig, at have meget fritid uden for studiet",
         },
         {
-            positiveReferencedAnswers: ["student_job_priority"],
+            positiveReferencedAnswers: ["studentJobPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at du kan få studiejob?",
         },
         {
-            positiveReferencedAnswers: ["teaching_priority", "lectures_priority"],
-            negativeReferencedAnswers: ["literature_priority"],
+            positiveReferencedAnswers: ["teachingPriority", "lecturesPriority"],
+            negativeReferencedAnswers: ["literaturePriority"],
             question: "Hvor vigtigt er det for dig, at der høj grad er undevisning frem for selvstudie?",
         },
         {
-            positiveReferencedAnswers: ["dislike_exam_priority"],
+            positiveReferencedAnswers: ["dislikeExamPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at have få eksamener?",
         },
         {
-            positiveReferencedAnswers: ["internship_priority"],
+            positiveReferencedAnswers: ["internshipPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at du kommer i praktik?",
         },
         {
-            positiveReferencedAnswers: ["international_stay_priority"],
-            negativeReferencedAnswers: ["work_nationally_priority"],
+            positiveReferencedAnswers: ["internationalStayPriority"],
+            negativeReferencedAnswers: ["workNationallyPriority"],
             question: "Hvor vigtigt er det for dig, at du kan arbejde eller studere internationalt?",
         },
         {
-            positiveReferencedAnswers: ["starting_salary_priority", "experienced_salary_priority"],
+            positiveReferencedAnswers: ["startingSalaryPriority", "experiencedSalaryPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at der er høj løn på dine mulige jobs efter studiet?",
         },
         {
-            positiveReferencedAnswers: ["unemployment_priority"],
+            positiveReferencedAnswers: ["unemploymentPriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at der er lav arbejdsløshed på mulige jobs efter studiet?",
         },
         {
-            positiveReferencedAnswers: ["degree_relevance_priority"],
+            positiveReferencedAnswers: ["degreeRelevancePriority"],
             negativeReferencedAnswers: [],
             question: "Hvor vigtigt er det for dig, at uddannelsen er relevant på arbejdsmarkedet?",
         },
         {
-            positiveReferencedAnswers: ["flexible_hours_priority", "self_schedule_priority"],
-            negativeReferencedAnswers: ["fixed_hours_priority", "variable_schedule_priority"],
+            positiveReferencedAnswers: ["flexibleHoursPriority", "selfSchedulePriority"],
+            negativeReferencedAnswers: ["fixedHoursPriority", "variableSchedulePriority"],
             question: "Hvor vigtigt er det for dig, at din arbejdstid i job efter studiet er fleksibel og selvbestemt?",
         },
         {
             positiveReferencedAnswers: [],
-            negativeReferencedAnswers: ["night_and_evening_shifts_priority"],
+            negativeReferencedAnswers: ["nightAndEveningShiftsPriority"],
             question: "Hvor vigtigt er det for dig, at du ikke arbejder sent (aften og nat) på mulige jobs efter studiet?",
         },
     ];
@@ -141,35 +143,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
     ]
 
 
-    const [quizAnswerState, SetQuizAnwerState] = React.useState<QuizAnswers>(
-        {
-            subjectsPriority: 0,
-            industriesPriority: 0,
-            socialEnvironmentPriority: 0,
-            groupEngagementPriority: 0,
-            lonelinessPriority: 0,
-            academicEnvironmentPriority: 0,
-            stressPriority: 0,
-            highWorkloadAcceptancePriority: 0,
-            studentJobPriority: 0,
-            teachingPriority: 0,
-            lecturesPriority: 0,
-            literaturePriority: 0,
-            dislikeExamPriority: 0,
-            internshipPriority: 0,
-            internationalStayPriority: 0,
-            workNationallyPriority: 0,
-            startingSalaryPriority: 0,
-            experiencedSalaryPriority: 0,
-            unemploymentPriority: 0,
-            degreeRelevancePriority: 0,
-            flexibleHoursPriority: 0,
-            selfSchedulePriority: 0,
-            fixedHoursPriority: 0,
-            variableSchedulePriority: 0,
-            nightAndEveningShiftsPriority: 0,
-        }
-    );
+
 
     const HandlePrevQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex - 1)
@@ -189,7 +163,7 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
             newAnswer[propName as keyof QuizAnswers] = (6 - sliderValue);
         })
 
-        SetQuizAnwerState(newAnswer);
+        setQuizAnswerState(newAnswer);
 
         const isLastQuestion = (currentQuestionIndex + 1) == questions.length;
         if (isLastQuestion) {
