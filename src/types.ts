@@ -233,3 +233,8 @@ export type RankedEducationsType = {
     upperhalf: Education[],
     lowerhalf: Education[]
 }
+
+export type EducationVector = {
+    educationID: number,
+    coordinates: number[]
+}
