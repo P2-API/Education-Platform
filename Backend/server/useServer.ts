@@ -1,5 +1,5 @@
 import { QuizAnswers, TableSectionDataFromServer, PCAData, Education } from "types";
-import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
+import { FilterProps } from "types"
 
 const useServer = () => {
 
@@ -20,18 +20,37 @@ const useServer = () => {
 
 
 
-    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers, data: Education[]) => {
+    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers) => {
 
-        const response = await fetch("http://localhost:1337/update_ranking", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ filterProps, quizAnswers, data })
-        });
+        try {
+            const response = await fetch("http://localhost:1337/update_ranking", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ filterProps, quizAnswers })
+            });
 
-        return response
-    }
+            const responseText = await response.text(); // Read the response as text
+
+            if (!response.ok) {
+                console.error("Failed to update ranking", responseText);
+                throw new Error("Failed to update ranking");
+            }
+
+            try {
+                const ranking = JSON.parse(responseText); // Parse the text as JSON
+                console.log("ranking", ranking);
+                return ranking;
+            } catch (parseError) {
+                console.error("Error parsing JSON response:", responseText);
+                throw new Error("Invalid JSON response");
+            }
+        } catch (error) {
+            console.error("Error updating ranking:", error);
+            throw error;
+        }
+    };
 
     const getPCAData = async (PCA_request: PCAData) => {
         const response = await fetch("http://localhost:1337/PCA_request", {
