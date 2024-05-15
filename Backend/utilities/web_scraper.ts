@@ -15,17 +15,32 @@ const urls = ["https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transp
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
 assignSubjectRankings(getGroupedEducations)
 
-function assignSubjectRankings( subjectData: any) {
+async function assignSubjectRankings(subjectData) {
     for (const title in subjectData) {
         const url = subjectData[title].url;
         const name = subjectData[title].name;
         const result = await loadSubjectsFromUrls(url, name);
 
+        // Serialize the result to JSON format
+        const jsonData = JSON.stringify(result, null, 2); // Use null and 2 for pretty formatting
+
+        // Choose a file path where you want to save the data
+        const filePath = `subject-data-${name}.json`;
+
+        // Write the serialized data to the file
+        fs.writeFile(filePath, jsonData, 'utf8', (err) => {
+            if (err) {
+                console.error(`Error writing data to file ${filePath}:`, err);
+            } else {
+                console.log(`Data saved to ${filePath}`);
+            }
+        });
+    }
 }
 
 
 (async () => {
-    const test = await loadSubjectsFromUrls(urls);
+    const test = await loadSubjectsFromUrls(urls, "Renovation");
     console.log(test)
 })();
 
