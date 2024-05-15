@@ -1,6 +1,7 @@
-import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermedietRankingType, MinimumMaximum } from "../../src/types"
+import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
 import { DegreeTypeToDuration } from "../../src/enums"
+import { getNormilizedEducations } from "../server/on-server-start" 
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -8,15 +9,15 @@ export class Ranker {
         this.ranking = { upperhalf: [], lowerhalf: [] }
     }
 
-    produceRanking(educations: Education[], userImputs: UserImputs): FinalRankingType {
-        this.ranking.upperhalf = educations
+    produceRanking(userImputs: UserImputs): FinalRankingType {
+        this.ranking.upperhalf = getNormilizedEducations()
         this.roughSorting(userImputs.filters)
         const optimalEducation = findOptimalSolution(userImputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs.quizAnswers)
         return this.changeToApropriateType(rankedEducations)
     }
 
-    changeToApropriateType(rankedEducations: IntermedietRankingType): FinalRankingType {
+    changeToApropriateType(rankedEducations: IntermediateRankingType): FinalRankingType {
         const finalRanking: FinalRankingType = { ranking: [], index: 0 }
         rankedEducations.upperhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         finalRanking.index = finalRanking.ranking.length
@@ -38,11 +39,11 @@ export class Ranker {
         })
     }
 
-    normSorting(ranking: RankedEducationsType, optimalEducation: Education, weights: QuizAnswers): IntermedietRankingType {
+    normSorting(ranking: RankedEducationsType, optimalEducation: Education, weights: QuizAnswers): IntermediateRankingType {
         const normValue = 2;
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, weights);
         const educationVecotors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, weights);
-        const sortedEducations: IntermedietRankingType = { upperhalf: [], lowerhalf: [] };
+        const sortedEducations: IntermediateRankingType = { upperhalf: [], lowerhalf: [] };
 
         educationVecotors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
@@ -121,12 +122,12 @@ export class Ranker {
     filtersPassed(education: Education, filters: TableFilters) {
         return (filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType) &&
             (filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)) &&
-                (filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions) &&
-                    filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
-                    filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true &&
-                        (filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true &&
-                        this.educationDurationFilterPassed(education, filters.educationDuration) &&
-        this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
+            (filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions) &&
+            filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
+            filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true &&
+            (filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true &&
+            this.educationDurationFilterPassed(education, filters.educationDuration) &&
+            this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
 
     }
     educationDurationFilterPassed(education: Education, educationDurationFilter: MinimumMaximum): boolean {
