@@ -219,6 +219,10 @@ const calculateBasedOnMinimumAndMaximumEducation = () => {
     normilizedEducations = normilizesEducations(educations);
 }
 
+export const getNormilizedEducations = (): Education[] => {
+    return normilizedEducations;
+}
+
 let educationDurationRange: MinimumMaximum;
 
 export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
