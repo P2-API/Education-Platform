@@ -1,5 +1,5 @@
-import { QuizAnswers, TableSectionDataFromServer, PCAData, Education } from "types";
-import { FilterProps } from "types"
+import { QuizAnswers, TableSectionDataFromServer, PCAData, Education, EducationGroup } from "types";
+import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
 
 const useServer = () => {
 
@@ -16,6 +16,17 @@ const useServer = () => {
         return tableSectionData;
     }
 
+    const getGroupedEducations = async (): Promise<EducationGroup[]> => {
+        const response = await fetch("http://localhost:1337/get_grouped_educations");
+        const groupedEducations: EducationGroup[] = await response.json();
+        return groupedEducations;
+    }
+
+    const getEducationsProperties = async (): Promise<any[]> => {
+        const response = await fetch("http://localhost:1337/get_education_properties");
+        const educationProperties: any[]= await response.json();
+        return educationProperties;
+    }
     // write more functions here
 
 
@@ -67,7 +78,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties };
 }
 
 export { useServer };

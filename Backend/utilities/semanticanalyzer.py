@@ -33,7 +33,6 @@ keywords = {
     "Economics",
     "Programming",
     "Environment",
-    "Education",
     "Journalism",
     "Communication",
     "Religion",
