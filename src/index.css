@@ -57,6 +57,11 @@ body {
   cursor: pointer;
 }
 
+.css-1atu56z-MuiPaper-root {
+  height: 100%;
+}
+
+
 .primary-button-blue:hover {
   background: linear-gradient(180deg, #0761d6 10%, #4242cb 100%);
 }

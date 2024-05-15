@@ -61,5 +61,9 @@ dist-ssr
 *.sln
 *.sw?
 
+
+# Random files
 node_modules/.package-lock.json
 src/debug/tsObject.ts
+Backend/utilities/input.json
+Backend/utilities/output.json
