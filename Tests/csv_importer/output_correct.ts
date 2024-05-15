@@ -3,7 +3,6 @@ import { County, Institution, DegreeType, Geography } from "../../src/enums"
 
 export let educations: Education[] = [
     {
-        "id": 1,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/samfundsvidenskabeligekandidatuddannelser/oevrigesamfundsvidenskab/organisational-innovation-and-entrepreneurship",
         "rank": 0,
         "title": "Organisational Innovation and Entrepreneurship",
@@ -98,7 +97,6 @@ export let educations: Education[] = [
         }
     },
     {
-        "id": 2,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/historie",
         "rank": 0,
         "title": "Historie",
@@ -193,7 +191,6 @@ export let educations: Education[] = [
         }
     },
     {
-        "id": 3,
         "url": "www.ug.dk/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/dansk",
         "rank": 0,
         "title": "Dansk",
