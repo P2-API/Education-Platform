@@ -200,10 +200,11 @@ export type TableFilters = {
     hasIndustries: string[]; // in use       
     hasFormsOfEducation: string[]; // in use
     wantedSalary: SalaryFilters; // in use / LP filter  
-    unemployment: UnenploymentFilters; // in use / LP filter    (!!!remember to inplement in LPsolver!!!)
-    hasFlexibleJobSchedule: boolean; // in use / LP filter      (!!!remember to implement in LPsolver!!!)
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter   (!!!remember to implement in LPsolver!!!)
+    unemployment: UnenploymentFilters; // in use / LP filter
+    hasFlexibleJobSchedule: boolean; // in use / LP filter 
+    wantedWorkingHours: MinimumMaximum; // in use / LP filter
     canWorkInternationally: boolean; //in use
+    educationDuration: MinimumMaximum; //in use
 }
 
 export type UserImputs = {
@@ -235,7 +236,6 @@ export type RankedEducationsType = {
 
 export type EducationVector = {
     education: Education,
-    //coordinates: number[]
     coordinates: {name: string, value: number}[]
 }
 
