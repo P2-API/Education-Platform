@@ -193,15 +193,15 @@ export type TableSectionDataFromServer = {
 }
 
 export type TableFilters = {
-    wantedDegreeTypes: string[]; //in use               
-    canStudyInGeographies: Geography[]; //in use         
-    canStudyAtInstitution: Institution[]; //in use      
-    hasSubjects: string[]; // in use      
+    wantedDegreeTypes: string[]; //in use / hard filter               
+    canStudyInGeographies: Geography[]; //in use / hard filter      
+    canStudyAtInstitution: Institution[]; //in use / hard filter
+    hasSubjects: string[]; // in use 
     hasFormsOfEducation: string[]; // in use
-    wantedSalary: SalaryFilters; // in use / LP filter  
-    unemployment: UnemploymentFilters; // in use / LP filter
-    hasFlexibleJobSchedule: boolean; // in use / LP filter 
-    wantedWorkingHours: MinimumMaximum; // in use / LP filter
+    wantedSalary: SalaryFilters; // in use / Userdefined LP filter  
+    unemployment: UnemploymentFilters; // in use / Userdefine LP filter
+    hasFlexibleJobSchedule: boolean; // in use
+    wantedWorkingHours: MinimumMaximum; // in use 
     canWorkInternationally: boolean; //in use
     educationDuration: MinimumMaximum; //in use
 }
@@ -254,7 +254,7 @@ type axisData = { composition: linearCombination, varianceExplained: number }
 
 type linearCombination = { variable: string, coeff: number }[]
 
-export type IntermedietRankingType = {
+export type IntermediateRankingType = {
     upperhalf: {
         education: Education;
         similarity: number;
@@ -274,18 +274,3 @@ export type RankedDataStructure = {
     education: Education;
     score: number;
 }
-
-
-export type FilterProps = {
-    wantedDegreeTypes: string[];
-    canStudyAtInstitution: string[];
-    canStudyInGeographies: string[];
-    hasSubjects: string[];
-    hasFormsOfEducation: string[];
-    wantedSalary: SalaryFilters; // in use / LP filter  
-    unemployment: UnemploymentFilters; // in use / LP filter
-    hasFlexibleJobSchedule: boolean;
-    wantedWorkingHours: MinimumMaximum;
-    canWorkInternationally: boolean;
-    educationDuration: MinimumMaximum;
-};
