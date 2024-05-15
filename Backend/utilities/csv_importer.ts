@@ -30,7 +30,6 @@ function csvParser(csvData: string): Education[] {
         const values = removeSemicolonsBetweenQuotes(lines[i]).split(';');
 
         const education: Education = {
-            "id": i,
             "url": values[2],
             "rank": 0,
             "title": values[4],
