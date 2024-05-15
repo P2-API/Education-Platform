@@ -18,6 +18,15 @@ type MultiSelectAutoCompleteProps = {
     identifier: string;
 }
 
+type SelectAutoCompleteProps = {
+    collection: string[];
+    selectLabel: string;
+    selectPlaceholder: string;
+    value: string[];
+    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    identifier: string;
+}
+
 export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
 
     const [value, setValue] = React.useState<string[]>([]);
@@ -33,6 +42,38 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     return (
         <Autocomplete
             multiple
+            id="tags-outlined"
+            sx={{ width: "100%" }}
+            options={collection}
+            getOptionLabel={(option) => option.toString()}
+            filterSelectedOptions
+            value={value}
+            onChange={handleChange}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={selectLabel}
+                    placeholder={selectPlaceholder}
+                />
+            )}
+        />
+    );
+}
+
+export const SelectAutoComplete: React.FC<SelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
+
+    const [value, setValue] = React.useState<string[]>([]);
+    const identity = identifier; // Assign the identifier value to a constant variable identity
+    const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
+        setValue(newValue);
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            [identity]: newValue // Use identity instead of identifier
+        }));
+    }
+
+    return (
+        <Autocomplete
             id="tags-outlined"
             sx={{ width: "100%" }}
             options={collection}

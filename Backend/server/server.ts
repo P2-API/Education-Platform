@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
-import { onStart, getTableSectionData } from './on-server-start';
+import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
 import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import bodyParser from 'body-parser'; // Import the bodyParser package
@@ -38,6 +38,13 @@ server.post("/PCA_request", (request: Request, response: Response) => {
     // return the result below
     response.status(200).send("PCA_data received: " + JSON.stringify(requestData));
 });
+server.get("/get_grouped_educations", (request: Request, response: Response) => {
+    response.status(200).send(getGroupedEducations());
+});
+server.get("/get_education_properties", (request: Request, response: Response) => {
+    response.status(200).send(getEducationProperties());
+});
+
 
 server.post("/update_ranking", (request: Request, response: Response) => {
     const requestData = request.body;
