@@ -33,6 +33,7 @@
     "ldrs": "^1.0.1",
     "lottie-react": "^2.4.0",
     "material-react-table": "^2.13.0",
+    "ml-pca": "^4.1.1",
     "node-fetch": "^2.7.0",
     "openai": "^4.43.0",
     "plotly.js": "^2.32.0",
