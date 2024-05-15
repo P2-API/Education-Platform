@@ -235,13 +235,25 @@ export type RankedEducationsType = {
 
 export type EducationVector = {
     education: Education,
-    coordinates: number[]
+    //coordinates: number[]
+    coordinates: {name: string, value: number}[]
 }
 
 export type PCAData = {
-    x_axis: string[];
-    y_axis: string[];
+    points: {
+        x: number,
+        y: number,
+        education: Education
+    }[],
+    principalComponents: {
+        xAxis: axisData
+        yAxis: axisData
+    }
 }
+
+type axisData = {composition: linearCombination, varianceExplained: number}
+
+type linearCombination = {variable: string, coeff: number}[]
 
 export type IntermedietRankingType = {
     upperhalf: {

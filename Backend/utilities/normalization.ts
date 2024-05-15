@@ -6,7 +6,7 @@ import deepCopy from "./deep-copy";
 
 
 const normilize = (number: number, min: number, max: number) => {
-    return (number - min) / (max - min);
+    return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
 
 let minimumEducation;
@@ -19,7 +19,7 @@ export const normilizesEducations = (educations: Education[]): Education[] => {
 
     let normilizedEducations = deepCopy(educations);
     normilizedEducations.forEach((education) => {
-        normilizeEducation(education);
+        normilizeEducation(education); // Normilize each numerical value in the education
     });
     return normilizedEducations;
 }
