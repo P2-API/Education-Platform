@@ -216,13 +216,8 @@ export const getMaximumEducation = (): Education => {
 
 const calculateBasedOnMinimumAndMaximumEducation = () => {
     // ("calculateBasedOnMinimumAndMaximumEducation");
-    normilizesEducations(educations);
+    normilizedEducations = normilizesEducations(educations);
 }
-
-
-
-
-
 
 let educationDurationRange: MinimumMaximum;
 
