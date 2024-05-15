@@ -111,7 +111,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                         <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
                             <>
                                 <MultiSelectAutoComplete
-                                    value={filters.degreeTypes}
+                                    value={filters.wantedDegreeTypes}
                                     collection={data?.degreeTypeKeys ?? []}
                                     selectLabel="Filtrer efter uddannelsestype"
                                     selectPlaceholder="Uddannelsestype"
@@ -119,7 +119,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="degreeTypes"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.subjects}
+                                    value={filters.hasSubjects}
                                     collection={data?.subjectKeys ?? []}
                                     selectLabel="Filtrer efter interesse"
                                     selectPlaceholder="Fag"
@@ -127,7 +127,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="subjects"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.institutes}
+                                    value={filters.canStudyAtInstitution}
                                     collection={data?.institutionKeys ?? []}
                                     selectLabel="Filtrer efter uddannelsessted"
                                     selectPlaceholder="Uddannelsessted"
@@ -135,7 +135,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="institutes"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.geographies}
+                                    value={filters.canStudyInGeographies}
                                     collection={data?.geographyKeys ?? []}
                                     selectLabel="Filtrer efter geografi"
                                     selectPlaceholder="Geografi"
@@ -143,7 +143,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="geographies"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.formsOfEducation}
+                                    value={filters.hasFormsOfEducation}
                                     collection={data?.formOfEducationKeys ?? []}
                                     selectLabel="Filtrer efter undervisningsform"
                                     selectPlaceholder="Undervisningsform"

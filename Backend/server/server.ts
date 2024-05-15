@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
-import { onStart, getTableSectionData } from './on-server-start';
+import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
 import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import bodyParser from 'body-parser'; // Import the bodyParser package
@@ -38,30 +38,38 @@ server.post("/PCA_request", (request: Request, response: Response) => {
     // return the result below
     response.status(200).send("PCA_data received: " + JSON.stringify(requestData));
 });
+server.get("/get_grouped_educations", (request: Request, response: Response) => {
+    response.status(200).send(getGroupedEducations());
+});
+server.get("/get_education_properties", (request: Request, response: Response) => {
+    response.status(200).send(getEducationProperties());
+});
+
 
 server.post("/update_ranking", (request: Request, response: Response) => {
-    const requestData = request.body;
-    const filterProps: TableFilters = requestData.filterProps;
-    const quizAnswers: QuizAnswers = requestData.quizAnswers;
-    const data = requestData.data;
-    console.log("filterProps", filterProps)
-    console.log("quizAnswers", quizAnswers)
-    console.log("data", data)
+    try {
+        const requestData = request.body;
+        const filterProps: TableFilters = requestData.filterProps;
+        const quizAnswers: QuizAnswers = requestData.quizAnswers;
 
-    const userInput: UserImputs = {
-        quizAnswers: quizAnswers,
-        filters: filterProps,
+        const data // GET DATA HERE 
+
+
+        const userInput: UserImputs = {
+            quizAnswers: quizAnswers,
+            filters: filterProps,
+        };
+
+
+        const ranker = new Ranker();
+        const ranking = ranker.produceRanking(data, userInput);
+
+
+        response.status(200).json(ranking); // Ensure JSON response
+    } catch (error) {
+        console.error("Error in /update_ranking:", error);
+        response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
     }
-
-    const ranker = new Ranker();
-    const ranking = ranker.produceRanking(data, userInput);
-    console.log("rankking", ranking)
-
-
-
-    // return the result below
-    //response.status(200).send(rankings);
-    response.status(200).send(JSON.stringify(requestData));
 });
 
 server.post("generate_personalized_message", (request: Request, response: Response) => {

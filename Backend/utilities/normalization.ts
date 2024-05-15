@@ -1,16 +1,74 @@
 import { SubjectTitle } from "../../src/enums";
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, HoursSpentDoing, Industry, JobData, JobWorkSchedule, Salaries, SocialFeedback, Subject, Unemployment } from "../../src/types";
-import { getMinimumEducation, getMaximumEducation } from "../server/on-server-start";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, SalaryFilters, SocialFeedback, Subject, TableFilters, Unemployment, UnemploymentFilters } from "../../src/types";
+import { getMinimumEducation, getMaximumEducation, getEducationDurationRange } from "../server/on-server-start";
 import deepCopy from "./deep-copy";
 
 
+let minimumEducation: Education;
+let maximumEducation: Education;
 
 const normilize = (number: number, min: number, max: number) => {
     return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
 
-let minimumEducation;
-let maximumEducation;
+export const normalizeFilters = (filters: TableFilters) => {
+    // ("normalizeFilters");
+    minimumEducation = getMinimumEducation();
+    maximumEducation = getMaximumEducation();
+    
+    let normalizedFilters = deepCopy(filters);
+
+    normalizeSalaryFilters(normalizedFilters.wantedSalary);
+    normalizeUnemploymentFilters(normalizedFilters.unemployment);
+    normalizeWorkingHoursFilters(normalizedFilters.wantedWorkingHours);
+    normalizeEducationDurationFilters(normalizedFilters.educationDuration);
+}
+
+const normalizeSalaryFilters = (salaryFilter: SalaryFilters) => {
+    // ("normalizeSalaryFilters");
+    let minSalary = minimumEducation.jobData.salaries;
+    let maxSalary = maximumEducation.jobData.salaries;
+
+    salaryFilter.newGraduate.minimum = normilize(salaryFilter.newGraduate.minimum, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
+    salaryFilter.newGraduate.maximum = normilize(salaryFilter.newGraduate.maximum, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
+
+    salaryFilter.experienced.minimum = normilize(salaryFilter.experienced.minimum, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
+    salaryFilter.experienced.maximum = normilize(salaryFilter.experienced.maximum, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
+}
+
+const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) => {
+    // ("normilizeUnemploymentFilters");
+    let minUnemployment = minimumEducation.jobData.unemployment;
+    let maxUnemployment = maximumEducation.jobData.unemployment;
+
+    unemploymentFilter.newGraduate.minimum = normilize(unemploymentFilter.newGraduate.minimum, minUnemployment.newGraduate, maxUnemployment.newGraduate);
+    unemploymentFilter.newGraduate.maximum = normilize(unemploymentFilter.newGraduate.maximum, minUnemployment.newGraduate, maxUnemployment.newGraduate);
+
+    unemploymentFilter.experienced.minimum = normilize(unemploymentFilter.experienced.minimum, minUnemployment.experienced, maxUnemployment.experienced);    
+    unemploymentFilter.experienced.maximum = normilize(unemploymentFilter.experienced.maximum, minUnemployment.experienced, maxUnemployment.experienced);
+}
+
+const normalizeWorkingHoursFilters = (workingHoursFilter: MinimumMaximum) => {
+    // ("normalizeWorkingHoursFilters");
+    let minWorkingHours = minimumEducation.jobData.workSchedule.workingHours;
+    let maxWorkingHours = maximumEducation.jobData.workSchedule.workingHours;
+
+    workingHoursFilter.minimum = normilize(workingHoursFilter.minimum, minWorkingHours, maxWorkingHours);
+    workingHoursFilter.maximum = normilize(workingHoursFilter.maximum, minWorkingHours, maxWorkingHours);
+}
+
+const normalizeEducationDurationFilters = (educationDurationFilter: MinimumMaximum) => {
+    // ("normalizeEducationDurationFilters");
+    const educationDurationRange = getEducationDurationRange();
+
+    educationDurationFilter.minimum = normilize(educationDurationFilter.minimum, educationDurationRange.minimum, educationDurationRange.maximum);
+    educationDurationFilter.maximum = normilize(educationDurationFilter.maximum, educationDurationRange.minimum, educationDurationRange.maximum);
+}
+
+
+
+
+
 
 export const normilizesEducations = (educations: Education[]): Education[] => {
     // ("normilizesEducations");

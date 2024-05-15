@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
 import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
+import { useServer } from '@backend/server/useServer';
 
 interface VisualisationProps {
     chartType: ChartType
@@ -10,6 +11,16 @@ interface VisualisationProps {
 
 
 const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
+
+    const [educationProperties, setEducationProperties] = useState<string[]>([]);
+
+    const { getEducationsProperties } = useServer();
+    useEffect(() => {
+        getEducationsProperties().then((data) => {
+            setEducationProperties(data);
+        })
+    }, []);
+
 
     console.log("chartType: ", chartType)
     
@@ -23,7 +34,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
         const xValues = [];
         const yValues = [];
         const text = []
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < educationProperties.length; i++) {
             xValues.push(Math.random() * 10);
             yValues.push(Math.random() * 100);
             // generate random text for each point
@@ -135,15 +146,15 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                     data={[
                         {
                             r: data.y,
-                            theta: data.text,
-                            text: data.text,
+                            theta: educationProperties,
+                            text: educationProperties,
                             mode: "markers",
                             type: "scatterpolar",
+                            fill: 'toself',
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
-                                "<b>%{text}</b><br><br>" +
-                                "Løn: %{r}<br>" +
-                                "Uddannelsestype: %{theta}<br>" +
+                                "<b>%{text}</b><br>" +
+                                "Value: %{r}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
@@ -156,6 +167,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                             }
                         },
                         hovermode: "closest",
+                        fill: 'toself',
                         hoverlabel: { bgcolor: "#FFF" },
                         autosize: true, // Enable automatic resizing
                         transition: {

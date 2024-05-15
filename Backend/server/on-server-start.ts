@@ -10,7 +10,7 @@ import { normilizesEducations } from "../utilities/normalization";
 let educations: Education[] = [];
 let educationGroups: EducationGroup[] = [];
 let normilizedEducations: Education[] = [];
-
+let educationProperties: string[] = [];
 
 let degreeTypeKeys: (keyof typeof DegreeType)[];
 let subjectKeys: (keyof typeof SubjectTitle)[];
@@ -22,8 +22,13 @@ let formOfEducationKeys: (keyof typeof FormOfEducation)[];
 let minimumEducation: Education;
 let maximumEducation: Education;
 
+
+let educationDurationRange: MinimumMaximum;
+
+
 export const onStart = () => {
     cacheEducations();
+    calculateEducationProperties();
 }
 
 const cacheEducations = async () => {
@@ -43,6 +48,101 @@ const caclulateBasedOnEducations = () => {
     calculateMinMaxDegreeDuration();
 }
 
+const calculateEducationProperties = () => {
+    let edu: Education = {
+        url: "",
+        rank: null,
+        title: "",
+        degreeType: DegreeType["Andre uddannelser"],
+        counties: [],
+        geographies: [],
+        institutions: Institution["?"],
+        subjects: [],
+        industries: [],
+        hours: {
+            withManyStudents: 0,
+            withFewStudents: 0,
+            withSupervision: 0
+        },
+        socialFeedback: {
+            socialEnvironment: 0,
+            groupEngagement: 0,
+            loneliness: 0,
+            stress: 0
+        },
+        academicFeedback: {
+            academicEnvironment: 0,
+            teacherEvaluation: 0,
+            satisfaction: 0
+        },
+        academicWorkload: {
+            lectures: 0,
+            literature: 0,
+            studentJob: 0
+        },
+        degreeStructure: {
+            contents: {
+                teaching: 0,
+                exams: 0,
+                internship: 0,
+                internationalStay: 0
+            },
+            teachingMethods: []
+        },
+        dropoutRate: 0,
+        jobData: {
+            salaries: {
+                newGraduate: {
+                    lowerQuartile: 0,
+                    median: 0,
+                    upperQuartile: 0,
+                    projectedDirection: ""
+                },
+                experienced: {
+                    lowerQuartile: 0,
+                    median: 0,
+                    upperQuartile: 0,
+                    projectedDirection: ""
+                }
+            },
+            workSchedule: {
+                workingHours: 0,
+                fixedHoursPercent: 0,
+                flexibleHoursPercent: 0,
+                selfSchedulePercent: 0,
+                variableSchedulePercent: 0,
+                nightAndEveningShiftsPercent: 0
+            },
+            unemployment: {
+                newGraduate: 0,
+                experienced: 0,
+                projectedNewGraduate: 0,
+                projectedExperienced: 0
+            },
+            degreeRelevance: 0,
+            degreePreparesForJob: 0,
+            nationalJobs: 0
+        }
+    };
+    educationProperties = recursivelyGetLeafProperties(edu);
+}
+
+const recursivelyGetLeafProperties = (object: Object): string[] => {
+    let array: string[] = [];
+    for (let key in object) {
+        if (object[key] != undefined && typeof object[key] === "object") {
+            const branches = recursivelyGetLeafProperties(object[key]);
+            for (let branch in branches) {
+                array.push(branches[branch]);
+            }
+        } 
+        else {
+            array.push(key);
+        }   
+    }
+    return array;
+}
+
 function groupEducations() {
     educations.forEach((education) => {
         var alreadyGrouped = false;
@@ -54,6 +154,14 @@ function groupEducations() {
     fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
     console.log("thomas, tallet er det her :)-> ", educationGroups.length);
 }
+
+export function getGroupedEducations(): EducationGroup[] {
+    return educationGroups;
+}
+
+export const getEducationProperties = () => {
+    return educationProperties;
+} 
 
 export const caclulateEnumTypes = () => {
     // ("calculateEnumTypes");
@@ -220,9 +328,11 @@ const calculateBasedOnMinimumAndMaximumEducation = () => {
     normilizedEducations = normilizesEducations(educations);
 }
 
-let educationDurationRange: MinimumMaximum;
+export const getNormilizedEducations = (): Education[] => {
+    return normilizedEducations;
+}
 
-export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
+export const calculateMinMaxDegreeDuration = () => {
     // ("caclulateMinMaxDegreeDuration");
 
     let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
@@ -235,10 +345,9 @@ export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
         }
     });
     educationDurationRange = { minimum: educationDurationMin, maximum: educationDurationMax }
-    return educationDurationRange;
 }
 
-const getEducationDurationRange = (): MinimumMaximum => {
+export const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 
