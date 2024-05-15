@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-
+import { normalizeFilters } from '../utilities/normalization';
 import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
 import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
@@ -49,20 +49,16 @@ server.get("/get_education_properties", (request: Request, response: Response) =
 server.post("/update_ranking", (request: Request, response: Response) => {
     try {
         const requestData = request.body;
-        const filterProps: TableFilters = requestData.filterProps;
+        const filters: TableFilters = requestData.filterProps;
         const quizAnswers: QuizAnswers = requestData.quizAnswers;
-
-        const data // GET DATA HERE 
-
 
         const userInput: UserImputs = {
             quizAnswers: quizAnswers,
-            filters: filterProps,
+            filters: normalizeFilters(filters),
         };
-
-
+        console.log("filters", userInput.filters)
         const ranker = new Ranker();
-        const ranking = ranker.produceRanking(data, userInput);
+        const ranking = ranker.produceRanking(userInput);
 
 
         response.status(200).json(ranking); // Ensure JSON response

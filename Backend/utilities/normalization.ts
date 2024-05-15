@@ -11,23 +11,24 @@ const normilize = (number: number, min: number, max: number) => {
     return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
 
-export const normalizeFilters = (filters: TableFilters) => {
+export const normalizeFilters = (filters: TableFilters):TableFilters => {
     // ("normalizeFilters");
     minimumEducation = getMinimumEducation();
     maximumEducation = getMaximumEducation();
     
-    let normalizedFilters = deepCopy(filters);
+    const normalizedFilters = deepCopy(filters);
 
     normalizeSalaryFilters(normalizedFilters.wantedSalary);
     normalizeUnemploymentFilters(normalizedFilters.unemployment);
     normalizeWorkingHoursFilters(normalizedFilters.wantedWorkingHours);
     normalizeEducationDurationFilters(normalizedFilters.educationDuration);
+    return normalizedFilters;
 }
 
 const normalizeSalaryFilters = (salaryFilter: SalaryFilters) => {
     // ("normalizeSalaryFilters");
-    let minSalary = minimumEducation.jobData.salaries;
-    let maxSalary = maximumEducation.jobData.salaries;
+    const minSalary = minimumEducation.jobData.salaries;
+    const maxSalary = maximumEducation.jobData.salaries;
 
     salaryFilter.newGraduate.minimum = normilize(salaryFilter.newGraduate.minimum, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
     salaryFilter.newGraduate.maximum = normilize(salaryFilter.newGraduate.maximum, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
@@ -50,8 +51,8 @@ const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) =
 
 const normalizeWorkingHoursFilters = (workingHoursFilter: MinimumMaximum) => {
     // ("normalizeWorkingHoursFilters");
-    let minWorkingHours = minimumEducation.jobData.workSchedule.workingHours;
-    let maxWorkingHours = maximumEducation.jobData.workSchedule.workingHours;
+    const minWorkingHours = minimumEducation.jobData.workSchedule.workingHours;
+    const maxWorkingHours = maximumEducation.jobData.workSchedule.workingHours;
 
     workingHoursFilter.minimum = normilize(workingHoursFilter.minimum, minWorkingHours, maxWorkingHours);
     workingHoursFilter.maximum = normilize(workingHoursFilter.maximum, minWorkingHours, maxWorkingHours);
@@ -75,7 +76,7 @@ export const normilizesEducations = (educations: Education[]): Education[] => {
     minimumEducation = getMinimumEducation();
     maximumEducation = getMaximumEducation();
 
-    let normilizedEducations = deepCopy(educations);
+    const normilizedEducations = deepCopy(educations);
     normilizedEducations.forEach((education) => {
         normilizeEducation(education); // Normilize each numerical value in the education
     });
@@ -136,7 +137,7 @@ const normilizeEducationIndustries = (industries: Industry[]) => {
 const normilizeEducationHours = (hours: HoursSpentDoing) => {
     // ("normilizeEducationHours");
     let minHours = minimumEducation.hours;
-    let maxHours = maximumEducation.hours;
+    const maxHours = maximumEducation.hours;
     hours.withFewStudents = normilize(hours.withFewStudents, minHours.withFewStudents, maxHours.withFewStudents);
     hours.withManyStudents = normilize(hours.withManyStudents, minHours.withManyStudents, maxHours.withManyStudents);
     hours.withSupervision = normilize(hours.withSupervision, minHours.withSupervision, maxHours.withSupervision);

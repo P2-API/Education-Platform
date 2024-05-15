@@ -1,6 +1,6 @@
 
 import Paper from '@mui/material/Paper';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TableSectionDataContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
 import { MinimumMaximum, FinalRankingType } from "@src/types"
@@ -65,26 +65,43 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
     }
 
+    useEffect(() => {
+
+        setFilters?.((prevFilters) => ({
+            ...prevFilters,
+            wantedSalary: {
+                newGraduate: newGraduateSalaryRange,
+                experienced: experiencedSalaryRange
+            },
+            wantedWorkingHours: wantedWorkingHoursRange,
+            unemployment: {
+                newGraduate: newGraduateUnemploymentRange,
+                experienced: experiencedUnemploymentRange
+            },
+            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 1 }
+        }));
+    }, [data]);
+
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
     const getValueTextUnemployment = (value: number) => { return `${value}%` }
 
-
+    console.log("Filters", filters);
 
 
     // rank degrees: 
     const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
-        const response = await updateRanking(filters, quizAnswerState, data?.educations ?? []);
+        const response = await updateRanking(filters, quizAnswerState,);
         const result = await response.json();
         setRankedData(result);
         setIsCalculating(false);
     }
 
-
+    console.log("Data", data);
 
 
     bouncy.register()
@@ -116,7 +133,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectLabel="Filtrer efter uddannelsestype"
                                     selectPlaceholder="Uddannelsestype"
                                     setFilters={setFilters}
-                                    identifier="degreeTypes"
+                                    identifier="wantedDegreeTypes"
                                 />
                                 <MultiSelectAutoComplete
                                     value={filters.hasSubjects}
@@ -124,7 +141,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectLabel="Filtrer efter interesse"
                                     selectPlaceholder="Fag"
                                     setFilters={setFilters}
-                                    identifier="subjects"
+                                    identifier="hasSubjects"
                                 />
                                 <MultiSelectAutoComplete
                                     value={filters.canStudyAtInstitution}
@@ -132,7 +149,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectLabel="Filtrer efter uddannelsessted"
                                     selectPlaceholder="Uddannelsessted"
                                     setFilters={setFilters}
-                                    identifier="institutes"
+                                    identifier="canStudyAtInstitution"
                                 />
                                 <MultiSelectAutoComplete
                                     value={filters.canStudyInGeographies}
@@ -140,7 +157,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectLabel="Filtrer efter geografi"
                                     selectPlaceholder="Geografi"
                                     setFilters={setFilters}
-                                    identifier="geographies"
+                                    identifier="canStudyInGeographies"
                                 />
                                 <MultiSelectAutoComplete
                                     value={filters.hasFormsOfEducation}
@@ -148,7 +165,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     selectLabel="Filtrer efter undervisningsform"
                                     selectPlaceholder="Undervisningsform"
                                     setFilters={setFilters}
-                                    identifier="formsOfEducation"
+                                    identifier="hasFormsOfEducation"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
@@ -166,7 +183,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter nyuddannedes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setFilters}
-                                    identifier="newGraduateSalary"
+                                    identifier="wantedSalary.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedSalaryRange}
@@ -175,7 +192,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter erfarenes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setFilters}
-                                    identifier="experiencedSalary"
+                                    identifier="wantedSalary.experienced"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={wantedWorkingHoursRange}
@@ -193,7 +210,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter nyuddannedes arbejdsløshed"
                                     getValueText={getValueTextUnemployment}
                                     setFilters={setFilters}
-                                    identifier="newGraduateUnemployment"
+                                    identifier="unemployment.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedUnemploymentRange}
@@ -202,7 +219,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter erfarenes arbejdsløshed"
                                     getValueText={getValueTextUnemployment}
                                     setFilters={setFilters}
-                                    identifier="experiencedUnemployment"
+                                    identifier="unemployment.experienced"
                                 />
                                 <CheckmarkToggleButton
                                     initialState={false}

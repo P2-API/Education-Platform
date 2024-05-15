@@ -7,25 +7,16 @@ import Slider from '@mui/material/Slider';
 import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
 
-import { FilterProps } from "./FilterBoxComponent"
-import { MinimumMaximum } from "../../../src/types";
+import { MinimumMaximum, TableFilters } from "../../../src/types";
 type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;
     selectPlaceholder: string;
     value: string[];
-    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
-type SelectAutoCompleteProps = {
-    collection: string[];
-    selectLabel: string;
-    selectPlaceholder: string;
-    value: string[];
-    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
-    identifier: string;
-}
 
 export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
 
@@ -60,37 +51,6 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     );
 }
 
-export const SelectAutoComplete: React.FC<SelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
-
-    const [value, setValue] = React.useState<string[]>([]);
-    const identity = identifier; // Assign the identifier value to a constant variable identity
-    const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
-        setValue(newValue);
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [identity]: newValue // Use identity instead of identifier
-        }));
-    }
-
-    return (
-        <Autocomplete
-            id="tags-outlined"
-            sx={{ width: "100%" }}
-            options={collection}
-            getOptionLabel={(option) => option.toString()}
-            filterSelectedOptions
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label={selectLabel}
-                    placeholder={selectPlaceholder}
-                />
-            )}
-        />
-    );
-}
 
 type MinimumDistanceSliderProps = {
     initialState: MinimumMaximum;
@@ -98,13 +58,15 @@ type MinimumDistanceSliderProps = {
     minimumDistance: number;
     description: string;
     getValueText: (value: number) => string;
-    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
 export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, minimumDistance, description, getValueText, setFilters, identifier }) => {
-
+    console.log("identifier: ", identifier)
+    console.log("initialState: ", initialState)
     const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
+    console.log("value1: ", value1)
 
     const handleChange1 = (
         _event: Event,
@@ -138,12 +100,53 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             return;
         }
 
-        const [minValue, maxValue] = newValue;
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [identifier]: [minValue, maxValue]
-        }));
+        if (identifier === "unemployment.newGraduate") {
+            const [minValue, maxValue] = newValue;
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                unemployment: {
+                    ...prevFilters.unemployment,
+                    newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
+                }
+            }));
+        } else if (identifier === "unemployment.experienced") {
+            const [minValue, maxValue] = newValue;
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                unemployment: {
+                    ...prevFilters.unemployment,
+                    experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
+                }
+            }));
+        } else if (identifier === "salary.newGraduate") {
+            const [minValue, maxValue] = newValue;
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                wantedSalary: {
+                    ...prevFilters.wantedSalary,
+                    newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
+                }
+            }));
+        } else if (identifier === "salary.experienced") {
+            const [minValue, maxValue] = newValue;
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                wantedSalary: {
+                    ...prevFilters.wantedSalary,
+                    experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
+                }
+            }));
+        }
+
+        else {
+            const [minValue, maxValue] = newValue;
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [identifier]: { minimum: minValue, maximum: maxValue } // Update the type of identifier to MinimumMaximum
+            }));
+        }
     };
+    console.log("value1 again: ", value1)
 
     return (
         <Box sx={{}}>
@@ -169,7 +172,7 @@ type CheckmarkToggleButtonProps = {
     initialState: boolean;
     description: string;
 
-    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 

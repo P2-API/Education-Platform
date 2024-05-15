@@ -33,12 +33,16 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
 
     //const groupedEducationTitles: string[] = getGroupedEducations.map(education => education.title);
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
-
+    const [educationProperties, setEducationProperties] = useState<EducationGroup[]>([]);
+    
     const { getGroupedEducations, getEducationsProperties } = useServer();
     useEffect(() => {
         getGroupedEducations().then((data) => {
             setGroupedEducations(data);
         });
+        getEducationsProperties().then((data) => {
+            setEducationProperties(data);
+        })
     }, []);
 
     let groupedEducationTitles = groupedEducations.map((education) => education.title);
@@ -170,6 +174,14 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Education" />}
+                />
+                <MultiSelectAutoComplete
+                    value={[]}
+                    collection={educationProperties}
+                    selectLabel="Properties"
+                    selectPlaceholder="Properties"
+                    setFilters={() => ("hello")}
+                    identifier="y_axis"
                 />
                 <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>
             </div>
