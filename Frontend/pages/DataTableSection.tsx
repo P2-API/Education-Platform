@@ -4,6 +4,7 @@ import { useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
 import { FinalRankingType } from "../../src/types";
 import { TableSectionDataContext } from "./Homepage";
+import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
 
 
 
@@ -14,6 +15,7 @@ const DataTableSection: React.FC = ({ }) => {
     const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
 
     let data = useContext(TableSectionDataContext);
+
 
 
 
@@ -31,7 +33,12 @@ const DataTableSection: React.FC = ({ }) => {
             </div>
 
             <div style={{ width: "69%", height: "100%" }}>
-                <MaterialReactDataTable data={data?.educations ?? []} />
+                {!rankedData && (
+                    <MaterialReactDataTable data={data?.educations ?? []} />
+                )}
+                {rankedData && (
+                    <RankedMaterialReactDataTable rankedData={rankedData} />
+                )}
             </div>
         </div>
     );

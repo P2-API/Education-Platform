@@ -35,7 +35,7 @@ const Homepage: React.FC = () => {
 
 
   if (data === undefined) {
-    return <div>Loading...</div>;
+    return <HeroSection />;
   }
 
   return (

@@ -1,5 +1,4 @@
-import { useMemo, useRef } from "react";
-import { Education } from "@src/types"
+import React, { useMemo, useRef } from "react";
 import { Institution } from "../../../src/enums"
 import {
   MaterialReactTable,
@@ -8,23 +7,32 @@ import {
   type MRT_RowVirtualizer,
   MRT_Row,
 } from "material-react-table";
+import { FinalRankingType, RankedDataStructure } from "../../../src/types";
 
-type MaterialReactDataTableProps = {
-  data: Education[];
+type RankedMaterialReactDataTableProps = {
+  rankedData: FinalRankingType;
 }
 
-const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data }) => {
-  const columns: MRT_ColumnDef<Education>[] = useMemo(
+
+
+
+
+const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
+
+  const data: RankedDataStructure[] = rankedData.ranking;
+  const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
       {
-        accessorKey: "rank",
+        accessorKey: "education.rank",
         header: "Rang", // Change to your language's translation for "Rang"
         size: 75,
         sortingFn: (rowA, rowB) => {
-          return (rowA.original.rank ?? 0) - (rowB.original.rank ?? 0);
+          const rankB = rowB.original.education?.rank || 0;
+          const rankA = rowA.original.education?.rank || 0;
+          return rankA - rankB;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const rank = row.original.rank;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const rank = row.original.education.rank;
           if (rank == null || rank == undefined || rank == 0) {
             return (
               <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>-</p>
@@ -32,27 +40,32 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
           }
 
           return (
-            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{row.original.rank}</p>
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{row.original.education.rank}</p>
           );
         }
       },
       {
-        accessorKey: "title",
+        accessorKey: "education.score",
+        header: "Score",
+        size: 75,
+      },
+      {
+        accessorKey: "education.title",
         header: "Uddannelse",
         minSize: 130,
         size: 150,
         maxSize: 200,
       },
       {
-        accessorKey: "degreeType",
+        accessorKey: "education.degreeType",
         header: "Type",
         size: 160,
       },
       {
-        accessorKey: "institutions",
+        accessorKey: "education.institutions",
         header: "Uddannelsessted",
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const institutionName = Institution[row.original.institutions];
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const institutionName = Institution[row.original.education.institutions];
           // (row.original.institutions)
           return (
             <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
@@ -60,14 +73,14 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         },
       },
       {
-        accessorKey: "geography",
+        accessorKey: "education.geographies",
         header: "Geografi",
         size: 120,
         sortingFn: (rowA, rowB) => {
-          return rowA.original.geographies[0].localeCompare(rowB.original.geographies[0]);
+          return rowA.original.education.geographies.length - rowB.original.education.geographies.length;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const geography = row.original.geographies;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const geography = row.original.education.geographies;
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", alignItems: "center" }}>
               {geography.map((geo: string) => (
@@ -79,11 +92,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
       },
 
       {
-        accessorKey: "subjects",
+        accessorKey: "education.subjects",
         header: "Fag",
         size: 130,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const subjects: string[] = row.original.subjects.map((subject) => subject.title)
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const subjects: string[] = row.original.education.subjects.map((subject) => subject.title)
           // ("subjects", subjects)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
@@ -95,22 +108,22 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "industries",
+        accessorKey: "education.industries",
         header: "Brancher",
         size: 370,
         sortingFn: (rowA, rowB) => {
           let rowAMedian = 0;
           let rowBMedian = 0;
-          rowA.original.industries.forEach(rowAIndustry => {
+          rowA.original.education.industries.forEach(rowAIndustry => {
             rowAMedian += rowAIndustry.share;
           })
-          rowB.original.industries.forEach(rowBIndustry => {
+          rowB.original.education.industries.forEach(rowBIndustry => {
             rowBMedian += rowBIndustry.share;
           })
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const industries: string[] = row.original.industries.map((industry) => industry.title)
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const industries: string[] = row.original.education.industries.map((industry) => industry.title)
           // ("subjects", industries)
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
@@ -122,21 +135,21 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "hours",
+        accessorKey: "education.hours",
         header: "Undervisningsfordeling",
         size: 180,
         sortingFn: (rowA, rowB) => {
-          let KlasseUndervisningA = rowA.original.hours.withFewStudents;
-          let KlasseUndervisningB = rowB.original.hours.withFewStudents;
-          let totalHoursA = KlasseUndervisningA + rowA.original.hours.withManyStudents + rowA.original.hours.withSupervision;
-          let totalHoursB = KlasseUndervisningB + rowB.original.hours.withManyStudents + rowB.original.hours.withSupervision;
+          let KlasseUndervisningA = rowA.original.education.hours.withFewStudents;
+          let KlasseUndervisningB = rowB.original.education.hours.withFewStudents;
+          let totalHoursA = KlasseUndervisningA + rowA.original.education.hours.withManyStudents + rowA.original.education.hours.withSupervision;
+          let totalHoursB = KlasseUndervisningB + rowB.original.education.hours.withManyStudents + rowB.original.education.hours.withSupervision;
           let rowAMedian = KlasseUndervisningA / totalHoursA;
           let rowBMedian = KlasseUndervisningB / totalHoursB;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const hoursTitles: string[] = ["Forelæsninger", "Klasse/Gruppearbejde", "Med vejledning"];
-          const hoursNumbers: number[] = Object.values(row.original.hours);
+          const hoursNumbers: number[] = Object.values(row.original.education.hours);
           const totalHours = hoursNumbers.reduce((acc, curr) => acc + curr, 0);
           hoursNumbers.forEach((hours, index) => {
             hoursNumbers[index] = Math.round((hours / totalHours) * 100);
@@ -154,19 +167,19 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "socialFeedback",
+        accessorKey: "education.socialFeedback",
         header: "Socialt miljø 1 til 5",
         size: 160,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.socialFeedback.socialEnvironment + rowA.original.socialFeedback.groupEngagement + rowA.original.socialFeedback.loneliness + rowA.original.socialFeedback.stress;
-          let rowBMedian = rowB.original.socialFeedback.socialEnvironment + rowB.original.socialFeedback.groupEngagement + rowB.original.socialFeedback.loneliness + rowB.original.socialFeedback.stress;
+          let rowAMedian = rowA.original.education.socialFeedback.socialEnvironment + rowA.original.education.socialFeedback.groupEngagement + rowA.original.education.socialFeedback.loneliness + rowA.original.education.socialFeedback.stress;
+          let rowBMedian = rowB.original.education.socialFeedback.socialEnvironment + rowB.original.education.socialFeedback.groupEngagement + rowB.original.education.socialFeedback.loneliness + rowB.original.education.socialFeedback.stress;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const socialEnvironment = row.original.socialFeedback.socialEnvironment;
-          const groupEngagement = row.original.socialFeedback.groupEngagement;
-          const loneliness = row.original.socialFeedback.loneliness;
-          const stress = row.original.socialFeedback.stress;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const socialEnvironment = row.original.education.socialFeedback.socialEnvironment;
+          const groupEngagement = row.original.education.socialFeedback.groupEngagement;
+          const loneliness = row.original.education.socialFeedback.loneliness;
+          const stress = row.original.education.socialFeedback.stress;
           // ("hoursNumbers", hoursNumbers)
           // ("hoursTitles", hoursTitles)
           return (
@@ -180,18 +193,18 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "academicFeedback",
+        accessorKey: "education.academicFeedback",
         header: "Fagligt miljø 1 til 5",
         size: 200,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.academicFeedback.academicEnvironment + rowA.original.academicFeedback.teacherEvaluation + rowA.original.academicFeedback.satisfaction;
-          let rowBMedian = rowB.original.academicFeedback.academicEnvironment + rowB.original.academicFeedback.teacherEvaluation + rowB.original.academicFeedback.satisfaction;
+          let rowAMedian = rowA.original.education.academicFeedback.academicEnvironment + rowA.original.education.academicFeedback.teacherEvaluation + rowA.original.education.academicFeedback.satisfaction;
+          let rowBMedian = rowB.original.education.academicFeedback.academicEnvironment + rowB.original.education.academicFeedback.teacherEvaluation + rowB.original.education.academicFeedback.satisfaction;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const academicEnvironment = row.original.academicFeedback.academicEnvironment;
-          const teacherEvaluation = row.original.academicFeedback.teacherEvaluation;
-          const satisfaction = row.original.academicFeedback.satisfaction;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const academicEnvironment = row.original.education.academicFeedback.academicEnvironment;
+          const teacherEvaluation = row.original.education.academicFeedback.teacherEvaluation;
+          const satisfaction = row.original.education.academicFeedback.satisfaction;
           // ("hoursNumbers", hoursNumbers)
           // ("hoursTitles", hoursTitles)
           return (
@@ -204,23 +217,23 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "academicWorkload",
+        accessorKey: "education.academicWorkload",
         header: "Arbejdsbyrde",
         size: 160,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.academicWorkload.lectures
-          let rowBMedian = rowB.original.academicWorkload.lectures
-          let totalHoursA = rowA.original.academicWorkload.lectures + rowA.original.academicWorkload.literature + rowA.original.academicWorkload.studentJob;
-          let totalHoursB = rowB.original.academicWorkload.lectures + rowB.original.academicWorkload.literature + rowB.original.academicWorkload.studentJob;
+          let rowAMedian = rowA.original.education.academicWorkload.lectures
+          let rowBMedian = rowB.original.education.academicWorkload.lectures
+          let totalHoursA = rowA.original.education.academicWorkload.lectures + rowA.original.education.academicWorkload.literature + rowA.original.education.academicWorkload.studentJob;
+          let totalHoursB = rowB.original.education.academicWorkload.lectures + rowB.original.education.academicWorkload.literature + rowB.original.education.academicWorkload.studentJob;
           rowAMedian = rowAMedian / totalHoursA;
           rowBMedian = rowBMedian / totalHoursB;
 
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lectures = row.original.academicWorkload.lectures;
-          const literature = row.original.academicWorkload.literature;
-          const studentJob = row.original.academicWorkload.studentJob;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const lectures = row.original.education.academicWorkload.lectures;
+          const literature = row.original.education.academicWorkload.literature;
+          const studentJob = row.original.education.academicWorkload.studentJob;
           const total = lectures + literature + studentJob;
           const lecturesPercent = Math.round((lectures / total) * 100);
           const literaturePercent = Math.round((literature / total) * 100);
@@ -236,23 +249,23 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "degreeStructure.contents",
+        accessorKey: "education.degreeStructure.contents",
         header: "Uddannelsesstruktur",
         size: 180,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.degreeStructure.contents.teaching
-          let rowBMedian = rowB.original.degreeStructure.contents.teaching
-          let totalHoursA = rowA.original.degreeStructure.contents.teaching + rowA.original.degreeStructure.contents.exams + rowA.original.degreeStructure.contents.internship + rowA.original.degreeStructure.contents.internationalStay;
-          let totalHoursB = rowB.original.degreeStructure.contents.teaching + rowB.original.degreeStructure.contents.exams + rowB.original.degreeStructure.contents.internship + rowB.original.degreeStructure.contents.internationalStay;
+          let rowAMedian = rowA.original.education.degreeStructure.contents.teaching
+          let rowBMedian = rowB.original.education.degreeStructure.contents.teaching
+          let totalHoursA = rowA.original.education.degreeStructure.contents.teaching + rowA.original.education.degreeStructure.contents.exams + rowA.original.education.degreeStructure.contents.internship + rowA.original.education.degreeStructure.contents.internationalStay;
+          let totalHoursB = rowB.original.education.degreeStructure.contents.teaching + rowB.original.education.degreeStructure.contents.exams + rowB.original.education.degreeStructure.contents.internship + rowB.original.education.degreeStructure.contents.internationalStay;
           rowAMedian = rowAMedian / totalHoursA;
           rowBMedian = rowBMedian / totalHoursB;
 
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const teaching = row.original.degreeStructure.contents.teaching;
-          const exams = row.original.degreeStructure.contents.exams;
-          const internship = row.original.degreeStructure.contents.internship;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const teaching = row.original.education.degreeStructure.contents.teaching;
+          const exams = row.original.education.degreeStructure.contents.exams;
+          const internship = row.original.education.degreeStructure.contents.internship;
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>Undervisning: {teaching}%</p>
@@ -263,11 +276,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         },
       },
       {
-        accessorKey: "degreeStructure.teachingMethods",
+        accessorKey: "education.degreeStructure.teachingMethods",
         header: "Undervisningsform",
         size: 160,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const teachingMethods = row.original.degreeStructure.teachingMethods;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const teachingMethods = row.original.education.degreeStructure.teachingMethods;
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px", }}>
               <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>1. {teachingMethods[0]} </p>
@@ -278,29 +291,29 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         },
       },
       {
-        accessorKey: "dropoutRate",
+        accessorKey: "education.dropoutRate",
         header: "Dropout-rate",
         size: 130,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const dropoutRate = row.original.dropoutRate;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const dropoutRate = row.original.education.dropoutRate;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{dropoutRate}%</p>
           );
         }
       },
       {
-        accessorKey: "jobData.salaries.newGraduate",
+        accessorKey: "education.jobData.salaries.newGraduate",
         header: "Løn som nyuddannet",
         size: 200,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.jobData.salaries.newGraduate.lowerQuartile + rowA.original.jobData.salaries.newGraduate.median + rowA.original.jobData.salaries.newGraduate.upperQuartile;
-          let rowBMedian = rowB.original.jobData.salaries.newGraduate.lowerQuartile + rowB.original.jobData.salaries.newGraduate.median + rowB.original.jobData.salaries.newGraduate.upperQuartile;
+          let rowAMedian = rowA.original.education.jobData.salaries.newGraduate.lowerQuartile + rowA.original.education.jobData.salaries.newGraduate.median + rowA.original.education.jobData.salaries.newGraduate.upperQuartile;
+          let rowBMedian = rowB.original.education.jobData.salaries.newGraduate.lowerQuartile + rowB.original.education.jobData.salaries.newGraduate.median + rowB.original.education.jobData.salaries.newGraduate.upperQuartile;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lower_quartile = row.original.jobData.salaries.newGraduate.lowerQuartile;
-          const median = row.original.jobData.salaries.newGraduate.median;
-          const upper_quartile = row.original.jobData.salaries.newGraduate.upperQuartile;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const lower_quartile = row.original.education.jobData.salaries.newGraduate.lowerQuartile;
+          const median = row.original.education.jobData.salaries.newGraduate.median;
+          const upper_quartile = row.original.education.jobData.salaries.newGraduate.upperQuartile;
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -320,18 +333,18 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "jobData.salaries.experienced",
+        accessorKey: "education.jobData.salaries.experienced",
         header: "Løn som erfaren",
         size: 200,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.jobData.salaries.experienced.lowerQuartile + rowA.original.jobData.salaries.experienced.median + rowA.original.jobData.salaries.experienced.upperQuartile;
-          let rowBMedian = rowB.original.jobData.salaries.experienced.lowerQuartile + rowB.original.jobData.salaries.experienced.median + rowB.original.jobData.salaries.experienced.upperQuartile;
+          let rowAMedian = rowA.original.education.jobData.salaries.experienced.lowerQuartile + rowA.original.education.jobData.salaries.experienced.median + rowA.original.education.jobData.salaries.experienced.upperQuartile;
+          let rowBMedian = rowB.original.education.jobData.salaries.experienced.lowerQuartile + rowB.original.education.jobData.salaries.experienced.median + rowB.original.education.jobData.salaries.experienced.upperQuartile;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const lower_quartile = row.original.jobData.salaries.experienced.lowerQuartile;
-          const median = row.original.jobData.salaries.experienced.median;
-          const upper_quartile = row.original.jobData.salaries.experienced.upperQuartile;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const lower_quartile = row.original.education.jobData.salaries.experienced.lowerQuartile;
+          const median = row.original.education.jobData.salaries.experienced.median;
+          const upper_quartile = row.original.education.jobData.salaries.experienced.upperQuartile;
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -351,17 +364,17 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "jobData.unemployment",
+        accessorKey: "education.jobData.unemployment",
         header: "Arbejdsløshed",
         size: 160,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.jobData.unemployment.newGraduate + rowA.original.jobData.unemployment.experienced;
-          let rowBMedian = rowB.original.jobData.unemployment.newGraduate + rowB.original.jobData.unemployment.experienced;
+          let rowAMedian = rowA.original.education.jobData.unemployment.newGraduate + rowA.original.education.jobData.unemployment.experienced;
+          let rowBMedian = rowB.original.education.jobData.unemployment.newGraduate + rowB.original.education.jobData.unemployment.experienced;
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const newGraduate = row.original.jobData.unemployment.newGraduate;
-          const experienced = row.original.jobData.unemployment.experienced;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const newGraduate = row.original.education.jobData.unemployment.newGraduate;
+          const experienced = row.original.education.jobData.unemployment.experienced;
           return (
             <ul style={{ padding: 0, width: "250px", height: "40px", scrollbarWidth: "thin", marginRight: "1.5em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -377,18 +390,18 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "jobData.workSchedule",
+        accessorKey: "education.jobData.workSchedule",
         header: "Arbejdstid (job)",
         size: 180,
         sortingFn: (rowA, rowB) => {
-          let rowAMedian = rowA.original.jobData.workSchedule.workingHours
-          let rowBMedian = rowB.original.jobData.workSchedule.workingHours
+          let rowAMedian = rowA.original.education.jobData.workSchedule.workingHours
+          let rowBMedian = rowB.original.education.jobData.workSchedule.workingHours
           return rowAMedian > rowBMedian ? -1 : 1;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const working_hours = row.original.jobData.workSchedule.workingHours;
-          const flexible_hours = row.original.jobData.workSchedule.flexibleHoursPercent + row.original.jobData.workSchedule.selfSchedulePercent + row.original.jobData.workSchedule.variableSchedulePercent;
-          const fixed_hours = row.original.jobData.workSchedule.fixedHoursPercent;
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const working_hours = row.original.education.jobData.workSchedule.workingHours;
+          const flexible_hours = row.original.education.jobData.workSchedule.flexibleHoursPercent + row.original.education.jobData.workSchedule.selfSchedulePercent + row.original.education.jobData.workSchedule.variableSchedulePercent;
+          const fixed_hours = row.original.education.jobData.workSchedule.fixedHoursPercent;
           const flexible_hours_percent = flexible_hours / (flexible_hours + fixed_hours);
 
           return (
@@ -410,39 +423,39 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         }
       },
       {
-        accessorKey: "jobData.degreeRelevance",
+        accessorKey: "education.jobData.degreeRelevance",
         header: "Job relevans",
         size: 120,
         sortingFn: (rowA, rowB) => {
-          return rowA.original.jobData.degreeRelevance - rowB.original.jobData.degreeRelevance;
+          return rowA.original.education.jobData.degreeRelevance - rowB.original.education.jobData.degreeRelevance;
         },
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
 
-          const degree_relevance = row.original.jobData.degreeRelevance;
+          const degree_relevance = row.original.education.jobData.degreeRelevance;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{degree_relevance}</p>
           );
         }
       },
       {
-        accessorKey: "jobData.degreePreparesForJob",
+        accessorKey: "ranking.education.jobData.degreePreparesForJob",
         header: "Job forberedende",
         size: 140,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
 
-          const degree_prepares_for_job = row.original.jobData.degreePreparesForJob;
+          const degree_prepares_for_job = row.original.education.jobData.degreePreparesForJob;
           return (
             <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{degree_prepares_for_job}</p>
           );
         }
       },
       {
-        accessorKey: "jobData.nationalJobs",
+        accessorKey: "education.jobData.nationalJobs",
         header: "Internationalt job",
         size: 140,
-        Cell: ({ row }: { row: MRT_Row<Education> }) => {
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
 
-          let national_jobs = row.original.jobData.nationalJobs;
+          let national_jobs = row.original.education.jobData.nationalJobs;
           if (national_jobs < 0) {
             national_jobs = national_jobs / 10000;
           }
@@ -515,4 +528,4 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
   return <MaterialReactTable table={table} />;
 };
 
-export default MaterialReactDataTable;
+export default RankedMaterialReactDataTable;

@@ -28,18 +28,19 @@ keywords = {
     "Music",
     "Politics",
     "Culture",
-    "Health Science",
+    "Health",
     "Law",
     "Economics",
-    "Information Technology",
     "Programming",
-    "Environmental Science",
+    "Environment",
     "Education",
     "Journalism",
     "Communication",
     "Religion",
     "Sociology",
-    "Agricultural Science",
+    "Agriculture",
+    "Craftsmanship",
+    "Trade"
 }
 
 # Calculate mean similarity scores for each keyword
@@ -51,11 +52,6 @@ for keyword in keywords:
         similarity_scores.append(nlp(keyword).similarity(nlp(word)))
     mean_similarity = sum(similarity_scores) / len(similarity_scores)
     rankings[keyword] = mean_similarity
-
-# Normalize via abs max normalization
-max_value = max(rankings.values())
-for keyword in rankings:
-    rankings[keyword] = rankings[keyword] / max_value
 
 # Write rankings to output file
 output_file = sys.argv[2]
