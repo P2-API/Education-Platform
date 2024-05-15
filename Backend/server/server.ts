@@ -56,7 +56,7 @@ server.post("/update_ranking", (request: Request, response: Response) => {
             quizAnswers: quizAnswers,
             filters: normalizeFilters(filters),
         };
-
+        console.log("filters", userInput.filters)
         const ranker = new Ranker();
         const ranking = ranker.produceRanking(userInput);
 

@@ -47,6 +47,10 @@ const FiltersContext = createContext<FilterInfoType>({
     },
     setFilters: () => { }
 });
+
+
+
+
 const QuizInfoContext = createContext<QuizInfoType>({
     quizData: {
         subjectsPriority: 3,
@@ -201,6 +205,7 @@ export default function BasicTabs() {
 
     console.log("filters", FilterInfo)
     console.log("quiz", QuizInfo)
+
 
 
     return (
