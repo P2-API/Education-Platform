@@ -125,7 +125,8 @@ function csvParser(csvData: string): Education[] {
             }
         };
 
-        if (recursivelyCheckForMissingProperties(education)) {
+        // For some reason we also need to discard working hours as it gives weird values that are impossible to decode what is.
+        if (recursivelyCheckForMissingProperties(education) || education.jobData.workSchedule.workingHours == 0) {
             continue;
         }
 
