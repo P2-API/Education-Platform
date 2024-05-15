@@ -167,7 +167,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                             }
                         },
                         hovermode: "closest",
-                        fill: 'toself',
                         hoverlabel: { bgcolor: "#FFF" },
                         autosize: true, // Enable automatic resizing
                         transition: {
