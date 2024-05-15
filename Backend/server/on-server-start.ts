@@ -2,6 +2,8 @@ import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, Educatio
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
+import { assignSubjectRankings } from "../utilities/web_scraper";
+
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
@@ -368,3 +370,5 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
     }
 }
 
+
+assignSubjectRankings(getGroupedEducations());

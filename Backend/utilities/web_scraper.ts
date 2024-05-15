@@ -13,9 +13,9 @@ const urls = ["https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transp
 
 //translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
-assignSubjectRankings(getGroupedEducations)
+//assignSubjectRankings(getGroupedEducations)
 
-async function assignSubjectRankings(subjectData) {
+export async function assignSubjectRankings(subjectData) {
     for (const title in subjectData) {
         const url = subjectData[title].url;
         const name = subjectData[title].name;
