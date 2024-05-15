@@ -1,6 +1,6 @@
 import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermedietRankingType, MinimumMaximum } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
-import {JobFlexibility,DegreeTypeToDuration} from "../../src/enums"
+import {DegreeTypeToDuration} from "../../src/enums"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -57,7 +57,7 @@ export class Ranker {
     norm(education: EducationVector, optimalEducation: EducationVector, normValue: number): number {
         let sum = 0;
         education.coordinates.forEach((coordinate, index) => {
-            sum += Math.pow(coordinate - optimalEducation.coordinates[index], normValue)
+            sum += Math.pow(coordinate.value - optimalEducation.coordinates[index].value, normValue)
         })
         return Math.pow(sum, 1 / normValue)
     }
@@ -74,43 +74,43 @@ export class Ranker {
         const coordinates = weightedEducationVector.coordinates
         //add subjects
         education.subjects.forEach((subject) => {
-            coordinates.push(subject.score * weights.subjectsPriority)
+            coordinates.push({name:subject.title, value: subject.score * weights.subjectsPriority})
         })
         //add industries
         education.industries.forEach((industry) => {
-            coordinates.push(industry.share * weights.subjectsPriority)
+            coordinates.push({name:industry.title, value: industry.share * weights.subjectsPriority})
         })
         //add hours
-        coordinates.push(education.hours.withFewStudents * weights.highWorkloadAcceptancePriority,
-            education.hours.withManyStudents * weights.highWorkloadAcceptancePriority,
-            education.hours.withSupervision * weights.highWorkloadAcceptancePriority)
+        coordinates.push({name:"HoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority},
+            {name:"HourswithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority},
+            {name:"HoursWithSupervision", value: education.hours.withSupervision * weights.highWorkloadAcceptancePriority})
         //add socialFeedback
-        coordinates.push(education.socialFeedback.socialEnvironment * weights.socialEnvironmentPriority,
-            education.socialFeedback.groupEngagement * weights.groupEngagementPriority,
-            education.socialFeedback.loneliness * weights.lonelinessPriority)
+        coordinates.push({name:"socialEnvironment", value: education.socialFeedback.socialEnvironment * weights.socialEnvironmentPriority},
+            {name:"groupEngaement", value: education.socialFeedback.groupEngagement * weights.groupEngagementPriority},
+            {name:"loneliness", value: education.socialFeedback.loneliness * weights.lonelinessPriority})
         //add academicFeedback
-        coordinates.push(education.academicFeedback.academicEnvironment * weights.academicEnvironmentPriority,
-            education.academicFeedback.teacherEvaluation * weights.teachingPriority)
+        coordinates.push({name:"acedemicEnvironment", value: education.academicFeedback.academicEnvironment * weights.academicEnvironmentPriority},
+            {name:"acedemicFeedback", value: education.academicFeedback.teacherEvaluation * weights.teachingPriority})
         //add academicWorkload
-        coordinates.push(education.academicWorkload.studentJob * weights.studentJobPriority,
-            education.academicWorkload.lectures * weights.lecturesPriority,
-            education.academicWorkload.literature * weights.literaturePriority)
+        coordinates.push({name:"studentJob", value: education.academicWorkload.studentJob * weights.studentJobPriority},
+            {name:"lectures", value: education.academicWorkload.lectures * weights.lecturesPriority},
+            {name:"literature", value: education.academicWorkload.literature * weights.literaturePriority})
         //add degreeStructure
-        coordinates.push(education.degreeStructure.contents.exams * weights.dislikeExamPriority,
-            education.degreeStructure.contents.internship * weights.internshipPriority,
-            education.degreeStructure.contents.internationalStay * weights.internationalStayPriority)
+        coordinates.push({name: "exams", value: education.degreeStructure.contents.exams * weights.dislikeExamPriority},
+            {name: "internship", value: education.degreeStructure.contents.internship * weights.internshipPriority},
+            {name: "internationalStay", value: education.degreeStructure.contents.internationalStay * weights.internationalStayPriority})
         //add jobData
-        coordinates.push(education.jobData.salaries.newGraduate.median * weights.startingSalaryPriority,
-            education.jobData.salaries.experienced.median * weights.experiencedSalaryPriority,
-            education.jobData.unemployment.experienced * weights.unemploymentPriority,
-            education.jobData.unemployment.newGraduate * weights.unemploymentPriority,
-            education.jobData.degreeRelevance * weights.degreeRelevancePriority,
-            education.jobData.workSchedule.fixedHoursPercent * weights.fixedHoursPriority,
-            education.jobData.workSchedule.flexibleHoursPercent * weights.flexibleHoursPriority,
-            education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority,
-            education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority,
-            education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority,
-            education.jobData.nationalJobs * weights.workNationallyPriority)
+        coordinates.push({name:"salaryNewGraduate",value:education.jobData.salaries.newGraduate.median * weights.startingSalaryPriority},
+            {name:"salaryExperienced",value:education.jobData.salaries.experienced.median * weights.experiencedSalaryPriority},
+            {name:"unemploymentExperienced",value:education.jobData.unemployment.experienced * weights.unemploymentPriority},
+            {name:"unemploymentNewGraduate", value:education.jobData.unemployment.newGraduate * weights.unemploymentPriority},
+            {name:"degreeRelevance", value: education.jobData.degreeRelevance * weights.degreeRelevancePriority},
+            {name:"fixedHoursPercernt",value: education.jobData.workSchedule.fixedHoursPercent * weights.fixedHoursPriority},
+            {name:"flexibleHoursPercent", value: education.jobData.workSchedule.flexibleHoursPercent * weights.flexibleHoursPriority},
+            {name:"selfSchedulePercent", value: education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority},
+            {name:"variableSchedulePercent", value: education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority},
+            {name:"nightAndEveningShiftsPercent", value: education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority},
+            {name:"nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority})
 
         return weightedEducationVector
     }
@@ -121,7 +121,7 @@ export class Ranker {
             (filters.canStudyAtInstitution.length === 0)?true:filters.canStudyAtInstitution.includes(education.institutions) &&
             filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)) &&
             filters.canWorkInternationally?(education.jobData.nationalJobs > 0.8 ? false : true):true &&
-            (filters.jobFlexibility===JobFlexibility.Fleksibel)?(education.jobData.workSchedule.flexibleHoursPercent > 0.5?true:false):true &&
+            (filters.hasFlexibleJobSchedule === true)?(education.jobData.workSchedule.flexibleHoursPercent > 0.5?true:false):true &&
             this.educationDurationFilterPassed(education, filters.educationDuration) &&
             this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
 
