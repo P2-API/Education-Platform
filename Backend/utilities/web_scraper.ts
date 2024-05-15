@@ -3,50 +3,35 @@ import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
+//import { promises } from 'dns';
 //import TextRazor from 'textrazor';
 
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
+const urls = ["https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0"];
 
 //translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
-getSubjectsFromUgText("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0");
 
+(async () => {
+    const test = await loadSubjectsFromUrls(urls);
+    console.log(test)
+})();
 
-async function getSubjectsFromUgText(url: string) {
-    try {
-        const text = await getAllText(url);
-
-        const englishText = await translateTextToEnglishChatGPT(text);
-        if (!englishText) {
-            return "Error translating text";
-        }
-        console.log(englishText);
-
-        const keywords = await extractKeywordsFromText(englishText);
-        if (!keywords) {
-            return "Error extracting keywords";
-        }
-        console.log(keywords);
-
-        const similarities = await analyseSubjects(keywords);
-        if (!similarities) {
-            return "Error analysing subjects";
-        }
-        console.log(similarities);
-        
-
-    } catch (error) {
-        console.error('Error:', error);
-        return "An error occurred while processing the request.";
-    }
-
+interface CategoryData {
+    [category: string]: number;
 }
+
+interface NamedCategoryData {
+    name: string;
+    data: CategoryData;
+}
+
 
 export async function getPersonalizedMessage(url: string) {
     try {
         const text = await getAllText(url);
 
-        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug gerne data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
+        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
 
         const preferences = {
             academic_environment_priority: 5,
@@ -77,7 +62,6 @@ export async function getPersonalizedMessage(url: string) {
         };
 
         const message = await sendMessageToChatGPT(text, preferences, promptString);
-        console.log('Response from ChatGPT:', message);
         return { message };
     } catch (error) {
         console.error('Error:', error);
@@ -85,17 +69,44 @@ export async function getPersonalizedMessage(url: string) {
     }
 }
 
+async function removeNewlines(input: string): Promise<string> {
+    return input.replace(/[\r\n]+/g, '');
+}
+
+async function removeConsecutiveUppercase(str: string): Promise<string> {
+    return str.replace(/[A-Z]{3,}/g, '');
+}
+async function removeMultipleSpaces(str: string): Promise<string> {
+    return str.replace(/ +/g, ' ');
+}
+
+async function removeParentheses(str: string): Promise<string> {
+    return str.replace(/[()]/g, '.');
+}
+
+async function sanitizeText(text: string): Promise<string> {
+    try {
+        text = await removeNewlines(text);
+        text = await removeMultipleSpaces(text);
+        text = await removeConsecutiveUppercase(text);
+        text = await removeParentheses(text);
+        return text;
+    } catch (error) {
+        console.error(`Error sanitizing text: ${error}`);
+        return text;
+    }
+}
 
 export async function getHeadliner(url: string) {
     const response = await fetchHtml(url);
     if (response === "Error fetching the URL") {
         return "Error fetching the URL";
     }
-    const headlinerText = getHeadlinerText(response.data);
+    const headlinerText = await getHeadlinerText(response.data);
     return { headlinerText };
 }
 
-function getHeadlinerText(html: string) {
+export async function getHeadlinerText(html: string) {
     try {
         const $ = load(html);
         const headlinerText = $('.field-item.even').first().text();
@@ -106,7 +117,17 @@ function getHeadlinerText(html: string) {
 
 }
 
-export function getDescribingText(html: string) {
+async function getSmallSummary(html: string) {
+    try {
+        const $ = load(html);
+        const smallSummary = $('.field-item.even').eq(2).text();
+        return smallSummary;
+    } catch (error) {
+        console.error(`Error filtering data: ${error}`);
+    }
+}
+
+export async function getDescribingText(html: string) {
     try {
         const $ = load(html);
         const headlinerText = $('.views-row.views-row-1').text();
@@ -158,7 +179,7 @@ async function translateTextToEnglishChatGPT(text: string) {
             },
             {
                 role: "user",
-                content: "translate the text to english, pls give the translationed text back in a JSON string."
+                content: "translate the text to english, dont make format changes to the text, pls give the translationed text back in a JSON with all text in one string."
             },
         ],
         model: "gpt-3.5-turbo-0125",
@@ -262,18 +283,26 @@ async function getAllText(url: string) {
         return "Error extracting headliner text";
     }
 
+    const smallSummary = await getSmallSummary(response.data);
+    if (!smallSummary) {
+        return "Error extracting small summary";
+    }
+
     const describingText = await getDescribingText(response.data);
     if (!describingText) {
         return "Error extracting describing text";
     }
 
-    return (headlinerText + describingText);
+    let allText = headlinerText + smallSummary + describingText;
+
+    allText = await sanitizeText(allText);
+
+    return (allText);
 }
 
 
 async function analyseSubjects(keywords: string[]) {
     const similarities = await calculateSimilarity(keywords, );
-    console.log(similarities);
     return similarities;
 }
 
@@ -310,4 +339,49 @@ interface Rankings {
     [subject: string]: number;
 }
 
+
+export async function loadSubjectsFromUrls(urls: string[]): Promise<NamedCategoryData[]> {
+    const loadedData: NamedCategoryData[] = [];
+
+    for (const url of urls) {
+        try {
+            const text = await getAllText(url);
+            const sanitizedText = await sanitizeText(text);
+
+            const englishText = await translateTextToEnglishChatGPT(sanitizedText);
+            if (!englishText) {
+                console.error("Error translating text");
+                continue;
+            }
+
+            const keywords = await extractKeywordsFromText(englishText);
+            if (!keywords) {
+                console.error("Error extracting keywords");
+                continue;
+            }
+
+            const similarities = await analyseSubjects(keywords);
+            if (!similarities) {
+                console.error("Error analysing subjects");
+                continue;
+            }
+
+            // Construct NamedCategoryData object
+            const namedData: NamedCategoryData = {
+                name: url, // Use URL as name for now
+                data: {} // Placeholder for data
+            };
+            // Add loaded data to namedData
+            for (const subject in similarities) {
+                namedData.data[subject] = similarities[subject]; // Assign similarity scores to data
+            }
+            loadedData.push(namedData);
+        } catch (error) {
+            console.error(`Error processing URL ${url}:`, error);
+            continue;
+        }
+    }
+
+    return loadedData;
+}
 

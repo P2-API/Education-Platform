@@ -60,6 +60,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.VSCodeCounter/*
 
 
 # Random files
