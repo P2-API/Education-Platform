@@ -5,23 +5,45 @@ import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
 import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React, { useState, createContext } from 'react';
-import { QuizAnswers, FilterProps } from '@src/types';
+import { QuizAnswers, FilterProps, TableFilters } from '@src/types';
 
 const FiltersContext = createContext<FilterInfoType>({
     filters: {
-        degreeTypes: [],
-        subjects: [],
-        institutes: [],
-        geographies: [],
-        formsOfEducation: [],
-        educationDuration: { minimum: 0, maximum: 0 },
-        newGraduateSalary: { minimum: 0, maximum: 0 },
-        experiencedSalary: { minimum: 0, maximum: 0 },
-        wantedWorkingHours: { minimum: 0, maximum: 0 },
-        newGraduateUnemployment: { minimum: 0, maximum: 0 },
-        experiencedUnemployment: { minimum: 0, maximum: 0 },
-        canWorkInternationally: false,
+        wantedDegreeTypes: [],
+        canStudyInGeographies: [],
+        canStudyAtInstitution: [],
+        hasSubjects: [],
+        hasFormsOfEducation: [],
+        wantedSalary: {
+            newGraduate: {
+                minimum: 0,
+                maximum: 0
+            },
+            experienced: {
+                minimum: 0,
+                maximum: 0
+            }
+        },
+        unemployment: {
+            newGraduate: {
+                minimum: 0,
+                maximum: 0
+            },
+            experienced: {
+                minimum: 0,
+                maximum: 0
+            }
+        },
         hasFlexibleJobSchedule: false,
+        wantedWorkingHours: {
+            minimum: 0,
+            maximum: 0
+        },
+        canWorkInternationally: false,
+        educationDuration: {
+            minimum: 0,
+            maximum: 0
+        }
     },
     setFilters: () => { }
 });
@@ -69,8 +91,8 @@ export type QuizInfoType = {
 };
 
 export type FilterInfoType = {
-    filters: FilterProps;
-    setFilters: React.Dispatch<React.SetStateAction<FilterProps>>;
+    filters: TableFilters;
+    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
 };
 
 type TabPanelProps = {
@@ -146,6 +168,30 @@ export default function BasicTabs() {
         }
     );
     const [isQuizOpen, setIsQuizOpen] = useState(false);
+    const [filters, setFilters] = useState<TableFilters>({
+        wantedDegreeTypes: [],
+        hasSubjects: [],
+        canStudyAtInstitution: [],
+        canStudyInGeographies: [],
+        hasFormsOfEducation: [],
+        educationDuration: { minimum: 0, maximum: 0 },
+        wantedSalary: {
+            newGraduate: { minimum: 0, maximum: 0 },
+            experienced: { minimum: 0, maximum: 0 },
+        },
+        wantedWorkingHours: { minimum: 0, maximum: 0 },
+        unemployment: {
+            newGraduate: { minimum: 0, maximum: 0 },
+            experienced: { minimum: 0, maximum: 0 },
+        },
+        hasFlexibleJobSchedule: false,
+        canWorkInternationally: false,
+    });
+    const FilterInfo: FilterInfoType = {
+        filters: filters,
+        setFilters: setFilters
+    };
+
     const QuizInfo: QuizInfoType = {
         quizData: quizAnswerState,
         setQuizData: SetQuizAnswerState,
@@ -153,30 +199,7 @@ export default function BasicTabs() {
         setIsQuizOpen: setIsQuizOpen
     };
 
-
-
-    // Filter states
-    const [filters, setFilters] = useState<FilterProps>({
-        degreeTypes: [],
-        subjects: [],
-        institutes: [],
-        geographies: [],
-        formsOfEducation: [],
-        educationDuration: { minimum: 0, maximum: 0 },
-        newGraduateSalary: { minimum: 0, maximum: 0 },
-        experiencedSalary: { minimum: 0, maximum: 0 },
-        wantedWorkingHours: { minimum: 0, maximum: 0 },
-        newGraduateUnemployment: { minimum: 0, maximum: 0 },
-        experiencedUnemployment: { minimum: 0, maximum: 0 },
-        canWorkInternationally: false,
-        hasFlexibleJobSchedule: false,
-    });
-    const FilterInfo: FilterInfoType = {
-        filters: filters,
-        setFilters: setFilters
-    };
-
-
+    console.log("filters", FilterInfo)
     console.log("quiz", QuizInfo)
 
 

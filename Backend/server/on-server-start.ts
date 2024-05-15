@@ -22,6 +22,10 @@ let formOfEducationKeys: (keyof typeof FormOfEducation)[];
 let minimumEducation: Education;
 let maximumEducation: Education;
 
+
+let educationDurationRange: MinimumMaximum;
+
+
 export const onStart = () => {
     cacheEducations();
     calculateEducationProperties();
@@ -323,9 +327,11 @@ const calculateBasedOnMinimumAndMaximumEducation = () => {
     normilizedEducations = normilizesEducations(educations);
 }
 
-let educationDurationRange: MinimumMaximum;
+export const getNormilizedEducations = (): Education[] => {
+    return normilizedEducations;
+}
 
-export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
+export const calculateMinMaxDegreeDuration = () => {
     // ("caclulateMinMaxDegreeDuration");
 
     let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
@@ -338,10 +344,9 @@ export const calculateMinMaxDegreeDuration = (): MinimumMaximum => {
         }
     });
     educationDurationRange = { minimum: educationDurationMin, maximum: educationDurationMax }
-    return educationDurationRange;
 }
 
-const getEducationDurationRange = (): MinimumMaximum => {
+export const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 

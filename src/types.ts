@@ -167,9 +167,9 @@ export type SalaryFilters = {
     experienced: MinimumMaximum;
 }
 
-export type UnenploymentFilters = {
-    newGraduate: number;
-    experienced: number;
+export type UnemploymentFilters = {
+    newGraduate: MinimumMaximum;
+    experienced: MinimumMaximum;
 }
 
 export type Subject = {
@@ -194,13 +194,12 @@ export type TableSectionDataFromServer = {
 
 export type TableFilters = {
     wantedDegreeTypes: string[]; //in use               
-    canStudyInGeoraphies: Geography[]; //in use         
+    canStudyInGeographies: Geography[]; //in use         
     canStudyAtInstitution: Institution[]; //in use      
     hasSubjects: string[]; // in use      
-    hasIndustries: string[]; // in use       
     hasFormsOfEducation: string[]; // in use
     wantedSalary: SalaryFilters; // in use / LP filter  
-    unemployment: UnenploymentFilters; // in use / LP filter
+    unemployment: UnemploymentFilters; // in use / LP filter
     hasFlexibleJobSchedule: boolean; // in use / LP filter 
     wantedWorkingHours: MinimumMaximum; // in use / LP filter
     canWorkInternationally: boolean; //in use
@@ -236,7 +235,7 @@ export type RankedEducationsType = {
 
 export type EducationVector = {
     education: Education,
-    coordinates: {name: string, value: number}[]
+    coordinates: { name: string, value: number }[]
 }
 
 export type PCAData = {
@@ -251,9 +250,9 @@ export type PCAData = {
     }
 }
 
-type axisData = {composition: linearCombination, varianceExplained: number}
+type axisData = { composition: linearCombination, varianceExplained: number }
 
-type linearCombination = {variable: string, coeff: number}[]
+type linearCombination = { variable: string, coeff: number }[]
 
 export type IntermedietRankingType = {
     upperhalf: {
@@ -278,17 +277,15 @@ export type RankedDataStructure = {
 
 
 export type FilterProps = {
-    degreeTypes: string[];
-    institutes: string[];
-    geographies: string[];
-    subjects: string[];
-    formsOfEducation: string[];
-    educationDuration: MinimumMaximum;
-    newGraduateSalary: MinimumMaximum;
-    experiencedSalary: MinimumMaximum;
-    wantedWorkingHours: MinimumMaximum;
-    newGraduateUnemployment: MinimumMaximum;
-    experiencedUnemployment: MinimumMaximum;
-    canWorkInternationally: boolean;
+    wantedDegreeTypes: string[];
+    canStudyAtInstitution: string[];
+    canStudyInGeographies: string[];
+    hasSubjects: string[];
+    hasFormsOfEducation: string[];
+    wantedSalary: SalaryFilters; // in use / LP filter  
+    unemployment: UnemploymentFilters; // in use / LP filter
     hasFlexibleJobSchedule: boolean;
+    wantedWorkingHours: MinimumMaximum;
+    canWorkInternationally: boolean;
+    educationDuration: MinimumMaximum;
 };
