@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
+import { getGroupedEducations } from '../server/on-server-start';
+
 //import { promises } from 'dns';
 //import TextRazor from 'textrazor';
 
@@ -11,6 +13,16 @@ const urls = ["https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transp
 
 //translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
+assignSubjectRankings(getGroupedEducations)
+
+function assignSubjectRankings( subjectData: any) {
+    for (const title in subjectData) {
+        const url = subjectData[title].url;
+        const name = subjectData[title].name;
+        const result = await loadSubjectsFromUrls(url, name);
+
+}
+
 
 (async () => {
     const test = await loadSubjectsFromUrls(urls);
@@ -23,6 +35,7 @@ interface CategoryData {
 
 interface NamedCategoryData {
     name: string;
+    url: string;
     data: CategoryData;
 }
 
@@ -340,7 +353,7 @@ interface Rankings {
 }
 
 
-export async function loadSubjectsFromUrls(urls: string[]): Promise<NamedCategoryData[]> {
+export async function loadSubjectsFromUrls(urls: string[], name: string): Promise<NamedCategoryData[]> {
     const loadedData: NamedCategoryData[] = [];
 
     for (const url of urls) {
@@ -366,9 +379,9 @@ export async function loadSubjectsFromUrls(urls: string[]): Promise<NamedCategor
                 continue;
             }
 
-            // Construct NamedCategoryData object
             const namedData: NamedCategoryData = {
-                name: url, // Use URL as name for now
+                name: name,
+                url: url,
                 data: {} // Placeholder for data
             };
             // Add loaded data to namedData
@@ -384,4 +397,3 @@ export async function loadSubjectsFromUrls(urls: string[]): Promise<NamedCategor
 
     return loadedData;
 }
-
