@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-
+import { normalizeFilters } from '../utilities/normalization';
 import { onStart, getTableSectionData } from './on-server-start';
-import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
+import { UserImputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import bodyParser from 'body-parser'; // Import the bodyParser package
 
@@ -42,20 +42,16 @@ server.post("/PCA_request", (request: Request, response: Response) => {
 server.post("/update_ranking", (request: Request, response: Response) => {
     try {
         const requestData = request.body;
-        const filterProps: TableFilters = requestData.filterProps;
+        const filters: TableFilters = requestData.filterProps;
         const quizAnswers: QuizAnswers = requestData.quizAnswers;
-
-        const data // GET DATA HERE 
-
 
         const userInput: UserImputs = {
             quizAnswers: quizAnswers,
-            filters: filterProps,
+            filters: normalizeFilters(filters),
         };
 
-
         const ranker = new Ranker();
-        const ranking = ranker.produceRanking(data, userInput);
+        const ranking = ranker.produceRanking(userInput);
 
 
         response.status(200).json(ranking); // Ensure JSON response
