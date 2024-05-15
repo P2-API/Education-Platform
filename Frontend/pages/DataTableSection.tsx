@@ -30,7 +30,7 @@ const DataTableSection: React.FC = ({ }) => {
                 <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={setRankedData} />
             </div>
 
-            <div style={{ width: "69%", height: "100%", maxHeight: "60vh" }}>
+            <div style={{ width: "69%", height: "100%" }}>
                 <MaterialReactDataTable data={data?.educations ?? []} />
             </div>
         </div>

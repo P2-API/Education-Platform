@@ -144,7 +144,7 @@ const HeroIntroduction: React.FC = () => {
                 <p></p>
                 <button
                     className="primary-button"
-                    style={{ width: "12em" }}
+                    style={{ width: "12em", marginRight: "1em" }}
                     onClick={() => {
                         tableRef.current?.scrollIntoView({ behavior: "smooth" });
                     }}
