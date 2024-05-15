@@ -267,11 +267,13 @@ export type IntermedietRankingType = {
 }
 
 export type FinalRankingType = {
-    ranking: {
-        education: Education;
-        score: number;
-    }[]
+    ranking: RankedDataStructure[];
     index: number; //index indicating the position of the ranking afterwhich the educations don't comply with the filters
+}
+
+export type RankedDataStructure = {
+    education: Education;
+    score: number;
 }
 
 
