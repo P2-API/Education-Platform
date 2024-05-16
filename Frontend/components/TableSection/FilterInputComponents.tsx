@@ -12,7 +12,6 @@ type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;
     selectPlaceholder: string;
-    value: string[];
     setFilters?: React.Dispatch<React.SetStateAction<TableFilters>>;
     setProperties?: React.Dispatch<React.SetStateAction<string[]>>;
     givenValue: string[];

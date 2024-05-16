@@ -145,14 +145,9 @@ const recursivelyGetLeafProperties = (object: Object): string[] => {
             }
         }
         else {
-<<<<<<< Updated upstream
             if (typeof object[key] == 'string') continue;
             array.push(key);
         }
-=======
-            array.push(key); // If the key is not an object, then add it to the array
-        }   
->>>>>>> Stashed changes
     }
     return array;
 }

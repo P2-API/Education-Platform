@@ -57,6 +57,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
     }
 
+
+
     const { filters, setFilters } = filterInfo;
 
 
@@ -72,7 +74,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                 newGraduate: newGraduateUnemploymentRange,
                 experienced: experiencedUnemploymentRange
             },
-            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 1 }
+            educationDuration: { minimum: 0, maximum: 0 }
         }));
     }, [data]);
     // Utility function for showcasing value when moving sliders
