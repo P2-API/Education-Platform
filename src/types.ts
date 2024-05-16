@@ -228,6 +228,11 @@ export type EducationGroup = {
     url: string
 }
 
+export type EducationsGroupped = {
+    title: string;
+    url: string;
+}[];
+
 export type RankedEducationsType = {
     upperhalf: Education[],
     lowerhalf: Education[]

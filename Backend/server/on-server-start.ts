@@ -2,7 +2,7 @@ import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, Educatio
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
-import { assignSubjectRankings } from "../utilities/web_scraper";
+import { assignSubjectRankings, processAllEducations } from "../utilities/web_scraper";
 
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
@@ -370,5 +370,4 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
     }
 }
 
-
-assignSubjectRankings(getGroupedEducations());
+processAllEducations(); // Scrapes all educations from the web and saves them to the database
