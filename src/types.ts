@@ -177,7 +177,7 @@ export type Subject = {
     score: number;
 }
 
-export type TableSectionDataFromServer = {
+export type EducationDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];

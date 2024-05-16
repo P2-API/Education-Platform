@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
 import { FinalRankingType } from "../../src/types";
-import { TableSectionDataContext } from "./Homepage";
+import { EducationDataFromServerContext } from "./Homepage";
 import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
 
 
@@ -14,7 +14,7 @@ const DataTableSection: React.FC = ({ }) => {
     const [isCalculating, setisCalculating] = useState<boolean>(true);
     const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
 
-    let data = useContext(TableSectionDataContext);
+    let data = useContext(EducationDataFromServerContext);
 
 
 

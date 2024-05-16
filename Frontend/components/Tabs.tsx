@@ -118,7 +118,7 @@ function CustomTabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <span>{children}</span>
                 </Box>
             )}
         </div>
@@ -202,9 +202,6 @@ export default function BasicTabs() {
         isQuizOpen: isQuizOpen,
         setIsQuizOpen: setIsQuizOpen
     };
-
-    console.log("filters", FilterInfo)
-    console.log("quiz", QuizInfo)
 
 
 
