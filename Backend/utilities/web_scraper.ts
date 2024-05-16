@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
@@ -33,7 +33,7 @@ export async function processAllEducations() {
 }
 
 async function assignSubjectRankings(educationData: EducationsGroupped) {
-    const groupData: { [key: string]: any } = {};
+    const groupData: { [key: string]: unknown } = {};
 
     for (let index = educationData.length - 1; index >= 0; index--) {
         const result = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
@@ -66,9 +66,14 @@ interface NamedCategoryData {
     data: CategoryData;
 }
 
-export async function getPersonalizedMessage(url: string) {
+export async function getPersonalizedMessage(url: string): Promise<{ message: string | null }> {
     try {
         const text = await getAllText(url);
+        if (text === "Error fetching the URL" || text === null) {
+            console.error("Error fetching or processing text from URL:", url);
+            return { message: null };
+        }
+
         const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
 
         const preferences = {
@@ -103,9 +108,10 @@ export async function getPersonalizedMessage(url: string) {
         return { message };
     } catch (error) {
         console.error('Error:', error);
-        return "An error occurred while processing the request.";
+        return { message: null };
     }
 }
+
 
 async function removeNewlines(input: string): Promise<string> {
     return input.replace(/[\r\n]+/g, '');
@@ -136,55 +142,92 @@ async function sanitizeText(text: string): Promise<string> {
     }
 }
 
-export async function getHeadliner(url: string) {
-    const response = await fetchHtml(url);
-    if (response === "Error fetching the URL") {
-        return "Error fetching the URL";
+export async function getHeadliner(url: string): Promise<{ headlinerText: string | null }> {
+    try {
+        const response = await fetchHtml(url);
+        if (response === "Error fetching the URL") {
+            return { headlinerText: "Error fetching the URL" };
+        }
+        
+        if (response === null) {
+            console.error('Error: Response is null');
+            return { headlinerText: null };
+        }
+        
+        const headlinerText = await getHeadlinerText(response);
+        return { headlinerText };
+    } catch (error) {
+        console.error('Error:', error);
+        return { headlinerText: null };
     }
-    const headlinerText = await getHeadlinerText(response.data);
-    return { headlinerText };
 }
 
-export async function getHeadlinerText(html: string) {
+export async function getHeadlinerText(html: string): Promise<string | null> {
     try {
+        if (!html) {
+            console.error('Error: HTML content is empty or null.');
+            return null;
+        }
         const $ = load(html);
         const headlinerText = $('.field-item.even').first().text();
-        return headlinerText;
+        return headlinerText || null; // Return null if headlinerText is empty
     } catch (error) {
         console.error(`Error filtering data: ${error}`);
+        return null;
     }
 }
 
-async function getSmallSummary(html: string) {
+export async function getSmallSummary(html: string): Promise<string | null> {
     try {
+        if (!html) {
+            console.error('Error: HTML content is empty or null.');
+            return null;
+        }
         const $ = load(html);
         const smallSummary = $('.field-item.even').eq(2).text();
-        return smallSummary;
+        return smallSummary || null; // Return null if smallSummary is empty
     } catch (error) {
         console.error(`Error filtering data: ${error}`);
+        return null;
     }
 }
 
-export async function getDescribingText(html: string) {
+export async function getDescribingText(html: string): Promise<string | null> {
     try {
+        if (!html) {
+            console.error('Error: HTML content is empty or null.');
+            return null;
+        }
         const $ = load(html);
-        const headlinerText = $('.views-row.views-row-1').text();
-        return headlinerText;
+        const describingText = $('.views-row.views-row-1').text();
+        return describingText || null; // Return null if describingText is empty
     } catch (error) {
         console.error(`Error filtering data: ${error}`);
+        return null;
     }
 }
 
-function fetchHtml(url: string) {
+
+async function fetchHtml(url: string): Promise<string | null> {
     try {
         if (!url.startsWith('https://')) {
             url = 'https://' + url;
         }
 
-        return axios.get(url);
+        const response: AxiosResponse<string> = await axios.get(url);
+        return response.data;
     } catch (error) {
-        console.error('Error fetching the URL:', error);
-        return "Error fetching the URL";
+        if (axios.isAxiosError(error)) {
+            const axiosError: AxiosError = error;
+            if (axiosError.response && axiosError.response.status === 403) {
+                console.error('Error: Forbidden (403) - Access to the URL is forbidden.');
+            } else {
+                console.error('Error fetching the URL:', axiosError.message);
+            }
+        } else {
+            console.error('Error fetching the URL:', error);
+        }
+        return null;
     }
 }
 
@@ -270,18 +313,30 @@ interface KeywordsResponse {
     keywords: Keyword[];
 }
 
-async function getAllText(url: string) {
-    const response = await fetchHtml(url);
-    if (response === "Error fetching the URL") {
-        return "Error fetching the URL";
+export async function getAllText(url: string): Promise<string | null> {
+    try {
+        const response = await fetchHtml(url);
+        if (response === "Error fetching the URL") {
+            return "Error fetching the URL";
+        }
+        
+        if (response === null) {
+            console.error('Error: Response is null');
+            return null;
+        }
+
+        const responseData = JSON.parse(response);
+        const headlineText = await getHeadlinerText(responseData.data); 
+        const smallSummaryText = await getSmallSummary(responseData.data);
+        const describingText = await getDescribingText(responseData.data);
+
+        return `${headlineText}\n${smallSummaryText}\n${describingText}`;
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
     }
-
-    const headlineText = await getHeadlinerText(response.data);
-    const smallSummaryText = await getSmallSummary(response.data);
-    const describingText = await getDescribingText(response.data);
-
-    return `${headlineText}\n${smallSummaryText}\n${describingText}`;
 }
+
 
 async function analyseSubjects(keywords: string[]): Promise<Rankings> {
     const similarities = await calculateSimilarity(keywords);
@@ -319,6 +374,11 @@ interface Rankings {
 export async function loadSubjectsFromUrls(url: string, name: string): Promise<NamedCategoryData | undefined> {
     try {
         const text = await getAllText(url);
+        if (text === "Error fetching the URL" || text === null) {
+            console.error("Error fetching or processing text from URL:", url);
+            return undefined;
+        }
+
         const sanitizedText = await sanitizeText(text);
         const englishText = await translateTextToEnglishChatGPT(sanitizedText);
 
@@ -356,7 +416,8 @@ export async function loadSubjectsFromUrls(url: string, name: string): Promise<N
     }
 }
 
-function saveToJsonFile(data: any, filename: string): void {
+
+function saveToJsonFile(data: unknown, filename: string): void {
     try {
         fs.writeFileSync(filename, JSON.stringify(data, null, 2));
     } catch (error) {
@@ -364,7 +425,7 @@ function saveToJsonFile(data: any, filename: string): void {
     }
 }
 
-function readJsonFile(filename: string): any {
+function readJsonFile(filename: string): unknown {
     try {
         const jsonString = fs.readFileSync(filename, 'utf-8');
         return JSON.parse(jsonString);
@@ -422,12 +483,17 @@ function normalizeData(professions: Record<string, Profession>): NormalizedProfe
 
 export function assignSubjectsToEducations(educations: Education[]): void {
     const educationSubjects = readJsonFile('Backend/cache/all-education-data.json');
-    if (!educationSubjects) {
-        console.error('Error reading education subjects from file.');
+    if (!educationSubjects || Object.keys(educationSubjects).length === 0) {
+        console.error('Error reading education subjects from file or the file is empty.');
         return;
     }
 
     const professions = normalizeData(educationSubjects);
+    if (!professions || professions.length === 0) {
+        console.error('Error normalizing education data or the normalized data is empty.');
+        return;
+    }
+
     professions.forEach(profession => {
         const matchingEducations = educations.filter(education => education.url === profession.url && education.title === profession.name);
 
@@ -443,3 +509,4 @@ export function assignSubjectsToEducations(educations: Education[]): void {
 
     //console.log(educations);
 }
+
