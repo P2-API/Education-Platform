@@ -51,7 +51,10 @@ export class Ranker {
         educationVectors.lowerhalf.forEach((education) => {
             sortedEducations.lowerhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
         })
-
+        
+        //sort each half
+        sortedEducations.upperhalf.sort((a, b) => a.similarity - b.similarity)
+        sortedEducations.lowerhalf.sort((a, b) => a.similarity - b.similarity)
         return sortedEducations
     }
 
