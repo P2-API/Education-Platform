@@ -1,12 +1,12 @@
 import React from 'react';
 import VisualisationSettingsBox, { ChartType } from "@frontend/components/VisualisationSection/VisualisationSettingsBox"
-import Visualisation from "@frontend/components/VisualisationSection/Visualisation"
+import Visualisation from '@frontend/components/VisualisationSection/Visualisation';
 
 
-const VisualisationSection: React.FC = ( ) => {
+const VisualisationSection: React.FC = () => {
     const [chartType, setChartType] = React.useState<ChartType>(ChartType.scatter);
 
-    
+
     return (
 
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
