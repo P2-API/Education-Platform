@@ -2,7 +2,7 @@ import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, Educatio
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
-import { assignSubjectRankings, processAllEducations } from "../utilities/web_scraper";
+import { assignSubjectsToEducations } from "../utilities/web_scraper";
 
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
@@ -50,6 +50,7 @@ export const getCachedEducations = (): Education[] => {
 const caclulateBasedOnEducations = () => {
     groupEducations();
     calculateMinimumAndMaximumEducation(educations);
+    assignSubjectsToEducations(educations);
 }
 
 // Calculates the properties of the education object
@@ -388,5 +389,3 @@ export const getTableSectionData = (): EducationDataFromServer => {
         maximumValueEducation: maximumEducation,
     }
 }
-
-//processAllEducations(); // Scrapes all educations from the web and saves them to the database
