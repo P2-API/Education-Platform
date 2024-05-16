@@ -103,7 +103,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 unemployment: {
-                    ...prevFilters.unemployment,
+                    experienced: prevFilters.unemployment.experienced, // Add the experienced property
                     newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
                 }
             }));
@@ -112,7 +112,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 unemployment: {
-                    ...prevFilters.unemployment,
+                    newGraduate: prevFilters.unemployment.newGraduate, // Add the newGraduate property
                     experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
                 }
             }));
@@ -121,7 +121,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 wantedSalary: {
-                    ...prevFilters.wantedSalary,
+                    experienced: prevFilters.wantedSalary.experienced, // Add the experienced property
                     newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
                 }
             }));
@@ -130,7 +130,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 wantedSalary: {
-                    ...prevFilters.wantedSalary,
+                    newGraduate: prevFilters.wantedSalary.newGraduate, // Add the newGraduate property
                     experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
                 }
             }));
