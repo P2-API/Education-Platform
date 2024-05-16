@@ -6,12 +6,7 @@ import fs from 'fs';
 
 import { EducationsGroupped, Profession, NormalizedProfession, Education, Subject } from "../../src/types";
 
-const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' }); // Replace with your actual API key
-
-export async function test() {
-    const test = await fetchHtml("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0");
-    console.log(test);
-}
+const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
 export async function processAllEducations() {
     const filePath = '../../Backend/cache/education_groups.ts';
@@ -21,6 +16,8 @@ export async function processAllEducations() {
     let allEducationData = {};
 
     for (const educationGroup of groupedEducations) {
+        const index = 0;
+        console.log(`Processing group ${index + 1}/${groupedEducations.length}: ${educationGroup.title}`);
         const groupData = await assignSubjectRankings([educationGroup]);
         allEducationData = { ...allEducationData, ...groupData };
     }
@@ -36,11 +33,9 @@ export async function processAllEducations() {
 }
 
 async function assignSubjectRankings(educationData: EducationsGroupped) {
-    console.log("Starting assigning of subject rankings");
     const groupData: { [key: string]: any } = {};
 
     for (let index = educationData.length - 1; index >= 0; index--) {
-        console.log(index + " " + educationData[index].url);
         const result = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
         if (!result) {
             console.error(`Error processing URL ${educationData[index].url}`);
@@ -147,7 +142,6 @@ export async function getHeadliner(url: string) {
         return "Error fetching the URL";
     }
     const headlinerText = await getHeadlinerText(response.data);
-    console.log(headlinerText);
     return { headlinerText };
 }
 
@@ -237,7 +231,7 @@ async function translateTextToEnglishChatGPT(text: string) {
 }
 
 async function extractKeywordsFromText(text: string): Promise<string[] | undefined> {
-    const apiKey = 'eyJvcmciOiI2NTNiOTllNjEzOGM3YzAwMDE2MDM5NTEiLCJpZCI6IjFhOTZlYjJkZjQxNzQxNjlhYjM1ZTk4YzgzNWIwNjkyIiwiaCI6Im11cm11cjEyOCJ9'; // Replace with your actual API key
+    const apiKey = 'eyJvcmciOiI2NTNiOTllNjEzOGM3YzAwMDE2MDM5NTEiLCJpZCI6IjFhOTZlYjJkZjQxNzQxNjlhYjM1ZTk4YzgzNWIwNjkyIiwiaCI6Im11cm11cjEyOCJ9';
     const apiUrl = 'https://gw.cortical.io/nlp/keywords?limit=10';
     const options = {
         text: text,
