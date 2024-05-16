@@ -27,7 +27,7 @@ let educationDurationRange: MinimumMaximum;
 
 
 // Called from server.ts during startup
-export const onStart = () => { 
+export const onStart = () => {
     cacheEducations();
     caclulateEnumTypes();
     calculateEducationProperties();
@@ -46,7 +46,7 @@ export const getCachedEducations = (): Education[] => {
 
 // Runs some heavy calculations based on the imported educations
 const caclulateBasedOnEducations = () => {
-    groupEducations(); 
+    groupEducations();
     calculateMinimumAndMaximumEducation(educations);
 }
 
@@ -138,18 +138,14 @@ const recursivelyGetLeafProperties = (object: Object): string[] => {
     for (let key in object) { // Search through all the keys in the object
         if (object[key] != undefined && typeof object[key] === "object") { // If the key is an object, then search through that object
             const branches = recursivelyGetLeafProperties(object[key]);
-            for (let branch in branches) { 
+            for (let branch in branches) {
                 array.push(branches[branch]);
             }
-        } 
+        }
         else {
-<<<<<<< Updated upstream
-            array.push(key); // If the key is not an object, then add it to the array
-=======
             if (typeof object[key] == 'string') continue;
             array.push(key);
->>>>>>> Stashed changes
-        }   
+        }
     }
     return array;
 }
@@ -173,7 +169,7 @@ export function getGroupedEducations(): EducationGroup[] {
 
 export const getEducationProperties = () => {
     return educationProperties;
-} 
+}
 
 // Gets the enum keys and stores them in variables
 export const caclulateEnumTypes = () => {
@@ -348,7 +344,7 @@ export const getMaximumEducation = (): Education => {
 
 const calculateBasedOnMinimumAndMaximumEducation = () => {
     // Normalizes the educations based on the minimum and maximum values
-    normilizedEducations = normilizesEducations(educations); 
+    normilizedEducations = normilizesEducations(educations);
 }
 
 export const getNormilizedEducations = (): Education[] => {

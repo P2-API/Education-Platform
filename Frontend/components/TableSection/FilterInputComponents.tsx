@@ -12,15 +12,15 @@ type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;
     selectPlaceholder: string;
-    value: string[];
+    givenValue: string[];
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
 
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
 
-    const [value, setValue] = React.useState<string[]>([]);
+    const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
     const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
         setValue(newValue);
@@ -57,14 +57,13 @@ type MinimumDistanceSliderProps = {
     sliderRange: MinimumMaximum;
     minimumDistance: number;
     description: string;
+    givenValue: MinimumMaximum;
     getValueText: (value: number) => string;
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
-
-export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, minimumDistance, description, getValueText, setFilters, identifier }) => {
-    const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
-
+export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, givenValue, minimumDistance, description, getValueText, setFilters, identifier }) => {
+    const [value1, setValue1] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
 
     const handleChange1 = (
         _event: Event,
@@ -169,13 +168,57 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
 type CheckmarkToggleButtonProps = {
     initialState: boolean;
     description: string;
-
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
 export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ initialState, description, setFilters, identifier }) => {
     const [selected, setSelected] = React.useState(initialState);
+
+
+    if (identifier === "hasFlexibleJobSchedule") {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    sx={{ height: "0px", width: "0px" }}
+                    onChange={() => {
+                        setSelected(!selected)
+                        setFilters((prevFilters) => ({
+                            ...prevFilters,
+                            hasFlexibleJobSchedule: !selected
+                        }));
+                    }}
+                >
+                    {selected && (<CheckIcon />)}
+                </ToggleButton>
+                <div style={{ marginLeft: '8px' }}>{description}</div>
+            </Box>
+        );
+    }
+
+    else if (identifier === "canWorkInternationally") {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    sx={{ height: "0px", width: "0px" }}
+                    onChange={() => {
+                        setSelected(!selected)
+                        setFilters((prevFilters) => ({
+                            ...prevFilters,
+                            canWorkInternationally: selected
+                        }));
+                    }}
+                >
+                    {selected && (<CheckIcon />)}
+                </ToggleButton>
+                <div style={{ marginLeft: '8px' }}>{description}</div>
+            </Box>
+        );
+    }
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

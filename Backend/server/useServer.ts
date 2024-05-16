@@ -45,6 +45,7 @@ const useServer = () => {
             },
             body: JSON.stringify({ filterProps, quizAnswers })
         });
+        console.log("filterProps", filterProps)
 
         const responseJson = await response.json(); // Read the response as text
         console.log("responseJson", responseJson)
