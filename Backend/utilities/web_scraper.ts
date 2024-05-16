@@ -135,28 +135,28 @@ export async function getPersonalizedMessage(url: string): Promise<{ message: st
 }
 
 
-async function removeNewlines(input: string): Promise<string> {
+function removeNewlines(input: string) {
     return input.replace(/[\r\n]+/g, '');
 }
 
-async function removeConsecutiveUppercase(str: string): Promise<string> {
+function removeConsecutiveUppercase(str: string) {
     return str.replace(/[A-Z]{3,}/g, '');
 }
 
-async function removeMultipleSpaces(str: string): Promise<string> {
+function removeMultipleSpaces(str: string) {
     return str.replace(/ +/g, ' ');
 }
 
-async function removeParentheses(str: string): Promise<string> {
+function removeParentheses(str: string) {
     return str.replace(/[()]/g, '.');
 }
 
-async function sanitizeText(text: string): Promise<string> {
+async function sanitizeText(text: string) {
     try {
-        text = await removeNewlines(text);
-        text = await removeMultipleSpaces(text);
-        text = await removeConsecutiveUppercase(text);
-        text = await removeParentheses(text);
+        text = removeNewlines(text);
+        text = removeMultipleSpaces(text);
+        text = removeConsecutiveUppercase(text);
+        text = removeParentheses(text);
         return text;
     } catch (error) {
         console.error(`Error sanitizing text: ${error}`);
