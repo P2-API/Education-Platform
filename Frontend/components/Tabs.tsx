@@ -1,53 +1,20 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
 import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React, { useState, createContext } from 'react';
-import { QuizAnswers, FilterProps, TableFilters } from '@src/types';
+import { QuizAnswers } from '@src/types';
 
-const FiltersContext = createContext<FilterInfoType>({
-    filters: {
-        wantedDegreeTypes: [],
-        canStudyInGeographies: [],
-        canStudyAtInstitution: [],
-        hasSubjects: [],
-        hasFormsOfEducation: [],
-        wantedSalary: {
-            newGraduate: {
-                minimum: 0,
-                maximum: 0
-            },
-            experienced: {
-                minimum: 0,
-                maximum: 0
-            }
-        },
-        unemployment: {
-            newGraduate: {
-                minimum: 0,
-                maximum: 0
-            },
-            experienced: {
-                minimum: 0,
-                maximum: 0
-            }
-        },
-        hasFlexibleJobSchedule: false,
-        wantedWorkingHours: {
-            minimum: 0,
-            maximum: 0
-        },
-        canWorkInternationally: false,
-        educationDuration: {
-            minimum: 0,
-            maximum: 0
-        }
-    },
-    setFilters: () => { }
-});
 
+export type QuizInfoType = {
+    quizData: QuizAnswers;
+    setQuizData: React.Dispatch<React.SetStateAction<QuizAnswers>>;
+    isQuizOpen: boolean;
+    setIsQuizOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+// create context 
 
 
 
@@ -84,20 +51,8 @@ const QuizInfoContext = createContext<QuizInfoType>({
     isQuizOpen: false,
     setIsQuizOpen: () => { }
 });
-export { QuizInfoContext, FiltersContext };
+export { QuizInfoContext };
 
-
-export type QuizInfoType = {
-    quizData: QuizAnswers;
-    setQuizData: React.Dispatch<React.SetStateAction<QuizAnswers>>;
-    isQuizOpen: boolean;
-    setIsQuizOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export type FilterInfoType = {
-    filters: TableFilters;
-    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
-};
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -118,7 +73,7 @@ function CustomTabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <span>{children}</span>
                 </Box>
             )}
         </div>
@@ -172,29 +127,7 @@ export default function BasicTabs() {
         }
     );
     const [isQuizOpen, setIsQuizOpen] = useState(false);
-    const [filters, setFilters] = useState<TableFilters>({
-        wantedDegreeTypes: [],
-        hasSubjects: [],
-        canStudyAtInstitution: [],
-        canStudyInGeographies: [],
-        hasFormsOfEducation: [],
-        educationDuration: { minimum: 0, maximum: 0 },
-        wantedSalary: {
-            newGraduate: { minimum: 0, maximum: 0 },
-            experienced: { minimum: 0, maximum: 0 },
-        },
-        wantedWorkingHours: { minimum: 0, maximum: 0 },
-        unemployment: {
-            newGraduate: { minimum: 0, maximum: 0 },
-            experienced: { minimum: 0, maximum: 0 },
-        },
-        hasFlexibleJobSchedule: false,
-        canWorkInternationally: false,
-    });
-    const FilterInfo: FilterInfoType = {
-        filters: filters,
-        setFilters: setFilters
-    };
+
 
     const QuizInfo: QuizInfoType = {
         quizData: quizAnswerState,
@@ -203,30 +136,25 @@ export default function BasicTabs() {
         setIsQuizOpen: setIsQuizOpen
     };
 
-    console.log("filters", FilterInfo)
-    console.log("quiz", QuizInfo)
-
 
 
     return (
-        <QuizInfoContext.Provider value={QuizInfo} >
-            <Box sx={{ width: '100vw', height: "75%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "center", }}>
-                    <Tabs sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px", height: "100%" }} label="Uddannelser" {...a11yProps(0)} />
-                        <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px" }} label="Visualisering" {...a11yProps(1)} />
-                    </Tabs>
-                </Box>
-                <FiltersContext.Provider value={FilterInfo}>
-                    <CustomTabPanel value={value} index={0}>
-                        <DataTableSection />
-                    </CustomTabPanel>
-                </FiltersContext.Provider>
+        <Box sx={{ width: '100vw', height: "75%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', display: "flex", justifyContent: "center", }}>
+                <Tabs sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px", height: "100%" }} label="Uddannelser" {...a11yProps(0)} />
+                    <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px" }} label="Visualisering" {...a11yProps(1)} />
+                </Tabs>
+            </Box>
+            <QuizInfoContext.Provider value={QuizInfo}>
+                <CustomTabPanel value={value} index={0}>
+                    <DataTableSection />
+                </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <VisualisationSection />
                 </CustomTabPanel>
+            </QuizInfoContext.Provider>
 
-            </Box>
-        </QuizInfoContext.Provider>
+        </Box>
     );
 }

@@ -12,15 +12,15 @@ type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;
     selectPlaceholder: string;
-    value: string[];
+    givenValue: string[];
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
 
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
 
-    const [value, setValue] = React.useState<string[]>([]);
+    const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
     const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
         setValue(newValue);
@@ -57,16 +57,13 @@ type MinimumDistanceSliderProps = {
     sliderRange: MinimumMaximum;
     minimumDistance: number;
     description: string;
+    givenValue: MinimumMaximum;
     getValueText: (value: number) => string;
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
-
-export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, minimumDistance, description, getValueText, setFilters, identifier }) => {
-    console.log("identifier: ", identifier)
-    console.log("initialState: ", initialState)
-    const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
-    console.log("value1: ", value1)
+export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, givenValue, minimumDistance, description, getValueText, setFilters, identifier }) => {
+    const [value1, setValue1] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
 
     const handleChange1 = (
         _event: Event,
@@ -105,7 +102,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 unemployment: {
-                    ...prevFilters.unemployment,
+                    experienced: prevFilters.unemployment.experienced, // Add the experienced property
                     newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
                 }
             }));
@@ -114,7 +111,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 unemployment: {
-                    ...prevFilters.unemployment,
+                    newGraduate: prevFilters.unemployment.newGraduate, // Add the newGraduate property
                     experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
                 }
             }));
@@ -123,7 +120,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 wantedSalary: {
-                    ...prevFilters.wantedSalary,
+                    experienced: prevFilters.wantedSalary.experienced, // Add the experienced property
                     newGraduate: { minimum: minValue, maximum: maxValue } // Update the type of newGraduate to MinimumMaximum
                 }
             }));
@@ -132,7 +129,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             setFilters((prevFilters) => ({
                 ...prevFilters,
                 wantedSalary: {
-                    ...prevFilters.wantedSalary,
+                    newGraduate: prevFilters.wantedSalary.newGraduate, // Add the newGraduate property
                     experienced: { minimum: minValue, maximum: maxValue } // Update the type of experienced to MinimumMaximum
                 }
             }));
@@ -146,11 +143,11 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             }));
         }
     };
-    console.log("value1 again: ", value1)
+
 
     return (
         <Box sx={{}}>
-            <p style={{}}  >{description}</p>
+            <div style={{}}  >{description}</div>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
                 value={value1}
@@ -171,13 +168,57 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
 type CheckmarkToggleButtonProps = {
     initialState: boolean;
     description: string;
-
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
 export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ initialState, description, setFilters, identifier }) => {
     const [selected, setSelected] = React.useState(initialState);
+
+
+    if (identifier === "hasFlexibleJobSchedule") {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    sx={{ height: "0px", width: "0px" }}
+                    onChange={() => {
+                        setSelected(!selected)
+                        setFilters((prevFilters) => ({
+                            ...prevFilters,
+                            hasFlexibleJobSchedule: !selected
+                        }));
+                    }}
+                >
+                    {selected && (<CheckIcon />)}
+                </ToggleButton>
+                <div style={{ marginLeft: '8px' }}>{description}</div>
+            </Box>
+        );
+    }
+
+    else if (identifier === "canWorkInternationally") {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    sx={{ height: "0px", width: "0px" }}
+                    onChange={() => {
+                        setSelected(!selected)
+                        setFilters((prevFilters) => ({
+                            ...prevFilters,
+                            canWorkInternationally: selected
+                        }));
+                    }}
+                >
+                    {selected && (<CheckIcon />)}
+                </ToggleButton>
+                <div style={{ marginLeft: '8px' }}>{description}</div>
+            </Box>
+        );
+    }
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -189,13 +230,13 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
                     setSelected(!selected)
                     setFilters((prevFilters) => ({
                         ...prevFilters,
-                        [identifier]: [selected]
+                        [identifier]: selected
                     }));
                 }}
             >
                 {selected && (<CheckIcon />)}
             </ToggleButton>
-            <p style={{ marginLeft: '8px' }}>{description}</p>
+            <div style={{ marginLeft: '8px' }}>{description}</div>
         </Box>
     );
 }

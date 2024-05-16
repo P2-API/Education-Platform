@@ -1,5 +1,10 @@
-import { QuizAnswers, TableSectionDataFromServer, PCAData, Education, EducationGroup } from "types";
-import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
+import {
+    QuizAnswers,
+    EducationDataFromServer,
+    PCAData,
+    EducationGroup,
+    TableFilters
+} from "types";
 
 const useServer = () => {
 
@@ -10,9 +15,9 @@ const useServer = () => {
         return data;
     }
 
-    const getTableSectionData = async (): Promise<TableSectionDataFromServer> => {
+    const getTableSectionData = async (): Promise<EducationDataFromServer> => {
         const response = await fetch("http://localhost:1337/get_table_section_data");
-        const tableSectionData: TableSectionDataFromServer = await response.json();
+        const tableSectionData: EducationDataFromServer = await response.json();
         return tableSectionData;
     }
 
@@ -24,43 +29,28 @@ const useServer = () => {
 
     const getEducationsProperties = async (): Promise<any[]> => {
         const response = await fetch("http://localhost:1337/get_education_properties");
-        const educationProperties: any[]= await response.json();
+        const educationProperties: any[] = await response.json();
         return educationProperties;
     }
     // write more functions here
 
 
 
-    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers) => {
+    const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
+        console.log("im in here")
+        const response = await fetch("http://localhost:1337/update_ranking", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ filterProps, quizAnswers })
+        });
+        console.log("filterProps", filterProps)
 
-        try {
-            const response = await fetch("http://localhost:1337/update_ranking", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ filterProps, quizAnswers })
-            });
+        const responseJson = await response.json(); // Read the response as text
+        console.log("responseJson", responseJson)
+        return responseJson;
 
-            const responseText = await response.text(); // Read the response as text
-
-            if (!response.ok) {
-                console.error("Failed to update ranking", responseText);
-                throw new Error("Failed to update ranking");
-            }
-
-            try {
-                const ranking = JSON.parse(responseText); // Parse the text as JSON
-                console.log("ranking", ranking);
-                return ranking;
-            } catch (parseError) {
-                console.error("Error parsing JSON response:", responseText);
-                throw new Error("Invalid JSON response");
-            }
-        } catch (error) {
-            console.error("Error updating ranking:", error);
-            throw error;
-        }
     };
 
     const getPCAData = async (PCA_request: PCAData) => {

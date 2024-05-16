@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "tsc  && vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest --coverage",
@@ -33,6 +33,7 @@
     "ldrs": "^1.0.1",
     "lottie-react": "^2.4.0",
     "material-react-table": "^2.13.0",
+    "ml-pca": "^4.1.1",
     "node-fetch": "^2.7.0",
     "openai": "^4.43.0",
     "plotly.js": "^2.32.0",

@@ -42,24 +42,28 @@ export class Ranker {
     normSorting(ranking: RankedEducationsType, optimalEducation: Education, weights: QuizAnswers): IntermediateRankingType {
         const normValue = 2;
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, weights);
-        const educationVecotors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, weights);
+        const educationVectors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, weights);
         const sortedEducations: IntermediateRankingType = { upperhalf: [], lowerhalf: [] };
 
-        educationVecotors.upperhalf.forEach((education) => {
+        educationVectors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
         })
-        educationVecotors.lowerhalf.forEach((education) => {
+        educationVectors.lowerhalf.forEach((education) => {
             sortedEducations.lowerhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
         })
-
+        
+        //sort each half
+        sortedEducations.upperhalf.sort((a, b) => a.similarity - b.similarity)
+        sortedEducations.lowerhalf.sort((a, b) => a.similarity - b.similarity)
         return sortedEducations
     }
 
     norm(education: EducationVector, optimalEducation: EducationVector, normValue: number): number {
         let sum = 0;
-        console.log("education", education)
-        console.log("optimalEducation", optimalEducation)
-        console.log("normValue", normValue)
+        //console.log("education", education)
+        //console.log("industries", education.education.industries)
+        //console.log("degreeStructure contents", education.education.degreeStructure.contents)
+        //console.log("optimalEducation", optimalEducation)
         education.coordinates.forEach((coordinate, index) => {
             sum += Math.pow(coordinate.value - optimalEducation.coordinates[index].value, normValue)
         })
@@ -80,10 +84,12 @@ export class Ranker {
         education.subjects.forEach((subject) => {
             coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority })
         })
+        /*
         //add industries
         education.industries.forEach((industry) => {
             coordinates.push({ name: industry.title, value: industry.share * weights.subjectsPriority })
         })
+        */
         //add hours
         coordinates.push({ name: "HoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority },
             { name: "HourswithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority },
@@ -113,8 +119,8 @@ export class Ranker {
             { name: "flexibleHoursPercent", value: education.jobData.workSchedule.flexibleHoursPercent * weights.flexibleHoursPriority },
             { name: "selfSchedulePercent", value: education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority },
             { name: "variableSchedulePercent", value: education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority },
-            { name: "nightAndEveningShiftsPercent", value: education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority },
-            { name: "nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority })
+            { name: "nightAndEveningShiftsPercent", value: education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority })
+           // { name: "nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority })
 
         return weightedEducationVector
     }

@@ -1,18 +1,14 @@
 
 import Paper from '@mui/material/Paper';
-import { useContext, useEffect } from "react";
-import { TableSectionDataContext } from "@frontend/pages/Homepage";
+import { useContext, useEffect, useState } from "react";
+import { EducationDataFromServerContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
 import { MinimumMaximum, FinalRankingType } from "@src/types"
 import { bouncy } from 'ldrs';
 import QuizModal from "@frontend/pages/QuizModal"
 import { useServer } from '@backend/server/useServer';
-import { FiltersContext, QuizInfoContext } from '../Tabs';
-
-
-
-
-
+import { QuizInfoContext } from '../Tabs';
+import { FilterInfoType } from '@frontend/pages/DataTableSection';
 
 
 
@@ -20,19 +16,15 @@ type FilterBoxComponentProps = {
     isCalculating: Boolean;
     setIsCalculating: React.Dispatch<React.SetStateAction<boolean>>;
     setRankedData: React.Dispatch<React.SetStateAction<FinalRankingType | null>>;
+    filterInfo: FilterInfoType
 }
 
 
 
-const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, setIsCalculating, setRankedData }) => {
+const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, setIsCalculating, setRankedData, filterInfo }) => {
+    const data = useContext(EducationDataFromServerContext);
 
-
-
-
-    const data = useContext(TableSectionDataContext);
-    const filters = useContext(FiltersContext)?.filters;
     const quizAnswerState = useContext(QuizInfoContext)?.quizData;
-    const setFilters = useContext(FiltersContext)?.setFilters;
     const SetQuizAnswerState = useContext(QuizInfoContext)?.setQuizData;
     const isModalOpen = useContext(QuizInfoContext)?.isQuizOpen;
     const setIsModalOpen = useContext(QuizInfoContext)?.setIsQuizOpen;
@@ -65,9 +57,11 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
     }
 
-    useEffect(() => {
+    const { filters, setFilters } = filterInfo;
 
-        setFilters?.((prevFilters) => ({
+
+    useEffect(() => {
+        setFilters((prevFilters) => ({
             ...prevFilters,
             wantedSalary: {
                 newGraduate: newGraduateSalaryRange,
@@ -81,27 +75,30 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
             educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 1 }
         }));
     }, [data]);
-
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
     const getValueTextUnemployment = (value: number) => { return `${value}%` }
 
-    console.log("Filters", filters);
 
 
     // rank degrees: 
     const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
-        const response = await updateRanking(filters, quizAnswerState,);
-        const result = await response.json();
-        setRankedData(result);
+        setFilters(internalFilters);
+        const response = await updateRanking(internalFilters, quizAnswerState,);
+        setRankedData(response);
         setIsCalculating(false);
     }
+    const [internalFilters, setInternalFilters] = useState(filters); // Initialize with filters directly
 
-    console.log("Data", data);
+    useEffect(() => {
+        setInternalFilters(filters); // Update internalFilters whenever filters change
+    }, [filters]);
+
+    console.log("internalFilters", internalFilters)
 
 
     bouncy.register()
@@ -110,7 +107,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
             <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
-                {false ? (
+                {isCalculating ? (
                     <div style={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
                         <l-bouncy
                             size="70"
@@ -128,109 +125,115 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                         <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
                             <>
                                 <MultiSelectAutoComplete
-                                    value={filters.wantedDegreeTypes}
+                                    givenValue={internalFilters.wantedDegreeTypes}
                                     collection={data?.degreeTypeKeys ?? []}
                                     selectLabel="Filtrer efter uddannelsestype"
                                     selectPlaceholder="Uddannelsestype"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="wantedDegreeTypes"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.hasSubjects}
+                                    givenValue={internalFilters.hasSubjects}
                                     collection={data?.subjectKeys ?? []}
                                     selectLabel="Filtrer efter interesse"
                                     selectPlaceholder="Fag"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="hasSubjects"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.canStudyAtInstitution}
+                                    givenValue={internalFilters.canStudyAtInstitution}
                                     collection={data?.institutionKeys ?? []}
                                     selectLabel="Filtrer efter uddannelsessted"
                                     selectPlaceholder="Uddannelsessted"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="canStudyAtInstitution"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.canStudyInGeographies}
+                                    givenValue={internalFilters.canStudyInGeographies}
                                     collection={data?.geographyKeys ?? []}
                                     selectLabel="Filtrer efter geografi"
                                     selectPlaceholder="Geografi"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="canStudyInGeographies"
                                 />
                                 <MultiSelectAutoComplete
-                                    value={filters.hasFormsOfEducation}
+                                    givenValue={internalFilters.hasFormsOfEducation}
                                     collection={data?.formOfEducationKeys ?? []}
                                     selectLabel="Filtrer efter undervisningsform"
                                     selectPlaceholder="Undervisningsform"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="hasFormsOfEducation"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
                                     sliderRange={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
+                                    givenValue={internalFilters.educationDuration}
                                     minimumDistance={1}
                                     description="Filtrer efter uddannelsesvarighed i måneder"
                                     getValueText={getValueTextDuration}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="educationDuration"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={newGraduateSalaryRange}
                                     sliderRange={newGraduateSalaryRange}
+                                    givenValue={internalFilters.wantedSalary.newGraduate}
                                     minimumDistance={1}
                                     description="Filtrer efter nyuddannedes løn i tusinde"
                                     getValueText={getValueTextSalary}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="wantedSalary.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedSalaryRange}
                                     sliderRange={experiencedSalaryRange}
+                                    givenValue={internalFilters.wantedSalary.experienced}
                                     minimumDistance={1}
                                     description="Filtrer efter erfarenes løn i tusinde"
                                     getValueText={getValueTextSalary}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="wantedSalary.experienced"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={wantedWorkingHoursRange}
                                     sliderRange={wantedWorkingHoursRange}
+                                    givenValue={internalFilters.wantedWorkingHours}
                                     minimumDistance={1}
                                     description="Filtrer efter arbejdstimer i muligt arbejde efter uddannelse"
                                     getValueText={getValueTextJobHours}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="wantedWorkingHours"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={newGraduateUnemploymentRange}
                                     sliderRange={newGraduateUnemploymentRange}
+                                    givenValue={internalFilters.unemployment.newGraduate}
                                     minimumDistance={1}
                                     description="Filtrer efter nyuddannedes arbejdsløshed"
                                     getValueText={getValueTextUnemployment}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="unemployment.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedUnemploymentRange}
                                     sliderRange={experiencedUnemploymentRange}
+                                    givenValue={internalFilters.unemployment.experienced}
                                     minimumDistance={1}
                                     description="Filtrer efter erfarenes arbejdsløshed"
                                     getValueText={getValueTextUnemployment}
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="unemployment.experienced"
                                 />
                                 <CheckmarkToggleButton
-                                    initialState={false}
+                                    initialState={internalFilters.canWorkInternationally}
                                     description="Har internationale arbejdsmuligheder"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="canWorkInternationally"
                                 />
                                 <CheckmarkToggleButton
-                                    initialState={false}
+                                    initialState={internalFilters.hasFlexibleJobSchedule}
                                     description="Har fleksibelt arbejdstidsskema"
-                                    setFilters={setFilters}
+                                    setFilters={setInternalFilters}
                                     identifier="hasFlexibleJobSchedule"
                                 />
                                 <span style={{ color: "#006eff" }} >Du har ramt bunden</span>

@@ -61,11 +61,24 @@ export class LPclass implements LP {
     this.objective.vars.forEach((variable) => {
       this.subjectTo.push({ name: variable.name, vars: [{ name: variable.name, coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: 1, lb: 0 } })
     })
+    
     // user defined LP filters
-    this.subjectTo.push({ name: "startingSalary", vars: [{ name: "startingSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.newGraduate.maximum, lb: filters.wantedSalary.newGraduate.minimum } })
-    this.subjectTo.push({ name: "experiencedSalary", vars: [{ name: "experiencedSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.experienced.maximum, lb: filters.wantedSalary.experienced.minimum } })
-    this.subjectTo.push({ name: "unemploymentNewGraduate", vars: [{ name: "unemploymentNewGraduate", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.newGraduate.maximum, lb: filters.unemployment.newGraduate.minimum } })
-    this.subjectTo.push({ name: "unemploymentExperienced", vars: [{ name: "unemploymentExperienced", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.experienced.maximum, lb: filters.unemployment.experienced.minimum } })
+    const userDefinedConstraints = [
+      { name: "startingSalary", vars: [{ name: "startingSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.newGraduate.maximum, lb: filters.wantedSalary.newGraduate.minimum }},
+      { name: "experiencedSalary", vars: [{ name: "experiencedSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.experienced.maximum, lb: filters.wantedSalary.experienced.minimum }},
+      { name: "unemploymentNewGraduate", vars: [{ name: "unemploymentNewGraduate", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.newGraduate.maximum, lb: filters.unemployment.newGraduate.minimum }},
+      { name: "unemploymentExperienced", vars: [{ name: "unemploymentExperienced", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.experienced.maximum, lb: filters.unemployment.experienced.minimum }}]
+    
+    // add/change user defined constraints depending on whether default constraints of the same name already exist
+    userDefinedConstraints.forEach(userConstraint => {
+      const existingConstraint = this.subjectTo.find(constraint => constraint.name === userConstraint.name);
+      if (existingConstraint) {
+        existingConstraint.bnds.ub = userConstraint.bnds.ub;
+        existingConstraint.bnds.lb = userConstraint.bnds.lb;
+      } else {
+        this.subjectTo.push({ name: userConstraint.name, vars: [{ name: userConstraint.name, coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: userConstraint.bnds.ub, lb: userConstraint.bnds.lb}});
+      }
+    });
   }
 }
 
@@ -166,9 +179,9 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
       }, //irelevant
       degreeRelevance: values["degreeRelevance"],
       degreePreparesForJob: 0, // irelevant
-      nationalJobs: 0
-    } //irelevant 
+      nationalJobs: 0 } //irelevant 
   };
+  
   function addSubjects(result: Result, FilterSubjects: string[]): Types.Subject[] {
     const optimalSubjectsAndScores: Types.Subject[] = [];
     FilterSubjects.forEach((subject) => {
@@ -176,6 +189,8 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     })
     return optimalSubjectsAndScores;
   }
+
+  /*
   function addIndustries(result: Result, FilterIndustries: string[]): Types.Industry[] {
     const optimalIndustries: Types.Industry[] = [];
     FilterIndustries.forEach((industry) => {
@@ -183,6 +198,7 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     })
     return optimalIndustries;
   }
+  */
   return optimalEducation;
 }
 
