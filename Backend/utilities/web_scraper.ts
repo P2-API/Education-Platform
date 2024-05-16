@@ -365,7 +365,6 @@ export async function loadSubjectsFromUrls(url: string, name: string): Promise<N
 function saveToJsonFile(data: any, filename: string): void {
     try {
         fs.writeFileSync(filename, JSON.stringify(data, null, 2));
-        console.log(`Data has been saved to ${filename}`);
     } catch (error) {
         console.error(`Error saving data to ${filename}: ${error}`);
     }
