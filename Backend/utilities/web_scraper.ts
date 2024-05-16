@@ -25,7 +25,7 @@ export async function processAllEducations() {
         allEducationData = { ...allEducationData, ...groupData };
     }
 
-    const outputFilePath = 'all-education-data.json';
+    const outputFilePath = 'Backend/cache/all-education-data.json';
     try {
         const jsonData = JSON.stringify(allEducationData, null, 2);
         await fs.promises.writeFile(outputFilePath, jsonData);
@@ -296,8 +296,8 @@ async function analyseSubjects(keywords: string[]): Promise<Rankings> {
 
 async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
     return new Promise((resolve, reject) => {
-        const inputFile = 'input.json';
-        const outputFile = 'output.json';
+        const inputFile = 'Backend/cache/input.json';
+        const outputFile = 'Backend/cache/output.json';
         fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
         const pythonProcess = spawn('python', ['semanticanalyzer.py', inputFile, outputFile]);
@@ -423,11 +423,12 @@ function normalizeData(professions: Record<string, Profession>): NormalizedProfe
         }
     }
 
+    saveToJsonFile(normalizedProfessions, 'Backend/cache/normalized-education-data.json');
     return normalizedProfessions;
 }
 
 export function assignSubjectsToEducations(educations: Education[]): void {
-    const educationSubjects = readJsonFile('Backend/utilities/all-education-data.json');
+    const educationSubjects = readJsonFile('Backend/cache/all-education-data.json');
     if (!educationSubjects) {
         console.error('Error reading education subjects from file.');
         return;
@@ -447,5 +448,5 @@ export function assignSubjectsToEducations(educations: Education[]): void {
         });
     });
 
-    console.log(educations);
+    //console.log(educations);
 }
