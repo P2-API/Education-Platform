@@ -1,4 +1,4 @@
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, TableSectionDataFromServer, Unemployment } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
@@ -368,7 +368,7 @@ export const getEducationDurationRange = (): MinimumMaximum => {
 }
 
 // Get all the relevant data packed into an object
-export const getTableSectionData = (): TableSectionDataFromServer => {
+export const getTableSectionData = (): EducationDataFromServer => {
     return {
         educations: educations,
 
