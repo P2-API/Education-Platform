@@ -94,9 +94,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
-        const response = await updateRanking(filters, quizAnswerState,);
-        const result = await response.json();
-        setRankedData(result);
+        const response = await updateRanking(filters, quizAnswerState);
+        setRankedData(response);
         setIsCalculating(false);
     }
 
@@ -239,7 +238,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={rankDegrees}>Beregn</button>
                         </div>
                     </>
-                    )
+                )
                 }
 
             </Paper >

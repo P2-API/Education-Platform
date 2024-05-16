@@ -17,7 +17,7 @@ const DataTableSection: React.FC = ({ }) => {
     let data = useContext(EducationDataFromServerContext);
 
 
-
+    console.log("rankedData", rankedData);
 
     useEffect(() => {
         if (data) {

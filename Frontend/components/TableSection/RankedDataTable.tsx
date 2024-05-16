@@ -45,9 +45,15 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         }
       },
       {
-        accessorKey: "education.score",
+        accessorKey: "score",
         header: "Score",
         size: 75,
+        Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
+          const score = row.original.score * 100;
+          return (
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{score.toFixed(2)}%</p>
+          );
+        }
       },
       {
         accessorKey: "education.title",
@@ -495,7 +501,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
       },
       sx: {
         cursor: 'pointer',
-        backgroundColor: (!row.getIsExpanded() && row.index >= 50) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
+        backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),
     positionExpandColumn: "last",
