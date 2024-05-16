@@ -303,7 +303,7 @@ export type Profession = {
   data: ProfessionData;
 };
 
-export type NormalizedProfessionData = Record<string, Record<string, number>>;
+export type NormalizedProfessionData = Record<string, number>;
 
 export type NormalizedProfession = {
   name: string;

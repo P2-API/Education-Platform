@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
-import { EducationsGroupped, Profession, NormalizedProfession, NormalizedProfessionData } from "../../src/types";
-import { any, number, string } from 'prop-types';
+import { EducationsGroupped, Profession, NormalizedProfession } from "../../src/types";
+
 
 //import { promises } from 'dns';
 //import TextRazor from 'textrazor';
@@ -511,14 +511,16 @@ function normalizeData(professions: Record<string, Profession>): NormalizedProfe
           }
         }
     
-        normalizedProfessions.push({ name, url, data: normalizedData});
+        normalizedProfessions.push({ name, url, data: normalizedData });
       }
     }
     
     return normalizedProfessions;
-  }
+}
+  
+  
   
 
 const educationSubjects = readJsonFile('all-education-data.json');
-normalizeData(educationSubjects);
-saveToJsonFile(educationSubjects, 'normalized-education-data.json');
+const normalizeSubjects = normalizeData(educationSubjects);
+saveToJsonFile(normalizeSubjects, 'normalized-education-data.json');
