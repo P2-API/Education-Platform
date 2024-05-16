@@ -216,6 +216,11 @@ export type EducationGroup = {
     url: string
 }
 
+export type EducationsGroupped = {
+    title: string;
+    url: string;
+}[];
+
 export type RankedEducationsType = {
     upperhalf: Education[],
     lowerhalf: Education[]
@@ -262,3 +267,33 @@ export type RankedDataStructure = {
     education: Education;
     score: number;
 }
+
+export type FilterProps = {
+    wantedDegreeTypes: string[];
+    canStudyAtInstitution: string[];
+    canStudyInGeographies: string[];
+    hasSubjects: string[];
+    hasFormsOfEducation: string[];
+    wantedSalary: SalaryFilters; // in use / LP filter  
+    unemployment: UnemploymentFilters; // in use / LP filter
+    hasFlexibleJobSchedule: boolean;
+    wantedWorkingHours: MinimumMaximum;
+    canWorkInternationally: boolean;
+    educationDuration: MinimumMaximum;
+};
+
+export type ProfessionData = Record<string, number>;
+
+export type Profession = {
+  name: string;
+  url: string;
+  data: ProfessionData;
+};
+
+export type NormalizedProfessionData = Record<string, number>;
+
+export type NormalizedProfession = {
+  name: string;
+  url: string;
+  data: NormalizedProfessionData;
+};
