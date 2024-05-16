@@ -1,20 +1,20 @@
-import TableSection from "./TableSection";
 import HeroSection from "./HeroSection";
 import { createContext, useState, useRef, useEffect } from "react";
 import { useServer } from "@backend/server/useServer";
-import { TableSectionDataFromServer } from "types";
+import { EducationDataFromServer } from "types";
+import InteractiveSection from "./InteractiveSection";
 
 // Context providing global access to states to prevent prop drilling
-const TableSectionDataContext = createContext<TableSectionDataFromServer | undefined>(undefined);
+const EducationDataFromServerContext = createContext<EducationDataFromServer | undefined>(undefined);
 const TableSectionReferenceContext = createContext<React.RefObject<HTMLDivElement> | undefined>(undefined);
-export { TableSectionDataContext, TableSectionReferenceContext };
+export { TableSectionReferenceContext, EducationDataFromServerContext };
 
 
 
 const Homepage: React.FC = () => {
 
   // Complete list of educations 
-  const [data, setData] = useState<TableSectionDataFromServer>();
+  const [data, setData] = useState<EducationDataFromServer>();
 
   // Reference for scrolling to table
   const tableRef = useRef<HTMLDivElement>(null);
@@ -34,17 +34,15 @@ const Homepage: React.FC = () => {
 
 
 
-  if (data === undefined) {
-    return <HeroSection />;
-  }
+
 
   return (
-    <TableSectionDataContext.Provider value={data} >
+    <EducationDataFromServerContext.Provider value={data} >
       <TableSectionReferenceContext.Provider value={tableRef}>
         <HeroSection />
-        <TableSection tableRef={tableRef} />
+        {data && <InteractiveSection tableRef={tableRef} />}
       </TableSectionReferenceContext.Provider>
-    </TableSectionDataContext.Provider>
+    </EducationDataFromServerContext.Provider>
   );
 };
 

@@ -63,10 +63,8 @@ type MinimumDistanceSliderProps = {
 }
 
 export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, minimumDistance, description, getValueText, setFilters, identifier }) => {
-    console.log("identifier: ", identifier)
-    console.log("initialState: ", initialState)
     const [value1, setValue1] = React.useState<number[]>([initialState.minimum, initialState.maximum]);
-    console.log("value1: ", value1)
+
 
     const handleChange1 = (
         _event: Event,
@@ -146,11 +144,11 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             }));
         }
     };
-    console.log("value1 again: ", value1)
+
 
     return (
         <Box sx={{}}>
-            <p style={{}}  >{description}</p>
+            <div style={{}}  >{description}</div>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
                 value={value1}
@@ -195,7 +193,7 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
             >
                 {selected && (<CheckIcon />)}
             </ToggleButton>
-            <p style={{ marginLeft: '8px' }}>{description}</p>
+            <div style={{ marginLeft: '8px' }}>{description}</div>
         </Box>
     );
 }

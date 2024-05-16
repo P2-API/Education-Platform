@@ -1,12 +1,12 @@
 import React from 'react';
 import BasicTabs from '../components/Tabs.tsx';
 
-type TableSectionProps = {
+type InteractiveSectionProps = {
     tableRef: React.RefObject<HTMLDivElement>;
 };
 
 
-const TableSection: React.FC<TableSectionProps> = ({ tableRef }) => {
+const InteractiveSection: React.FC<InteractiveSectionProps> = ({ tableRef }) => {
 
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>
@@ -16,6 +16,6 @@ const TableSection: React.FC<TableSectionProps> = ({ tableRef }) => {
     );
 };
 
-export default TableSection;
+export default InteractiveSection;
 
 

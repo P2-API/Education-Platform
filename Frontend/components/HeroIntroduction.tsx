@@ -114,7 +114,7 @@ const HeroIntroduction: React.FC = () => {
                             visualiseringsværktøjer.
                         </p>
                     </div>
-                    <p></p>
+
 
 
                 </div>
@@ -141,7 +141,7 @@ const HeroIntroduction: React.FC = () => {
                         på AI-teknologi
                     </div>
                 </div>
-                <p></p>
+                <br></br>
                 <button
                     className="primary-button"
                     style={{ width: "12em", marginRight: "1em" }}

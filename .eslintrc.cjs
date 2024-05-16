@@ -14,5 +14,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'jsx-a11y/valid-embed-has-alt': 0 // Remove dom errors due to MUI library malfunctioning.
   },
 }
