@@ -26,11 +26,15 @@ let maximumEducation: Education;
 let educationDurationRange: MinimumMaximum;
 
 
-export const onStart = () => {
+// Called from server.ts during startup
+export const onStart = () => { 
     cacheEducations();
+    caclulateEnumTypes();
     calculateEducationProperties();
 }
 
+// Imports the educations from the csv file and runs some heavy 
+// calculations on them
 const cacheEducations = async () => {
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
     caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations    
@@ -40,14 +44,13 @@ export const getCachedEducations = (): Education[] => {
     return educations;
 }
 
+// Runs some heavy calculations based on the imported educations
 const caclulateBasedOnEducations = () => {
-    // ("caclulateBasedOnEducations");
     groupEducations(); 
-    caclulateEnumTypes();
     calculateMinimumAndMaximumEducation(educations);
-    calculateMinMaxDegreeDuration();
 }
 
+// Calculates the properties of the education object
 const calculateEducationProperties = () => {
     let edu: Education = {
         url: "",
@@ -127,22 +130,25 @@ const calculateEducationProperties = () => {
     educationProperties = recursivelyGetLeafProperties(edu);
 }
 
+// Recursively gets all the leaf properties of an object
+// Meaning the ones which aren't themselves objects
 const recursivelyGetLeafProperties = (object: Object): string[] => {
     let array: string[] = [];
-    for (let key in object) {
-        if (object[key] != undefined && typeof object[key] === "object") {
+    for (let key in object) { // Search through all the keys in the object
+        if (object[key] != undefined && typeof object[key] === "object") { // If the key is an object, then search through that object
             const branches = recursivelyGetLeafProperties(object[key]);
-            for (let branch in branches) {
+            for (let branch in branches) { 
                 array.push(branches[branch]);
             }
         } 
         else {
-            array.push(key);
+            array.push(key); // If the key is not an object, then add it to the array
         }   
     }
     return array;
 }
 
+// Groups the educations based on their title
 function groupEducations() {
     educations.forEach((education) => {
         var alreadyGrouped = false;
@@ -163,8 +169,8 @@ export const getEducationProperties = () => {
     return educationProperties;
 } 
 
+// Gets the enum keys and stores them in variables
 export const caclulateEnumTypes = () => {
-    // ("calculateEnumTypes");
     degreeTypeKeys = Object.keys(DegreeType) as (keyof typeof DegreeType)[];
 
     institutionKeys = Object.keys(Institution) as (keyof typeof Institution)[];
@@ -174,6 +180,8 @@ export const caclulateEnumTypes = () => {
     subjectKeys = Object.keys(SubjectTitle) as (keyof typeof SubjectTitle)[];
 
     formOfEducationKeys = Object.keys(FormOfEducation) as (keyof typeof FormOfEducation)[];
+
+    calculateMinMaxDegreeDuration();
 }
 
 export const getSubjectKeys = () => {
@@ -192,20 +200,25 @@ export const getGeographyKeys = () => {
     return geographyKeys;
 }
 
+// Calculates the minimum and maximum values of the education object
+// Then returns values in an education object
 export const calculateMinimumAndMaximumEducation = (educations: Education[]) => {
     minimumEducation = deepCopy(educations[0]);
     minimumEducation.title = "minimum education";
     maximumEducation = deepCopy(educations[0]);
     maximumEducation.title = "maximum education";
 
+    // Loop through all educations to find the minimum and maximum values
     educations.forEach((education) => {
-        runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // recursively finds the minimum of all properties
-        runAndAssignFunctionForEducation(maximumEducation, education, Math.max);
+        runAndAssignFunctionForEducation(minimumEducation, education, Math.min); // Finds the minimum of all properties in an education object
+        runAndAssignFunctionForEducation(maximumEducation, education, Math.max); // Finds the maximum of all properties in an education object
     });
 
+    // Runs some heavy calculations based on the minimum and maximum values
     calculateBasedOnMinimumAndMaximumEducation();
 };
 
+// Runs the function for each property in the education object
 const runAndAssignFunctionForEducation = (assignTo: Education, compare: Education, func: (number1: number, number2: number) => number) => {
     assignTo.rank = func(assignTo.rank ? assignTo.rank : -1, compare.rank ? compare.rank : -1);
     runAndAssignFunctionForEducationSubject(assignTo.subjects, compare.subjects, func);
@@ -219,6 +232,9 @@ const runAndAssignFunctionForEducation = (assignTo: Education, compare: Educatio
     runAndAssignFunctionForEducationJobData(assignTo.jobData, compare.jobData, func);
 }
 
+// If the property exists in the assignTo object, then 
+// assign the return value of the function to the assignTo object
+// Otherwise push the property to the assignTo object
 const runAndAssignFunctionForEducationSubject = (assignTo: Subject[], compare: Subject[], func: (number1: number, number2: number) => number) => {
     compare.forEach(compareSubject => {
         let exists = false;
@@ -235,6 +251,7 @@ const runAndAssignFunctionForEducationSubject = (assignTo: Subject[], compare: S
     })
 }
 
+// Reference runAndAssignFunctionForEducationSubject for a description
 const runAndAssignFunctionForEducationIndustry = (assignTo: Industry[], compare: Industry[], func: (number1: number, number2: number) => number) => {
     compare.forEach(compareIndustry => {
         let exists = false;
@@ -324,22 +341,21 @@ export const getMaximumEducation = (): Education => {
 }
 
 const calculateBasedOnMinimumAndMaximumEducation = () => {
-    // ("calculateBasedOnMinimumAndMaximumEducation");
-    normilizedEducations = normilizesEducations(educations);
+    // Normalizes the educations based on the minimum and maximum values
+    normilizedEducations = normilizesEducations(educations); 
 }
 
 export const getNormilizedEducations = (): Education[] => {
     return normilizedEducations;
 }
 
+// Uses the keys to calculate the minimum and maximum duration of a DegreeType
 export const calculateMinMaxDegreeDuration = () => {
-    // ("caclulateMinMaxDegreeDuration");
-
-    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum;
-    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum;
-    degreeTypeKeys.forEach((degreeType) => {
-        let newDuration = DegreeTypeToDuration(degreeType);
-        if (newDuration.minimum != -1) {
+    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum; // Initial to a value in range
+    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum; // Initial to a value in range
+    degreeTypeKeys.forEach((degreeType) => { // Loop through all the keys of DegreeType
+        let newDuration = DegreeTypeToDuration(degreeType); // Get the duration of the DegreeType
+        if (newDuration.minimum != -1) { // Deprecated check probably
             educationDurationMin = Math.min(educationDurationMin, newDuration.minimum);
             educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
         }
@@ -351,6 +367,7 @@ export const getEducationDurationRange = (): MinimumMaximum => {
     return educationDurationRange;
 }
 
+// Get all the relevant data packed into an object
 export const getTableSectionData = (): TableSectionDataFromServer => {
     return {
         educations: educations,
