@@ -8,7 +8,8 @@ let minimumEducation: Education;
 let maximumEducation: Education;
 
 const normilize = (number: number, min: number, max: number) => {
-    if (min == max) return min;
+    if (min == 0 && max == 0) return 0;
+    if (min == max) return 1;
 
     return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
