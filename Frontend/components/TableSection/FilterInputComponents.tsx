@@ -187,7 +187,7 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
                     setSelected(!selected)
                     setFilters((prevFilters) => ({
                         ...prevFilters,
-                        [identifier]: [selected]
+                        [identifier]: selected
                     }));
                 }}
             >
