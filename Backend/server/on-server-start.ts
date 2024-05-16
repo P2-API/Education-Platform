@@ -370,4 +370,4 @@ export const getTableSectionData = (): TableSectionDataFromServer => {
     }
 }
 
-processAllEducations(); // Scrapes all educations from the web and saves them to the database
+//processAllEducations(); // Scrapes all educations from the web and saves them to the database

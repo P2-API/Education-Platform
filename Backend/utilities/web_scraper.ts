@@ -3,16 +3,18 @@ import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
-import { EducationsGroupped } from "../../src/types";
+import { EducationsGroupped, Profession, NormalizedProfession, NormalizedProfessionData } from "../../src/types";
+import { any, number, string } from 'prop-types';
 
 //import { promises } from 'dns';
 //import TextRazor from 'textrazor';
 
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
-test();
+//processAllEducations();
+//test();
 
-async function test(){
+export async function test(){
     const test = await fetchHtml("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0");
     console.log(test);
 }
@@ -22,7 +24,7 @@ async function test(){
 //getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
 
 export async function processAllEducations() {
-    const filePath = 'Backend/cache/education_groups.ts';
+    const filePath = '../../Backend/cache/education_groups.ts';
     console.log("Starting processing of all educations");
     
     // Load education data from the file
@@ -55,11 +57,16 @@ async function assignSubjectRankings(educationData: EducationsGroupped) {
     // Initialize an empty object to store data for this education group
     const groupData: { [key: string]: any } = {};
 
-    for (const { title, url } of educationData) {
-        const result = await loadSubjectsFromUrls(url, title);
+    for (let index = educationData.length -1; index === 0 ; index--) {
+        console.log(index + " " + educationData[index].url);
+        const result = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
+        if (!result) {
+            console.error(`Error processing URL ${educationData[index].url}`);
+            continue;
+        }
+        
 
-        // Add the result to the group data, using the title as the key
-        groupData[title] = result;
+        groupData[educationData[index].title] = result;
     }
 
     return groupData;
@@ -197,9 +204,10 @@ export async function getDescribingText(html: string) {
     }
 }
 
-function fetchHtml(url: string) {
+export function fetchHtml(url: string) {
     try {
-        return axios.get(url);
+
+        return axios.get("https://" + url);
     } catch (error) {
         (error);
         return "Error fetching the URL";
@@ -319,17 +327,18 @@ async function extractKeywordsFromText(text: string): Promise<string[] | undefin
 
 function extractWordsFromKeywords(response: KeywordsResponse): string[] {
     return response.keywords.map(keyword => keyword.word);
-  }
-  interface Keyword {
+}
+
+interface Keyword {
     word: string;
     document_frequency: number;
     pos_tags: string[];
     score: number;
-  }
-  
-  interface KeywordsResponse {
+}
+
+interface KeywordsResponse {
     keywords: Keyword[];
-  }
+}
 
 async function getAllText(url: string) {
 
@@ -374,7 +383,7 @@ async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
         fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
         // Run the Python script as a child process
-        const pythonProcess = spawn('python', ['Backend/utilities/semanticanalyzer.py', inputFile, outputFile]);
+        const pythonProcess = spawn('python', ['semanticanalyzer.py', inputFile, outputFile]);
 
         // Handle errors from the Python script
         pythonProcess.stderr.on('data', (data) => {
@@ -440,4 +449,76 @@ export async function loadSubjectsFromUrls(url: string, name: string): Promise<N
     }
 }
 
+function saveToJsonFile(data: any, filename: string): void {
+    try {
+      fs.writeFileSync(filename, JSON.stringify(data, null, 2));
+      console.log(`Data has been saved to ${filename}`);
+    } catch (error) {
+      console.error(`Error saving data to ${filename}: ${error}`);
+    }
+}
 
+function readJsonFile(filename: string): any {
+    try {
+      const jsonString = fs.readFileSync(filename, 'utf-8');
+      const jsonObject = JSON.parse(jsonString);
+      return jsonObject;
+    } catch (error) {
+      console.error(`Error reading JSON file ${filename}: ${error}`);
+      return null;
+    }
+}
+
+function normalizeData(professions: Record<string, Profession>): NormalizedProfession[] {
+    const normalizedProfessions: NormalizedProfession[] = [];
+    
+    // Calculate the maximum and minimum values for each data key
+    const maxValueByDataKey: Record<string, number> = {};
+    const minValueByDataKey: Record<string, number> = {};
+    
+    for (const professionKey in professions) {
+      if (Object.prototype.hasOwnProperty.call(professions, professionKey)) {
+        const data = professions[professionKey].data;
+        for (const dataKey in data) {
+          if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            const value = data[dataKey];
+            if (maxValueByDataKey[dataKey] === undefined || value > maxValueByDataKey[dataKey]) {
+              maxValueByDataKey[dataKey] = value;
+            }
+            if (minValueByDataKey[dataKey] === undefined || value < minValueByDataKey[dataKey]) {
+              minValueByDataKey[dataKey] = value;
+            }
+          }
+        }
+      }
+    }
+    
+    // Normalize the data values
+    for (const professionKey in professions) {
+      if (Object.prototype.hasOwnProperty.call(professions, professionKey)) {
+        const profession = professions[professionKey];
+        const { name, url, data } = profession;
+  
+        const normalizedData: Record<string, number> = {};
+    
+        for (const dataKey in data) {
+          if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            const dataValue = data[dataKey];
+            const maxValue = maxValueByDataKey[dataKey];
+            const minValue = minValueByDataKey[dataKey];
+            const normalizedValue = (dataValue - minValue) / (maxValue - minValue);
+            normalizedData[dataKey] = normalizedValue;
+          }
+        }
+    
+        normalizedProfessions.push({ name, url, data: normalizedData});
+      }
+    }
+    
+    return normalizedProfessions;
+  }
+  
+
+const educationSubjects = readJsonFile('all-education-data.json');
+normalizeData(educationSubjects);
+saveToJsonFile(educationSubjects, 'normalized-education-data.json');

@@ -294,3 +294,19 @@ export type FilterProps = {
     canWorkInternationally: boolean;
     educationDuration: MinimumMaximum;
 };
+
+export type ProfessionData = Record<string, number>;
+
+export type Profession = {
+  name: string;
+  url: string;
+  data: ProfessionData;
+};
+
+export type NormalizedProfessionData = Record<string, Record<string, number>>;
+
+export type NormalizedProfession = {
+  name: string;
+  url: string;
+  data: NormalizedProfessionData;
+};
