@@ -182,7 +182,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter nyuddannedes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setInternalFilters}
-                                    identifier="wantedSalary.newGraduate"
+                                    identifier="salary.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedSalaryRange}
@@ -192,7 +192,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter erfarenes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setInternalFilters}
-                                    identifier="wantedSalary.experienced"
+                                    identifier="salary.experienced"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={wantedWorkingHoursRange}
