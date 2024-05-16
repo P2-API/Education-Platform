@@ -2,6 +2,8 @@ import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, Educatio
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
+import { assignSubjectRankings, processAllEducations } from "../utilities/web_scraper";
+
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
@@ -143,9 +145,14 @@ const recursivelyGetLeafProperties = (object: Object): string[] => {
             }
         }
         else {
+<<<<<<< Updated upstream
             if (typeof object[key] == 'string') continue;
             array.push(key);
         }
+=======
+            array.push(key); // If the key is not an object, then add it to the array
+        }   
+>>>>>>> Stashed changes
     }
     return array;
 }
@@ -387,3 +394,4 @@ export const getTableSectionData = (): EducationDataFromServer => {
     }
 }
 
+//processAllEducations(); // Scrapes all educations from the web and saves them to the database

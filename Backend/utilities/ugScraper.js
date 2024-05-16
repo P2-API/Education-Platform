@@ -10,7 +10,7 @@ const textRazor = new TextRazor('ee38eb1dffc5d19af37965711c0f6533e65a5297e9deaeb
 const authKey = "532b6341-31c0-4c51-9cef-043f21bbfd91:fx";
 const translator = new deepl.Translator(authKey);
 
-async function fetchHtmlData(url) {
+export async function fetchHtmlData(url) {
     try {
         const newUrl = (url + "#Indhold");
         const response = await axios.get(newUrl);

@@ -12,23 +12,28 @@ type MultiSelectAutoCompleteProps = {
     collection: string[];
     selectLabel: string;
     selectPlaceholder: string;
+    value: string[];
+    setFilters?: React.Dispatch<React.SetStateAction<TableFilters>>;
+    setProperties?: React.Dispatch<React.SetStateAction<string[]>>;
     givenValue: string[];
-    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
 
-
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, identifier }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier }) => {
 
     const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
     const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
         setValue(newValue);
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [identity]: newValue // Use identity instead of identifier
-        }));
+        if(setProperties != undefined && value != undefined && value != null) setProperties(newValue);
+        if (setFilters) {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [identity]: newValue // Use identity instead of identifier
+            }));
+        }
     }
+
 
     return (
         <Autocomplete
@@ -36,7 +41,7 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
             id="tags-outlined"
             sx={{ width: "100%" }}
             options={collection}
-            getOptionLabel={(option) => option.toString()}
+            getOptionLabel={(option) => option}
             filterSelectedOptions
             value={value}
             onChange={handleChange}
@@ -62,6 +67,7 @@ type MinimumDistanceSliderProps = {
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
     identifier: string;
 }
+
 export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, givenValue, minimumDistance, description, getValueText, setFilters, identifier }) => {
     const [value1, setValue1] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
 

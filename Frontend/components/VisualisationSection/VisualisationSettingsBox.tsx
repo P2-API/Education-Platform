@@ -4,18 +4,18 @@ import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
 import { EducationGroup, PCAData } from 'types'
 import { toast } from 'sonner';
-import { setChosenPropertiesForRadarGraph } from "./Visualisation"
 export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
-
 
 type VisualisationSettingsBoxProps = {
     chartType: ChartType,
     setChartType: React.Dispatch<React.SetStateAction<ChartType>>
+    setProperties: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
+let educationProperties: string[] = [];
 
-const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ chartType, setChartType }) => {
-
+const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ chartType, setChartType, setProperties }) => {
+    console.log("edu props:", educationProperties);
     //const { getPCAData } = useServer();
 
     /*const calculatePCA = async () => {
@@ -34,20 +34,22 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
 
     //const groupedEducationTitles: string[] = getGroupedEducations.map(education => education.title);
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
-    const [educationProperties, setEducationProperties] = useState<EducationGroup[]>([]);
 
     const { getGroupedEducations, getEducationsProperties } = useServer();
+    
     useEffect(() => {
         getGroupedEducations().then((data) => {
             setGroupedEducations(data);
         });
         getEducationsProperties().then((data) => {
-            setEducationProperties(data);
+            educationProperties = data as string[];
+            console.log(educationProperties);
+
         })
     }, []);
 
     let groupedEducationTitles = groupedEducations.map((education) => education.title);
-    let educationPropertiesTitles = educationProperties.map((education) => education.title);
+    //let educationPropertiesTitles = educationProperties.map((education) => education.title);
 
     const handleChartChange = (event: SelectChangeEvent) => {
         setChartType(event.target.value as ChartType);
@@ -145,9 +147,9 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
                         label="Chart"
                         onChange={handleChartChange}
                     >
-                        <MenuItem value="scatter">Scatter</MenuItem>
-                        <MenuItem value="bar">Bar</MenuItem>
-                        <MenuItem value="radar">Radar</MenuItem>
+                        <MenuItem key={"scatter"} value="scatter">Scatter</MenuItem> 
+                        <MenuItem key={"bar"} value="bar">Bar</MenuItem>
+                        <MenuItem key={"radar"} value="radar">Radar</MenuItem>
                     </Select>
                 </FormControl>
             </div>
@@ -179,11 +181,11 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
                 />
                 <MultiSelectAutoComplete
                     value={[]}
-                    collection={educationPropertiesTitles}
+                    collection={educationProperties ?? []}
+                    setProperties={setProperties}
                     selectLabel="Properties"
                     selectPlaceholder="Properties"
-                    setFilters={() => "hello"}
-                    identifier="y_axis"
+                    identifier="selectProperties"
                 />
                 <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>
             </div>

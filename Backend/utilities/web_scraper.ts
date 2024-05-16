@@ -3,46 +3,85 @@ import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
-import { getGroupedEducations } from '../server/on-server-start';
+import { EducationsGroupped, Profession, NormalizedProfession } from "../../src/types";
+
 
 //import { promises } from 'dns';
 //import TextRazor from 'textrazor';
 
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
-const urls = ["https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0"];
 
-//translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
-//getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
-assignSubjectRankings(getGroupedEducations)
+//processAllEducations();
+//test();
 
-async function assignSubjectRankings(subjectData) {
-    for (const title in subjectData) {
-        const url = subjectData[title].url;
-        const name = subjectData[title].name;
-        const result = await loadSubjectsFromUrls(url, name);
-
-        // Serialize the result to JSON format
-        const jsonData = JSON.stringify(result, null, 2); // Use null and 2 for pretty formatting
-
-        // Choose a file path where you want to save the data
-        const filePath = `subject-data-${name}.json`;
-
-        // Write the serialized data to the file
-        fs.writeFile(filePath, jsonData, 'utf8', (err) => {
-            if (err) {
-                console.error(`Error writing data to file ${filePath}:`, err);
-            } else {
-                console.log(`Data saved to ${filePath}`);
-            }
-        });
-    }
+export async function test(){
+    const test = await fetchHtml("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0");
+    console.log(test);
 }
 
 
-(async () => {
-    const test = await loadSubjectsFromUrls(urls, "Renovation");
-    console.log(test)
-})();
+//translateTextToEnglishChatGPT("Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.");
+//getPersonalizedMessage("https://www.ug.dk/uddannelser/arbejdsmarkedsuddannelseramu/transporterhvervene/renovation-0")
+
+export async function processAllEducations() {
+    const filePath = '../../Backend/cache/education_groups.ts';
+    console.log("Starting processing of all educations");
+    
+    // Load education data from the file
+    const groupedEducations = loadEducationsFromFile(filePath);
+
+    // Initialize an empty object to store all education data
+    let allEducationData = {};
+
+    // Iterate through each education group
+    for (const educationGroup of groupedEducations) {
+        const groupData = await assignSubjectRankings([educationGroup]); // Wrap educationGroup in an array
+        // Merge the data from this group into the overall data object
+        allEducationData = { ...allEducationData, ...groupData };
+    }
+
+    // Write the combined data to a single JSON file
+    const outputFilePath = 'all-education-data.json';
+    try {
+        const jsonData = JSON.stringify(allEducationData, null, 2);
+        await fs.promises.writeFile(outputFilePath, jsonData);
+        console.log(`All education data saved to ${outputFilePath}`);
+    } catch (err) {
+        console.error(`Error writing data to file ${outputFilePath}:`, err);
+    }
+}
+
+async function assignSubjectRankings(educationData: EducationsGroupped) {
+    console.log("Starting assigning of subject rankings");
+    
+    // Initialize an empty object to store data for this education group
+    const groupData: { [key: string]: any } = {};
+
+    for (let index = educationData.length -1; index === 0 ; index--) {
+        console.log(index + " " + educationData[index].url);
+        const result = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
+        if (!result) {
+            console.error(`Error processing URL ${educationData[index].url}`);
+            continue;
+        }
+        
+
+        groupData[educationData[index].title] = result;
+    }
+
+    return groupData;
+}
+
+function loadEducationsFromFile(filePath: string): EducationsGroupped {
+    try {
+        const data = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error(`Error loading data from file ${filePath}:`, err);
+        return [];
+    }
+}
+
 
 interface CategoryData {
     [category: string]: number;
@@ -165,9 +204,10 @@ export async function getDescribingText(html: string) {
     }
 }
 
-function fetchHtml(url: string) {
+export function fetchHtml(url: string) {
     try {
-        return axios.get(url);
+
+        return axios.get("https://" + url);
     } catch (error) {
         (error);
         return "Error fetching the URL";
@@ -287,17 +327,18 @@ async function extractKeywordsFromText(text: string): Promise<string[] | undefin
 
 function extractWordsFromKeywords(response: KeywordsResponse): string[] {
     return response.keywords.map(keyword => keyword.word);
-  }
-  interface Keyword {
+}
+
+interface Keyword {
     word: string;
     document_frequency: number;
     pos_tags: string[];
     score: number;
-  }
-  
-  interface KeywordsResponse {
+}
+
+interface KeywordsResponse {
     keywords: Keyword[];
-  }
+}
 
 async function getAllText(url: string) {
 
@@ -368,47 +409,118 @@ interface Rankings {
 }
 
 
-export async function loadSubjectsFromUrls(urls: string[], name: string): Promise<NamedCategoryData[]> {
-    const loadedData: NamedCategoryData[] = [];
+export async function loadSubjectsFromUrls(url: string, name: string): Promise<NamedCategoryData | undefined> {
+    try {
+        const text = await getAllText(url);
+        const sanitizedText = await sanitizeText(text);
 
-    for (const url of urls) {
-        try {
-            const text = await getAllText(url);
-            const sanitizedText = await sanitizeText(text);
-
-            const englishText = await translateTextToEnglishChatGPT(sanitizedText);
-            if (!englishText) {
-                console.error("Error translating text");
-                continue;
-            }
-
-            const keywords = await extractKeywordsFromText(englishText);
-            if (!keywords) {
-                console.error("Error extracting keywords");
-                continue;
-            }
-
-            const similarities = await analyseSubjects(keywords);
-            if (!similarities) {
-                console.error("Error analysing subjects");
-                continue;
-            }
-
-            const namedData: NamedCategoryData = {
-                name: name,
-                url: url,
-                data: {} // Placeholder for data
-            };
-            // Add loaded data to namedData
-            for (const subject in similarities) {
-                namedData.data[subject] = similarities[subject]; // Assign similarity scores to data
-            }
-            loadedData.push(namedData);
-        } catch (error) {
-            console.error(`Error processing URL ${url}:`, error);
-            continue;
+        const englishText = await translateTextToEnglishChatGPT(sanitizedText);
+        if (!englishText) {
+            console.error("Error translating text");
+            return undefined;
         }
-    }
 
-    return loadedData;
+        const keywords = await extractKeywordsFromText(englishText);
+        if (!keywords) {
+            console.error("Error extracting keywords");
+            return undefined;
+        }
+
+        const similarities = await analyseSubjects(keywords);
+        if (!similarities) {
+            console.error("Error analysing subjects");
+            return undefined;
+        }
+
+        const namedData: NamedCategoryData = {
+            name: name,
+            url: url,
+            data: {} // Placeholder for data
+        };
+        // Add loaded data to namedData
+        for (const subject in similarities) {
+            namedData.data[subject] = similarities[subject]; // Assign similarity scores to data
+        }
+
+        return namedData;
+    } catch (error) {
+        console.error(`Error processing URL ${url}:`, error);
+        return undefined;
+    }
 }
+
+function saveToJsonFile(data: any, filename: string): void {
+    try {
+      fs.writeFileSync(filename, JSON.stringify(data, null, 2));
+      console.log(`Data has been saved to ${filename}`);
+    } catch (error) {
+      console.error(`Error saving data to ${filename}: ${error}`);
+    }
+}
+
+function readJsonFile(filename: string): any {
+    try {
+      const jsonString = fs.readFileSync(filename, 'utf-8');
+      const jsonObject = JSON.parse(jsonString);
+      return jsonObject;
+    } catch (error) {
+      console.error(`Error reading JSON file ${filename}: ${error}`);
+      return null;
+    }
+}
+
+function normalizeData(professions: Record<string, Profession>): NormalizedProfession[] {
+    const normalizedProfessions: NormalizedProfession[] = [];
+    
+    // Calculate the maximum and minimum values for each data key
+    const maxValueByDataKey: Record<string, number> = {};
+    const minValueByDataKey: Record<string, number> = {};
+    
+    for (const professionKey in professions) {
+      if (Object.prototype.hasOwnProperty.call(professions, professionKey)) {
+        const data = professions[professionKey].data;
+        for (const dataKey in data) {
+          if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            const value = data[dataKey];
+            if (maxValueByDataKey[dataKey] === undefined || value > maxValueByDataKey[dataKey]) {
+              maxValueByDataKey[dataKey] = value;
+            }
+            if (minValueByDataKey[dataKey] === undefined || value < minValueByDataKey[dataKey]) {
+              minValueByDataKey[dataKey] = value;
+            }
+          }
+        }
+      }
+    }
+    
+    // Normalize the data values
+    for (const professionKey in professions) {
+      if (Object.prototype.hasOwnProperty.call(professions, professionKey)) {
+        const profession = professions[professionKey];
+        const { name, url, data } = profession;
+  
+        const normalizedData: Record<string, number> = {};
+    
+        for (const dataKey in data) {
+          if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            const dataValue = data[dataKey];
+            const maxValue = maxValueByDataKey[dataKey];
+            const minValue = minValueByDataKey[dataKey];
+            const normalizedValue = (dataValue - minValue) / (maxValue - minValue);
+            normalizedData[dataKey] = normalizedValue;
+          }
+        }
+    
+        normalizedProfessions.push({ name, url, data: normalizedData });
+      }
+    }
+    
+    return normalizedProfessions;
+}
+  
+  
+  
+
+const educationSubjects = readJsonFile('all-education-data.json');
+const normalizeSubjects = normalizeData(educationSubjects);
+saveToJsonFile(normalizeSubjects, 'normalized-education-data.json');

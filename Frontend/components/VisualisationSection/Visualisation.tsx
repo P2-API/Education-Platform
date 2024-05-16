@@ -6,16 +6,11 @@ import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
 
 interface VisualisationProps {
-    chartType: ChartType
+    chartType: ChartType,
+    properties: string[]
 }
 
-let chosenPropertiesForRadarGraph: string[] = [];
-
-export function setChosenPropertiesForRadarGraph(newProperties: string[]) {
-    chosenPropertiesForRadarGraph = newProperties;
-}
-
-const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
+const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) => {
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
 
@@ -27,6 +22,9 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
     }, []);
 
     console.log("chartType: ", chartType)
+
+
+
 
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
         x: [1, 2, 3, 4, 5],
@@ -46,7 +44,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
         }
         setData({ x: xValues, y: yValues, text: text });
     };
-
+    
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
@@ -149,9 +147,9 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                 <Plot
                     data={[
                         {
-                            r: data.y,
-                            theta: chosenPropertiesForRadarGraph,
-                            text: chosenPropertiesForRadarGraph,
+                            r: [90, 45, 69, 80, 30],// Set to the education selection of first education
+                            theta: properties,
+                            text: properties,
                             mode: "markers",
                             type: "scatterpolar",
                             fill: 'toself',

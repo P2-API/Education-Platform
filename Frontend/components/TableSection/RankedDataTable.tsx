@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Institution } from "../../../src/enums"
 import {
   MaterialReactTable,
@@ -6,6 +6,7 @@ import {
   type MRT_ColumnDef,
   type MRT_RowVirtualizer,
   MRT_Row,
+  MRT_ColumnVirtualizer,
 } from "material-react-table";
 import { FinalRankingType, RankedDataStructure } from "../../../src/types";
 
@@ -18,7 +19,6 @@ type RankedMaterialReactDataTableProps = {
 
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
-
   const data: RankedDataStructure[] = rankedData.ranking;
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
@@ -477,10 +477,14 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   );
 
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
+  const columnVirtualizerInstanceRef = useRef<MRT_ColumnVirtualizer>(null);
 
   const DetailPanelContent = () => {
+    const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
+    console.log("margingLeft", margingLeft)
     return (
-      <div style={{ height: "200px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      DEFINITELY RANKED
       </div>
     );
   };
@@ -509,6 +513,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,
     enableColumnVirtualization: true,
+    columnVirtualizerInstanceRef,
     enablePagination: false,
     enableStickyHeader: true,
     enableSorting: true,
@@ -527,10 +532,11 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 2 }, //optionally customize the row virtualizer
     columnVirtualizerOptions: { overscan: 4 }, //optionally customize the column virtualizer
-
   });
 
-  return <MaterialReactTable table={table} />;
+
+
+  return <MaterialReactTable table={table} />
 };
 
 export default RankedMaterialReactDataTable;

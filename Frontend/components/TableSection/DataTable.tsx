@@ -7,6 +7,7 @@ import {
   type MRT_ColumnDef,
   type MRT_RowVirtualizer,
   MRT_Row,
+  MRT_ColumnVirtualizer,
 } from "material-react-table";
 
 type MaterialReactDataTableProps = {
@@ -458,14 +459,18 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
   );
 
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
+  const columnVirtualizerInstanceRef = useRef<MRT_ColumnVirtualizer>(null);
 
   const DetailPanelContent = () => {
+    const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
+    console.log("margingLeft", margingLeft)
     return (
-      <div style={{ height: "200px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      NOT RANKED
       </div>
     );
   };
-
+  
   const table = useMaterialReactTable({
     columns,
     data, //10,000 rows
@@ -490,6 +495,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,
     enableColumnVirtualization: true,
+    columnVirtualizerInstanceRef,
     enablePagination: false,
     enableStickyHeader: true,
     enableSorting: true,
