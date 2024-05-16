@@ -1,5 +1,10 @@
-import { EducationDataFromServer, TableFilters, QuizAnswers, PCAData, EducationGroup } from "../../src/types.ts";
-
+import {
+    QuizAnswers,
+    EducationDataFromServer,
+    PCAData,
+    EducationGroup,
+    FilterProps
+} from "types";
 
 const useServer = () => {
 

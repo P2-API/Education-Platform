@@ -160,6 +160,7 @@ export enum SubjectTitle {
     Landbrugsvidenskab = "Landbrugsvidenskab",
 }
 
+// Return the minimum and maximum duration of a DegreeType
 export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): MinimumMaximum => {
     switch (degreeType) {
         case DegreeType["Akademisk overbygningsuddannelse"]:

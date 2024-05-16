@@ -1,6 +1,7 @@
 import { Education, EducationGroup } from "../../src/types";
 import { County, Geography } from "../../src/enums";
 
+// Converts an Education to an EducationGroup
 export function educationToEducationGroup(education: Education) {
     let educationGroup: EducationGroup = {
         title: education.title,
@@ -9,6 +10,7 @@ export function educationToEducationGroup(education: Education) {
     return educationGroup;  
 }
 
+// Returns the Geography of a given County
 export const countyToGeography = (county: County): Geography => {
     switch (county) {
         case County['Ballerup']:

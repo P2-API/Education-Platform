@@ -1,18 +1,6 @@
-/*
-Fag
-Sted
-Degree_type
-Salary
-Unemployment
-_____________
-
-Brancher
-Klasseundervisning/forelæsning/underviservejledning
-
-
-*/
-
 import { Geography, County, Institution, DegreeType, FormOfEducation } from "./enums";
+
+
 
 export type Industry = {
     title: string;
