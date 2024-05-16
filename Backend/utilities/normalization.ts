@@ -8,6 +8,8 @@ let minimumEducation: Education;
 let maximumEducation: Education;
 
 const normilize = (number: number, min: number, max: number) => {
+    if (min == max) return min;
+
     return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
 
@@ -164,7 +166,9 @@ const normilizeEducationDegreeStructureContents = (degreeContents: DegreeContent
     degreeContents.teaching = normilize(degreeContents.teaching, minDegreeContents.teaching, maxDegreeContents.teaching);
     degreeContents.exams = normilize(degreeContents.exams, minDegreeContents.exams, maxDegreeContents.exams);
     degreeContents.internship = normilize(degreeContents.internship, minDegreeContents.internship, maxDegreeContents.internship);
+    console.log(minDegreeContents.internationalStay, maxDegreeContents.internationalStay);
     degreeContents.internationalStay = normilize(degreeContents.internationalStay, minDegreeContents.internationalStay, maxDegreeContents.internationalStay);
+    console.log("degreeContents.internationalStay",degreeContents.internationalStay);
 }
 
 const normilizeEducationJobData = (jobData: JobData) => {
