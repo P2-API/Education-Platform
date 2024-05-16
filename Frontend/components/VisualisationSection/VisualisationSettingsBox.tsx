@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
-import { EducationGroup, PCAData } from 'types'
-import { toast } from 'sonner';
+import { EducationGroup } from 'types';
 
-export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
+export enum ChartType { scatter = "scatter", bar = "bar", radar = "radar" };
 
 type VisualisationSettingsBoxProps = {
     chartType: ChartType,
@@ -34,7 +33,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
     //const groupedEducationTitles: string[] = getGroupedEducations.map(education => education.title);
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
     const [educationProperties, setEducationProperties] = useState<EducationGroup[]>([]);
-    
+
     const { getGroupedEducations, getEducationsProperties } = useServer();
     useEffect(() => {
         getGroupedEducations().then((data) => {
@@ -55,29 +54,29 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel id="select-graph">Graph</InputLabel>
-                <Select
-                    labelId="select-graph"
-                    id="select-graph"
-                    value={chartType}
-                    label="Chart"
-                    onChange={handleChartChange}
-                >
-                    <MenuItem value="scatter">Scatter</MenuItem>
-                    <MenuItem value="bar">Bar</MenuItem>
-                    <MenuItem value="radar">Radar</MenuItem>
-                </Select>
+                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <Select
+                        labelId="select-graph"
+                        id="select-graph"
+                        value={chartType}
+                        label="Chart"
+                        onChange={handleChartChange}
+                    >
+                        <MenuItem value="scatter">Scatter</MenuItem>
+                        <MenuItem value="bar">Bar</MenuItem>
+                        <MenuItem value="radar">Radar</MenuItem>
+                    </Select>
                 </FormControl>
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
                     Scatterplot
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     En PCA analyser tager adskillige faktorer i betragtning og reducerer dimensionenen/antallet af akser, så man kan
                     visualisere data på en mere overskuelig måde.
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     PCA visualiseringen er baseret ud fra dine filtre indstillinger og svar på quizzen i 'udannelser' siden.
                 </p>
             </div>
@@ -90,26 +89,26 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel id="select-graph">Graph</InputLabel>
-                <Select
-                    labelId="select-graph"
-                    id="select-graph"
-                    value={chartType}
-                    label="Chart"
-                    onChange={handleChartChange}
-                >
-                    <MenuItem value="scatter">Scatter</MenuItem>
-                    <MenuItem value="bar">Bar</MenuItem>
-                    <MenuItem value="radar">Radar</MenuItem>
-                </Select>
+                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <Select
+                        labelId="select-graph"
+                        id="select-graph"
+                        value={chartType}
+                        label="Chart"
+                        onChange={handleChartChange}
+                    >
+                        <MenuItem value="scatter">Scatter</MenuItem>
+                        <MenuItem value="bar">Bar</MenuItem>
+                        <MenuItem value="radar">Radar</MenuItem>
+                    </Select>
                 </FormControl>
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
                     Bar plot
-                    <br/>
-                    <br/>
-                    This is a bar plot, here you can see 2 educations up against each other on their different statistics 
+                    <br />
+                    <br />
+                    This is a bar plot, here you can see 2 educations up against each other on their different statistics
                     in order to see which you prefer.
                 </p>
                 <Autocomplete
@@ -135,24 +134,24 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel id="select-graph">Graph</InputLabel>
-                <Select
-                    labelId="select-graph"
-                    id="select-graph"
-                    value={chartType}
-                    label="Chart"
-                    onChange={handleChartChange}
-                >
-                    <MenuItem value="scatter">Scatter</MenuItem>
-                    <MenuItem value="bar">Bar</MenuItem>
-                    <MenuItem value="radar">Radar</MenuItem>
-                </Select>
+                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <Select
+                        labelId="select-graph"
+                        id="select-graph"
+                        value={chartType}
+                        label="Chart"
+                        onChange={handleChartChange}
+                    >
+                        <MenuItem value="scatter">Scatter</MenuItem>
+                        <MenuItem value="bar">Bar</MenuItem>
+                        <MenuItem value="radar">Radar</MenuItem>
+                    </Select>
                 </FormControl>
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
                     - Radar -
-                    
+
                 </p>
                 <Autocomplete
                     disablePortal

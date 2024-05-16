@@ -7,7 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@frontend': path.resolve(__dirname, 'Frontend'),
-      '@backend': path.resolve(__dirname, 'Backend')
+      '@backend': path.resolve(__dirname, 'Backend'),
+      '@src': path.resolve(__dirname, 'src')
     }
   }
 });

@@ -1,11 +1,10 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
 import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React, { useState, createContext } from 'react';
-import { QuizAnswers, FilterProps, TableFilters } from '@src/types';
+import { QuizAnswers, TableFilters } from '@src/types';
 
 const FiltersContext = createContext<FilterInfoType>({
     filters: {
