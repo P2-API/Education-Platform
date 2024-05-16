@@ -12,9 +12,8 @@ const normilize = (number: number, min: number, max: number) => {
 }
 
 export const normalizeFilters = (filters: TableFilters):TableFilters => {
-    // ("normalizeFilters");
-    minimumEducation = getMinimumEducation();
-    maximumEducation = getMaximumEducation();
+    minimumEducation ??= getMinimumEducation();
+    maximumEducation ??= getMaximumEducation();
     
     const normalizedFilters = deepCopy(filters);
 
@@ -26,7 +25,6 @@ export const normalizeFilters = (filters: TableFilters):TableFilters => {
 }
 
 const normalizeSalaryFilters = (salaryFilter: SalaryFilters) => {
-    // ("normalizeSalaryFilters");
     const minSalary = minimumEducation.jobData.salaries;
     const maxSalary = maximumEducation.jobData.salaries;
 
@@ -38,7 +36,6 @@ const normalizeSalaryFilters = (salaryFilter: SalaryFilters) => {
 }
 
 const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) => {
-    // ("normilizeUnemploymentFilters");
     let minUnemployment = minimumEducation.jobData.unemployment;
     let maxUnemployment = maximumEducation.jobData.unemployment;
 
@@ -50,7 +47,6 @@ const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) =
 }
 
 const normalizeWorkingHoursFilters = (workingHoursFilter: MinimumMaximum) => {
-    // ("normalizeWorkingHoursFilters");
     const minWorkingHours = minimumEducation.jobData.workSchedule.workingHours;
     const maxWorkingHours = maximumEducation.jobData.workSchedule.workingHours;
 
@@ -59,7 +55,6 @@ const normalizeWorkingHoursFilters = (workingHoursFilter: MinimumMaximum) => {
 }
 
 const normalizeEducationDurationFilters = (educationDurationFilter: MinimumMaximum) => {
-    // ("normalizeEducationDurationFilters");
     const educationDurationRange = getEducationDurationRange();
 
     educationDurationFilter.minimum = normilize(educationDurationFilter.minimum, educationDurationRange.minimum, educationDurationRange.maximum);
@@ -72,9 +67,8 @@ const normalizeEducationDurationFilters = (educationDurationFilter: MinimumMaxim
 
 
 export const normilizesEducations = (educations: Education[]): Education[] => {
-    // ("normilizesEducations");
-    minimumEducation = getMinimumEducation();
-    maximumEducation = getMaximumEducation();
+    minimumEducation ??= getMinimumEducation();
+    maximumEducation ??= getMaximumEducation();
 
     const normilizedEducations = deepCopy(educations);
     normilizedEducations.forEach((education) => {
@@ -84,7 +78,6 @@ export const normilizesEducations = (educations: Education[]): Education[] => {
 }
 
 const normilizeEducation = (education: Education) => {
-    // ("normilizeEducation");
     normilizeEducationSubjects(education.subjects);
     normilizeEducationIndustries(education.industries);
     normilizeEducationHours(education.hours);
@@ -97,7 +90,6 @@ const normilizeEducation = (education: Education) => {
 }
 
 const normilizeEducationSubjects = (subjects: Subject[]) => {
-    // ("normilizeEducationSubjects");
     subjects.forEach((subject) => {
         let minScore = 0;
         let maxScore = 0;
@@ -116,7 +108,6 @@ const normilizeEducationSubjects = (subjects: Subject[]) => {
 }
 
 const normilizeEducationIndustries = (industries: Industry[]) => {
-    // ("normilizeEducationIndustries");
     industries.forEach((industry) => {
         let minShare = 0;
         let maxShare = 0;
@@ -135,7 +126,6 @@ const normilizeEducationIndustries = (industries: Industry[]) => {
 }
 
 const normilizeEducationHours = (hours: HoursSpentDoing) => {
-    // ("normilizeEducationHours");
     let minHours = minimumEducation.hours;
     const maxHours = maximumEducation.hours;
     hours.withFewStudents = normilize(hours.withFewStudents, minHours.withFewStudents, maxHours.withFewStudents);
@@ -144,7 +134,6 @@ const normilizeEducationHours = (hours: HoursSpentDoing) => {
 }
 
 const normilizeEducationSocialFeedback = (socialFeedback: SocialFeedback) => {
-    // ("normilizeEducationSocialFeedback");
     let minSocialFeedback = minimumEducation.socialFeedback;
     let maxSocialFeedback = maximumEducation.socialFeedback;
     socialFeedback.groupEngagement = normilize(socialFeedback.groupEngagement, minSocialFeedback.groupEngagement, maxSocialFeedback.groupEngagement);
@@ -154,7 +143,6 @@ const normilizeEducationSocialFeedback = (socialFeedback: SocialFeedback) => {
 }
 
 const normilizeEducationAcademicFeedback = (academicFeedback: AcademicFeedback) => {
-    // ("normilizeEducationAcademicFeedback");
     let minAcademicFeedback = minimumEducation.academicFeedback;
     let maxAcademicFeedback = maximumEducation.academicFeedback;
     academicFeedback.academicEnvironment = normilize(academicFeedback.academicEnvironment, minAcademicFeedback.academicEnvironment, maxAcademicFeedback.academicEnvironment);
@@ -163,7 +151,6 @@ const normilizeEducationAcademicFeedback = (academicFeedback: AcademicFeedback) 
 }
 
 const normilizeEducationAcademicWorkload = (academicWorkload: AcademicWorkload) => {
-    // ("normilizeEducationAcademicWorkload");
     let minAcademicWorkload = minimumEducation.academicWorkload;
     let maxAcademicWorkload = maximumEducation.academicWorkload;
     academicWorkload.lectures = normilize(academicWorkload.lectures, minAcademicWorkload.lectures, maxAcademicWorkload.lectures);
@@ -172,7 +159,6 @@ const normilizeEducationAcademicWorkload = (academicWorkload: AcademicWorkload) 
 }
 
 const normilizeEducationDegreeStructureContents = (degreeContents: DegreeContents) => {
-    // ("normilizeEducationDegreeStructureContents");
     let minDegreeContents = minimumEducation.degreeStructure.contents;
     let maxDegreeContents = maximumEducation.degreeStructure.contents;
     degreeContents.teaching = normilize(degreeContents.teaching, minDegreeContents.teaching, maxDegreeContents.teaching);
@@ -182,7 +168,6 @@ const normilizeEducationDegreeStructureContents = (degreeContents: DegreeContent
 }
 
 const normilizeEducationJobData = (jobData: JobData) => {
-    // ("normilizeEducationJobData");
     let minJobData = minimumEducation.jobData;
     let maxJobData = maximumEducation.jobData;
     normilizeEducationSalaries(jobData.salaries);
@@ -194,7 +179,6 @@ const normilizeEducationJobData = (jobData: JobData) => {
 }
 
 const normilizeEducationSalaries = (salary: Salaries) => {
-    // ("normilizeEducationSalary");
     let minSalary = minimumEducation.jobData.salaries;
     let maxSalary = maximumEducation.jobData.salaries;
     salary.newGraduate.lowerQuartile = normilize(salary.newGraduate.lowerQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.lowerQuartile);
@@ -207,7 +191,6 @@ const normilizeEducationSalaries = (salary: Salaries) => {
 }
 
 const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
-    // ("normilizeEducationWorkSchedule");
     let minWorkSchedule = minimumEducation.jobData.workSchedule;
     let maxWorkSchedule = maximumEducation.jobData.workSchedule;
     workSchedule.fixedHoursPercent = normilize(workSchedule.fixedHoursPercent, minWorkSchedule.fixedHoursPercent, maxWorkSchedule.fixedHoursPercent);
@@ -219,7 +202,6 @@ const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
 }
 
 const normilizeUnemployment = (unemployment: Unemployment) => {
-    // ("normilizeUnemployment");
     let minUnemployment = minimumEducation.jobData.unemployment;
     let maxUnemployment = maximumEducation.jobData.unemployment;
     unemployment.experienced = normilize(unemployment.experienced, minUnemployment.experienced, maxUnemployment.experienced);
