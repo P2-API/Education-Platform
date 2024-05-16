@@ -9,9 +9,15 @@ interface VisualisationProps {
     chartType: ChartType
 }
 
+let chosenPropertiesForRadarGraph: string[] = [];
+
+export function setChosenPropertiesForRadarGraph (newProperties: string[]) {
+    chosenPropertiesForRadarGraph = newProperties;
+}
 
 const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
 
+<<<<<<< Updated upstream
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
 
     const { getEducationsProperties } = useServer();
@@ -24,6 +30,10 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
 
 
 
+=======
+    console.log("chartType: ", chartType)
+    
+>>>>>>> Stashed changes
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
         x: [1, 2, 3, 4, 5],
         y: [1, 2, 3, 4, 5],
@@ -146,8 +156,8 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                     data={[
                         {
                             r: data.y,
-                            theta: educationProperties,
-                            text: educationProperties,
+                            theta: chosenPropertiesForRadarGraph,
+                            text: chosenPropertiesForRadarGraph,
                             mode: "markers",
                             type: "scatterpolar",
                             fill: 'toself',

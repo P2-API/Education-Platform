@@ -128,6 +128,7 @@ const calculateEducationProperties = () => {
         }
     };
     educationProperties = recursivelyGetLeafProperties(edu);
+    //console.log(educationProperties);
 }
 
 // Recursively gets all the leaf properties of an object
@@ -142,7 +143,12 @@ const recursivelyGetLeafProperties = (object: Object): string[] => {
             }
         } 
         else {
+<<<<<<< Updated upstream
             array.push(key); // If the key is not an object, then add it to the array
+=======
+            if (typeof object[key] == 'string') continue;
+            array.push(key);
+>>>>>>> Stashed changes
         }   
     }
     return array;
