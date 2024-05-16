@@ -10,11 +10,10 @@ export class Ranker {
     }
 
     produceRanking(userImputs: UserImputs): FinalRankingType {
-       // console.log("filters", userImputs.filters)
         const normalizedEducations = getNormilizedEducations()
+        console.log("teachingMethods and type", normalizedEducations[0].degreeStructure.teachingMethods, typeof normalizedEducations[0].degreeStructure.teachingMethods[0])
+        console.log("filter teachingMethods and type", userImputs.filters.hasFormsOfEducation, typeof userImputs.filters.hasFormsOfEducation[0])
         this.roughSorting(userImputs.filters, normalizedEducations)
-        console.log("length of upperhalf",this.ranking.upperhalf.length)
-        console.log("length of lowerhalf",this.ranking.lowerhalf.length)
         const optimalEducation = findOptimalSolution(userImputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs.quizAnswers)
         return this.changeToApropriateType(rankedEducations)
@@ -35,16 +34,12 @@ export class Ranker {
     }
 
     roughSorting(filters: TableFilters, educations: Education[]) {
-        let indexNordjylland = 0
-        let indexOther = 0
         educations.forEach((education) => {
-            if (!this.filtersPassed(education, filters)) {
-                indexNordjylland += 1
-                console.log("Not Nordjylland and count:", education.geographies[0],indexNordjylland)
-                this.ranking.lowerhalf.push(education)
+            if (this.filtersPassed(education, filters)) {
+                this.ranking.upperhalf.push(education)
             }
             else {
-                this.ranking.upperhalf.push(education)
+                this.ranking.lowerhalf.push(education)
             }
         })
     }
@@ -136,18 +131,18 @@ export class Ranker {
     }
 
     filtersPassed(education: Education, filters: TableFilters) {
-        return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType)) &&
+       return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType)) &&
                ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography))) &&
-                ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions))// &&
-                && (filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))) //&&
+               ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) &&
+                (filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))) //&&
                 && (filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true)// &&
-                && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)// &&
-                && this.educationDurationFilterPassed(education, filters.educationDuration)// &&
+               && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)// &&
+               &&  this.educationDurationFilterPassed(education, filters.educationDuration) //&&
                 && this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
 
     }
     educationDurationFilterPassed(education: Education, educationDurationFilter: MinimumMaximum): boolean {
-        const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType)
+        const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType,true)
         return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
     }
     workingHoursFilterPassed(education: Education, workingHoursFilter: MinimumMaximum): boolean {
