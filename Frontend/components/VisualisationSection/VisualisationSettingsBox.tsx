@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
-import { EducationGroup } from 'types';
+import { EducationGroup, PCAData } from 'types'
+import { toast } from 'sonner';
+import { setChosenPropertiesForRadarGraph } from "./Visualisation"
+export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
 
-export enum ChartType { scatter = "scatter", bar = "bar", radar = "radar" };
 
 type VisualisationSettingsBoxProps = {
     chartType: ChartType,
@@ -45,6 +47,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
     }, []);
 
     let groupedEducationTitles = groupedEducations.map((education) => education.title);
+    let educationPropertiesTitles = educationProperties.map((education) => education.title);
 
     const handleChartChange = (event: SelectChangeEvent) => {
         setChartType(event.target.value as ChartType);
@@ -176,10 +179,10 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ cha
                 />
                 <MultiSelectAutoComplete
                     value={[]}
-                    collection={educationProperties}
+                    collection={educationPropertiesTitles}
                     selectLabel="Properties"
                     selectPlaceholder="Properties"
-                    setFilters={() => ("hello")}
+                    setFilters={() => "hello"}
                     identifier="y_axis"
                 />
                 <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>
