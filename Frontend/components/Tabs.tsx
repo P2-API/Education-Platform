@@ -1,11 +1,10 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
 import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React, { useState, createContext } from 'react';
-import { QuizAnswers, FilterProps, TableFilters } from '@src/types';
+import { QuizAnswers, TableFilters } from '@src/types';
 
 const FiltersContext = createContext<FilterInfoType>({
     filters: {
@@ -118,7 +117,7 @@ function CustomTabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <span>{children}</span>
                 </Box>
             )}
         </div>
@@ -202,9 +201,6 @@ export default function BasicTabs() {
         isQuizOpen: isQuizOpen,
         setIsQuizOpen: setIsQuizOpen
     };
-
-    console.log("filters", FilterInfo)
-    console.log("quiz", QuizInfo)
 
 
 

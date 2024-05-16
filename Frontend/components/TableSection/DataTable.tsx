@@ -462,7 +462,6 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
   const DetailPanelContent = () => {
     return (
       <div style={{ height: "200px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-        <p>Detail Panel Content</p>
       </div>
     );
   };

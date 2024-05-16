@@ -1,18 +1,6 @@
-/*
-Fag
-Sted
-Degree_type
-Salary
-Unemployment
-_____________
-
-Brancher
-Klasseundervisning/forelæsning/underviservejledning
-
-
-*/
-
 import { Geography, County, Institution, DegreeType, FormOfEducation } from "./enums";
+
+
 
 export type Industry = {
     title: string;
@@ -177,7 +165,7 @@ export type Subject = {
     score: number;
 }
 
-export type TableSectionDataFromServer = {
+export type EducationDataFromServer = {
     educations: Education[];
 
     degreeTypeKeys: (keyof typeof DegreeType)[];

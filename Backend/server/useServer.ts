@@ -1,5 +1,10 @@
-import { QuizAnswers, TableSectionDataFromServer, PCAData, Education, EducationGroup } from "types";
-import { FilterProps } from "@frontend/components/TableSection/FilterBoxComponent";
+import {
+    QuizAnswers,
+    EducationDataFromServer,
+    PCAData,
+    EducationGroup,
+    FilterProps
+} from "types";
 
 const useServer = () => {
 
@@ -10,9 +15,9 @@ const useServer = () => {
         return data;
     }
 
-    const getTableSectionData = async (): Promise<TableSectionDataFromServer> => {
+    const getTableSectionData = async (): Promise<EducationDataFromServer> => {
         const response = await fetch("http://localhost:1337/get_table_section_data");
-        const tableSectionData: TableSectionDataFromServer = await response.json();
+        const tableSectionData: EducationDataFromServer = await response.json();
         return tableSectionData;
     }
 
@@ -24,14 +29,14 @@ const useServer = () => {
 
     const getEducationsProperties = async (): Promise<any[]> => {
         const response = await fetch("http://localhost:1337/get_education_properties");
-        const educationProperties: any[]= await response.json();
+        const educationProperties: any[] = await response.json();
         return educationProperties;
     }
     // write more functions here
 
 
 
-    const updateRanking = async (filterProps: FilterProps, quizAnswers: QuizAnswers) => {
+    const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
 
         try {
             const response = await fetch("http://localhost:1337/update_ranking", {

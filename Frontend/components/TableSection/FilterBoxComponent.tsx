@@ -1,7 +1,7 @@
 
 import Paper from '@mui/material/Paper';
 import { useContext, useEffect } from "react";
-import { TableSectionDataContext } from "@frontend/pages/Homepage";
+import { EducationDataFromServerContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
 import { MinimumMaximum, FinalRankingType } from "@src/types"
 import { bouncy } from 'ldrs';
@@ -29,7 +29,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
 
 
 
-    const data = useContext(TableSectionDataContext);
+    const data = useContext(EducationDataFromServerContext);
     const filters = useContext(FiltersContext)?.filters;
     const quizAnswerState = useContext(QuizInfoContext)?.quizData;
     const setFilters = useContext(FiltersContext)?.setFilters;
@@ -88,7 +88,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     const getValueTextJobHours = (value: number) => { return `${value} timer` }
     const getValueTextUnemployment = (value: number) => { return `${value}%` }
 
-    console.log("Filters", filters);
 
 
     // rank degrees: 
@@ -101,7 +100,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         setIsCalculating(false);
     }
 
-    console.log("Data", data);
 
 
     bouncy.register()
@@ -110,7 +108,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
             <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
-                {false ? (
+                {isCalculating ? (
                     <div style={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
                         <l-bouncy
                             size="70"
@@ -241,7 +239,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={rankDegrees}>Beregn</button>
                         </div>
                     </>
-                )
+                    )
                 }
 
             </Paper >

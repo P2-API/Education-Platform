@@ -4,6 +4,7 @@ import { getMinimumEducation, getMaximumEducation, calculateMinimumAndMaximumEdu
 import { Education } from '../../src/types';
 import { County, DegreeType, Geography, Institution, SubjectTitle } from '../../src/enums';
 
+// Mock data
 export const education1: Education = 
 { 
     title: "education1",  
@@ -95,6 +96,7 @@ export const education1: Education =
     }
 }
 
+// Mock data
 const education2: Education = 
 { 
     title: "education2",  
@@ -186,6 +188,7 @@ const education2: Education =
     }
 }
 
+// Expected minimum education
 const minimumEducation: Education = 
 { 
     title: "minimum education",  
@@ -277,6 +280,7 @@ const minimumEducation: Education =
     }
 }
 
+// Expected maximum education
 const maximumEducation: Education = 
 { 
     title: "maximum education",  
@@ -369,8 +373,8 @@ const maximumEducation: Education =
 }
 
 test("Calculate Minimum And Maximum Education", () => {
-    const educations: Education[] = [education1, education2];
-    calculateMinimumAndMaximumEducation(educations); 
+    const educations: Education[] = [education1, education2]; // Mock data
+    calculateMinimumAndMaximumEducation(educations); // Calculate the minimum and maximum education 
 
     expect(getMinimumEducation()).toStrictEqual(minimumEducation);
     expect(getMaximumEducation()).toStrictEqual(maximumEducation);
