@@ -20,6 +20,7 @@ type RankedMaterialReactDataTableProps = {
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
   const data: RankedDataStructure[] = rankedData.ranking;
+  console.log("rankeddata", rankedData)
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
       {
@@ -35,7 +36,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
           const rank = row.original.education.rank;
           if (rank == null || rank == undefined || rank == 0) {
             return (
-              <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>-</p>
+              <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}><b>{row.index + 1}</b></p>
             );
           }
 
@@ -183,9 +184,11 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         },
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const socialEnvironment = row.original.education.socialFeedback.socialEnvironment;
+          console.log("socialEnvironment", row.original.education.socialFeedback)
           const groupEngagement = row.original.education.socialFeedback.groupEngagement;
           const loneliness = row.original.education.socialFeedback.loneliness;
           const stress = row.original.education.socialFeedback.stress;
+
           // ("hoursNumbers", hoursNumbers)
           // ("hoursTitles", hoursTitles)
           return (

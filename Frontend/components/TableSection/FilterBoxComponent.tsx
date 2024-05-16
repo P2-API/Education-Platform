@@ -106,7 +106,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     bouncy.register()
     return (
         <>
-            <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
+            <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} filters={filterInfo.filters} setRankedData={setRankedData} setIsCalculating={setIsCalculating} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
                 {isCalculating ? (

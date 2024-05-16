@@ -5,7 +5,8 @@ import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgres
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-import { QuizAnswers } from ',,/../../src/types.tsx'
+import { QuizAnswers, TableFilters, FinalRankingType } from ',,/../../src/types.tsx'
+import { useServer } from '@backend/server/useServer';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -41,9 +42,12 @@ type QuizModalProperties = {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setQuizAnswerState: React.Dispatch<React.SetStateAction<QuizAnswers>>;
     quizAnswerState: QuizAnswers;
+    filters: TableFilters;
+    setRankedData: React.Dispatch<React.SetStateAction<FinalRankingType | null>>
+    setIsCalculating: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen, setQuizAnswerState, quizAnswerState }) => {
+const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen, setQuizAnswerState, quizAnswerState, filters, setRankedData, setIsCalculating}) => {
     const questions = [
         {
             positiveReferencedAnswers: ["subjectsPriority"],
@@ -146,6 +150,16 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen,
         setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
 
+    const { updateRanking } = useServer();
+
+    const finishQuiz = async (newAnswer: QuizAnswers) => {
+        setIsCalculating(true);
+        setIsModalOpen(false);
+        setCurrentQuestionIndex(0);
+        const response = await updateRanking(filters, newAnswer);
+        setRankedData(response);
+        setIsCalculating(false);
+    }
     const HandleNextQuestion = () => {
 
         const newAnswer: QuizAnswers = {
@@ -163,9 +177,11 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen,
         setQuizAnswerState(newAnswer);
 
         const isLastQuestion = (currentQuestionIndex + 1) == questions.length;
+
+
+
         if (isLastQuestion) {
-            setIsModalOpen(false);
-            setCurrentQuestionIndex(0);
+            finishQuiz(newAnswer);
             return;
         }
 
