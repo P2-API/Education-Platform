@@ -6,6 +6,7 @@ import fs from 'fs';
 
 import { EducationsGroupped, Profession, NormalizedProfession, Education, Subject } from "../../src/types";
 
+const failedUrls: string[] = [];
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
 export async function processAllEducations() {
@@ -32,18 +33,39 @@ export async function processAllEducations() {
     }
 }
 
-async function assignSubjectRankings(educationData: EducationsGroupped) {
-    const groupData: { [key: string]: unknown } = {};
+interface GroupData {
+    [key: string]: unknown;
+}
+
+async function assignSubjectRankings(educationData: { url: string; title: string }[]) {
+    const groupData: GroupData = {}; 
 
     for (let index = educationData.length - 1; index >= 0; index--) {
-        const result = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
+        const result: unknown = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
         if (!result) {
             console.error(`Error processing URL ${educationData[index].url}`);
+            // If processing fails, add the URL to the failedUrls array
+            failedUrls.push(educationData[index].url);
             continue;
         }
         groupData[educationData[index].title] = result;
     }
+
+    // After processing all URLs, write failed URLs to a file
+    await saveFailedUrlsToFile();
+
     return groupData;
+}
+
+async function saveFailedUrlsToFile() {
+    const outputFilePath = 'failed_urls.txt';
+    try {
+        // Convert array of failed URLs to string and append to file
+        await fs.promises.appendFile(outputFilePath, failedUrls.join('\n') + '\n');
+        console.log(`Failed URLs appended to ${outputFilePath}`);
+    } catch (err) {
+        console.error(`Error appending failed URLs to file ${outputFilePath}:`, err);
+    }
 }
 
 function loadEducationsFromFile(filePath: string): EducationsGroupped {
