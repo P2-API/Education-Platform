@@ -44,7 +44,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
         }
         setData({ x: xValues, y: yValues, text: text });
     };
-    
+
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
@@ -57,7 +57,11 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
                             text: data.text,
                             mode: "markers",
                             type: "scatter",
-                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            marker: {
+                                size: 10,
+                                sizemode: "area",
+                                color: data.y.map((value: number) => value > 60 ? "red" : "green")
+                            },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
                                 "Løn: %{y}<br>" +

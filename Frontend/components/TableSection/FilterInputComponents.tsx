@@ -24,7 +24,7 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     const identity = identifier; // Assign the identifier value to a constant variable identity
     const handleChange = (_event: React.SyntheticEvent, newValue: string[]) => {
         setValue(newValue);
-        if(setProperties != undefined && value != undefined && value != null) setProperties(newValue);
+        if (setProperties != undefined && value != undefined && value != null) setProperties(newValue);
         if (setFilters) {
             setFilters((prevFilters) => ({
                 ...prevFilters,
@@ -180,7 +180,6 @@ type CheckmarkToggleButtonProps = {
 export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ initialState, description, setFilters, identifier }) => {
     const [selected, setSelected] = React.useState(initialState);
 
-
     if (identifier === "hasFlexibleJobSchedule") {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -202,7 +201,6 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
             </Box>
         );
     }
-
     else if (identifier === "canWorkInternationally") {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -211,11 +209,11 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
                     selected={selected}
                     sx={{ height: "0px", width: "0px" }}
                     onChange={() => {
-                        setSelected(!selected)
                         setFilters((prevFilters) => ({
                             ...prevFilters,
-                            canWorkInternationally: selected
+                            canWorkInternationally: !selected
                         }));
+                        setSelected(!selected)
                     }}
                 >
                     {selected && (<CheckIcon />)}
@@ -225,23 +223,4 @@ export const CheckmarkToggleButton: React.FC<CheckmarkToggleButtonProps> = ({ in
         );
     }
 
-    return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <ToggleButton
-                value="check"
-                selected={selected}
-                sx={{ height: "0px", width: "0px" }}
-                onChange={() => {
-                    setSelected(!selected)
-                    setFilters((prevFilters) => ({
-                        ...prevFilters,
-                        [identifier]: selected
-                    }));
-                }}
-            >
-                {selected && (<CheckIcon />)}
-            </ToggleButton>
-            <div style={{ marginLeft: '8px' }}>{description}</div>
-        </Box>
-    );
 }

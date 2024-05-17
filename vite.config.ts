@@ -10,5 +10,12 @@ export default defineConfig({
       '@backend': path.resolve(__dirname, 'Backend'),
       '@src': path.resolve(__dirname, 'src')
     }
+  },
+  optimizeDeps: {
+    exclude: [
+      'chunk-7ZYFG3L4.js?v=ca1385e6',
+      'chunk-JWRYLV4P.js?v=ca1385e6',
+      'chunk-ZCRPVQPG.js?v=ca1385e6',
+    ]
   }
 });

@@ -1,11 +1,17 @@
 import React from 'react';
 import VisualisationSettingsBox, { ChartType } from "@frontend/components/VisualisationSection/VisualisationSettingsBox"
 import Visualisation from '@frontend/components/VisualisationSection/Visualisation';
+import { rankedDataInfo } from '@frontend/components/Tabs';
 
+type VisualisationSectionProps = {
+    rankedDataInfo: rankedDataInfo;
+}
 
-const VisualisationSection: React.FC = () => {
+const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataInfo }) => {
     const [chartType, setChartType] = React.useState<ChartType>(ChartType.scatter);
     const [properties, setProperties] = React.useState<string[]>([])
+
+    console.log("Visualization has access to: ", rankedDataInfo)
 
     return (
 
@@ -14,7 +20,7 @@ const VisualisationSection: React.FC = () => {
                 <VisualisationSettingsBox chartType={chartType} setChartType={setChartType} setProperties={setProperties} />
             </div>
             <div style={{ width: "69%" }}>
-                <Visualisation chartType={chartType} properties={properties}/>
+                <Visualisation chartType={chartType} properties={properties} />
             </div>
         </div>
     );
