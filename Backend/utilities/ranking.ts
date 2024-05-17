@@ -2,6 +2,7 @@ import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers,
 import { findOptimalSolution } from "./linear-programming"
 import { DegreeTypeToDuration } from "../../src/enums"
 import { getNormilizedEducations } from "../server/on-server-start"
+import { table } from "console"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -11,8 +12,7 @@ export class Ranker {
 
     produceRanking(userImputs: UserImputs): FinalRankingType {
         const normalizedEducations = getNormilizedEducations()
-        console.log("teachingMethods and type", normalizedEducations[0].degreeStructure.teachingMethods, typeof normalizedEducations[0].degreeStructure.teachingMethods[0])
-        console.log("filter teachingMethods and type", userImputs.filters.hasFormsOfEducation, typeof userImputs.filters.hasFormsOfEducation[0])
+        console.log("filters", userImputs.filters.educationDuration)
         this.roughSorting(userImputs.filters, normalizedEducations)
         const optimalEducation = findOptimalSolution(userImputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs.quizAnswers)
@@ -34,11 +34,25 @@ export class Ranker {
     }
 
     roughSorting(filters: TableFilters, educations: Education[]) {
+        console.log(filters.hasFormsOfEducation)
         educations.forEach((education) => {
+            /*
+            console.log("education duration", DegreeTypeToDuration(education.degreeType,true))
+            console.log("forms of education",(filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))))
+            console.log("degreeType:",(filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
+            console.log("geography:",(filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography))) 
+            console.log("institution",(filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) 
+            console.log("internationally",filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true)
+            console.log("flexibility",(filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)
+            console.log("duration",this.educationDurationFilterPassed(education, filters.educationDuration))
+            console.log("working hours",this.workingHoursFilterPassed(education, filters.wantedWorkingHours))
+            */
             if (this.filtersPassed(education, filters)) {
+                console.log("passed filters")
                 this.ranking.upperhalf.push(education)
             }
             else {
+                console.log("did not pass filters")
                 this.ranking.lowerhalf.push(education)
             }
         })
@@ -131,18 +145,20 @@ export class Ranker {
     }
 
     filtersPassed(education: Education, filters: TableFilters) {
+    
        return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType)) &&
                ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography))) &&
                ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) &&
-                (filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))) //&&
+                ((filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)))) //&&
                 && (filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true)// &&
                && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)// &&
-               &&  this.educationDurationFilterPassed(education, filters.educationDuration) //&&
+               && this.educationDurationFilterPassed(education, filters.educationDuration) //&&
                 && this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
 
     }
     educationDurationFilterPassed(education: Education, educationDurationFilter: MinimumMaximum): boolean {
         const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType,true)
+        console.log("filter duration", educationDurationFilter)
         return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
     }
     workingHoursFilterPassed(education: Education, workingHoursFilter: MinimumMaximum): boolean {

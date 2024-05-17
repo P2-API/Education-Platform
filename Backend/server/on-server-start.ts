@@ -356,10 +356,10 @@ export const getNormilizedEducations = (): Education[] => {
 
 // Uses the keys to calculate the minimum and maximum duration of a DegreeType
 export const calculateMinMaxDegreeDuration = () => {
-    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum; // Initial to a value in range
-    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum; // Initial to a value in range
+    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0],false).minimum; // Initial to a value in range
+    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0],false).maximum; // Initial to a value in range
     degreeTypeKeys.forEach((degreeType) => { // Loop through all the keys of DegreeType
-        let newDuration = DegreeTypeToDuration(degreeType); // Get the duration of the DegreeType
+        let newDuration = DegreeTypeToDuration(degreeType,false); // Get the duration of the DegreeType
         if (newDuration.minimum != -1) { // Deprecated check probably
             educationDurationMin = Math.min(educationDurationMin, newDuration.minimum);
             educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
