@@ -20,7 +20,7 @@ type RankedMaterialReactDataTableProps = {
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
   const data: RankedDataStructure[] = rankedData.ranking;
-  console.log("rankeddata", rankedData)
+
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
       {
@@ -184,7 +184,6 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         },
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const socialEnvironment = row.original.education.socialFeedback.socialEnvironment;
-          console.log("socialEnvironment", row.original.education.socialFeedback)
           const groupEngagement = row.original.education.socialFeedback.groupEngagement;
           const loneliness = row.original.education.socialFeedback.loneliness;
           const stress = row.original.education.socialFeedback.stress;
@@ -484,10 +483,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
   const DetailPanelContent = () => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
-    console.log("margingLeft", margingLeft)
     return (
-      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-      DEFINITELY RANKED
+      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+        DEFINITELY RANKED
       </div>
     );
   };
