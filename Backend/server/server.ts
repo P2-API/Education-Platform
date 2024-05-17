@@ -31,11 +31,8 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
 });
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData = request.body;
-    console.log("quizData", requestData)
-    const pcaData = performPCA(requestData);
-    console.log("pcaData", pcaData)
-
-    response.status(200).send(requestData);;
+    const pcaData = performPCA(requestData.quizAnswers);
+    response.status(200).send(pcaData);
 });
 server.get("/get_grouped_educations", (request: Request, response: Response) => {
     response.status(200).send(getGroupedEducations());

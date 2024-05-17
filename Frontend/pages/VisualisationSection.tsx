@@ -12,6 +12,7 @@ const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataI
     const [properties, setProperties] = React.useState<string[]>([])
 
     console.log("Visualization has access to: ", rankedDataInfo)
+    const rankedDat = rankedDataInfo;
 
     return (
 
@@ -20,7 +21,7 @@ const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataI
                 <VisualisationSettingsBox chartType={chartType} setChartType={setChartType} setProperties={setProperties} />
             </div>
             <div style={{ width: "69%" }}>
-                <Visualisation chartType={chartType} properties={properties} />
+                <Visualisation chartType={chartType} properties={properties} rankedDataInfo={rankedDat} />
             </div>
         </div>
     );
