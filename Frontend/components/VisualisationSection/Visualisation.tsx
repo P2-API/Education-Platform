@@ -4,18 +4,25 @@ import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
-import { QuizInfoContext } from '@frontend/components/Tabs';
+import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
 import { PCAData } from '@src/types';
 
 interface VisualisationProps {
     chartType: ChartType,
     properties: string[]
+    rankedDataInfo: rankedDataInfo
 }
 
-const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) => {
+type pcaScatterData = {
+    xValues: number[],
+    yValues: number[]
+    textValues: string[]
+}
+
+const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo }) => {
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
-
+    console.log("rankedDataInfo: ", rankedDataInfo)
     const quizAnswerState = useContext(QuizInfoContext);
 
     const { getEducationsProperties } = useServer();
@@ -28,14 +35,19 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
     console.log("chartType: ", chartType)
 
     const { getPCAData } = useServer();
-    const [pcaData, setPCAData] = useState<PCAData | null>(null);
+    const [pcaData, setPCAData] = useState<pcaScatterData>();
 
     useEffect(() => {
         getPCAData(quizAnswerState.quizData).then((data) => {
-            console.log("PCA data: ", data)
+            setPCAData({
+                xValues: data?.points.map((point) => point.x),
+                yValues: data?.points.map((point) => point.y),
+                textValues: data?.points.map((point) => point.education.title)
+            })
         })
     }, [quizAnswerState.quizData]);
-
+    const rankedData = rankedDataInfo;
+    const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
 
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
         x: [1, 2, 3, 4, 5],
@@ -63,32 +75,30 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
                 <Plot
                     data={[
                         {
-                            x: data.x,
-                            y: data.y,
-                            text: data.text,
+                            x: pcaData?.xValues,
+                            y: pcaData?.yValues,
+                            text: pcaData?.textValues,
                             mode: "markers",
                             type: "scatter",
                             marker: {
                                 size: 10,
                                 sizemode: "area",
-                                color: data.y.map((value: number) => value > 60 ? "red" : "green")
+                                color: pcaData?.textValues.map((_text, index) => (index < rankIndex ? "green" : "red"))
                             },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
-                                "Løn: %{y}<br>" +
-                                "Uddannelsestype: %{x}<br>" +
+                                "Hjalfedildur: %{y}<br>" +
+                                "Kramsemar: %{x}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "PCA Analyse - Løn og uddannelsestype",
+                        title: "PCA Analyse",
                         xaxis: {
-                            title: "Uddannelsestype",
-                            range: [0, 10] // Set the range for x-axis
+                            title: "Kramsemar",
                         },
                         yaxis: {
-                            title: "Løn (kr.)",
-                            range: [0, 100] // Set the range for y-axis
+                            title: "Hjalfedildur",
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },

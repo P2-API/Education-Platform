@@ -62,7 +62,9 @@ const useServer = () => {
             body: JSON.stringify({ quizAnswers })
         });
 
-        return response
+        const responseJson: PCAData = await response.json();
+
+        return responseJson;
     }
 
 
