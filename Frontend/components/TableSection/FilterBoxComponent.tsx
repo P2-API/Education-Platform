@@ -40,7 +40,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         minimum: data?.minimumValueEducation?.jobData.salaries.experienced.lowerQuartile ?? 0,
         maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
     };
-
+    console.log("data", data)
     // Value packing for working hours slider
     const wantedWorkingHoursRange: MinimumMaximum = {
         minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
@@ -74,7 +74,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                 newGraduate: newGraduateUnemploymentRange,
                 experienced: experiencedUnemploymentRange
             },
-            educationDuration: { minimum: 0, maximum: 0 }
+            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 36 }
         }));
     }, [data]);
     // Utility function for showcasing value when moving sliders

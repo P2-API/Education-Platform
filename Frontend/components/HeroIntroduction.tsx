@@ -151,8 +151,8 @@ const HeroIntroduction: React.FC = () => {
                 >
                     Gå til uddannelser
                 </button>
-                <button className="primary-button" style={{ backgroundColor: "blue" }} onClick={serverGreetsWithToast}>Snak med server</button>
-
+                {/*                 <button className="primary-button" style={{ backgroundColor: "blue" }} onClick={serverGreetsWithToast}>Snak med server</button>
+ */}
             </div>
         </div>
     );

@@ -18,39 +18,40 @@ word_list = json.loads(input_data)["words"]
 
 # Define keywords
 keywords = {
-    "Natural Science",
-    "Art",
-    "History",
-    "Psychology",
-    "Philosophy",
-    "Mathematics",
-    "Architecture",
-    "Music",
-    "Politics",
-    "Culture",
-    "Health",
-    "Law",
-    "Economics",
-    "Programming",
-    "Environment",
-    "Journalism",
-    "Communication",
-    "Religion",
-    "Sociology",
-    "Agriculture",
-    "Craftsmanship",
-    "Trade"
+    "Natural Science": ["Natural Science", "Biology", "Chemistry", "Geology"],
+    "Art": ["Art", "Theater", "Sculpture", "Photography"],
+    "History": ["History", "Archaeology", "Timeline", "Cultural Heritage"],
+    "Psychology": ["Psychology", "Mental Health", "Behavior", "Therapy"],
+    "Philosophy": ["Philosophy", "Ethics", "Logic", "Metaphysics"],
+    "Mathematics": ["Mathematics", "Geometry", "Calculus", "Statistics"],
+    "Architecture": ["Architecture", "Urbanism", "Building Design", "Sustainability"],
+    "Music": ["Music", "Harmony", "Composition", "Performance"],
+    "Politics": ["Politics", "Democracy", "Power Distribution", "Political System"],
+    "Culture": ["Culture", "Traditions", "Artistic Expression", "Identity"],
+    "Health Science": ["Health", "Epidemiology", "Medical Research", "Healthcare"],
+    "Law": ["Law", "Legal System", "Legislation", "Legal Responsibility"],
+    "Economics": ["Economics", "Market Dynamics", "Capitalism", "Microeconomics"],
+    "Information Technology": ["Information Technology", "Network Security", "Data Analysis", "Software Development"],
+    "Programming": ["Programming", "Algorithms", "Web Development", "Object-Oriented Programming", "Computer"],
+    "Environmental Science": ["Environmental", "Climate", "Principles of Sustainability", "Ecological Balance"],
+    "Education": ["Education", "Learning Theory", "Pedagogy", "School Leadership"],
+    "Journalism": ["Journalism", "Press Ethics", "News Reporting", "Editorial Process"],
+    "Communication": ["Speech", "Interpersonal Communication", "Mass Communication", "Digital Communication"],
+    "Religion": ["Religion", "Theology", "Religious Practice", "Spiritual Development"],
+    "Sociology": ["Sociology", "Culture", "Movements", "Cultural Diversity"],
+    "Agricultural Science": ["Agricultural", "Agronomy", "Animal Husbandry", "Sustainable Agricultural Practices"]
 }
 
-# Calculate mean similarity scores for each keyword
+# Calculate mean similarity scores for each keyword category
 rankings = {}
 
-for keyword in keywords:
+for category, keyword_list in keywords.items():
     similarity_scores = []
-    for word in word_list:
-        similarity_scores.append(nlp(keyword).similarity(nlp(word)))
+    for keyword in keyword_list:
+        for word in word_list:
+            similarity_scores.append(nlp(keyword).similarity(nlp(word)))
     mean_similarity = sum(similarity_scores) / len(similarity_scores)
-    rankings[keyword] = mean_similarity
+    rankings[category] = mean_similarity
 
 # Write rankings to output file
 output_file = sys.argv[2]
