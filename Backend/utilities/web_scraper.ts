@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { load } from 'cheerio';
 import OpenAI from 'openai';
 import { spawn } from 'child_process';
@@ -10,15 +10,16 @@ const failedUrls: string[] = [];
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
 export async function processAllEducations() {
-    const filePath = '../../Backend/cache/education_groups.ts';
+    const filePath = 'Backend/cache/education_groups.ts';
     console.log("Starting processing of all educations");
 
     const groupedEducations = loadEducationsFromFile(filePath);
     let allEducationData = {};
+    let index = 0;
 
     for (const educationGroup of groupedEducations) {
-        const index = 0;
-        console.log(`Processing group ${index + 1}/${groupedEducations.length}: ${educationGroup.title}`);
+        index++;
+        console.log(`Processing education ${index}/${groupedEducations.length}: ${educationGroup.title}`);
         const groupData = await assignSubjectRankings([educationGroup]);
         allEducationData = { ...allEducationData, ...groupData };
     }
@@ -58,11 +59,13 @@ async function assignSubjectRankings(educationData: { url: string; title: string
 }
 
 async function saveFailedUrlsToFile() {
-    const outputFilePath = 'failed_urls.txt';
+    const outputFilePath = 'Backend/cache/failed_urls.txt';
     try {
         // Convert array of failed URLs to string and append to file
-        await fs.promises.appendFile(outputFilePath, failedUrls.join('\n') + '\n');
-        console.log(`Failed URLs appended to ${outputFilePath}`);
+        if (failedUrls.length === 0) {
+            return;
+        }
+        await fs.promises.writeFile(outputFilePath, failedUrls.join('\n') + '\n');
     } catch (err) {
         console.error(`Error appending failed URLs to file ${outputFilePath}:`, err);
     }
@@ -176,7 +179,7 @@ export async function getHeadliner(url: string): Promise<{ headlinerText: string
             return { headlinerText: null };
         }
 
-        const headlinerText = await getHeadlinerText(response);
+        const headlinerText = await getHeadlinerText(response.data);
         return { headlinerText };
     } catch (error) {
         console.error('Error:', error);
@@ -230,14 +233,13 @@ export async function getDescribingText(html: string): Promise<string | null> {
 }
 
 
-async function fetchHtml(url: string): Promise<string | null> {
+function fetchHtml(url: string) {
     try {
         if (!url.startsWith('https://')) {
-            url = 'https://' + url;
+            url = "https://" + url;
         }
+        return axios.get(url)
 
-        const response: AxiosResponse<string> = await axios.get(url);
-        return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const axiosError: AxiosError = error;
@@ -249,7 +251,7 @@ async function fetchHtml(url: string): Promise<string | null> {
         } else {
             console.error('Error fetching the URL:', error);
         }
-        return null;
+        return "Error fetching the URL";
     }
 }
 
@@ -267,7 +269,7 @@ async function sendMessageToChatGPT(text: string, preferences: Record<string, nu
                 content: promptString
             },
         ],
-        model: "gpt-3.5-turbo-0301",
+        model: "gpt-3.5-turbo-0125",
         response_format: { type: "json_object" },
         temperature: 0.2,
     });
@@ -287,11 +289,12 @@ async function translateTextToEnglishChatGPT(text: string) {
                 content: "translate the text to english, dont make format changes to the text, pls give the translationed text back in a JSON with all text in one string."
             },
         ],
-        model: "gpt-3.5-turbo-0301",
+        model: "gpt-3.5-turbo-0125",
         response_format: { type: "json_object" },
         temperature: 0.1,
     });
 
+    (completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
 
@@ -335,28 +338,33 @@ interface KeywordsResponse {
     keywords: Keyword[];
 }
 
-export async function getAllText(url: string): Promise<string | null> {
-    try {
-        const response = await fetchHtml(url);
-        if (response === "Error fetching the URL") {
-            return "Error fetching the URL";
-        }
+async function getAllText(url: string) {
 
-        if (response === null) {
-            console.error('Error: Response is null');
-            return null;
-        }
-
-        const responseData = JSON.parse(response);
-        const headlineText = await getHeadlinerText(responseData.data);
-        const smallSummaryText = await getSmallSummary(responseData.data);
-        const describingText = await getDescribingText(responseData.data);
-
-        return `${headlineText}\n${smallSummaryText}\n${describingText}`;
-    } catch (error) {
-        console.error('Error:', error);
-        return null;
+    const response = await fetchHtml(url);
+    if (response === "Error fetching the URL") {
+        return "Error fetching the URL";
     }
+
+    const headlinerText = await getHeadlinerText(response.data);
+    if (!headlinerText) {
+        return "Error extracting headliner text";
+    }
+
+    const smallSummary = await getSmallSummary(response.data);
+    if (!smallSummary) {
+        return "Error extracting small summary";
+    }
+
+    const describingText = await getDescribingText(response.data);
+    if (!describingText) {
+        return "Error extracting describing text";
+    }
+
+    let allText = headlinerText + smallSummary + describingText;
+
+    allText = await sanitizeText(allText);
+
+    return (allText);
 }
 
 
@@ -371,7 +379,7 @@ async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
         const outputFile = 'Backend/cache/output.json';
         fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
-        const pythonProcess = spawn('python', ['semanticanalyzer.py', inputFile, outputFile]);
+        const pythonProcess = spawn('python', ['Backend/utilities/semanticanalyzer.py', inputFile, outputFile]);
 
         pythonProcess.stderr.on('data', (data) => {
             reject(`Error from Python script: ${data}`);

@@ -9,7 +9,7 @@ import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
 import { processAllEducations } from "../utilities/web_scraper";
-processAllEducations()
+
 let educations: Education[] = [];
 const educationGroups: EducationGroup[] = [];
 let normilizedEducations: Education[] = [];
@@ -55,6 +55,7 @@ const caclulateBasedOnEducations = () => {
     groupEducations();
     calculateMinimumAndMaximumEducation(educations);
     assignSubjectsToEducations(educations);
+    //processAllEducations();
 }
 
 // Calculates the properties of the education object
