@@ -53,13 +53,13 @@ const useServer = () => {
 
     };
 
-    const getPCAData = async (PCA_request: PCAData) => {
+    const getPCAData = async (quizAnswers: QuizAnswers) => {
         const response = await fetch("http://localhost:1337/PCA_request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ PCA_request })
+            body: JSON.stringify({ quizAnswers })
         });
 
         return response

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
 import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
+import { QuizInfoContext } from '@frontend/components/Tabs';
+import { PCAData } from '@src/types';
 
 interface VisualisationProps {
     chartType: ChartType,
@@ -14,6 +16,8 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
 
+    const quizAnswerState = useContext(QuizInfoContext);
+
     const { getEducationsProperties } = useServer();
     useEffect(() => {
         getEducationsProperties().then((data) => {
@@ -23,7 +27,14 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties }) 
 
     console.log("chartType: ", chartType)
 
+    const { getPCAData } = useServer();
+    const [pcaData, setPCAData] = useState<PCAData | null>(null);
 
+    useEffect(() => {
+        getPCAData(quizAnswerState.quizData).then((data) => {
+            console.log("PCA data: ", data)
+        })
+    }, [quizAnswerState.quizData]);
 
 
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
