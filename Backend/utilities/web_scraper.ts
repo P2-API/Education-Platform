@@ -38,7 +38,7 @@ interface GroupData {
 }
 
 async function assignSubjectRankings(educationData: { url: string; title: string }[]) {
-    const groupData: GroupData = {}; 
+    const groupData: GroupData = {};
 
     for (let index = educationData.length - 1; index >= 0; index--) {
         const result: unknown = await loadSubjectsFromUrls(educationData[index].url, educationData[index].title);
@@ -170,12 +170,12 @@ export async function getHeadliner(url: string): Promise<{ headlinerText: string
         if (response === "Error fetching the URL") {
             return { headlinerText: "Error fetching the URL" };
         }
-        
+
         if (response === null) {
             console.error('Error: Response is null');
             return { headlinerText: null };
         }
-        
+
         const headlinerText = await getHeadlinerText(response);
         return { headlinerText };
     } catch (error) {
@@ -341,14 +341,14 @@ export async function getAllText(url: string): Promise<string | null> {
         if (response === "Error fetching the URL") {
             return "Error fetching the URL";
         }
-        
+
         if (response === null) {
             console.error('Error: Response is null');
             return null;
         }
 
         const responseData = JSON.parse(response);
-        const headlineText = await getHeadlinerText(responseData.data); 
+        const headlineText = await getHeadlinerText(responseData.data);
         const smallSummaryText = await getSmallSummary(responseData.data);
         const describingText = await getDescribingText(responseData.data);
 

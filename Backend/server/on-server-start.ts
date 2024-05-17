@@ -8,7 +8,8 @@ import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
-
+import { processAllEducations } from "../utilities/web_scraper";
+processAllEducations()
 let educations: Education[] = [];
 const educationGroups: EducationGroup[] = [];
 let normilizedEducations: Education[] = [];
@@ -39,6 +40,9 @@ export const onStart = () => {
 // calculations on them
 const cacheEducations = async () => {
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
+
+
+
     caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations    
 }
 
@@ -360,10 +364,10 @@ export const getEducationData = (): EducationData => {
 
 // Uses the keys to calculate the minimum and maximum duration of a DegreeType
 export const calculateMinMaxDegreeDuration = () => {
-    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0],false).minimum; // Initial to a value in range
-    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0],false).maximum; // Initial to a value in range
+    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0], false).minimum; // Initial to a value in range
+    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0], false).maximum; // Initial to a value in range
     degreeTypeKeys.forEach((degreeType) => { // Loop through all the keys of DegreeType
-        let newDuration = DegreeTypeToDuration(degreeType,false); // Get the duration of the DegreeType
+        let newDuration = DegreeTypeToDuration(degreeType, false); // Get the duration of the DegreeType
         if (newDuration.minimum != -1) { // Deprecated check probably
             educationDurationMin = Math.min(educationDurationMin, newDuration.minimum);
             educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
