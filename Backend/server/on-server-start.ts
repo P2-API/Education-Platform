@@ -1,4 +1,4 @@
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment, EducationData } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
@@ -10,7 +10,7 @@ import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
 
 let educations: Education[] = [];
-let educationGroups: EducationGroup[] = [];
+const educationGroups: EducationGroup[] = [];
 let normilizedEducations: Education[] = [];
 let educationProperties: string[] = [];
 
@@ -55,7 +55,7 @@ const caclulateBasedOnEducations = () => {
 
 // Calculates the properties of the education object
 const calculateEducationProperties = () => {
-    let edu: Education = {
+    const edu: Education = {
         url: "",
         rank: null,
         title: "",
@@ -350,8 +350,12 @@ const calculateBasedOnMinimumAndMaximumEducation = () => {
     normilizedEducations = normilizesEducations(educations);
 }
 
-export const getNormilizedEducations = (): Education[] => {
-    return normilizedEducations;
+export const getEducationData = (): EducationData => {
+    const normalizedAndNormalEducations = {
+        normalized: normilizedEducations,
+        normal: educations
+    }
+    return normalizedAndNormalEducations;
 }
 
 // Uses the keys to calculate the minimum and maximum duration of a DegreeType

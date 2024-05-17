@@ -235,7 +235,7 @@ export type PCAData = {
     points: {
         x: number,
         y: number,
-        education: Education
+        education: Education,
     }[],
     principalComponents: {
         xAxis: axisData
@@ -297,3 +297,8 @@ export type NormalizedProfession = {
   url: string;
   data: NormalizedProfessionData;
 };
+
+export type EducationData = {
+    normalized: Education[],
+    normal: Education[]
+}

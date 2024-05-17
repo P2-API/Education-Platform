@@ -1,8 +1,7 @@
-import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum } from "../../src/types"
+import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum, EducationData } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
 import { DegreeTypeToDuration } from "../../src/enums"
-import { getNormilizedEducations } from "../server/on-server-start"
-import { table } from "console"
+import { getEducationData } from "../server/on-server-start"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -11,20 +10,28 @@ export class Ranker {
     }
 
     produceRanking(userImputs: UserImputs): FinalRankingType {
-        const normalizedEducations = getNormilizedEducations()
-        console.log("filters", userImputs.filters.educationDuration)
-        this.roughSorting(userImputs.filters, normalizedEducations)
+        const educationData:EducationData = getEducationData()
+        this.roughSorting(userImputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userImputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs.quizAnswers)
-        return this.changeToApropriateType(rankedEducations)
+        return this.changeToApropriateType(rankedEducations, educationData.normal)
     }
 
-    changeToApropriateType(rankedEducations: IntermediateRankingType): FinalRankingType {
+    changeToApropriateType(rankedEducations: IntermediateRankingType, normalEducationData:Education[]): FinalRankingType {
         const finalRanking: FinalRankingType = { ranking: [], index: 0 }
         rankedEducations.upperhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         finalRanking.index = finalRanking.ranking.length
         rankedEducations.lowerhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         this.normalizeScores(finalRanking.ranking)
+        //map the ranked educations to the normal education data
+        finalRanking.ranking.map((education) => {
+            const normalEducation = normalEducationData.find((normalEducation) => (normalEducation.title === education.education.title && normalEducation.institutions === education.education.institutions));
+            if (normalEducation) {
+                education.education = normalEducation;
+            } else {
+                throw new Error("could not map normalized education to normal education data");
+            }
+        });
         return finalRanking
     }
 
@@ -61,9 +68,8 @@ export class Ranker {
     normSorting(ranking: RankedEducationsType, optimalEducation: Education, weights: QuizAnswers): IntermediateRankingType {
         const normValue = 2;
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, weights);
-        const educationVectors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, weights);
-        const sortedEducations: IntermediateRankingType = { upperhalf: [], lowerhalf: [] };
-
+        const educationVectors: {upperhalf: EducationVector[], lowerhalf: EducationVector[]} = this.addEducationVectors(ranking, weights);
+        const sortedEducations: IntermediateRankingType = {upperhalf: [], lowerhalf: []};
         educationVectors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
         })
