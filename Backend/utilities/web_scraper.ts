@@ -4,7 +4,8 @@ import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
 
-import { EducationsGroupped, Profession, NormalizedProfession, Education, Subject } from "../../src/types";
+import { EducationsGroupped, NormalizedProfession, Education, Subject, NormalizedProfessionData } from "../../src/types";
+
 
 const failedUrls: string[] = [];
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
@@ -511,17 +512,20 @@ export function normalizeData(professions: unknown): NormalizedProfession[] {
 }
 
 export function assignSubjectsToEducations(educations: Education[]): void {
+    console.log('Assigning subjects to educations...');
     const educationSubjects = readJsonFile('Backend/cache/all-education-data.json');
     if (!educationSubjects || Object.keys(educationSubjects).length === 0) {
         console.error('Error reading education subjects from file or the file is empty.');
         return;
     }
 
-    const professions = normalizeData(educationSubjects);
-    if (!professions || professions.length === 0) {
+    let professions = normalizeData(educationSubjects);
+    if (!professions) {
         console.error('Error normalizing education data or the normalized data is empty.');
         return;
     }
+
+    professions = translateProfessions(professions);
 
     professions.forEach(profession => {
         const matchingEducations = educations.filter(education => education.url === profession.url && education.title === profession.name);
@@ -534,8 +538,57 @@ export function assignSubjectsToEducations(educations: Education[]): void {
         matchingEducations.forEach(education => {
             education.subjects = subjects;
         });
-    });
 
-    //console.log(educations);
+        
+    });
+    console.log('Subjects assigned to educations.');
 }
 
+function translateProfessions(professions: NormalizedProfession[]): NormalizedProfession[] {
+    const translatedProfessions: NormalizedProfession[] = [];
+
+    const keyTranslationDict: Record<string, string> = {
+        "Natural Science": "Naturvidenskab",
+        "Art": "Kunst",
+        "History": "Historie",
+        "Psychology": "Psykologi",
+        "Philosophy": "Filosofi",
+        "Mathematics": "Matematik",
+        "Architecture": "Arkitektur",
+        "Music": "Musik",
+        "Politics": "Politik",
+        "Culture": "Kultur",
+        "Health Science": "Sundhedsvidenskab",
+        "Law": "Jura",
+        "Economics": "Økonomi",
+        "Information Technology": "Informationsteknologi",
+        "Programming": "Programmering",
+        "Environmental Science": "Miljøvidenskab",
+        "Education": "Uddannelse",
+        "Journalism": "Journalistik",
+        "Communication": "Kommunikation",
+        "Religion": "Religion",
+        "Sociology": "Sociologi",
+        "Agricultural Science": "Landbrugsvidenskab"
+    };
+
+    for (const profession of professions) {
+        const { name, url, data } = profession;
+        const translatedData: NormalizedProfessionData = {};
+
+        // Translate data keys
+        for (const oldKey in data) {
+            if (Object.prototype.hasOwnProperty.call(data, oldKey)) {
+                const oldValue = data[oldKey];
+                const newKey = keyTranslationDict[oldKey];
+                if (newKey) {
+                    translatedData[newKey] = oldValue;
+                }
+            }
+        }
+
+        translatedProfessions.push({ name, url, data: translatedData });
+    }
+
+    return translatedProfessions;
+}
