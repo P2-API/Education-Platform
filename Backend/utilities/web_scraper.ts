@@ -9,6 +9,35 @@ import { EducationsGroupped, Profession, NormalizedProfession, Education, Subjec
 const failedUrls: string[] = [];
 const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
 
+interface GroupData {
+    [key: string]: unknown;
+}
+
+interface CategoryData {
+    [category: string]: number;
+}
+
+interface NamedCategoryData {
+    name: string;
+    url: string;
+    data: CategoryData;
+}
+
+interface Keyword {
+    word: string;
+    document_frequency: number;
+    pos_tags: string[];
+    score: number;
+}
+
+interface KeywordsResponse {
+    keywords: Keyword[];
+}
+
+interface Rankings {
+    [subject: string]: number;
+}
+
 export async function processAllEducations() {
     const filePath = 'Backend/cache/education_groups.ts';
     console.log("Starting processing of all educations");
@@ -32,10 +61,6 @@ export async function processAllEducations() {
     } catch (err) {
         console.error(`Error writing data to file ${outputFilePath}:`, err);
     }
-}
-
-interface GroupData {
-    [key: string]: unknown;
 }
 
 async function assignSubjectRankings(educationData: { url: string; title: string }[]) {
@@ -79,16 +104,6 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
         console.error(`Error loading data from file ${filePath}:`, err);
         return [];
     }
-}
-
-interface CategoryData {
-    [category: string]: number;
-}
-
-interface NamedCategoryData {
-    name: string;
-    url: string;
-    data: CategoryData;
 }
 
 export async function getPersonalizedMessage(url: string): Promise<{ message: string | null }> {
@@ -138,23 +153,23 @@ export async function getPersonalizedMessage(url: string): Promise<{ message: st
 }
 
 
-function removeNewlines(input: string) {
+export function removeNewlines(input: string) {
     return input.replace(/[\r\n]+/g, '');
 }
 
-function removeConsecutiveUppercase(str: string) {
+export function removeConsecutiveUppercase(str: string) {
     return str.replace(/[A-Z]{3,}/g, '');
 }
 
-function removeMultipleSpaces(str: string) {
+export function removeMultipleSpaces(str: string) {
     return str.replace(/ +/g, ' ');
 }
 
-function removeParentheses(str: string) {
+export function removeParentheses(str: string) {
     return str.replace(/[()]/g, '.');
 }
 
-async function sanitizeText(text: string) {
+export async function sanitizeText(text: string) {
     try {
         text = removeNewlines(text);
         text = removeMultipleSpaces(text);
@@ -233,13 +248,12 @@ export async function getDescribingText(html: string): Promise<string | null> {
 }
 
 
-function fetchHtml(url: string) {
+export async function fetchHtml(url: string) {
     try {
         if (!url.startsWith('https://')) {
             url = "https://" + url;
         }
-        return axios.get(url)
-
+        return await axios.get(url);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const axiosError: AxiosError = error;
@@ -327,17 +341,6 @@ function extractWordsFromKeywords(response: KeywordsResponse): string[] {
     return response.keywords.map(keyword => keyword.word);
 }
 
-interface Keyword {
-    word: string;
-    document_frequency: number;
-    pos_tags: string[];
-    score: number;
-}
-
-interface KeywordsResponse {
-    keywords: Keyword[];
-}
-
 async function getAllText(url: string) {
 
     const response = await fetchHtml(url);
@@ -397,10 +400,6 @@ async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
     });
 }
 
-interface Rankings {
-    [subject: string]: number;
-}
-
 export async function loadSubjectsFromUrls(url: string, name: string): Promise<NamedCategoryData | undefined> {
     try {
         const text = await getAllText(url);
@@ -447,7 +446,7 @@ export async function loadSubjectsFromUrls(url: string, name: string): Promise<N
 }
 
 
-function saveToJsonFile(data: unknown, filename: string): void {
+export function saveToJsonFile(data: unknown, filename: string): void {
     try {
         fs.writeFileSync(filename, JSON.stringify(data, null, 2));
     } catch (error) {
@@ -455,7 +454,7 @@ function saveToJsonFile(data: unknown, filename: string): void {
     }
 }
 
-function readJsonFile(filename: string): unknown {
+export function readJsonFile(filename: string): unknown {
     try {
         const jsonString = fs.readFileSync(filename, 'utf-8');
         return JSON.parse(jsonString);
@@ -465,7 +464,7 @@ function readJsonFile(filename: string): unknown {
     }
 }
 
-function normalizeData(professions: Record<string, Profession>): NormalizedProfession[] {
+export function normalizeData(professions: unknown): NormalizedProfession[] {
     const normalizedProfessions: NormalizedProfession[] = [];
     const maxValueByDataKey: Record<string, number> = {};
     const minValueByDataKey: Record<string, number> = {};
