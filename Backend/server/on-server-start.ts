@@ -55,6 +55,7 @@ const caclulateBasedOnEducations = () => {
     groupEducations();
     calculateMinimumAndMaximumEducation(educations);
     assignSubjectsToEducations(educations);
+    assignSubjectsToEducations(normilizedEducations);
     //processAllEducations();
 }
 
