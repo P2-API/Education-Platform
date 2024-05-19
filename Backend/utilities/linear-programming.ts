@@ -1,7 +1,7 @@
 import { GLPK, LP, Result } from 'glpk.js/dist/glpk';
 import * as Types from '../../src/types';
 import GLPKConstructor from 'glpk.js/dist/glpk';
-import { Institution, DegreeType, County, Geography } from '../../src/enums';
+import { Institution, DegreeType, County, Geography, SubjectTitleDanishToEnglish } from '../../src/enums';
 
 export class LPclass implements LP {
   name: string;
@@ -18,9 +18,15 @@ export class LPclass implements LP {
     const variables = this.objective.vars
     // add weights to:
     // subjects
-    filters.hasSubjects.forEach((subject) => {
-      variables.push({ name: subject, coef: quizAnswers.subjectsPriority })
-    })
+    if (filters.hasSubjects.length > 0){
+      filters.hasSubjects.forEach((subject) => {
+        variables.push({ name: subject, coef: quizAnswers.subjectsPriority })
+      })
+    } else {
+      Object.keys(SubjectTitleDanishToEnglish).forEach((key) =>{
+        variables.push({name: key , coef: quizAnswers.subjectsPriority})
+      })
+    }
     // hours
     variables.push({ name: "withManyStudents", coef: quizAnswers.highWorkloadAcceptancePriority },
       { name: "withFewStudents", coef: quizAnswers.highWorkloadAcceptancePriority },
@@ -106,6 +112,7 @@ export function findOptimalSolution(userImputs: Types.UserImputs): Types.Educati
 }
 
 function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Education {
+  console.log(result.result.vars)
   const values = result.result.vars;
   const optimalEducation: Types.Education = {
     url: "", // irrelevant 
@@ -183,10 +190,17 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
   };
   
   function addSubjects(result: Result, FilterSubjects: string[]): Types.Subject[] {
+    console.log(result.result.vars)
     const optimalSubjectsAndScores: Types.Subject[] = [];
-    FilterSubjects.forEach((subject) => {
-      optimalSubjectsAndScores.push({ title: subject, score: result.result.vars[subject] })
-    })
+    if(FilterSubjects.length > 0){
+      FilterSubjects.forEach((subject) => {
+        optimalSubjectsAndScores.push({ title: subject, score: result.result.vars[subject] })
+      })
+    } else {
+      Object.keys(SubjectTitleDanishToEnglish).forEach((key) =>{
+        optimalSubjectsAndScores.push({title: key, score: result.result.vars[key]})
+      })
+    }
     return optimalSubjectsAndScores;
   }
 

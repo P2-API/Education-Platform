@@ -1,6 +1,6 @@
 import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum, EducationData } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
-import { DegreeTypeToDuration } from "../../src/enums"
+import { DegreeTypeToDuration, SubjectTitleDanishToEnglish } from "../../src/enums"
 import { getEducationData } from "../server/on-server-start"
 
 export class Ranker {
@@ -10,10 +10,11 @@ export class Ranker {
     }
 
     produceRanking(userImputs: UserImputs): FinalRankingType {
+        userImputs.filters.hasSubjects = this.convertFilterSubjectsToEnglish(userImputs.filters.hasSubjects)
         const educationData:EducationData = getEducationData()
         this.roughSorting(userImputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userImputs)
-        const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs.quizAnswers)
+        const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs)
         return this.changeToApropriateType(rankedEducations, educationData.normal)
     }
 
@@ -41,7 +42,6 @@ export class Ranker {
     }
 
     roughSorting(filters: TableFilters, educations: Education[]) {
-        console.log(filters.hasFormsOfEducation)
         educations.forEach((education) => {
             /*
             console.log("education duration", DegreeTypeToDuration(education.degreeType,true))
@@ -55,20 +55,19 @@ export class Ranker {
             console.log("working hours",this.workingHoursFilterPassed(education, filters.wantedWorkingHours))
             */
             if (this.filtersPassed(education, filters)) {
-                console.log("passed filters")
                 this.ranking.upperhalf.push(education)
             }
             else {
-                console.log("did not pass filters")
                 this.ranking.lowerhalf.push(education)
             }
         })
     }
 
-    normSorting(ranking: RankedEducationsType, optimalEducation: Education, weights: QuizAnswers): IntermediateRankingType {
+    normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserImputs): IntermediateRankingType {
         const normValue = 2;
-        const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, weights);
-        const educationVectors: {upperhalf: EducationVector[], lowerhalf: EducationVector[]} = this.addEducationVectors(ranking, weights);
+        //console.log("optimalEducation", optimalEducation)
+        const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, userInputs);
+        const educationVectors: {upperhalf: EducationVector[], lowerhalf: EducationVector[]} = this.addEducationVectors(ranking, userInputs);
         const sortedEducations: IntermediateRankingType = {upperhalf: [], lowerhalf: []};
         educationVectors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
@@ -85,30 +84,39 @@ export class Ranker {
 
     norm(education: EducationVector, optimalEducation: EducationVector, normValue: number): number {
         let sum = 0;
-        //console.log("education", education)
-        //console.log("industries", education.education.industries)
-        //console.log("degreeStructure contents", education.education.degreeStructure.contents)
-        //console.log("optimalEducation", optimalEducation)
+        //console.log("education", education.coordinates)
         education.coordinates.forEach((coordinate, index) => {
             sum += Math.pow(coordinate.value - optimalEducation.coordinates[index].value, normValue)
         })
         return Math.pow(sum, 1 / normValue)
     }
 
-    addEducationVectors(ranking: RankedEducationsType, weights: QuizAnswers): { upperhalf: EducationVector[], lowerhalf: EducationVector[] } {
+    addEducationVectors(ranking: RankedEducationsType, userImputs: UserImputs): { upperhalf: EducationVector[], lowerhalf: EducationVector[] } {
         const educationVecotors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = { upperhalf: [], lowerhalf: [] };
-        ranking.upperhalf.forEach((education) => educationVecotors.upperhalf.push(this.educationVector(education, weights)))
-        ranking.lowerhalf.forEach((education) => educationVecotors.lowerhalf.push(this.educationVector(education, weights)))
+        ranking.upperhalf.forEach((education) => educationVecotors.upperhalf.push(this.educationVector(education, userImputs)))
+        ranking.lowerhalf.forEach((education) => educationVecotors.lowerhalf.push(this.educationVector(education, userImputs)))
         return educationVecotors
     }
 
-    educationVector(education: Education, weights: QuizAnswers): EducationVector {
+    educationVector(education: Education, userInputs:UserImputs): EducationVector {
         const weightedEducationVector: EducationVector = { education: education, coordinates: [] }; //the coordinates are calculated by multiplying the values of relevant education properties with the weight of the corresponding property
         const coordinates = weightedEducationVector.coordinates
+        const weights:QuizAnswers = userInputs.quizAnswers
+        const filterSubjects:string[] = userInputs.filters.hasSubjects
         //add subjects
-        education.subjects.forEach((subject) => {
-            coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority })
-        })
+        if (filterSubjects.length > 0) {
+            education.subjects.forEach((subject) => {
+                console.log("subject", subject.title)
+                console.log("filterSubjects", filterSubjects)
+                if (filterSubjects.includes(subject.title)) { 
+                    coordinates.push({name: subject.title, value: subject.score * weights.subjectsPriority })}
+            })
+        } else {
+            education.subjects.forEach((subject) => {
+                coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority })
+            })
+        }
+        console.log("coordinates", coordinates)
         /*
         //add industries
         education.industries.forEach((industry) => {
@@ -146,7 +154,7 @@ export class Ranker {
             { name: "variableSchedulePercent", value: education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority },
             { name: "nightAndEveningShiftsPercent", value: education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority })
            // { name: "nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority })
-
+        
         return weightedEducationVector
     }
 
@@ -164,10 +172,13 @@ export class Ranker {
     }
     educationDurationFilterPassed(education: Education, educationDurationFilter: MinimumMaximum): boolean {
         const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType,true)
-        console.log("filter duration", educationDurationFilter)
         return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
     }
     workingHoursFilterPassed(education: Education, workingHoursFilter: MinimumMaximum): boolean {
         return education.jobData.workSchedule.workingHours >= workingHoursFilter.minimum && education.jobData.workSchedule.fixedHoursPercent <= workingHoursFilter.maximum
+    }
+
+    convertFilterSubjectsToEnglish(subjects:string[]) {
+        return subjects.map((subject) => SubjectTitleDanishToEnglish[subject])
     }
 }
