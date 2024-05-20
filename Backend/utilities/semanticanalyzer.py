@@ -57,3 +57,5 @@ for category, keyword_list in keywords.items():
 output_file = sys.argv[2]
 with open(output_file, 'w') as f:
     json.dump(rankings, f)
+
+print("Semantic analysis complete.")

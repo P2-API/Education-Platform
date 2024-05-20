@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
 
-import { EducationsGroupped, NormalizedProfession, Education, Subject, NormalizedProfessionData } from "../../src/types";
+import { EducationsGroupped, NormalizedProfession, Profession, Education, Subject, NormalizedProfessionData } from "../../src/types";
 
 
 const failedUrls: string[] = [];
@@ -39,6 +39,44 @@ interface Rankings {
     [subject: string]: number;
 }
 
+export async function manualKeywordExtraction(url : string) {
+    const response = await fetchHtml(url);
+    if (response === "Error fetching the URL") {
+        return "Error fetching the URL";
+    }
+
+    const headlinerText = await getHeadlinerText(response.data);
+    if (!headlinerText) {
+        return "Error extracting headliner text";
+    }
+
+    const smallSummary = await getSmallSummary(response.data);
+    if (!smallSummary) {
+        return "Error extracting small summary";
+    }
+
+    const describingText = await getDescribingText(response.data);
+    if (!describingText) {
+        return "Error extracting describing text";
+    }
+
+    let allText = headlinerText + smallSummary + describingText;
+
+    allText = await sanitizeText(allText);
+
+    const englishText = await translateTextToEnglishChatGPT(allText);
+    if (!englishText) {
+        return "Error translating text";
+    }
+
+    const keywords = await extractKeywordsFromText(englishText);
+    if (!keywords) {
+        return "Error extracting keywords";
+    }
+
+    console.log(keywords);
+}
+
 export async function processAllEducations() {
     const filePath = 'Backend/cache/education_groups.ts';
     console.log("Starting processing of all educations");
@@ -54,9 +92,13 @@ export async function processAllEducations() {
         allEducationData = { ...allEducationData, ...groupData };
     }
 
+    const educationSubjects = readJsonFile('Backend/cache/all-education-data.json')
+
+    const newEducationData = updateProfessions(educationSubjects, allEducationData);
+
     const outputFilePath = 'Backend/cache/all-education-data.json';
     try {
-        const jsonData = JSON.stringify(allEducationData, null, 2);
+        const jsonData = JSON.stringify(newEducationData, null, 2);
         await fs.promises.writeFile(outputFilePath, jsonData);
         console.log(`All education data saved to ${outputFilePath}`);
     } catch (err) {
@@ -313,7 +355,7 @@ async function translateTextToEnglishChatGPT(text: string) {
     return completion.choices[0].message.content;
 }
 
-async function extractKeywordsFromText(text: string): Promise<string[] | undefined> {
+export async function extractKeywordsFromText(text: string): Promise<string[] | undefined> {
     const apiKey = 'eyJvcmciOiI2NTNiOTllNjEzOGM3YzAwMDE2MDM5NTEiLCJpZCI6IjFhOTZlYjJkZjQxNzQxNjlhYjM1ZTk4YzgzNWIwNjkyIiwiaCI6Im11cm11cjEyOCJ9';
     const apiUrl = 'https://gw.cortical.io/nlp/keywords?limit=10';
     const options = {
@@ -377,11 +419,11 @@ async function analyseSubjects(keywords: string[]): Promise<Rankings> {
     return similarities;
 }
 
-async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
+export async function calculateSimilarity(): Promise<Rankings> {
     return new Promise((resolve, reject) => {
         const inputFile = 'Backend/cache/input.json';
         const outputFile = 'Backend/cache/output.json';
-        fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
+        //fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
         const pythonProcess = spawn('python', ['Backend/utilities/semanticanalyzer.py', inputFile, outputFile]);
 
@@ -592,3 +634,22 @@ function translateProfessions(professions: NormalizedProfession[]): NormalizedPr
 
     return translatedProfessions;
 }
+
+function updateProfessions(
+    existingProfessions: Record<string, Profession>,
+    newProfessions: Record<string, Profession>
+  ): Record<string, Profession> {
+    for (const key in newProfessions) {
+      if (Object.prototype.hasOwnProperty.call(newProfessions, key)) {
+        const newProfession = newProfessions[key];
+  
+        if (Object.prototype.hasOwnProperty.call(existingProfessions, key)) {
+          existingProfessions[key].data = newProfession.data;
+        } else {
+          existingProfessions[key] = newProfession;
+        }
+      }
+    }
+  
+    return existingProfessions;
+  }

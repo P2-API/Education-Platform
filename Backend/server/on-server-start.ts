@@ -8,7 +8,7 @@ import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
-import { processAllEducations } from "../utilities/web_scraper";
+import { processAllEducations, extractKeywordsFromText, calculateSimilarity, manualKeywordExtraction } from "../utilities/web_scraper";
 
 let educations: Education[] = [];
 const educationGroups: EducationGroup[] = [];
@@ -54,9 +54,9 @@ export const getCachedEducations = (): Education[] => {
 const caclulateBasedOnEducations = () => {
     groupEducations();
     calculateMinimumAndMaximumEducation(educations);
+    //processAllEducations();
     assignSubjectsToEducations(educations);
     assignSubjectsToEducations(normilizedEducations);
-    //processAllEducations();
 }
 
 // Calculates the properties of the education object
