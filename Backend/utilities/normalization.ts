@@ -184,13 +184,13 @@ const normilizeEducationJobData = (jobData: JobData) => {
 const normilizeEducationSalaries = (salary: Salaries) => {
     let minSalary = minimumEducation.jobData.salaries;
     let maxSalary = maximumEducation.jobData.salaries;
-    salary.newGraduate.lowerQuartile = normilize(salary.newGraduate.lowerQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.lowerQuartile);
-    salary.newGraduate.median = normilize(salary.newGraduate.median, minSalary.newGraduate.median, maxSalary.newGraduate.median);
-    salary.newGraduate.upperQuartile = normilize(salary.newGraduate.upperQuartile, minSalary.newGraduate.upperQuartile, maxSalary.newGraduate.upperQuartile);
+    salary.newGraduate.lowerQuartile = normilize(salary.newGraduate.lowerQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
+    salary.newGraduate.median = normilize(salary.newGraduate.median, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
+    salary.newGraduate.upperQuartile = normilize(salary.newGraduate.upperQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
     
-    salary.experienced.lowerQuartile = normilize(salary.experienced.lowerQuartile, minSalary.experienced.lowerQuartile, maxSalary.experienced.lowerQuartile);
-    salary.experienced.median = normilize(salary.experienced.median, minSalary.experienced.median, maxSalary.experienced.median);
-    salary.experienced.upperQuartile = normilize(salary.experienced.upperQuartile, minSalary.experienced.upperQuartile, maxSalary.experienced.upperQuartile);
+    salary.experienced.lowerQuartile = normilize(salary.experienced.lowerQuartile, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
+    salary.experienced.median = normilize(salary.experienced.median, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
+    salary.experienced.upperQuartile = normilize(salary.experienced.upperQuartile, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
 }
 
 const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
