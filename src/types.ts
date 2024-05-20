@@ -1,7 +1,5 @@
 import { Geography, County, Institution, DegreeType, FormOfEducation } from "./enums";
 
-
-
 export type Industry = {
     title: string;
     share: number;
@@ -194,7 +192,7 @@ export type TableFilters = {
     educationDuration: MinimumMaximum; //in use
 }
 
-export type UserImputs = {
+export type UserInputs = {
     quizAnswers: QuizAnswers,
     filters: TableFilters
 }

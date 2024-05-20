@@ -1,6 +1,6 @@
-import { Education, RankedEducationsType, UserImputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum, EducationData } from "../../src/types"
+import { Education, RankedEducationsType, UserInputs, TableFilters, QuizAnswers, EducationVector, FinalRankingType, IntermediateRankingType, MinimumMaximum, EducationData } from "../../src/types"
 import { findOptimalSolution } from "./linear-programming"
-import { DegreeTypeToDuration, SubjectTitleDanishToEnglish } from "../../src/enums"
+import { DegreeTypeToDuration } from "../../src/enums"
 import { getEducationData } from "../server/on-server-start"
 
 export class Ranker {
@@ -9,12 +9,12 @@ export class Ranker {
         this.ranking = { upperhalf: [], lowerhalf: [] }
     }
 
-    produceRanking(userImputs: UserImputs): FinalRankingType {
-        userImputs.filters.hasSubjects = this.convertFilterSubjectsToEnglish(userImputs.filters.hasSubjects)
+    produceRanking(userInputs: UserInputs): FinalRankingType {
         const educationData:EducationData = getEducationData()
-        this.roughSorting(userImputs.filters, educationData.normalized)
-        const optimalEducation = findOptimalSolution(userImputs)
-        const rankedEducations = this.normSorting(this.ranking, optimalEducation, userImputs)
+        educationData.normalized = educationData.normalized.filter((education) => education.subjects.length > 0)
+        this.roughSorting(userInputs.filters, educationData.normalized)
+        const optimalEducation = findOptimalSolution(userInputs)
+        const rankedEducations = this.normSorting(this.ranking, optimalEducation, userInputs)
         return this.changeToApropriateType(rankedEducations, educationData.normal)
     }
 
@@ -63,11 +63,12 @@ export class Ranker {
         })
     }
 
-    normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserImputs): IntermediateRankingType {
+    normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserInputs): IntermediateRankingType {
         const normValue = 2;
-        //console.log("optimalEducation", optimalEducation)
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, userInputs);
         const educationVectors: {upperhalf: EducationVector[], lowerhalf: EducationVector[]} = this.addEducationVectors(ranking, userInputs);
+        //educationVectors.upperhalf.forEach((education) => console.log("coordinates", education.coordinates))
+        //console.log("optimalEducationCoordinates", optimalEducationVector.coordinates)
         const sortedEducations: IntermediateRankingType = {upperhalf: [], lowerhalf: []};
         educationVectors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
@@ -91,32 +92,37 @@ export class Ranker {
         return Math.pow(sum, 1 / normValue)
     }
 
-    addEducationVectors(ranking: RankedEducationsType, userImputs: UserImputs): { upperhalf: EducationVector[], lowerhalf: EducationVector[] } {
+    addEducationVectors(ranking: RankedEducationsType, userInputs: UserInputs): { upperhalf: EducationVector[], lowerhalf: EducationVector[] } {
         const educationVecotors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = { upperhalf: [], lowerhalf: [] };
-        ranking.upperhalf.forEach((education) => educationVecotors.upperhalf.push(this.educationVector(education, userImputs)))
-        ranking.lowerhalf.forEach((education) => educationVecotors.lowerhalf.push(this.educationVector(education, userImputs)))
+        ranking.upperhalf.forEach((education) => educationVecotors.upperhalf.push(this.educationVector(education, userInputs)))
+        ranking.lowerhalf.forEach((education) => educationVecotors.lowerhalf.push(this.educationVector(education, userInputs)))
         return educationVecotors
     }
 
-    educationVector(education: Education, userInputs:UserImputs): EducationVector {
+    educationVector(education: Education, userInputs:UserInputs): EducationVector {
         const weightedEducationVector: EducationVector = { education: education, coordinates: [] }; //the coordinates are calculated by multiplying the values of relevant education properties with the weight of the corresponding property
         const coordinates = weightedEducationVector.coordinates
         const weights:QuizAnswers = userInputs.quizAnswers
         const filterSubjects:string[] = userInputs.filters.hasSubjects
         //add subjects
-        if (filterSubjects.length > 0) {
-            education.subjects.forEach((subject) => {
-                console.log("subject", subject.title)
-                console.log("filterSubjects", filterSubjects)
-                if (filterSubjects.includes(subject.title)) { 
-                    coordinates.push({name: subject.title, value: subject.score * weights.subjectsPriority })}
+        if (filterSubjects.length > 0){
+            //console.log("hi")
+            //console.log(education.title)
+            //console.log(education.subjects)
+            filterSubjects.forEach((filterSubject) => {
+                try{
+                    const subject = education.subjects.find((subject) => {return subject.title === filterSubject})
+                    coordinates.push({name: subject.title, value: subject.score * weights.subjectsPriority*10})
+                } catch{
+                    new Error("subject not found")
+                }
             })
         } else {
             education.subjects.forEach((subject) => {
                 coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority })
             })
         }
-        console.log("coordinates", coordinates)
+       // console.log("coordinates", coordinates)
         /*
         //add industries
         education.industries.forEach((industry) => {
@@ -178,7 +184,4 @@ export class Ranker {
         return education.jobData.workSchedule.workingHours >= workingHoursFilter.minimum && education.jobData.workSchedule.fixedHoursPercent <= workingHoursFilter.maximum
     }
 
-    convertFilterSubjectsToEnglish(subjects:string[]) {
-        return subjects.map((subject) => SubjectTitleDanishToEnglish[subject])
-    }
 }

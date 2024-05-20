@@ -144,7 +144,6 @@ export enum SubjectTitle {
     Arkitektur = "Arkitektur",
     Musik = "Musik",
     Politik = "Politik",
-    Sport = "Sport",
     Kultur = "Kultur",
     Sundhedsvidenskab = "Sundhedsvidenskab",
     Jura = "Jura",
@@ -159,7 +158,7 @@ export enum SubjectTitle {
     Sociologi = "Sociologi",
     Landbrugsvidenskab = "Landbrugsvidenskab",
 }
-
+/*
 export enum SubjectTitleDanishToEnglish{
     Naturvidenskab = "Natural Science",
     Kunst = "Art",
@@ -168,7 +167,7 @@ export enum SubjectTitleDanishToEnglish{
     Filosofi = "Philosophy",
     Matematik = "Mathematics",
     Arkitektur  = "Architecture",
-    Muik = "Music",
+    Musik = "Music",
     Politics = "Politics",
     Kultur = "Culture",
     Sundhedsvidenskab = "Health Science",
@@ -184,7 +183,7 @@ export enum SubjectTitleDanishToEnglish{
     Sociologi = "Sociology",
     Landbrugsvidenskab = "Agricultural Science"
 }
-
+*/
 // Return the minimum and maximum duration of a DegreeType
 export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType), normalizedOutput:boolean): MinimumMaximum => {
     const maxDuration = 36;

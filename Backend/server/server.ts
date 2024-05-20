@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
 import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
-import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
+import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
 import bodyParser from 'body-parser'; // Import the bodyParser package
@@ -48,7 +48,7 @@ server.post("/update_ranking", (request: Request, response: Response) => {
         const filters: TableFilters = requestData.filterProps;
         const quizAnswers: QuizAnswers = requestData.quizAnswers;
 
-        const userInput: UserImputs = {
+        const userInput: UserInputs = {
             quizAnswers: quizAnswers,
             filters: normalizeFilters(filters),
         };
