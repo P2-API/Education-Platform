@@ -388,9 +388,8 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         },
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
           const working_hours = row.original.jobData.workSchedule.workingHours;
-          const flexible_hours = row.original.jobData.workSchedule.flexibleHoursPercent + row.original.jobData.workSchedule.selfSchedulePercent + row.original.jobData.workSchedule.variableSchedulePercent;
+          const flexible_hours = row.original.jobData.workSchedule.flexibleHoursPercent
           const fixed_hours = row.original.jobData.workSchedule.fixedHoursPercent;
-          const flexible_hours_percent = flexible_hours / (flexible_hours + fixed_hours);
 
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1.5em" }}>
@@ -400,11 +399,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Fleksible timer: </p>
-                <p style={{ margin: 0 }} >{Math.floor(flexible_hours_percent * 100)}%</p>
+                <p style={{ margin: 0 }} >{flexible_hours}%</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Faste timer: </p>
-                <p style={{ margin: 0 }} >{Math.floor((1 - flexible_hours_percent) * 100)}%</p>
+                <p style={{ margin: 0 }} >{fixed_hours}%</p>
               </div>
             </ul>
           )
@@ -439,7 +438,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
       },
       {
         accessorKey: "jobData.nationalJobs",
-        header: "Internationalt job",
+        header: "Nationale job",
         size: 140,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
 

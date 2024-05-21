@@ -201,4 +201,17 @@ const normilizeUnemployment = (unemployment: Unemployment) => {
     unemployment.projectedNewGraduate = normilize(unemployment.projectedNewGraduate, minUnemployment.projectedNewGraduate, maxUnemployment.projectedNewGraduate);
 }
 
+export const normalizeFlexibleHours = (value: number) => {
+    const minJobFlexibility = minimumEducation.jobData.workSchedule.flexibleHoursPercent;
+    const maxJobFlexibility = maximumEducation.jobData.workSchedule.flexibleHoursPercent;
+    return normilize(value, minJobFlexibility, maxJobFlexibility);
+}
+
+export const normalizeNationalJobs = (value: number) => {
+    const minNationalJobs = minimumEducation.jobData.nationalJobs;
+    const maxNationalJobs = maximumEducation.jobData.nationalJobs;
+    console.log("max",maxNationalJobs,"min", minNationalJobs)
+    return normilize(value, minNationalJobs, maxNationalJobs);
+}
+
 export default normilize;

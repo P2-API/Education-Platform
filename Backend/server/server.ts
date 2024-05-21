@@ -59,7 +59,6 @@ server.post("/update_ranking", (request: Request, response: Response) => {
         };
         const ranker = new Ranker();
         const ranking = ranker.produceRanking(userInput);
-        console.log("ranking", ranking)
 
         response.status(200).send(ranking); // Ensure JSON response
     } catch (error) {
