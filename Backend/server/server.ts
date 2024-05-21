@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
-import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
+import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties, getNormalizedEducations } from './on-server-start';
 import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
 import bodyParser from 'body-parser'; // Import the bodyParser package
+import { getHeadliner } from '../utilities/web_scraper';
 
 const server: Express = express();
 
@@ -40,6 +41,10 @@ server.get("/get_grouped_educations", (request: Request, response: Response) => 
 server.get("/get_education_properties", (request: Request, response: Response) => {
     response.status(200).send(getEducationProperties());
 });
+server.get("/get_normalized_educations", (request: Request, response: Response) => {
+    response.status(200).send(getNormalizedEducations());
+});
+
 
 
 server.post("/update_ranking", (request: Request, response: Response) => {
@@ -77,6 +82,26 @@ server.post("generate_personalized_message", (request: Request, response: Respon
     response.send(JSON.stringify(requestData));
 });
 
+server.post("/get_small_text_about_education", (request: Request, response: Response) => {
+    const requestData = request.body;
+    const education = requestData.education;
+
+    // calculate small text function here: 
+    let smallText;
+    console.log("education", education)
+    getHeadliner(education.url).then((text) => {
+        smallText = text;
+
+        response.status(200).send(smallText.headlinerText);
+
+    }
+    ).catch((error) => {
+        console.error("Error in /get_small_text_about_education:", error);
+        response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
+    });
+
+    // return the result below
+});
 
 server.listen(PORT, () => {
 }).on("error", (error) => {
