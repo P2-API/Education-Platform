@@ -407,11 +407,11 @@ async function analyseSubjects(keywords: string[]): Promise<Rankings> {
     return similarities;
 }
 
-export async function calculateSimilarity(): Promise<Rankings> {
+export async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
     return new Promise((resolve, reject) => {
         const inputFile = 'Backend/cache/input.json';
         const outputFile = 'Backend/cache/output.json';
-        //fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
+        fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
         const pythonProcess = spawn('python', ['Backend/utilities/semanticanalyzer.py', inputFile, outputFile]);
 
