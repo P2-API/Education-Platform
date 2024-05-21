@@ -495,6 +495,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     row: MRT_Row<RankedDataStructure>;
   };
 
+
+  
+
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     const [smallText, setSmallText] = useState<string | null>(null);
@@ -506,7 +509,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     }, [row.original.education]);
 
     return (
-      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         <p>{smallText}</p>
         {!smallText && <p>Loading...</p>}
         <button>
@@ -532,10 +535,10 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
       },
       sx: {
         cursor: 'pointer',
-        backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
+        backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),
-    positionExpandColumn: "first",
+    positionExpandColumn: "last",
     enableBottomToolbar: false,
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,
