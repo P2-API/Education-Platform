@@ -34,13 +34,13 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
         }
     }
 
-    const getLabel: (option: string) => string = getOptionsLabel != null ? getOptionsLabel : (option) => option;
+    const getLabel: (option: string) => string = getOptionsLabel != undefined ? getOptionsLabel : (option) => option;
 
     return (
         <Autocomplete
             multiple
             id="tags-outlined"
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", maxHeight: "300px", overflowY: "scroll" }}
             options={collection}
             getOptionLabel={getLabel}
             filterSelectedOptions

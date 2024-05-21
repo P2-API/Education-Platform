@@ -302,7 +302,6 @@ export type EducationData = {
 }
 
 export type PropertyNames = {
-    rank: string,
     withManyStudents: string,
     withFewStudents: string,
     withSupervision: string,
@@ -330,10 +329,6 @@ export type PropertyNames = {
     selfSchedulePercent: string,
     variableSchedulePercent: string,
     nightAndEveningShiftsPercent: string,
-    newGraduate: string,
-    experienced: string,
-    projectedNewGraduate: string,
-    projectedExperienced: string,
     degreeRelevance: string,
     degreePreparesForJob: string,
     nationalJobs: string
