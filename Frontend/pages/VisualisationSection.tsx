@@ -14,8 +14,7 @@ const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataI
     const [educationGroups, setEducationGroups] = React.useState<EducationGroup[]>([]);
     //console.log("Visualization has access to: ", rankedDataInfo)
     const rankedDat = rankedDataInfo;
-
-    // Very cursed update function
+    // Very cursed update function (do not touch unless you know what you are doing)
     const [update, setUpdate] = React.useState<boolean>(false);
     if (update) {
         setUpdate(false);

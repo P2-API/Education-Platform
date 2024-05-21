@@ -28,8 +28,6 @@ let normalizedEducations: Education[] = [];
 const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo, educationGroups }) => {
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
-    console.log("educationGroups inside of visualization", educationGroups)
-    console.log("rankedDataInfo: ", rankedDataInfo)
     const quizAnswerState = useContext(QuizInfoContext);
     const filterInfo = useContext(filtersContext);
 
@@ -42,8 +40,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
             normalizedEducations = data;
         })
     }, []);
-
-    console.log("chartType: ", chartType)
 
     const { getPCAData } = useServer();
     const [pcaData, setPCAData] = useState<pcaScatterData>();
@@ -59,25 +55,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     }, [quizAnswerState.quizData]);
     const rankedData = rankedDataInfo;
     const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
-
-    const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 3, 4, 5],
-        text: ["Point 1", "Point 2", "Point 3", "Point 4", "Point 5"]
-    });
-
-    const generateRandomData = () => {
-        const xValues = [];
-        const yValues = [];
-        const text = []
-        for (let i = 0; i < educationProperties.length; i++) {
-            xValues.push(Math.random() * 10);
-            yValues.push(Math.random() * 100);
-            // generate random text for each point
-            text.push(`Point ${i + 1}`);
-        }
-        setData({ x: xValues, y: yValues, text: text });
-    };
 
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
@@ -127,6 +104,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         </Paper >
     );
 
+    console.log("Visualisaztion.tsx", properties);
 
     const barPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
@@ -193,31 +171,36 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         </Paper >
     );
 
-    function findPropertyValue(obj: any, property: string): number | undefined {
-        if (obj.hasOwnProperty(property)) {
-            return obj[property];
-        }
-        for (let key in obj) {
-            if (typeof obj[key] === 'object' && obj[key] !== null) {
-                const result = findPropertyValue(obj[key], property);
-                if (result !== undefined) {
-                    return result;
-                }
+    function getValueByPath(obj: any, path: string): any {
+        const keys = path.split('.'); // Split the path string by dot
+        let value = obj;
+    
+        // Iterate through each part of the path and access nested properties
+        for (const key of keys) {
+            if (value && typeof value === 'object') {
+                value = value[key]; // Access nested property
+            } else {
+                // If any intermediate property is not an object or undefined, return undefined
+                return undefined;
             }
         }
-        return undefined;
+    
+        return value; // Return the final value
     }
 
     function getValuesOfProperties(edu: Education): number[] {
         let propertyValues: number[] = [];
-
+        console.log("getValuesOfProperties", properties)
         properties.forEach((property) => {
-            let value = findPropertyValue(edu, property);
+            let value = getValueByPath(edu, property);
+            console.log("value", value);
             if (typeof value === 'number') {
                 propertyValues.push(value * 100); // Times 100 to make it look better
+                console.log("value:", value * 100)
             }
 
         });
+        console.log("values of properties:", propertyValues)
         return propertyValues;
     }
 
@@ -293,11 +276,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
             </div>
         </Paper >
     );
-
-    useEffect(() => {
-        generateRandomData();
-    }, []);
-
 
     return (
         ((chartType == ChartType.scatter) && scatterPlot)

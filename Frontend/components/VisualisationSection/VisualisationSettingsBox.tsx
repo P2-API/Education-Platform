@@ -17,7 +17,6 @@ type VisualisationSettingsBoxProps = {
 
 //let educations: Education[] = [];
 let normalizedEducations: Education[] = [];
-let educationProperties: string[] = [];
 
 const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ setUpdate, chartType, setChartType, setProperties, educationGroups, setEducationGroups }) => {
     //const { getPCAData } = useServer();

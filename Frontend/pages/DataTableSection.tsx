@@ -28,9 +28,6 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ rankedDataInfo }) =
         }
     }, [data]);
 
-    console.log("filters", filterInfo.filters);
-
-
     return (
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
             <div style={{ width: "30%", height: "100%", minWidth: "417px", marginRight: "1em" }}>
