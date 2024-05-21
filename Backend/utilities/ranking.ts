@@ -2,6 +2,7 @@ import { Education, RankedEducationsType, UserInputs, TableFilters, QuizAnswers,
 import { findOptimalSolution } from "./linear-programming"
 import { DegreeTypeToDuration } from "../../src/enums"
 import { getEducationData } from "../server/on-server-start"
+import { normalizeFlexibleHours, normalizeNationalJobs } from "./normalization"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -35,7 +36,7 @@ export class Ranker {
             }
         });
         /*for (let i = 0; i < finalRanking.index; i++) {
-            console.log(finalRanking.ranking[i].education.title, finalRanking.ranking[i].education.institutions, finalRanking.ranking[i].education.degreeType, finalRanking.ranking[i].education.geographies)
+            console.log("normal education",finalRanking.ranking[i].education.title, finalRanking.ranking[i].education.institutions, finalRanking.ranking[i].education.degreeType, finalRanking.ranking[i].education.geographies, finalRanking.ranking[i].education.jobData.workSchedule.flexibleHoursPercent)
         }*/
         return finalRanking
     }
@@ -47,15 +48,13 @@ export class Ranker {
 
     roughSorting(filters: TableFilters, educations: Education[]) {
         educations.forEach((education) => {
-            if (this.filtersPassed(education, filters)) {
-                console.log("education", education, "unemployment:", education.jobData.unemployment.experienced)
+            if (this.filtersPassed(education, filters)) {    
                 this.ranking.upperhalf.push(education)
             }
             else {
                 this.ranking.lowerhalf.push(education)
             }
         })
-        console.log("filter", filters.unemployment.experienced)
     }
 
     normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserInputs): IntermediateRankingType {
@@ -166,8 +165,8 @@ export class Ranker {
                 && ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)))
                 && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) 
                 && ((filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)))) 
-                && (filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true)
-                && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)
+                && (filters.canWorkInternationally ? (education.jobData.nationalJobs > normalizeNationalJobs(80) ? false : true) : true)
+                && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > normalizeFlexibleHours(50) ? true : false) : true)
                 && this.educationDurationFilterPassed(education, filters.educationDuration)
                 && this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
                 && this.salaryFilterPassed(education, filters.wantedSalary)
