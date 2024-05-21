@@ -303,7 +303,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
                     ' | ' +
                     "dette er data omkring uddanelsen, her er alle numeriske værdier under subjects normalizeret til at være mellem 0 og 1, 0 betyder at det ikke er relevant for uddanelsen og 1 betyder det har stor relevans for uddanelsen =" + JSON.stringify(education).replace(/"/g, '') +
                     ' | ' +
-                    "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med, hvis ingen data her, ved du ikke hvilke intereser bruger har, og kan ikke bestemme hvilke interreser bruger har =" + JSON.stringify(filters).replace(/"/g, '')
+                    "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med, hvis der ingen data her om hvlike interreser brugeren har, og dette betydr du ikke ved hvilke intereser bruger har, og kan ikke bestemme hvilke interreser bruger har =" + JSON.stringify(filters).replace(/"/g, '')
                     ,
             },
             {
