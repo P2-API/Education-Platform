@@ -88,12 +88,9 @@ server.post("/get_small_text_about_education", (request: Request, response: Resp
 
     // calculate small text function here: 
     let smallText;
-    console.log("education", education)
     getHeadliner(education.url).then((text) => {
         smallText = text;
-
         response.status(200).send(smallText.headlinerText);
-
     }
     ).catch((error) => {
         console.error("Error in /get_small_text_about_education:", error);

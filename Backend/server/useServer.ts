@@ -43,7 +43,6 @@ const useServer = () => {
     // write more functions here
 
     const getSmallTextAboutEducation = async (education: Education) => {
-        console.log("education", education)
         
         const response = await fetch("http://localhost:1337/get_small_text_about_education", {
             method: "POST",
@@ -52,9 +51,7 @@ const useServer = () => {
             },
             body: JSON.stringify({ education })
         });
-        console.log("response", response)
         const smallText = await response.text();
-        console.log("smallText", smallText)    
         return smallText;
     }
 
