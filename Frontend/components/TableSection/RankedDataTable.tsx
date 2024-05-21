@@ -10,7 +10,8 @@ import {
 } from "material-react-table";
 import { FinalRankingType, RankedDataStructure } from "../../../src/types";
 import { useServer } from "../../../Backend/server/useServer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { FilterContext } from "../Tabs";
 
 type RankedMaterialReactDataTableProps = {
   rankedData: FinalRankingType;
@@ -22,7 +23,10 @@ type RankedMaterialReactDataTableProps = {
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
   
-  const { getSmallTextAboutEducation } = useServer();
+  const { getSmallTextAboutEducation, getPersonalizedMessage } = useServer();
+  const filterInfo = useContext(FilterContext);
+  const filters = filterInfo.filters
+
 
   const data: RankedDataStructure[] = rankedData.ranking;
 
@@ -490,6 +494,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   type DetailPanelContentProps = {
     row: MRT_Row<RankedDataStructure>;
   };
+
+
+  
 
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;

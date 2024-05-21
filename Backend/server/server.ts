@@ -6,7 +6,7 @@ import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
 import bodyParser from 'body-parser'; // Import the bodyParser package
-import { getHeadliner } from '../utilities/web_scraper';
+import { getHeadliner, getPersonalizedMessage } from '../utilities/web_scraper';
 
 const server: Express = express();
 
@@ -72,21 +72,23 @@ server.post("generate_personalized_message", (request: Request, response: Respon
     const requestData = request.body;
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
+    const education = requestData.education;
 
-
-    // calculate personalized message function here: 
-    // const personalizedMessage = calculatePersonalizedMessage(quizAnswers, filters);
-
-    // return the result below
-    //response.status(200).send(personalizedMessage);
-    response.send(JSON.stringify(requestData));
+    let personalizedMessage;
+    getPersonalizedMessage(quizAnswers, filters, education).then((text) => {
+        personalizedMessage = text;
+        response.status(200).send(personalizedMessage);
+    }
+    ).catch((error) => {
+        console.error("Error in /generate_personalized_message:", error);
+        response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
+    });
 });
 
 server.post("/get_small_text_about_education", (request: Request, response: Response) => {
     const requestData = request.body;
     const education = requestData.education;
 
-    // calculate small text function here: 
     let smallText;
     getHeadliner(education.url).then((text) => {
         smallText = text;
@@ -96,8 +98,6 @@ server.post("/get_small_text_about_education", (request: Request, response: Resp
         console.error("Error in /get_small_text_about_education:", error);
         response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
     });
-
-    // return the result below
 });
 
 server.listen(PORT, () => {
