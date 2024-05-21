@@ -523,11 +523,12 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     return (
       <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         <p>{smallText}</p>
-        {!smallText && <p>Loading...</p>}
+        {!smallText && <p>Indlæser...</p>}
         <button onClick={handleClick}>
-          Generate personal recommendation
+          Generere personlig besked
         </button>
         <p>{message}</p>
+        {!message && <p>Personlig besked bliver bedst hvis quizzen er besvaret</p>}
       </div>
     );
   };
