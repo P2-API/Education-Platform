@@ -41,9 +41,6 @@ export const onStart = () => {
 // calculations on them
 const cacheEducations = async () => {
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
-
-
-
     caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations    
 }
 

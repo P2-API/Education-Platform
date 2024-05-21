@@ -246,6 +246,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     selectPlaceholder="Egenskaber"
                     identifier="Egenskaber"
                     getOptionsLabel={ConvertPropertyToName}
+                    scrollable={true}
                 />
             </div>
         </Paper>

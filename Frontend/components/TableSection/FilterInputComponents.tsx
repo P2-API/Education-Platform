@@ -17,9 +17,10 @@ type MultiSelectAutoCompleteProps = {
     givenValue: string[];
     identifier: string;
     getOptionsLabel?: (option: string) => string;
+    scrollable?: boolean;
 }
 
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier, getOptionsLabel }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier, getOptionsLabel, scrollable = false }) => {
 
     const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
@@ -35,26 +36,48 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     }
 
     const getLabel: (option: string) => string = getOptionsLabel != undefined ? getOptionsLabel : (option) => option;
-
-    return (
-        <Autocomplete
-            multiple
-            id="tags-outlined"
-            sx={{ width: "100%", maxHeight: "300px", overflowY: "scroll" }}
-            options={collection}
-            getOptionLabel={getLabel}
-            filterSelectedOptions
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label={selectLabel}
-                    placeholder={selectPlaceholder}
-                />
-            )}
-        />
-    );
+    if (scrollable){
+        return (
+            <Autocomplete
+                multiple
+                id="tags-outlined"
+                sx={{ width: "100%", maxHeight: "300px", overflowY: "scroll" }}
+                options={collection}
+                getOptionLabel={getLabel}
+                filterSelectedOptions
+                value={value}
+                onChange={handleChange}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label={selectLabel}
+                        placeholder={selectPlaceholder}
+                    />
+                )}
+            />
+        );
+    }
+    else {
+        return (
+            <Autocomplete
+                multiple
+                id="tags-outlined"
+                sx={{ width: "100%" }}
+                options={collection}
+                getOptionLabel={getLabel}
+                filterSelectedOptions
+                value={value}
+                onChange={handleChange}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label={selectLabel}
+                        placeholder={selectPlaceholder}
+                    />
+                )}
+            />
+        );
+    }
 }
 
 
