@@ -102,8 +102,6 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
         }));
     };
 
-    console.log("value1", value1)
-
     return (
         <Box sx={{}}>
             <p style={{}}  >{description}</p>
