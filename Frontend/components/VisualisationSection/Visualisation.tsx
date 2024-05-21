@@ -113,35 +113,35 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                     data={[
                         {
                             x: PropertiesToPropertyNames(properties),
-                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education).map(value => Math.round(value)),
                             name: educationGroups[0]?.title,
                             mode: "markers",
                             type: "bar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
-                                "Værdi: %{y}<br>" +
+                                "Værdi: %{y}%<br>" +
                                 "<extra></extra>"
                         },
                         {
                             x: PropertiesToPropertyNames(properties),
-                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education).map(value => Math.round(value)),
                             name: educationGroups[1]?.title,
                             mode: "markers",
                             type: "bar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
-                                "Værdi: %{y}<br>" +
+                                "Værdi: %{y}%<br>" +
                                 "<extra></extra>"
                         },
                         {
                             x: PropertiesToPropertyNames(properties),
-                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education).map(value => Math.round(value)),
                             name: educationGroups[2]?.title,
                             mode: "markers",
                             type: "bar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
-                                "Værdi: %{y}<br>" +
+                                "Værdi: %{y}%<br>" +
                                 "<extra></extra>"
                         }
                     ]}
@@ -151,7 +151,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             title: "Egenskaber"
                         },
                         yaxis: {
-                            title: "Værdi",
+                            title: "Værdi normaliseret",
                             range: [0, 100] // Set the range for y-axis
                         },
                         hovermode: "closest",
