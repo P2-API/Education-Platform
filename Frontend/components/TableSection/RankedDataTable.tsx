@@ -22,7 +22,7 @@ type RankedMaterialReactDataTableProps = {
 
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
-  
+
   const { getSmallTextAboutEducation, getPersonalizedMessage } = useServer();
   const filterInfo = useContext(filtersContext);
   const quizInfo = useContext(QuizInfoContext);
@@ -419,10 +419,8 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         },
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const working_hours = row.original.education.jobData.workSchedule.workingHours;
-          const flexible_hours = row.original.education.jobData.workSchedule.flexibleHoursPercent + row.original.education.jobData.workSchedule.selfSchedulePercent + row.original.education.jobData.workSchedule.variableSchedulePercent;
+          const flexible_hours = row.original.education.jobData.workSchedule.flexibleHoursPercent
           const fixed_hours = row.original.education.jobData.workSchedule.fixedHoursPercent;
-          const flexible_hours_percent = flexible_hours / (flexible_hours + fixed_hours);
-
           return (
             <ul style={{ padding: 0, width: "250px", height: "60px", scrollbarWidth: "thin", marginRight: "1.5em" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -431,11 +429,11 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Fleksible timer: </p>
-                <p style={{ margin: 0 }} >{Math.floor(flexible_hours_percent * 100)}%</p>
+                <p style={{ margin: 0 }} >{flexible_hours}%</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ margin: 0, fontWeight: "normal" }}>Faste timer: </p>
-                <p style={{ margin: 0 }} >{Math.floor((1 - flexible_hours_percent) * 100)}%</p>
+                <p style={{ margin: 0 }} >{fixed_hours}%</p>
               </div>
             </ul>
           )
@@ -499,11 +497,11 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
 
   const getMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
-    const response = await getPersonalizedMessage(filters, quizAnswers, education);
-    return response;
-};
+    const message = await getPersonalizedMessage(filters, quizAnswers, education);
+    return message;
+  }
 
-  const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
+  const DetailPanelContent: React.FC<DetailPanelContentProps> = ({ row }) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     const [smallText, setSmallText] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
@@ -521,7 +519,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     }
 
     return (
-      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         <p>{smallText}</p>
         {!smallText && <p>Loading...</p>}
         <button onClick={handleClick}>
