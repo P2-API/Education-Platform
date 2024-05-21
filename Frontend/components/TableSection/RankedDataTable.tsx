@@ -499,9 +499,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
 
   const getMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
-    const message = await getPersonalizedMessage(filters, quizAnswers, education);
-    return message;
-  }
+    const response = await getPersonalizedMessage(filters, quizAnswers, education);
+    return response;
+};
 
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;

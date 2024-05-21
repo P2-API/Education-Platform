@@ -149,23 +149,23 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
     }
 }
 
-export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education): Promise<{ message: string | null }> {
+export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education): Promise<string> {
     try {
         console.log("Getting personalized message for education:", education.title);
         const text = await getAllText(education.url);
         if (text === "Error fetching the URL" || text === null) {
             console.error("Error fetching or processing text from URL:", education.url);
-            return { message: null };
+            return "Der skete en fejl ved generering af en besked, prøv venligst senere";
         }
 
         const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst. Dit svar skal være meget direkte i forhold til de filtre og de preferencer som brugeren har valgt.  Læg ekstra meget vægt på preferencer med en værdi på 5 og ingen vægt på preferencer på 3 eller mindre. Inkluder IKKE de numeriske værdier fra preferencer i dit svar. Svar kun i hnehold til de valgte kriterier / Filtre. DU SKAL inddrage de fag som brugeren har valgt.";
 
 
         const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
-        return { message };
+        return message;
     } catch (error) {
         console.error('Error:', error);
-        return { message: null };
+        return "Der skete en fejl ved generering af en besked, prøv venligst senere" ;
     }
 }
 
@@ -316,7 +316,11 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
         temperature: 0.2,
     });
     console.log(completion.choices[0].message.content);
-    return completion.choices[0].message.content;
+    const jsonString = completion.choices[0].message.content;
+    const obj = JSON.parse(jsonString);
+    console.log(obj.personalizedText);
+
+    return obj.personalizedText;
 }
 
 async function translateTextToEnglishChatGPT(text: string) {
