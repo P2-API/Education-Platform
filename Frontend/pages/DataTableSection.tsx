@@ -1,7 +1,6 @@
 import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React, { useEffect, useState, useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
-import { TableFilters, } from "../../src/types";
 import { EducationDataFromServerContext } from "./Homepage";
 import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
 import { filtersContext, rankedDataInfo } from "../components/Tabs";
