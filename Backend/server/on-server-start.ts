@@ -8,7 +8,6 @@ import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
 import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
-import { processAllEducations, extractKeywordsFromText, calculateSimilarity, manualKeywordExtraction } from "../utilities/web_scraper";
 
 let educations: Education[] = [];
 const educationGroups: EducationGroup[] = [];
@@ -25,6 +24,8 @@ let formOfEducationKeys: (keyof typeof FormOfEducation)[];
 let minimumEducation: Education;
 let maximumEducation: Education;
 
+let lowestPercentage: number = 0;
+let highestPercentage: number = 100;
 
 let educationDurationRange: MinimumMaximum;
 
@@ -352,8 +353,44 @@ export const getMaximumEducation = (): Education => {
 }
 
 const calculateBasedOnMinimumAndMaximumEducation = () => {
+    // Calculate the lowest and highest percentage values
+    calculateLowestAndHighestPercentage();
+
     // Normalizes the educations based on the minimum and maximum values
     normilizedEducations = normilizesEducations(educations);
+}
+
+const calculateLowestAndHighestPercentage = () => {
+    lowestPercentage = minimumEducation.dropoutRate;
+    highestPercentage = maximumEducation.dropoutRate;
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.fixedHoursPercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.fixedHoursPercent);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.flexibleHoursPercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.flexibleHoursPercent);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.selfSchedulePercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.selfSchedulePercent);
+
+    minimumEducation.industries.forEach((industry) => {
+        lowestPercentage = Math.min(lowestPercentage, industry.share);
+        highestPercentage = Math.max(highestPercentage, industry.share);
+    });
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.unemployment.newGraduate);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.unemployment.newGraduate);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.unemployment.experienced);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.unemployment.experienced);
+}
+
+export const getLowestPercentage = () => {
+    return lowestPercentage;
+}
+
+export const getHighestPercentage = () => {
+    return highestPercentage;
 }
 
 export const getEducationData = (): EducationData => {

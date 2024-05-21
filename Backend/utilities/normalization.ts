@@ -1,4 +1,3 @@
-import { SubjectTitle } from "../../src/enums";
 import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, SalaryFilters, SocialFeedback, Subject, TableFilters, Unemployment, UnemploymentFilters } from "../../src/types";
 import { getMinimumEducation, getMaximumEducation, getEducationDurationRange } from "../server/on-server-start";
 import deepCopy from "./deep-copy";
@@ -6,6 +5,9 @@ import deepCopy from "./deep-copy";
 
 let minimumEducation: Education;
 let maximumEducation: Education;
+
+const lowestPercentage = 0;
+const highestPercentage = 100;
 
 const normilize = (number: number, min: number, max: number) => {
     if (min == 0 && max == 0) return 0;
@@ -73,10 +75,12 @@ export const normilizesEducations = (educations: Education[]): Education[] => {
     minimumEducation ??= getMinimumEducation();
     maximumEducation ??= getMaximumEducation();
 
+    console.log(educations.filter((education) => education.title == "Socialt arbejde").length);
     const normilizedEducations = deepCopy(educations);
     normilizedEducations.forEach((education) => {
         normilizeEducation(education); // Normilize each numerical value in the education
     });
+    console.log(normilizedEducations.filter((education) => education.title == "Socialt arbejde").length);
     return normilizedEducations;
 }
 
@@ -88,7 +92,7 @@ const normilizeEducation = (education: Education) => {
     normilizeEducationAcademicFeedback(education.academicFeedback);
     normilizeEducationAcademicWorkload(education.academicWorkload);
     normilizeEducationDegreeStructureContents(education.degreeStructure.contents);
-    education.dropoutRate = normilize(education.dropoutRate, minimumEducation.dropoutRate, maximumEducation.dropoutRate);
+    education.dropoutRate = normilize(education.dropoutRate, lowestPercentage, highestPercentage);
     normilizeEducationJobData(education.jobData);
 }
 
@@ -112,7 +116,7 @@ const normilizeEducationSubjects = (subjects: Subject[]) => {
 
 const normilizeEducationIndustries = (industries: Industry[]) => {
     industries.forEach((industry) => {
-        let minShare = 0;
+        /* let minShare = 0;
         let maxShare = 0;
         minimumEducation.industries.forEach((minIndustry) => {
             if (industry.title === minIndustry.title) {
@@ -123,8 +127,8 @@ const normilizeEducationIndustries = (industries: Industry[]) => {
             if (industry.title === maxIndustry.title) {
                 maxShare = maxIndustry.share;
             }
-        });
-        industry.share = normilize(industry.share, minShare, maxShare);
+        }); */
+        industry.share = normilize(industry.share, lowestPercentage, highestPercentage);
     });
 }
 
@@ -207,10 +211,10 @@ const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
 const normilizeUnemployment = (unemployment: Unemployment) => {
     let minUnemployment = minimumEducation.jobData.unemployment;
     let maxUnemployment = maximumEducation.jobData.unemployment;
-    unemployment.experienced = normilize(unemployment.experienced, minUnemployment.experienced, maxUnemployment.experienced);
-    unemployment.newGraduate = normilize(unemployment.newGraduate, minUnemployment.newGraduate, maxUnemployment.newGraduate);
-    unemployment.projectedExperienced = normilize(unemployment.projectedExperienced, minUnemployment.projectedExperienced, maxUnemployment.projectedExperienced);
-    unemployment.projectedNewGraduate = normilize(unemployment.projectedNewGraduate, minUnemployment.projectedNewGraduate, maxUnemployment.projectedNewGraduate);
+    unemployment.experienced = normilize(unemployment.experienced, lowestPercentage, highestPercentage);
+    unemployment.newGraduate = normilize(unemployment.newGraduate, lowestPercentage, highestPercentage);
+    unemployment.projectedExperienced = normilize(unemployment.projectedExperienced, lowestPercentage, highestPercentage);
+    unemployment.projectedNewGraduate = normilize(unemployment.projectedNewGraduate, lowestPercentage, highestPercentage);
 }
 
 export default normilize;
