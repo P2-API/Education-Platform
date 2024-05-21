@@ -1,7 +1,6 @@
 import { PropertyNames } from '../../src/types';
 
-const EducationPropertyNames: PropertyNames = {
-    rank: "Rank",
+export const EducationPropertyNames: PropertyNames = {
     withManyStudents: "Tid med mange studerende",
     withFewStudents: "Tid med få studerende",
     withSupervision: "Tid med vejleder",
@@ -19,7 +18,7 @@ const EducationPropertyNames: PropertyNames = {
     exams: "Eksamener",
     internship: "Praktik",
     internationalStay: "Udlands ophold",
-    dropoutRate: "Drop ud rate",
+    dropoutRate: "Frafald",
     lowerQuartile: "Nedre kvartil løn",
     median: "Median af løn",
     upperQuartile: "Øvre kvartil løn",
@@ -29,10 +28,6 @@ const EducationPropertyNames: PropertyNames = {
     selfSchedulePercent: "Tid med selv-planlagte arbejdstimer",
     variableSchedulePercent: "Tid med variable arbejdstimer",
     nightAndEveningShiftsPercent: "Tid med nat og aften arbejde",
-    newGraduate: "Ny uddannet",
-    experienced: "Erfaren",
-    projectedNewGraduate: "Projekteret ny udannet",
-    projectedExperienced: "Projekteret erfaren",
     degreeRelevance: "Relevens af uddannelse",
     degreePreparesForJob: "Uddannelse forbereder til job",
     nationalJobs: "Nationale jobs"
@@ -47,5 +42,6 @@ export function PropertiesToPropertyNames(properties: string[]): string[] {
 }
 
 export const ConvertPropertyToName = (property: string): string => { 
-    return property = EducationPropertyNames[property as keyof PropertyNames]
+    return property = EducationPropertyNames[property as keyof PropertyNames];
+
 }
