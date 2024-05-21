@@ -315,10 +315,9 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
         response_format: { type: "json_object" },
         temperature: 0.2,
     });
-    console.log(completion.choices[0].message.content);
+    
     const jsonString = completion.choices[0].message.content;
     const obj = JSON.parse(jsonString);
-    console.log(obj.personalizedText);
 
     return obj.personalizedText;
 }
