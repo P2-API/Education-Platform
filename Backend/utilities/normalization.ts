@@ -42,11 +42,14 @@ const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) =
     let minUnemployment = minimumEducation.jobData.unemployment;
     let maxUnemployment = maximumEducation.jobData.unemployment;
 
-    unemploymentFilter.newGraduate.minimum = normilize(unemploymentFilter.newGraduate.minimum, minUnemployment.newGraduate, maxUnemployment.newGraduate);
-    unemploymentFilter.newGraduate.maximum = normilize(unemploymentFilter.newGraduate.maximum, minUnemployment.newGraduate, maxUnemployment.newGraduate);
+    let minValue = Math.min(minUnemployment.newGraduate, minUnemployment.experienced);
+    let maxValue = Math.max(maxUnemployment.newGraduate, maxUnemployment.experienced);
 
-    unemploymentFilter.experienced.minimum = normilize(unemploymentFilter.experienced.minimum, minUnemployment.experienced, maxUnemployment.experienced);    
-    unemploymentFilter.experienced.maximum = normilize(unemploymentFilter.experienced.maximum, minUnemployment.experienced, maxUnemployment.experienced);
+    unemploymentFilter.newGraduate.minimum = normilize(unemploymentFilter.newGraduate.minimum, minValue, maxValue);
+    unemploymentFilter.newGraduate.maximum = normilize(unemploymentFilter.newGraduate.maximum, minValue, maxValue);
+
+    unemploymentFilter.experienced.minimum = normilize(unemploymentFilter.experienced.minimum, minValue, maxValue);    
+    unemploymentFilter.experienced.maximum = normilize(unemploymentFilter.experienced.maximum, minValue, maxValue);
 }
 
 const normalizeWorkingHoursFilters = (workingHoursFilter: MinimumMaximum) => {
@@ -81,7 +84,6 @@ export const normilizesEducations = (educations: Education[]): Education[] => {
 }
 
 const normilizeEducation = (education: Education) => {
-    normilizeEducationSubjects(education.subjects);
     normilizeEducationIndustries(education.industries);
     normilizeEducationHours(education.hours);
     normilizeEducationSocialFeedback(education.socialFeedback);
@@ -90,24 +92,6 @@ const normilizeEducation = (education: Education) => {
     normilizeEducationDegreeStructureContents(education.degreeStructure.contents);
     education.dropoutRate = normilize(education.dropoutRate, minimumEducation.dropoutRate, maximumEducation.dropoutRate);
     normilizeEducationJobData(education.jobData);
-}
-
-const normilizeEducationSubjects = (subjects: Subject[]) => {
-    subjects.forEach((subject) => {
-        let minScore = 0;
-        let maxScore = 0;
-        minimumEducation.subjects.forEach((minSubject) => {
-            if (subject.title === minSubject.title) {
-                minScore = minSubject.score;
-            }
-        });
-        maximumEducation.subjects.forEach((maxSubject) => {
-            if (subject.title === maxSubject.title) {
-                maxScore = maxSubject.score;
-            }
-        });
-        subject.score = normilize(subject.score, minScore, maxScore);
-    });
 }
 
 const normilizeEducationIndustries = (industries: Industry[]) => {
@@ -205,10 +189,14 @@ const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
 }
 
 const normilizeUnemployment = (unemployment: Unemployment) => {
-    let minUnemployment = minimumEducation.jobData.unemployment;
-    let maxUnemployment = maximumEducation.jobData.unemployment;
-    unemployment.experienced = normilize(unemployment.experienced, minUnemployment.experienced, maxUnemployment.experienced);
-    unemployment.newGraduate = normilize(unemployment.newGraduate, minUnemployment.newGraduate, maxUnemployment.newGraduate);
+    let minUnemployment: Unemployment = minimumEducation.jobData.unemployment;
+    let maxUnemployment: Unemployment = maximumEducation.jobData.unemployment;
+
+    let minValue = Math.min(minUnemployment.newGraduate, minUnemployment.experienced);
+    let maxValue = Math.max(maxUnemployment.newGraduate, maxUnemployment.experienced);
+
+    unemployment.experienced = normilize(unemployment.experienced, minValue, maxValue);
+    unemployment.newGraduate = normilize(unemployment.newGraduate, minValue, maxValue);
     unemployment.projectedExperienced = normilize(unemployment.projectedExperienced, minUnemployment.projectedExperienced, maxUnemployment.projectedExperienced);
     unemployment.projectedNewGraduate = normilize(unemployment.projectedNewGraduate, minUnemployment.projectedNewGraduate, maxUnemployment.projectedNewGraduate);
 }

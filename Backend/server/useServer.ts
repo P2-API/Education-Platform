@@ -1,9 +1,11 @@
+import assert from "assert";
 import {
     QuizAnswers,
     EducationDataFromServer,
     PCAData,
     EducationGroup,
-    TableFilters
+    TableFilters,
+    Education
 } from "types";
 
 const useServer = () => {
@@ -32,9 +34,26 @@ const useServer = () => {
         const educationProperties: any[] = await response.json();
         return educationProperties;
     }
+
+    const getNormalizedEducations = async (): Promise<Education[]> => {
+        const response = await fetch("http://localhost:1337/get_normalized_educations");
+        const normalizedEducations: any[] = await response.json();
+        return normalizedEducations;
+    }
     // write more functions here
 
-
+    const getSmallTextAboutEducation = async (education: Education) => {
+        
+        const response = await fetch("http://localhost:1337/get_small_text_about_education", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ education })
+        });
+        const smallText = await response.text();
+        return smallText;
+    }
 
     const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
         console.log("im in here")
@@ -70,7 +89,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations };
 }
 
 export { useServer };

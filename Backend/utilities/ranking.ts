@@ -24,15 +24,19 @@ export class Ranker {
         finalRanking.index = finalRanking.ranking.length
         rankedEducations.lowerhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         this.normalizeScores(finalRanking.ranking)
+    
         //map the ranked educations to the normal education data
         finalRanking.ranking.map((education) => {
-            const normalEducation = normalEducationData.find((normalEducation) => (normalEducation.title === education.education.title && normalEducation.institutions === education.education.institutions));
+            const normalEducation = normalEducationData.find((normalEducation) => this.areEquivalent(normalEducation, education.education));
             if (normalEducation) {
                 education.education = normalEducation;
             } else {
                 throw new Error("could not map normalized education to normal education data");
             }
         });
+        /*for (let i = 0; i < finalRanking.index; i++) {
+            console.log(finalRanking.ranking[i].education.title, finalRanking.ranking[i].education.institutions, finalRanking.ranking[i].education.degreeType, finalRanking.ranking[i].education.geographies)
+        }*/
         return finalRanking
     }
 
@@ -43,27 +47,15 @@ export class Ranker {
 
     roughSorting(filters: TableFilters, educations: Education[]) {
         educations.forEach((education) => {
-            /*
-            console.log("education duration", DegreeTypeToDuration(education.degreeType,true))
-            console.log("forms of education",(filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))))
-            console.log("degreeType:",(filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
-            console.log("geography:",(filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography))) 
-            console.log("institution",(filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) 
-            console.log("internationally",filters.canWorkInternationally ? (education.jobData.nationalJobs > 0.8 ? false : true) : true)
-            console.log("flexibility",(filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > 0.5 ? true : false) : true)
-            console.log("duration",this.educationDurationFilterPassed(education, filters.educationDuration))
-            console.log("working hours",this.workingHoursFilterPassed(education, filters.wantedWorkingHours))
-            */
             if (this.filtersPassed(education, filters)) {
+                console.log("education", education, "unemployment:", education.jobData.unemployment.experienced)
                 this.ranking.upperhalf.push(education)
-                console.log("education",education.jobData.salaries)
-                console.log("upperquartile",education.jobData.salaries.newGraduate.upperQuartile)
-                console.log("filterMaximum",filters.wantedSalary.newGraduate.maximum)
             }
             else {
                 this.ranking.lowerhalf.push(education)
             }
         })
+        console.log("filter", filters.unemployment.experienced)
     }
 
     normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserInputs): IntermediateRankingType {
@@ -186,7 +178,7 @@ export class Ranker {
         return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
     }
     workingHoursFilterPassed(education: Education, workingHoursFilter: MinimumMaximum): boolean {
-        return education.jobData.workSchedule.workingHours >= workingHoursFilter.minimum && education.jobData.workSchedule.fixedHoursPercent <= workingHoursFilter.maximum
+        return education.jobData.workSchedule.workingHours >= workingHoursFilter.minimum && education.jobData.workSchedule.workingHours <= workingHoursFilter.maximum
     }
     salaryFilterPassed(education: Education, salaryFilter: SalaryFilters): boolean {
         return education.jobData.salaries.newGraduate.lowerQuartile >= salaryFilter.newGraduate.minimum && education.jobData.salaries.newGraduate.upperQuartile <= salaryFilter.newGraduate.maximum
@@ -195,5 +187,14 @@ export class Ranker {
     unemploymentFilterPassed(education: Education, unemploymentFilter: UnemploymentFilters): boolean {
         return education.jobData.unemployment.newGraduate <= unemploymentFilter.newGraduate.maximum && education.jobData.unemployment.newGraduate >= unemploymentFilter.newGraduate.minimum
             && education.jobData.unemployment.experienced <= unemploymentFilter.experienced.maximum && education.jobData.unemployment.experienced >= unemploymentFilter.experienced.minimum
+    }
+    areEquivalent(education1: Education, education2: Education): boolean {
+        return (education1.title === education2.title && 
+            education1.institutions === education2.institutions &&
+            education1.degreeType === education2.degreeType &&
+            education1.geographies[0] === education2.geographies[0] &&
+            education1.url === education2.url &&
+            education1.counties[0] === education2.counties[0]
+        )
     }
 }

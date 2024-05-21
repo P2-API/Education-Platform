@@ -237,7 +237,12 @@ export async function getHeadliner(url: string): Promise<{ headlinerText: string
             return { headlinerText: null };
         }
 
-        const headlinerText = await getHeadlinerText(response.data);
+        let headlinerText = await getHeadlinerText(response.data);
+
+        if (headlinerText === "Her kan du se nedlagte uddannelser, hvor du ikke længere kan søge optagelse. Oversigten går 5 år tilbage og dækker både uddannelser for unge og vokse. ") {
+            headlinerText = "Denne uddannelse er nedlagt."
+        }
+
         return { headlinerText };
     } catch (error) {
         console.error('Error:', error);
