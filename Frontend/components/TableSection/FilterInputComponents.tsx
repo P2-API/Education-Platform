@@ -16,9 +16,10 @@ type MultiSelectAutoCompleteProps = {
     setProperties?: React.Dispatch<React.SetStateAction<string[]>>;
     givenValue: string[];
     identifier: string;
+    getOptionsLabel?: (option: string) => string;
 }
 
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier, getOptionsLabel }) => {
 
     const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
@@ -33,6 +34,7 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
         }
     }
 
+    const getLabel: (option: string) => string = getOptionsLabel != null ? getOptionsLabel : (option) => option;
 
     return (
         <Autocomplete
@@ -40,7 +42,7 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
             id="tags-outlined"
             sx={{ width: "100%" }}
             options={collection}
-            getOptionLabel={(option) => option}
+            getOptionLabel={getLabel}
             filterSelectedOptions
             value={value}
             onChange={handleChange}
