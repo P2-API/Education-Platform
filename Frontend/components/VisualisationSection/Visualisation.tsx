@@ -5,12 +5,14 @@ import Plot from 'react-plotly.js';
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
 import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
-import { PCAData } from '@src/types';
+import { Education, EducationGroup } from '@src/types';
 
 interface VisualisationProps {
+    setUpdate: React.Dispatch<React.SetStateAction<boolean>>,
     chartType: ChartType,
-    properties: string[]
-    rankedDataInfo: rankedDataInfo
+    properties: string[],
+    rankedDataInfo: rankedDataInfo,
+    educationGroups: EducationGroup[]
 }
 
 type pcaScatterData = {
@@ -19,16 +21,22 @@ type pcaScatterData = {
     textValues: string[]
 }
 
-const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo }) => {
+let normalizedEducations: Education[] = [];
+
+const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo, educationGroups }) => {
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
+    console.log("educationGroups inside of visualization", educationGroups)
     console.log("rankedDataInfo: ", rankedDataInfo)
     const quizAnswerState = useContext(QuizInfoContext);
 
-    const { getEducationsProperties } = useServer();
+    const { getEducationsProperties, getNormalizedEducations } = useServer();
     useEffect(() => {
         getEducationsProperties().then((data) => {
             setEducationProperties(data);
+        })
+        getNormalizedEducations().then((data) => {
+            normalizedEducations = data;
         })
     }, []);
 
@@ -165,6 +173,35 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         </Paper >
     );
 
+    function findPropertyValue(obj: any, property: string): number | undefined {
+        if (obj.hasOwnProperty(property)) {
+            return obj[property];
+        }
+        for (let key in obj) {
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+                const result = findPropertyValue(obj[key], property);
+                if (result !== undefined) {
+                    return result;
+                }
+            }
+        }
+        return undefined;
+    }
+    
+    function getValuesOfProperties(edu: Education): number[] {
+        let propertyValues: number[] = [];
+
+        properties.forEach((property) => {
+            let value = findPropertyValue(edu, property);
+            if (typeof value === 'number') {
+                propertyValues.push(value * 100); // Times 100 to make it look better
+            }
+            
+        });
+        console.log("property values and edu", propertyValues, properties, edu);
+        return propertyValues;
+    }
+    
     const radarPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
@@ -172,9 +209,38 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                 <Plot
                     data={[
                         {
-                            r: [90, 45, 69, 80, 30],// Set to the education selection of first education
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education), // Set to the education selection of first education
                             theta: properties,
                             text: properties,
+                            name: educationGroups[0]?.title,
+                            mode: "markers",
+                            type: "scatterpolar",
+                            fill: 'toself',
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "<b>%{text}</b><br>" +
+                                "Value: %{r}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education),// Set to the education selection of second education
+                            theta: properties,
+                            text: properties,
+                            name: educationGroups[1]?.title,
+                            mode: "markers",
+                            type: "scatterpolar",
+                            fill: 'toself',
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "<b>%{text}</b><br>" +
+                                "Value: %{r}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education),// Set to the education selection of third education
+                            theta: properties,
+                            text: properties,
+                            name: educationGroups[2]?.title,
                             mode: "markers",
                             type: "scatterpolar",
                             fill: 'toself',

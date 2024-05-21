@@ -50,6 +50,11 @@ export const getCachedEducations = (): Education[] => {
     return educations;
 }
 
+
+export const getNormalizedEducations = (): Education[] => {
+    return normilizedEducations;
+}
+
 // Runs some heavy calculations based on the imported educations
 const caclulateBasedOnEducations = () => {
     groupEducations();

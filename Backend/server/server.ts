@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
-import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
+import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties, getNormalizedEducations } from './on-server-start';
 import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
@@ -39,6 +39,9 @@ server.get("/get_grouped_educations", (request: Request, response: Response) => 
 });
 server.get("/get_education_properties", (request: Request, response: Response) => {
     response.status(200).send(getEducationProperties());
+});
+server.get("/get_normalized_educations", (request: Request, response: Response) => {
+    response.status(200).send(getNormalizedEducations());
 });
 
 

@@ -1,9 +1,11 @@
+import assert from "assert";
 import {
     QuizAnswers,
     EducationDataFromServer,
     PCAData,
     EducationGroup,
-    TableFilters
+    TableFilters,
+    Education
 } from "types";
 
 const useServer = () => {
@@ -31,6 +33,12 @@ const useServer = () => {
         const response = await fetch("http://localhost:1337/get_education_properties");
         const educationProperties: any[] = await response.json();
         return educationProperties;
+    }
+
+    const getNormalizedEducations = async (): Promise<Education[]> => {
+        const response = await fetch("http://localhost:1337/get_normalized_educations");
+        const normalizedEducations: any[] = await response.json();
+        return normalizedEducations;
     }
     // write more functions here
 
@@ -70,7 +78,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getNormalizedEducations };
 }
 
 export { useServer };
