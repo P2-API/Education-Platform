@@ -5,9 +5,6 @@ import React, { useContext } from 'react';
 import { TableSectionReferenceContext } from '../pages/Homepage';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useMediaQuery } from "@mui/material";
-import { toast } from 'sonner'
-import { useServer } from "../../Backend/server/useServer";
-
 
 
 
@@ -19,12 +16,6 @@ const HeroIntroduction: React.FC = () => {
 
     const useMargin = useMediaQuery("(min-width: 1179px)");
     const centerHero = useMediaQuery("(max-width: 925px)");
-
-    const { greetServer } = useServer();
-    const serverGreetsWithToast = async () => {
-        const response = await greetServer();
-        toast.info(response);
-    };
 
 
     return (
@@ -151,8 +142,8 @@ const HeroIntroduction: React.FC = () => {
                 >
                     Gå til uddannelser
                 </button>
-                <button className="primary-button" style={{ backgroundColor: "blue" }} onClick={serverGreetsWithToast}>Snak med server</button>
-
+                {/*                 <button className="primary-button" style={{ backgroundColor: "blue" }} onClick={serverGreetsWithToast}>Snak med server</button>
+ */}
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 import { Institution } from "../../../src/enums"
 import {
   MaterialReactTable,
@@ -24,6 +24,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const { getSmallTextAboutEducation } = useServer();
 
   const data: RankedDataStructure[] = rankedData.ranking;
+
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
       {
@@ -39,7 +40,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
           const rank = row.original.education.rank;
           if (rank == null || rank == undefined || rank == 0) {
             return (
-              <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>-</p>
+              <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}><b>{row.index + 1}</b></p>
             );
           }
 
@@ -190,6 +191,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
           const groupEngagement = row.original.education.socialFeedback.groupEngagement;
           const loneliness = row.original.education.socialFeedback.loneliness;
           const stress = row.original.education.socialFeedback.stress;
+
           // ("hoursNumbers", hoursNumbers)
           // ("hoursTitles", hoursTitles)
           return (
@@ -490,21 +492,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
-    const [smallText, setSmallText] = useState<string | null>(null);
-
-    useEffect(() => {
-      getSmallTextAboutEducation(row.original.education).then((text) => {
-        setSmallText(text);
-      });
-    }, [row.original.education]);
-
     return (
-      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-        <p>{smallText}</p>
-        {!smallText && <p>Loading...</p>}
-        <button>
-          Generate personal recommendation
-        </button>
+      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+        DEFINITELY RANKED
       </div>
     );
   };

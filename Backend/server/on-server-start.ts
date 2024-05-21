@@ -1,8 +1,8 @@
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment, EducationData } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
-import { assignSubjectRankings, processAllEducations } from "../utilities/web_scraper";
+import { assignSubjectsToEducations } from "../utilities/web_scraper";
 
 import * as fs from "fs";
 import { educationToEducationGroup } from "../utilities/custom-type-conversion";
@@ -10,7 +10,7 @@ import deepCopy from "../utilities/deep-copy";
 import { normilizesEducations } from "../utilities/normalization";
 
 let educations: Education[] = [];
-let educationGroups: EducationGroup[] = [];
+const educationGroups: EducationGroup[] = [];
 let normilizedEducations: Education[] = [];
 let educationProperties: string[] = [];
 
@@ -24,6 +24,8 @@ let formOfEducationKeys: (keyof typeof FormOfEducation)[];
 let minimumEducation: Education;
 let maximumEducation: Education;
 
+let lowestPercentage: number = 0;
+let highestPercentage: number = 100;
 
 let educationDurationRange: MinimumMaximum;
 
@@ -39,6 +41,9 @@ export const onStart = () => {
 // calculations on them
 const cacheEducations = async () => {
     educations = await GetEducationsOnServerStart(); // Gets the educations through the csv importer
+
+
+
     caclulateBasedOnEducations(); // Runs some heavy calculations based on the imported educations    
 }
 
@@ -46,15 +51,23 @@ export const getCachedEducations = (): Education[] => {
     return educations;
 }
 
+
+export const getNormalizedEducations = (): Education[] => {
+    return normilizedEducations;
+}
+
 // Runs some heavy calculations based on the imported educations
 const caclulateBasedOnEducations = () => {
     groupEducations();
     calculateMinimumAndMaximumEducation(educations);
+    //processAllEducations();
+    assignSubjectsToEducations(educations);
+    assignSubjectsToEducations(normilizedEducations);
 }
 
 // Calculates the properties of the education object
 const calculateEducationProperties = () => {
-    let edu: Education = {
+    const edu: Education = {
         url: "",
         rank: null,
         title: "",
@@ -345,20 +358,60 @@ export const getMaximumEducation = (): Education => {
 }
 
 const calculateBasedOnMinimumAndMaximumEducation = () => {
+    // Calculate the lowest and highest percentage values
+    calculateLowestAndHighestPercentage();
+
     // Normalizes the educations based on the minimum and maximum values
     normilizedEducations = normilizesEducations(educations);
 }
 
-export const getNormilizedEducations = (): Education[] => {
-    return normilizedEducations;
+const calculateLowestAndHighestPercentage = () => {
+    lowestPercentage = minimumEducation.dropoutRate;
+    highestPercentage = maximumEducation.dropoutRate;
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.fixedHoursPercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.fixedHoursPercent);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.flexibleHoursPercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.flexibleHoursPercent);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.workSchedule.selfSchedulePercent);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.workSchedule.selfSchedulePercent);
+
+    minimumEducation.industries.forEach((industry) => {
+        lowestPercentage = Math.min(lowestPercentage, industry.share);
+        highestPercentage = Math.max(highestPercentage, industry.share);
+    });
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.unemployment.newGraduate);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.unemployment.newGraduate);
+
+    lowestPercentage = Math.min(lowestPercentage, minimumEducation.jobData.unemployment.experienced);
+    highestPercentage = Math.max(highestPercentage, maximumEducation.jobData.unemployment.experienced);
+}
+
+export const getLowestPercentage = () => {
+    return lowestPercentage;
+}
+
+export const getHighestPercentage = () => {
+    return highestPercentage;
+}
+
+export const getEducationData = (): EducationData => {
+    const normalizedAndNormalEducations = {
+        normalized: normilizedEducations,
+        normal: educations
+    }
+    return normalizedAndNormalEducations;
 }
 
 // Uses the keys to calculate the minimum and maximum duration of a DegreeType
 export const calculateMinMaxDegreeDuration = () => {
-    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0]).minimum; // Initial to a value in range
-    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0]).maximum; // Initial to a value in range
+    let educationDurationMin = DegreeTypeToDuration(degreeTypeKeys[0], false).minimum; // Initial to a value in range
+    let educationDurationMax = DegreeTypeToDuration(degreeTypeKeys[0], false).maximum; // Initial to a value in range
     degreeTypeKeys.forEach((degreeType) => { // Loop through all the keys of DegreeType
-        let newDuration = DegreeTypeToDuration(degreeType); // Get the duration of the DegreeType
+        let newDuration = DegreeTypeToDuration(degreeType, false); // Get the duration of the DegreeType
         if (newDuration.minimum != -1) { // Deprecated check probably
             educationDurationMin = Math.min(educationDurationMin, newDuration.minimum);
             educationDurationMax = Math.max(educationDurationMax, newDuration.maximum);
@@ -388,5 +441,3 @@ export const getTableSectionData = (): EducationDataFromServer => {
         maximumValueEducation: maximumEducation,
     }
 }
-
-//processAllEducations(); // Scrapes all educations from the web and saves them to the database

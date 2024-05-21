@@ -2,9 +2,10 @@ import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
-import { FinalRankingType, TableFilters, } from "../../src/types";
+import { TableFilters, } from "../../src/types";
 import { EducationDataFromServerContext } from "./Homepage";
 import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
+import { rankedDataInfo } from "../components/Tabs";
 
 
 export type FilterInfoType = {
@@ -12,17 +13,19 @@ export type FilterInfoType = {
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
 };
 
+type DataTableSectionProps = {
+    rankedDataInfo: rankedDataInfo
+};
 
-const DataTableSection: React.FC = ({ }) => {
+
+const DataTableSection: React.FC<DataTableSectionProps> = ({ rankedDataInfo }) => {
 
 
     const [isCalculating, setisCalculating] = useState<boolean>(true);
-    const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
 
     let data = useContext(EducationDataFromServerContext);
 
 
-    console.log("rankedData", rankedData);
 
     useEffect(() => {
         if (data) {
@@ -61,15 +64,15 @@ const DataTableSection: React.FC = ({ }) => {
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
             <div style={{ width: "30%", height: "100%", minWidth: "417px", marginRight: "1em" }}>
 
-                <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={setRankedData} filterInfo={FilterInfo} />
+                <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={rankedDataInfo.setRankedData} filterInfo={FilterInfo} />
             </div>
 
             <div style={{ width: "69%", height: "100%" }}>
-                {!rankedData && (
+                {!rankedDataInfo.rankedData && (
                     <MaterialReactDataTable data={data?.educations ?? []} />
                 )}
-                {rankedData && (
-                    <RankedMaterialReactDataTable rankedData={rankedData} />
+                {rankedDataInfo.rankedData && (
+                    <RankedMaterialReactDataTable rankedData={rankedDataInfo.rankedData} />
                 )}
             </div>
         </div>

@@ -4,8 +4,12 @@ import Box from '@mui/material/Box';
 import DataTableSection from '@frontend/pages/DataTableSection';
 import VisualisationSection from '@frontend/pages/VisualisationSection';
 import React, { useState, createContext } from 'react';
-import { QuizAnswers } from '@src/types';
+import { QuizAnswers, FinalRankingType } from '@src/types';
 
+export type rankedDataInfo = {
+    rankedData: FinalRankingType | null;
+    setRankedData: React.Dispatch<React.SetStateAction<FinalRankingType | null>>;
+};
 
 export type QuizInfoType = {
     quizData: QuizAnswers;
@@ -94,7 +98,7 @@ export default function BasicTabs() {
         setValue(newValue);
     };
 
-
+    const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
 
     // Quiz states
     const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
@@ -136,6 +140,10 @@ export default function BasicTabs() {
         setIsQuizOpen: setIsQuizOpen
     };
 
+    const rankedDataInfo: rankedDataInfo = {
+        rankedData: rankedData,
+        setRankedData: setRankedData
+    };
 
 
     return (
@@ -148,10 +156,10 @@ export default function BasicTabs() {
             </Box>
             <QuizInfoContext.Provider value={QuizInfo}>
                 <CustomTabPanel value={value} index={0}>
-                    <DataTableSection />
+                    <DataTableSection rankedDataInfo={rankedDataInfo} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <VisualisationSection />
+                    <VisualisationSection rankedDataInfo={rankedDataInfo} />
                 </CustomTabPanel>
             </QuizInfoContext.Provider>
 

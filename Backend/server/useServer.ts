@@ -1,3 +1,4 @@
+import assert from "assert";
 import {
     QuizAnswers,
     EducationDataFromServer,
@@ -32,6 +33,12 @@ const useServer = () => {
         const response = await fetch("http://localhost:1337/get_education_properties");
         const educationProperties: any[] = await response.json();
         return educationProperties;
+    }
+
+    const getNormalizedEducations = async (): Promise<Education[]> => {
+        const response = await fetch("http://localhost:1337/get_normalized_educations");
+        const normalizedEducations: any[] = await response.json();
+        return normalizedEducations;
     }
     // write more functions here
 
@@ -68,22 +75,24 @@ const useServer = () => {
 
     };
 
-    const getPCAData = async (PCA_request: PCAData) => {
+    const getPCAData = async (quizAnswers: QuizAnswers) => {
         const response = await fetch("http://localhost:1337/PCA_request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ PCA_request })
+            body: JSON.stringify({ quizAnswers })
         });
 
-        return response
+        const responseJson: PCAData = await response.json();
+
+        return responseJson;
     }
 
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations };
 }
 
 export { useServer };

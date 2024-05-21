@@ -1,7 +1,7 @@
 import { GLPK, LP, Result } from 'glpk.js/dist/glpk';
 import * as Types from '../../src/types';
 import GLPKConstructor from 'glpk.js/dist/glpk';
-import { Institution, DegreeType, County, Geography } from '../../src/enums';
+import { Institution, DegreeType, County, Geography, SubjectTitle } from '../../src/enums';
 
 export class LPclass implements LP {
   name: string;
@@ -18,9 +18,15 @@ export class LPclass implements LP {
     const variables = this.objective.vars
     // add weights to:
     // subjects
-    filters.hasSubjects.forEach((subject) => {
-      variables.push({ name: subject, coef: quizAnswers.subjectsPriority })
-    })
+    if (filters.hasSubjects.length > 0){
+      filters.hasSubjects.forEach((subject) => {
+        variables.push({ name: subject, coef: quizAnswers.subjectsPriority})
+      })
+    } else {
+      Object.keys(SubjectTitle).forEach((key) =>{
+        variables.push({name: key , coef: quizAnswers.subjectsPriority})
+      })
+    }
     // hours
     variables.push({ name: "withManyStudents", coef: quizAnswers.highWorkloadAcceptancePriority },
       { name: "withFewStudents", coef: quizAnswers.highWorkloadAcceptancePriority },
@@ -87,22 +93,22 @@ export class LPsolver {
   constructor() {
     this.solver = GLPKConstructor();
   }
-  solve(userImputs: Types.UserImputs): Result {
-    const lp: LP = this.setUpLP(userImputs);
+  solve(userInputs: Types.UserInputs): Result {
+    const lp: LP = this.setUpLP(userInputs);
     return this.solver.solve(lp);
   }
-  setUpLP(userImputs: Types.UserImputs): LP {
+  setUpLP(userInputs: Types.UserInputs): LP {
     const lp = new LPclass(this.solver)
-    lp.addObjectiveFunction(userImputs.quizAnswers, userImputs.filters);
-    lp.addConstraints(userImputs.filters);
+    lp.addObjectiveFunction(userInputs.quizAnswers, userInputs.filters);
+    lp.addConstraints(userInputs.filters);
     return lp;
   }
 }
 
-export function findOptimalSolution(userImputs: Types.UserImputs): Types.Education {
+export function findOptimalSolution(userInputs: Types.UserInputs): Types.Education {
   const solver = new LPsolver();
-  const result = solver.solve(userImputs);
-  return OptimalEducation(result, userImputs.filters);
+  const result = solver.solve(userInputs);
+  return OptimalEducation(result, userInputs.filters);
 }
 
 function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Education {
@@ -184,9 +190,15 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
   
   function addSubjects(result: Result, FilterSubjects: string[]): Types.Subject[] {
     const optimalSubjectsAndScores: Types.Subject[] = [];
-    FilterSubjects.forEach((subject) => {
-      optimalSubjectsAndScores.push({ title: subject, score: result.result.vars[subject] })
-    })
+    if(FilterSubjects.length > 0){
+      FilterSubjects.forEach((subject) => {
+        optimalSubjectsAndScores.push({ title: subject, score: result.result.vars[subject] })
+      })
+    } else {
+      Object.keys(SubjectTitle).forEach((key) =>{
+        optimalSubjectsAndScores.push({title: key, score: result.result.vars[key]})
+      })
+    }
     return optimalSubjectsAndScores;
   }
 

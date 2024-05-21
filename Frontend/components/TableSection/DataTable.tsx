@@ -465,12 +465,12 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     console.log("margingLeft", margingLeft)
     return (
-      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-      NOT RANKED
+      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+        NOT RANKED
       </div>
     );
   };
-  
+
   const table = useMaterialReactTable({
     columns,
     data, //10,000 rows
@@ -487,7 +487,6 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
       },
       sx: {
         cursor: 'pointer',
-        backgroundColor: (!row.getIsExpanded() && row.index >= 50) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),
     positionExpandColumn: "last",

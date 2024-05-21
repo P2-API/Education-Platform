@@ -1,7 +1,5 @@
 import { Geography, County, Institution, DegreeType, FormOfEducation } from "./enums";
 
-
-
 export type Industry = {
     title: string;
     share: number;
@@ -194,7 +192,7 @@ export type TableFilters = {
     educationDuration: MinimumMaximum; //in use
 }
 
-export type UserImputs = {
+export type UserInputs = {
     quizAnswers: QuizAnswers,
     filters: TableFilters
 }
@@ -235,7 +233,7 @@ export type PCAData = {
     points: {
         x: number,
         y: number,
-        education: Education
+        education: Education,
     }[],
     principalComponents: {
         xAxis: axisData
@@ -297,3 +295,8 @@ export type NormalizedProfession = {
   url: string;
   data: NormalizedProfessionData;
 };
+
+export type EducationData = {
+    normalized: Education[],
+    normal: Education[]
+}

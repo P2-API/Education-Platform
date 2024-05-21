@@ -1,32 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
 import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
+import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
+import { Education, EducationGroup } from '@src/types';
 
 interface VisualisationProps {
-    chartType: ChartType
+    setUpdate: React.Dispatch<React.SetStateAction<boolean>>,
+    chartType: ChartType,
+    properties: string[],
+    rankedDataInfo: rankedDataInfo,
+    educationGroups: EducationGroup[]
 }
 
-let chosenPropertiesForRadarGraph: string[] = [];
-
-export function setChosenPropertiesForRadarGraph(newProperties: string[]) {
-    chosenPropertiesForRadarGraph = newProperties;
+type pcaScatterData = {
+    xValues: number[],
+    yValues: number[]
+    textValues: string[]
 }
 
-const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
+let normalizedEducations: Education[] = [];
+
+const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo, educationGroups }) => {
 
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
+    console.log("educationGroups inside of visualization", educationGroups)
+    console.log("rankedDataInfo: ", rankedDataInfo)
+    const quizAnswerState = useContext(QuizInfoContext);
 
-    const { getEducationsProperties } = useServer();
+    const { getEducationsProperties, getNormalizedEducations } = useServer();
     useEffect(() => {
         getEducationsProperties().then((data) => {
             setEducationProperties(data);
         })
+        getNormalizedEducations().then((data) => {
+            normalizedEducations = data;
+        })
     }, []);
 
     console.log("chartType: ", chartType)
+
+    const { getPCAData } = useServer();
+    const [pcaData, setPCAData] = useState<pcaScatterData>();
+
+    useEffect(() => {
+        getPCAData(quizAnswerState.quizData).then((data) => {
+            setPCAData({
+                xValues: data?.points.map((point) => point.x),
+                yValues: data?.points.map((point) => point.y),
+                textValues: data?.points.map((point) => point.education.title)
+            })
+        })
+    }, [quizAnswerState.quizData]);
+    const rankedData = rankedDataInfo;
+    const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
 
     const [data, setData] = React.useState<{ x: number[], y: number[], text: string[] }>({
         x: [1, 2, 3, 4, 5],
@@ -54,28 +83,30 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                 <Plot
                     data={[
                         {
-                            x: data.x,
-                            y: data.y,
-                            text: data.text,
+                            x: pcaData?.xValues,
+                            y: pcaData?.yValues,
+                            text: pcaData?.textValues,
                             mode: "markers",
                             type: "scatter",
-                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            marker: {
+                                size: 10,
+                                sizemode: "area",
+                                color: pcaData?.textValues.map((_text, index) => (index < rankIndex ? "green" : "red"))
+                            },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
-                                "Løn: %{y}<br>" +
-                                "Uddannelsestype: %{x}<br>" +
+                                "Hjalfedildur: %{y}<br>" +
+                                "Kramsemar: %{x}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "PCA Analyse - Løn og uddannelsestype",
+                        title: "PCA Analyse",
                         xaxis: {
-                            title: "Uddannelsestype",
-                            range: [0, 10] // Set the range for x-axis
+                            title: "Kramsemar",
                         },
                         yaxis: {
-                            title: "Løn (kr.)",
-                            range: [0, 100] // Set the range for y-axis
+                            title: "Hjalfedildur",
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },
@@ -142,6 +173,35 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
         </Paper >
     );
 
+    function findPropertyValue(obj: any, property: string): number | undefined {
+        if (obj.hasOwnProperty(property)) {
+            return obj[property];
+        }
+        for (let key in obj) {
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+                const result = findPropertyValue(obj[key], property);
+                if (result !== undefined) {
+                    return result;
+                }
+            }
+        }
+        return undefined;
+    }
+    
+    function getValuesOfProperties(edu: Education): number[] {
+        let propertyValues: number[] = [];
+
+        properties.forEach((property) => {
+            let value = findPropertyValue(edu, property);
+            if (typeof value === 'number') {
+                propertyValues.push(value * 100); // Times 100 to make it look better
+            }
+            
+        });
+        console.log("property values and edu", propertyValues, properties, edu);
+        return propertyValues;
+    }
+    
     const radarPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
@@ -149,9 +209,38 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType }) => {
                 <Plot
                     data={[
                         {
-                            r: data.y,
-                            theta: chosenPropertiesForRadarGraph,
-                            text: chosenPropertiesForRadarGraph,
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education), // Set to the education selection of first education
+                            theta: properties,
+                            text: properties,
+                            name: educationGroups[0]?.title,
+                            mode: "markers",
+                            type: "scatterpolar",
+                            fill: 'toself',
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "<b>%{text}</b><br>" +
+                                "Value: %{r}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education),// Set to the education selection of second education
+                            theta: properties,
+                            text: properties,
+                            name: educationGroups[1]?.title,
+                            mode: "markers",
+                            type: "scatterpolar",
+                            fill: 'toself',
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "<b>%{text}</b><br>" +
+                                "Value: %{r}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education),// Set to the education selection of third education
+                            theta: properties,
+                            text: properties,
+                            name: educationGroups[2]?.title,
                             mode: "markers",
                             type: "scatterpolar",
                             fill: 'toself',

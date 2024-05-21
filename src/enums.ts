@@ -144,7 +144,6 @@ export enum SubjectTitle {
     Arkitektur = "Arkitektur",
     Musik = "Musik",
     Politik = "Politik",
-    Sport = "Sport",
     Kultur = "Kultur",
     Sundhedsvidenskab = "Sundhedsvidenskab",
     Jura = "Jura",
@@ -159,27 +158,65 @@ export enum SubjectTitle {
     Sociologi = "Sociologi",
     Landbrugsvidenskab = "Landbrugsvidenskab",
 }
-
+/*
+export enum SubjectTitleDanishToEnglish{
+    Naturvidenskab = "Natural Science",
+    Kunst = "Art",
+    Historie = "History",
+    Psykologi = "Psychology",
+    Filosofi = "Philosophy",
+    Matematik = "Mathematics",
+    Arkitektur  = "Architecture",
+    Musik = "Music",
+    Politics = "Politics",
+    Kultur = "Culture",
+    Sundhedsvidenskab = "Health Science",
+    Jura = "Law",
+    Økonomi = "Economics",
+    Informationsteknologi = "Information Technology",
+    Programmering = "Programming",
+    Miljøvidenskab = "Environmental Science",
+    Uddannelse = "Education",
+    Journalistik = "Journalism",
+    Kommunikation = "Communication",
+    Religion = "Religion",
+    Sociologi = "Sociology",
+    Landbrugsvidenskab = "Agricultural Science"
+}
+*/
 // Return the minimum and maximum duration of a DegreeType
-export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType)): MinimumMaximum => {
+export const DegreeTypeToDuration = (degreeType: (keyof typeof DegreeType), normalizedOutput:boolean): MinimumMaximum => {
+    const maxDuration = 36;
+    let minDuration = 4;
+    let range = maxDuration - minDuration;
+
+    if (!normalizedOutput){
+        minDuration = 0;
+        range = 1;
+    }
+
     switch (degreeType) {
         case DegreeType["Akademisk overbygningsuddannelse"]:
-            return { minimum: 12, maximum: 12 };
+            return { minimum: n(12), maximum: n(12)};
         case DegreeType.Bacheloruddannelse:
-            return { minimum: 36, maximum: 36 };
+            return { minimum: n(36), maximum: n(36)};
         case DegreeType.Erhvervsakademiuddannelse:
-            return { minimum: 30, maximum: 30 };
+            return { minimum: n(30), maximum: n(30)};
         case DegreeType.Kandidatuddannelse:
-            return { minimum: 24, maximum: 24 };
+            return { minimum: n(24), maximum: n(24)};
         case DegreeType['Kunstnerisk uddannelse']:
-            return { minimum: 36, maximum: 36 };
+            return { minimum: n(36), maximum: n(36)};
         case DegreeType['Politi og forsvar']:
-            return { minimum: 4, maximum: 36 };
+            return { minimum: n(4), maximum: n(36)};
         case DegreeType['Professionsbacheloruddannelse']:
-            return { minimum: 18, maximum: 18 };
+            return { minimum: n(18), maximum: n(18)};
         case DegreeType['Andre uddannelser']:
         default:
-            return { minimum: 4, maximum: 36 }
+            return { minimum: n(4), maximum: n(36)}
+    }
+
+    function n(value:number){
+        return (value - minDuration)/range;
     }
 }
 

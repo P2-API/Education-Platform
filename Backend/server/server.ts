@@ -1,9 +1,10 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
-import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties } from './on-server-start';
-import { MinimumMaximum, UserImputs, TableFilters, QuizAnswers } from '../../src/types';
+import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties, getNormalizedEducations } from './on-server-start';
+import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
+import { performPCA } from "../utilities/pca";
 import bodyParser from 'body-parser'; // Import the bodyParser package
 import { getHeadliner } from '../utilities/web_scraper';
 
@@ -31,19 +32,17 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
 });
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData = request.body;
-    const data = requestData.PCA_request;
-
-    // calculate PCA function here: 
-    // const PCA_data = calculatePCA(requestData);
-
-    // return the result below
-    response.status(200).send("PCA_data received: " + JSON.stringify(requestData));
+    const pcaData = performPCA(requestData.quizAnswers);
+    response.status(200).send(pcaData);
 });
 server.get("/get_grouped_educations", (request: Request, response: Response) => {
     response.status(200).send(getGroupedEducations());
 });
 server.get("/get_education_properties", (request: Request, response: Response) => {
     response.status(200).send(getEducationProperties());
+});
+server.get("/get_normalized_educations", (request: Request, response: Response) => {
+    response.status(200).send(getNormalizedEducations());
 });
 
 
@@ -54,11 +53,10 @@ server.post("/update_ranking", (request: Request, response: Response) => {
         const filters: TableFilters = requestData.filterProps;
         const quizAnswers: QuizAnswers = requestData.quizAnswers;
 
-        const userInput: UserImputs = {
+        const userInput: UserInputs = {
             quizAnswers: quizAnswers,
             filters: normalizeFilters(filters),
         };
-        console.log("filters", userInput.filters)
         const ranker = new Ranker();
         const ranking = ranker.produceRanking(userInput);
         console.log("ranking", ranking)
@@ -81,7 +79,7 @@ server.post("generate_personalized_message", (request: Request, response: Respon
 
     // return the result below
     //response.status(200).send(personalizedMessage);
-    response.status(200).send(JSON.stringify(requestData));
+    response.send(JSON.stringify(requestData));
 });
 
 server.post("/get_small_text_about_education", (request: Request, response: Response) => {

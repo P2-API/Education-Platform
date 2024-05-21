@@ -40,7 +40,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         minimum: data?.minimumValueEducation?.jobData.salaries.experienced.lowerQuartile ?? 0,
         maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
     };
-
+    console.log("data", data)
     // Value packing for working hours slider
     const wantedWorkingHoursRange: MinimumMaximum = {
         minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
@@ -57,6 +57,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
     }
 
+
+
     const { filters, setFilters } = filterInfo;
 
 
@@ -72,7 +74,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                 newGraduate: newGraduateUnemploymentRange,
                 experienced: experiencedUnemploymentRange
             },
-            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 1 }
+            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 36 }
         }));
     }, [data]);
     // Utility function for showcasing value when moving sliders
@@ -104,7 +106,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     bouncy.register()
     return (
         <>
-            <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} />
+            <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} filters={filterInfo.filters} setRankedData={setRankedData} setIsCalculating={setIsCalculating} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
 
                 {isCalculating ? (
@@ -182,7 +184,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter nyuddannedes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setInternalFilters}
-                                    identifier="wantedSalary.newGraduate"
+                                    identifier="salary.newGraduate"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={experiencedSalaryRange}
@@ -192,7 +194,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     description="Filtrer efter erfarenes løn i tusinde"
                                     getValueText={getValueTextSalary}
                                     setFilters={setInternalFilters}
-                                    identifier="wantedSalary.experienced"
+                                    identifier="salary.experienced"
                                 />
                                 <MinimumDistanceSlider
                                     initialState={wantedWorkingHoursRange}
