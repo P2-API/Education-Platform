@@ -84,13 +84,13 @@ const useServer = () => {
 
     };
 
-    const getPCAData = async (quizAnswers: QuizAnswers) => {
+    const getPCAData = async (quizAnswers: QuizAnswers, filters: TableFilters) => {
         const response = await fetch("http://localhost:1337/PCA_request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ quizAnswers })
+            body: JSON.stringify({ quizAnswers, filters })
         });
 
         const responseJson: PCAData = await response.json();

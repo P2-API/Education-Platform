@@ -4,7 +4,7 @@ import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
-import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
+import { QuizInfoContext, rankedDataInfo, filtersContext } from '@frontend/components/Tabs';
 import { Education, EducationGroup } from '@src/types';
 
 interface VisualisationProps {
@@ -29,6 +29,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     console.log("educationGroups inside of visualization", educationGroups)
     console.log("rankedDataInfo: ", rankedDataInfo)
     const quizAnswerState = useContext(QuizInfoContext);
+    const filterInfo = useContext(filtersContext);
 
     const { getEducationsProperties, getNormalizedEducations } = useServer();
     useEffect(() => {
@@ -46,7 +47,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     const [pcaData, setPCAData] = useState<pcaScatterData>();
 
     useEffect(() => {
-        getPCAData(quizAnswerState.quizData).then((data) => {
+        getPCAData(quizAnswerState.quizData, filterInfo.filters).then((data) => {
             setPCAData({
                 xValues: data?.points.map((point) => point.x),
                 yValues: data?.points.map((point) => point.y),
@@ -187,7 +188,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         }
         return undefined;
     }
-    
+
     function getValuesOfProperties(edu: Education): number[] {
         let propertyValues: number[] = [];
 
@@ -196,12 +197,12 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
             if (typeof value === 'number') {
                 propertyValues.push(value * 100); // Times 100 to make it look better
             }
-            
+
         });
         console.log("property values and edu", propertyValues, properties, edu);
         return propertyValues;
     }
-    
+
     const radarPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <button onClick={generateRandomData} >Randomize</button>
