@@ -6,6 +6,7 @@ import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
 import bodyParser from 'body-parser'; // Import the bodyParser package
+import { getHeadliner, getPersonalizedMessage } from '../utilities/web_scraper';
 
 const server: Express = express();
 
@@ -30,8 +31,8 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
     response.status(200).send(getTableSectionData());
 });
 server.post("/PCA_request", (request: Request, response: Response) => {
-    const requestData = request.body;
-    const pcaData = performPCA(requestData.quizAnswers);
+    const requestData:UserInputs = request.body;
+    const pcaData = performPCA(requestData);
     response.status(200).send(pcaData);
 });
 server.get("/get_grouped_educations", (request: Request, response: Response) => {
@@ -43,6 +44,7 @@ server.get("/get_education_properties", (request: Request, response: Response) =
 server.get("/get_normalized_educations", (request: Request, response: Response) => {
     response.status(200).send(getNormalizedEducations());
 });
+
 
 
 server.post("/update_ranking", (request: Request, response: Response) => {
@@ -66,20 +68,37 @@ server.post("/update_ranking", (request: Request, response: Response) => {
     }
 });
 
-server.post("generate_personalized_message", (request: Request, response: Response) => {
+server.post("/generate_personalized_message", (request: Request, response: Response) => {
     const requestData = request.body;
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
+    const education = requestData.education;
 
-
-    // calculate personalized message function here: 
-    // const personalizedMessage = calculatePersonalizedMessage(quizAnswers, filters);
-
-    // return the result below
-    //response.status(200).send(personalizedMessage);
-    response.send(JSON.stringify(requestData));
+    let personalizedMessage;
+    getPersonalizedMessage(quizAnswers, filters, education).then((text) => {
+        personalizedMessage = text;
+        response.status(200).send(personalizedMessage);
+    }
+    ).catch((error) => {
+        console.error("Error in /generate_personalized_message:", error);
+        response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
+    });
 });
 
+server.post("/get_small_text_about_education", (request: Request, response: Response) => {
+    const requestData = request.body;
+    const education = requestData.education;
+
+    let smallText;
+    getHeadliner(education.url).then((text) => {
+        smallText = text;
+        response.status(200).send(smallText.headlinerText);
+    }
+    ).catch((error) => {
+        console.error("Error in /get_small_text_about_education:", error);
+        response.status(500).json({ error: "Internal Server Error" }); // Send JSON error
+    });
+});
 
 server.listen(PORT, () => {
 }).on("error", (error) => {

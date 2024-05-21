@@ -1,17 +1,12 @@
 import MaterialReactDataTable from "../components/TableSection/DataTable";
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
 import { TableFilters, } from "../../src/types";
 import { EducationDataFromServerContext } from "./Homepage";
 import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
-import { rankedDataInfo } from "../components/Tabs";
+import { filtersContext, rankedDataInfo } from "../components/Tabs";
 
 
-export type FilterInfoType = {
-    filters: TableFilters;
-    setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;
-};
 
 type DataTableSectionProps = {
     rankedDataInfo: rankedDataInfo
@@ -24,7 +19,7 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ rankedDataInfo }) =
     const [isCalculating, setisCalculating] = useState<boolean>(true);
 
     let data = useContext(EducationDataFromServerContext);
-
+    let filterInfo = useContext(filtersContext);
 
 
     useEffect(() => {
@@ -33,38 +28,14 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ rankedDataInfo }) =
         }
     }, [data]);
 
-    const [filters, setFilters] = useState<TableFilters>({
-        wantedDegreeTypes: [],
-        hasSubjects: [],
-        canStudyAtInstitution: [],
-        canStudyInGeographies: [],
-        hasFormsOfEducation: [],
-        educationDuration: { minimum: 0, maximum: 0 },
-        wantedSalary: {
-            newGraduate: { minimum: 0, maximum: 0 },
-            experienced: { minimum: 0, maximum: 0 },
-        },
-        wantedWorkingHours: { minimum: 0, maximum: 0 },
-        unemployment: {
-            newGraduate: { minimum: 0, maximum: 0 },
-            experienced: { minimum: 0, maximum: 0 },
-        },
-        hasFlexibleJobSchedule: false,
-        canWorkInternationally: false,
-    });
-
-    const FilterInfo: FilterInfoType = {
-        filters: filters,
-        setFilters: setFilters
-    };
-    console.log("filters", filters)
+    console.log("filters", filterInfo.filters);
 
 
     return (
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>
             <div style={{ width: "30%", height: "100%", minWidth: "417px", marginRight: "1em" }}>
 
-                <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={rankedDataInfo.setRankedData} filterInfo={FilterInfo} />
+                <FilterBoxComponent isCalculating={isCalculating} setIsCalculating={setisCalculating} setRankedData={rankedDataInfo.setRankedData} filterInfo={filterInfo} />
             </div>
 
             <div style={{ width: "69%", height: "100%" }}>

@@ -1,13 +1,11 @@
-import { EducationData, EducationVector, PCAData, QuizAnswers} from "../../src/types";
+import { EducationData, EducationVector, PCAData, UserInputs} from "../../src/types";
 import { Ranker } from "./ranking";
 import { PCA, PCAOptions} from "ml-pca";
 import { getEducationData } from "../server/on-server-start";
 
-export function performPCA(quizAnswers:QuizAnswers):PCAData{
-    const educations:EducationVector[] = constructEducationVecotors(quizAnswers);
-    //console.log("coordinates", educations.map((education) => education.coordinates))
+export function performPCA(userInputs:UserInputs):PCAData{
+    const educations:EducationVector[] = constructEducationVecotors(userInputs);
     const dataset = constructMatrix(educations)
-    //console.log("dataset", dataset)
 
     const pcaSettings:PCAOptions = {
         scale:true,                 // standerdize the data
@@ -48,14 +46,14 @@ function pcaData(educations:EducationVector[], transformedData:number[][], Pca:P
     return pcaData
 }
 
-function constructEducationVecotors(weights:QuizAnswers):EducationVector[]{
+function constructEducationVecotors(userInputs:UserInputs):EducationVector[]{
     const educations:EducationData = getEducationData()
+    educations.normalized = educations.normalized.filter((education) => education.subjects.length > 0)
     const educationVectors:EducationVector[] = []
-    //console.log("educations", educations.normalized)
     const ranker = new Ranker()
     
     educations.normalized.forEach((education) => {
-        educationVectors.push(ranker.educationVector(education, weights))
+        educationVectors.push(ranker.educationVector(education, userInputs))
     })
     
     return educationVectors

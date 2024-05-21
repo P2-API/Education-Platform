@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
 
-import { EducationsGroupped, NormalizedProfession, Profession, Education, Subject, NormalizedProfessionData } from "../../src/types";
+import { EducationsGroupped, NormalizedProfession, Profession, Education, Subject, NormalizedProfessionData, TableFilters, QuizAnswers } from "../../src/types";
 
 
 const failedUrls: string[] = [];
@@ -149,45 +149,18 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
     }
 }
 
-export async function getPersonalizedMessage(url: string): Promise<{ message: string | null }> {
+export async function getPersonalizedMessage(education: Education, filters: TableFilters, quiz: QuizAnswers): Promise<{ message: string | null }> {
     try {
-        const text = await getAllText(url);
+        const text = await getAllText(education.url);
         if (text === "Error fetching the URL" || text === null) {
-            console.error("Error fetching or processing text from URL:", url);
+            console.error("Error fetching or processing text from URL:", education.url);
             return { message: null };
         }
 
         const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
 
-        const preferences = {
-            academic_environment_priority: 5,
-            degree_relevance_priority: 5,
-            dislike_exam_priority: 3,
-            experienced_salary_priority: 5,
-            fixed_hours_priority: 2,
-            flexible_hours_priority: 4,
-            general_salary_priority: 5,
-            group_engagement_priority: 1,
-            high_workload_acceptance_priority: 2,
-            industries_priority: 3,
-            international_stay_priority: 4,
-            internship_priority: 2,
-            lectures_priority: 3,
-            literature_priority: 3,
-            loneliness_priority: 5,
-            self_schedule_priority: 4,
-            social_environment_priority: 1,
-            starting_salary_priority: 5,
-            stress_priority: 2,
-            student_job_priority: 5,
-            subjects_priority: 4,
-            teaching_priority: 3,
-            unemployment_priority: 4,
-            variable_schedule_priority: 2,
-            work_internationally_priority: 4,
-        };
 
-        const message = await sendMessageToChatGPT(text, preferences, promptString);
+        const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
         return { message };
     } catch (error) {
         console.error('Error:', error);
@@ -237,7 +210,12 @@ export async function getHeadliner(url: string): Promise<{ headlinerText: string
             return { headlinerText: null };
         }
 
-        const headlinerText = await getHeadlinerText(response.data);
+        let headlinerText = await getHeadlinerText(response.data);
+
+        if (headlinerText === "Her kan du se nedlagte uddannelser, hvor du ikke længere kan søge optagelse. Oversigten går 5 år tilbage og dækker både uddannelser for unge og vokse. ") {
+            headlinerText = "Denne uddannelse er nedlagt."
+        }
+
         return { headlinerText };
     } catch (error) {
         console.error('Error:', error);
@@ -312,14 +290,20 @@ export async function fetchHtml(url: string) {
     }
 }
 
-async function sendMessageToChatGPT(text: string, preferences: Record<string, number>, promptString: string) {
+async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
+    console.log("CHATGPT HELL")
     const completion = await openai.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: ("dette er data omkring uddanelsen" + text).replace(/\s+/g, ' ').trim() +
+                content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() +
                     ' | ' +
-                    "dette data er omkring brugeren" + JSON.stringify(preferences).replace(/"/g, ''),
+                    "dette data er omkring brugeren, disse vægte ligger mellem 1 og 5, her betyder 1 at bruger vægter det lavt og 5 betyder at brugeren vægter det højt =" + JSON.stringify(preferences).replace(/"/g, '') +
+                    ' | ' +
+                    "dette er data omkring uddanelsen, her er alle numeriske værdier under subjects normalizeret til at være mellem 0 og 1, 0 betyder at det ikke er relevant for uddanelsen og 1 betyder det har stor relevans for uddanelsen =" + JSON.stringify(education).replace(/"/g, '') +
+                    ' | ' +
+                    "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med =" + JSON.stringify(filters).replace(/"/g, '')
+                    ,
             },
             {
                 role: "user",
@@ -330,7 +314,7 @@ async function sendMessageToChatGPT(text: string, preferences: Record<string, nu
         response_format: { type: "json_object" },
         temperature: 0.2,
     });
-
+    console.log(completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
 

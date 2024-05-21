@@ -8,7 +8,7 @@ import { bouncy } from 'ldrs';
 import QuizModal from "@frontend/pages/QuizModal"
 import { useServer } from '@backend/server/useServer';
 import { QuizInfoContext } from '../Tabs';
-import { FilterInfoType } from '@frontend/pages/DataTableSection';
+import { FilterInfoType } from '@frontend/components/Tabs';
 
 
 

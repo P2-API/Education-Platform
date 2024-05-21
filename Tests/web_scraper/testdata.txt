@@ -1,0 +1,2508 @@
+<html lang="da" dir="ltr" prefix="fb: http://www.facebook.com/2008/fbml content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema#" class="js"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="https://www.ug.dk/profiles/ug3/themes/ug3/favicon.ico" type="image/vnd.microsoft.icon">
+<meta name="description" content="Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.">
+<meta name="generator" content="Drupal 7 (https://www.drupal.org)">
+<link rel="canonical" href="https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi">
+<link rel="shortlink" href="https://www.ug.dk/node/326183">
+  <title>Datalogi | UddannelsesGuiden</title>
+  <link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_lQaZfjVpwP_oGNqdtWCSpJT1EMqXdMiU84ekLLxQnc4.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_Gl4Iyo07PNmUIe2KNLon_nvqnDryU-hWklgzxzNU-VQ.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_2c93sEucAf9CPgkVCVQFl-Nrydj1n5gGIsx5dAuFp4Y.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_KhJJ0j50TlrUC_fPqHnqS-u_QRdgqzRJrcuX5pfkM2g.css" media="all">
+<style>.fa.fa-pencil.fa-lg.edit-icon{display:none!important}
+</style>
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_Qs3xAwLIJEEkpu5zoJJCotGTKZMDTybF7olYpfAUMUI.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_ekFwC1Zn1hhVapk_pwQMlN0a9SLAxoj94oD1pdSxfKI.css" media="all">
+<link type="text/css" rel="stylesheet" href="https://www.ug.dk/sites/default/files/css/css_nOvbzWKCEp3QcdxXip-Ivk6MeCgSSxJl-meK8JpP9FU.css" media="all">
+  <!-- HTML5 element support for IE6-8 -->
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script type="text/javascript" defer="" async="" src="https://matomo.stil.dk/piwik/piwik.js"></script><script id="CookieConsent" src="https://policy.app.cookieinformation.com/uc.js" data-culture="DA" type="text/javascript"></script><iframe name="cookie-information-sharinglibrary-iframe" src="https://policy.app.cookieinformation.com/cookiesharingiframe.html" title="Cookie Information cookie sharing library" style="display: none;"></iframe>
+  <script src="https://www.ug.dk/sites/default/files/js/js_s7yA-hwRxnKty__ED6DuqmTMKG39xvpRyrtyCrbWH4M.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_5ChR4JSnC4sIhHDWcwYqiEeyDHMA1HwdM5ib6Uzc1_c.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_iCSKpKVyODc9PFWsMMH9uWibs5ykbGMKTgM_BFsYerQ.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_P3iIgCXj8puJCz_fZngxkwbdqC5jFsRxRS9Ktn3qY9k.js"></script>
+<script src="https://www.google.com/jsapi"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_7IaeAnZn1pAeqGYu7w2Dha4BbCHsEG2SLfe-oPDGsS0.js"></script>
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+<script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_i9-mZxF1wrIj_pHo8CcygMfG3cz35Mlm6odAjzL19fk.js"></script>
+<script>var _paq = _paq || [];(function(){var u=(("https:" == document.location.protocol) ? "https://matomo.stil.dk/piwik/" : "http://matomo.stil.dk/piwik/");_paq.push(["setSiteId", "32"]);_paq.push(["setTrackerUrl", u+"piwik.php"]);_paq.push(["setDoNotTrack", 1]);_paq.push(["disableCookies"]);_paq.push(["trackPageView"]);_paq.push(["setIgnoreClasses", ["no-tracking","colorbox"]]);_paq.push(["enableLinkTracking"]);var d=document,g=d.createElement("script"),s=d.getElementsByTagName("script")[0];g.type="text/javascript";g.defer=true;g.async=true;g.src=u+"piwik.js";s.parentNode.insertBefore(g,s);})();</script>
+<script src="https://www.ug.dk/sites/default/files/js/js_HZPrKqdMoO0W2oLNsESylR5N0rEHoL8ZmbEaBJrFDwo.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_zp9jPmQ-5vMs6Jqq07OFtqlYbd2hGkxYO9ZhPQv_EHQ.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_ysImPqMOlkZDZ7nU42YI1AYQU3y6XXaN1skZSusFarI.js"></script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","setHasJsCookie":0,"ajaxPageState":{"theme":"ug3","theme_token":"8W5Jrb5hOP62kGYdl1UBRK62PgJR5vuNzC_TwufM-_w","js":{"profiles\/ug3\/modules\/contrib\/addthis\/addthis.js":1,"profiles\/ug3\/themes\/bootstrap\/js\/bootstrap.js":1,"profiles\/ug3\/modules\/contrib\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"profiles\/ug3\/modules\/contrib\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"profiles\/ug3\/modules\/contrib\/jquery_update\/replace\/ui\/external\/jquery.cookie.js":1,"profiles\/ug3\/modules\/contrib\/jquery_update\/replace\/misc\/jquery.form.min.js":1,"profiles\/ug3\/modules\/contrib\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.datepicker.min.js":1,"misc\/ui\/jquery.ui.datepicker-1.13.0-backport.js":1,"modules\/locale\/locale.datepicker.js":1,"profiles\/ug3\/modules\/patches\/date\/date_popup\/jquery.timeentry.pack.js":1,"profiles\/ug3\/modules\/features\/min_uddannelsesvej_datamodel\/js\/min_uddannelsesvej_datamodel.js":1,"profiles\/ug3\/modules\/features\/uddannelse_datamodel\/uddannelse.js":1,"profiles\/ug3\/modules\/custom\/ug3_friboks_link\/ug3_friboks_link.js":1,"profiles\/ug3\/modules\/custom\/ug3_search\/search.js":1,"public:\/\/languages\/da_7L2oqphk7iE2_WCLWU5X3q-nHLLYa_MI1_70eXkOnIE.js":1,"profiles\/ug3\/modules\/contrib\/authcache\/authcache.js":1,"sites\/all\/libraries\/colorbox\/jquery.colorbox-min.js":1,"profiles\/ug3\/modules\/contrib\/colorbox\/js\/colorbox.js":1,"profiles\/ug3\/modules\/contrib\/colorbox\/styles\/default\/colorbox_style.js":1,"profiles\/ug3\/modules\/contrib\/colorbox\/js\/colorbox_load.js":1,"profiles\/ug3\/modules\/contrib\/colorbox\/js\/colorbox_inline.js":1,"https:\/\/www.google.com\/jsapi":1,"profiles\/ug3\/modules\/custom\/ug3_min_uddannelsesvej\/ug3_min_uddannelsesvej.js":1,"profiles\/ug3\/modules\/features\/afsnit_field_collection\/js\/mobil.js":1,"profiles\/ug3\/modules\/patches\/date\/date_popup\/date_popup.js":1,"profiles\/ug3\/modules\/contrib\/ctools\/js\/auto-submit.js":1,"profiles\/ug3\/modules\/custom\/ug3_beskaeftigelsesdata\/js\/proj4-src.min.js":1,"https:\/\/unpkg.com\/leaflet@1.4.0\/dist\/leaflet.js":1,"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/proj4leaflet\/1.0.2\/proj4leaflet.min.js":1,"https:\/\/api.mapbox.com\/mapbox.js\/plugins\/leaflet-fullscreen\/v1.0.1\/Leaflet.fullscreen.min.js":1,"profiles\/ug3\/modules\/contrib\/matomo\/matomo.js":1,"0":1,"profiles\/ug3\/modules\/contrib\/authcache\/modules\/authcache_menu\/authcache_menu.js":1,"misc\/autocomplete.js":1,"profiles\/ug3\/modules\/contrib\/search_api_autocomplete\/search_api_autocomplete.js":1,"profiles\/ug3\/modules\/features\/uddannelse_datamodel\/js\/institutions-map.js":1,"profiles\/ug3\/modules\/custom\/ug3_search\/ug3_search_form.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/affix.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/alert.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/button.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/carousel.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/collapse.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/dropdown.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/modal.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/tooltip.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/popover.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/scrollspy.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/tab.js":1,"profiles\/ug3\/themes\/ug3\/bootstrap\/js\/transition.js":1,"profiles\/ug3\/themes\/ug3\/js\/holder.js":1,"profiles\/ug3\/themes\/ug3\/js\/ug3.js":1,"profiles\/ug3\/themes\/ug3\/js\/mobil.js":1,"profiles\/ug3\/themes\/ug3\/js\/jquery.hypher.js":1,"profiles\/ug3\/themes\/ug3\/js\/imagesloaded.pkgd.min.js":1,"profiles\/ug3\/themes\/ug3\/js\/jquery.equalheights.min.js":1,"profiles\/ug3\/themes\/ug3\/js\/ug3_equalheights.js":1,"profiles\/ug3\/themes\/ug3\/js\/ug3_user.js":1,"profiles\/ug3\/themes\/bootstrap\/js\/misc\/autocomplete.js":1},"css":{"modules\/system\/system.base.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"misc\/ui\/jquery.ui.datepicker.css":1,"profiles\/ug3\/modules\/patches\/date\/date_popup\/themes\/jquery.timeentry.css":1,"profiles\/ug3\/modules\/contrib\/simplenews\/simplenews.css":1,"profiles\/ug3\/modules\/contrib\/calendar\/css\/calendar_multiday.css":1,"modules\/field\/theme\/field.css":1,"profiles\/ug3\/modules\/features\/min_uddannelsesvej_datamodel\/css\/min_uddannelsesvej_datamodel.css":1,"modules\/node\/node.css":1,"profiles\/ug3\/modules\/custom\/ug3_friboks_link\/ug3_friboks_link.css":1,"profiles\/ug3\/modules\/patches\/views\/css\/views.css":1,"profiles\/ug3\/modules\/contrib\/media\/modules\/media_wysiwyg\/css\/media_wysiwyg.base.css":1,"profiles\/ug3\/modules\/contrib\/colorbox\/styles\/default\/colorbox_style.css":1,"profiles\/ug3\/modules\/contrib\/ctools\/css\/ctools.css":1,"profiles\/ug3\/modules\/patches\/panels\/css\/panels.css":1,"0":1,"profiles\/ug3\/modules\/patches\/date\/date_popup\/themes\/datepicker.1.7.css":1,"profiles\/ug3\/modules\/patches\/panels\/plugins\/layouts\/onecol\/onecol.css":1,"https:\/\/unpkg.com\/leaflet@1.4.0\/dist\/leaflet.css":1,"https:\/\/api.mapbox.com\/mapbox.js\/plugins\/leaflet-fullscreen\/v1.0.1\/leaflet.fullscreen.css":1,"profiles\/ug3\/modules\/contrib\/search_api_autocomplete\/search_api_autocomplete.css":1,"profiles\/ug3\/themes\/ug3\/css\/style.min.css":1,"profiles\/ug3\/themes\/ug3\/vendor\/font-awesome\/css\/font-awesome.min.css":1}},"authcache":{"q":"node\/326183","cp":{"path":"\/","domain":".www.ug.dk","secure":true},"cl":1},"colorbox":{"opacity":"0.85","current":"{current} of {total}","previous":"\u00ab Prev","next":"Next \u00bb","close":"Luk","maxWidth":"98%","maxHeight":"98%","fixed":true,"mobiledetect":true,"mobiledevicewidth":"480px","specificPagesDefaultValue":"admin*\nimagebrowser*\nimg_assist*\nimce*\nnode\/add\/*\nnode\/*\/edit\nprint\/*\nprintpdf\/*\nsystem\/ajax\nsystem\/ajax\/*"},"ug3_min_uddannelsesvej":{"access":false},"better_exposed_filters":{"views":{"baand":{"displays":{"default":{"filters":[]}}},"artikelbillede":{"displays":{"default":{"filters":[]}}},"afsnitsliste":{"displays":{"default":{"filters":[]}}},"kurser_til_uddannelse":{"displays":{"label":{"filters":[]},"default":{"filters":[]}}},"fag_kurser_liste":{"displays":{"panel_pane_1":{"filters":[]},"andre":{"filters":[]}}},"uddannelsens_veje":{"displays":{"block":{"filters":[]}}},"institutioner_for_uddannelse":{"displays":{"block_1":{"filters":[]}}},"arrangementer":{"displays":{"panel_pane_2":{"filters":[]}}}}},"jquery":{"ui":{"datepicker":{"isRTL":false,"firstDay":"1"}}},"datePopup":{"date_views_exposed_filter-960dfafb94ea000dc327cd698675f3f8-datepicker-popup-0":{"func":"datepicker","settings":{"changeMonth":true,"changeYear":true,"autoPopUp":"focus","closeAtTop":false,"speed":"immediate","firstDay":1,"dateFormat":"dd\/mm\/yy","yearRange":"-3:+3","fromTo":false,"defaultDate":"0y"}}},"urlIsAjaxTrusted":{"\/":true,"\/uddannelser\/bachelorogkandidatuddannelser\/bacheloruddannelser\/naturvidenskabeligebacheloruddannelser\/matematikfysikkemiogdatalogi\/datalogi":true},"uddannelse_datamodel":{"user":"NELRGYKAMN","pass":"TeamOL4ever!"},"matomo":{"trackMailto":1,"trackColorbox":1},"bootstrap":{"anchorsFix":"0","anchorsSmoothScrolling":"0","formHasError":1,"popoverEnabled":"1","popoverOptions":{"animation":1,"html":0,"placement":"right","selector":"","trigger":"click","triggerAutoclose":1,"title":"","content":"","delay":0,"container":"body"},"tooltipEnabled":"1","tooltipOptions":{"animation":1,"html":0,"placement":"auto left","selector":"","trigger":"hover focus","delay":0,"container":"body"}}});</script>
+<style id="holderjs-style" type="text/css"></style><script src="https://matomo.stil.dk/piwik/plugins/HeatmapSessionRecording/configs.php?idsite=32&amp;trackerid=5bJLkr&amp;url=https%3A%2F%2Fwww.ug.dk%2Fuddannelser%2Fbachelorogkandidatuddannelser%2Fbacheloruddannelser%2Fnaturvidenskabeligebacheloruddannelser%2Fmatematikfysikkemiogdatalogi%2Fdatalogi" async="" defer=""></script></head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-326183 node-type-uddannelse ug3-foldable-run"><div id="cookie-information-template-wrapper" style="display: block;"><style>/**
+Template name: Overlay v3
+URI: https://cookieinformation.com
+Version 1.1.0  
+**/
+:root{
+  /** Change to the main theme color of the website**/
+  --main-color: #2C622C;
+  
+  /** To change the color of link elements**/
+  --link-color: #234923;
+  
+  /**To change the color of the text**/
+  --text-color: #222;
+  
+  /** To chnge the color of accept button when hovering**/
+  --hover-color: #234923;
+  
+  /** To chnge the color of decline all/save settings button **/
+  --decline-color: #2C622C;
+
+  /** To chnge the color of decline all/save settings button text**/
+  --decline-text: #FFF;
+  
+  /** To chnge the color of decline all/save settings button when hovering**/
+  --decline-hover: #234923;
+  /**To change the background colour for maintext, toggles and branding   **/
+  --footer-background: #f6f6f6;
+}
+#coi-banner-wrapper * {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  white-space: normal;
+  line-height: normal;
+}
+
+.noScroll,.noScroll body{
+  overflow:hidden !important;
+  position: relative;
+  height: 100%;
+}
+
+#coi-banner-categories{
+  display:none;
+}
+
+/* Focus Ring Style */
+#coi-banner-wrapper *:focus-visible,
+.coi-checkboxes input:focus-visible + .checkbox-toggle,
+#Coi-Renew:focus-visible{
+  outline-offset: 2px !important;
+  outline: 2px solid black;
+}
+.coi-checkboxes input:focus-visible + .checkbox-toggle {
+  box-sizing: content-box !important;
+  -moz-box-sizing:content-box; /* Firefox */
+  -webkit-box-sizing:content-box; /* Safari */
+}
+#coiConsentBannerCategoriesWrapper:focus-visible {
+  outline-offset: -2px !important;
+}
+.coi-banner__wrapper:focus {
+  outline: none !important;
+}
+
+
+#Coi-Renew {
+  display: none;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  z-index: 99999999999;
+  padding: 10px;
+  border:0;
+  cursor: pointer;
+  border-top-right-radius: 50%;
+  transform: scale(.7);
+  transform-origin: bottom left;
+  transition: all .3s ease;
+}
+#Coi-Renew:hover {
+  transform: scale(1);
+}
+#Coi-Renew svg {
+  width: 100%;
+}
+#Coi-Renew .renew_path {
+  fill: var(--main-color);
+}
+
+#coiOverlay {
+  background: rgba(0, 0, 0, .7);
+  display: flex; /*Set to display:none;*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999999999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+#coi-expand {
+  text-align: center;
+  width: 100%;
+  margin-top: -40px;
+  height: 40px;
+  display: none;
+  background-color: var(--footer-background);
+  border: none;
+}
+.coi-purpose-list {
+  display: inline;
+  list-style: none;
+  padding: 0;
+}
+.coi-purpose-list li {
+  display: inline;
+}
+.coi-purpose-list li::after {
+  content: ", ";
+}
+.coi-purpose-list li:last-child::after {
+    content: "";
+    content: "\a";
+    white-space: pre;
+}
+.coi-banner__wrapper {
+  width: 600px;
+  max-width: 100%;
+  max-height: 100%;
+  background: #fff;
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+.coi-banner__wrapper::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
+  z-index:11000;
+}
+.coi-banner__wrapper::-webkit-scrollbar-track {
+  background-color: none;
+}
+.coi-banner__wrapper::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+  border-radius: 2px;
+}
+.coi-banner__wrapper ul,.coi-banner__wrapper ol{
+  padding:0;
+  list-style-position: inside;
+}
+.coi-banner__page {
+  background:var(--footer-background);
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-end;
+  display:block;
+  height:100%;
+  color: var(--text-color);
+  font-size:15px;
+}
+.coi-banner__page p{
+  font-size:1em;
+}
+.cookiedeclaration_wrapper h2,
+.cookiedeclaration_wrapper h3,
+.cookiedeclaration_wrapper p{
+  margin-bottom:1em;
+}
+.cookiedeclaration_wrapper h2{
+  font-size:25px;
+}
+.cookiedeclaration_wrapper h3{
+  font-size:20px;
+}
+.coi-banner__summary,
+.coi-banner__cookiedeclaration,
+.cookiedeclaration_wrapper{
+  padding:40px;
+}
+.coi-banner__wrapper a[href]:not([disabled]){
+  text-decoration:underline;
+  color: var(--link-color);
+  font-weight: 600;
+}
+.coi-banner__wrapper a[target="_blank"]{
+  text-decoration:underline;
+}
+.coi-banner__wrapper a[target="_blank"]:not(.coi-external-link):after{
+    margin: 0 3px 0 5px;
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+}
+
+.coi-banner__header{
+  display: flex;
+  max-width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 10px 40px 10px;
+  flex-direction: row;
+  text-align: right;
+}
+.coi-banner__header img{
+  max-width:100%;
+}
+.coi-banner__maintext {
+  line-height: 1.1 !important;
+  font-size: 1em;
+  font-weight: 400;
+  white-space:pre-line !important;
+}
+.coi-banner__cookiedeclaration 
+.coi-banner__maintext {
+  white-space: normal !important;
+}
+.coi-banner__headline {
+  display: block;
+  font-size: 1.8em;
+  line-height: 1.2em !important;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.coi-banner__header .coi-banner__branding {
+  font-size: 0.7em;
+  color:#444444;
+}
+.coi-banner__header .coi-banner__branding a {
+  display: block;
+  text-decoration: none;
+  color:#222222;
+  font-size: 0.8em;
+  font-weight:bold;
+}
+.coi-banner__page-footer {
+  background: #FFFFFF;
+  position: sticky;
+  position: -webkit-sticky;
+  top:0;
+  bottom: 0;
+  z-index: 5000;
+  border-top:1px solid #DDD;
+  padding-bottom: 10px;
+}
+.coi-button-group{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background-color: var(--footer-background);
+}
+.coi-toggle-group {
+  display: flex;
+  justify-content: center;
+  flex-flow:wrap-reverse;
+}
+.coi-banner__accept,
+.coi-banner__decline,
+.coi-banner__lastpage, 
+.coi-banner__nextpage {
+  color: #222;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  margin: 5px;
+  border:0;
+  background:none;
+  transition:all 300ms ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  flex:1 1;
+  max-width: 30%;
+  font-size: small;
+  text-align: center;
+}
+button.coi-banner__lastpage:not(:hover):not(.has-background),
+button.coi-banner__nextpage:not(:hover):not(.has-background),
+button.coi-banner__decline:not(:hover):not(.has-background) {
+  border:solid 1px #888888;
+  background: var(--decline-color);
+  color: var(--decline-text);
+}
+button.coi-banner__lastpage:hover,
+button.coi-banner__nextpage:hover,
+button.coi-banner__decline:hover{
+  background: var(--decline-hover);
+  border:solid 1px #888888;
+  color: var(--decline-text);
+}
+button.coi-banner__accept:not(:hover):not(.has-background) {
+  background: var(--main-color);
+  color: #fff;
+  text-decoration: none;
+}
+button.coi-banner__accept:hover{
+  background: var(--hover-color);
+  color: #fff;
+}
+.coi-button-group button:first-child{
+  margin-left:0px;
+}
+.coi-button-group button:last-child{
+  margin-right:0px;
+}
+
+/*Cookie Category CSS*/
+#coiConsentBannerCategoriesWrapper{
+  background:#FFFFFF;
+}
+.coi-consent-banner__categories-wrapper {
+  box-sizing: border-box;
+  position: relative;
+}
+.coi-consent-banner__category-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+  padding:0 40px;
+}
+.coi-consent-banner__category-container:first-child{
+  padding-top:40px;
+}
+.coi-consent-banner__category-container:last-child {
+  margin-bottom: 0;
+  padding-bottom:40px;
+}
+.coi-consent-banner__name-container {
+  position: relative;
+  display: flex;
+}
+.coi-consent-banner__category-name{
+  background: none !important;
+  display: flex;
+  border: none;
+  padding: 0 15px 0 0;
+  margin-left: -3px;
+  align-items: baseline;
+}
+.coi-consent-banner__category-name:not(:hover):not(.has-background) {
+  cursor: pointer;
+  display: flex;
+  color: inherit;
+  background: none;
+  align-items: baseline;
+  padding: 0 15px 0 0;
+  margin-left: -3px;
+  font-size:1em;
+}
+.coi-consent-banner__category-name:not(:hover):not(:active):not(.has-background) {
+  cursor: pointer;
+  display: flex;
+  color: inherit;
+  background: none;
+  align-items: baseline;
+  padding: 0 15px 0 0;
+  margin-left: -3px;
+  font-size:1em;
+}
+
+
+.coi-consent-banner__category-name h3{
+  font-weight: 600;
+  font-size: inherit;
+  padding:0px;
+  margin:0px;
+  word-break: break-word;
+  text-align: left;
+}
+.coi-consent-banner__category-controls{
+  display: flex;
+  align-items: flex-start;
+  flex-flow: wrap;
+  position:relative;
+}
+.coi-consent-banner__no-cookies {
+  margin: 0;
+  font-size: 1em;
+}
+.coi-consent-banner__category-name h3 {
+  margin: 5px 0;
+  min-width: 110px;
+  max-width: 110px;
+  word-break: keep-all;
+}
+.ci-btn-tab-active h3, 
+.coi-consent-banner__category-name:hover h3{
+  color: var(--main-color);
+}
+.coi-consent-banner__category-name:hover{
+  cursor: pointer;
+  display: flex;
+  background: none;
+  border: none;
+  align-items: baseline;
+  padding: 0 15px 0 0;
+  font-size:1em;
+}
+.coi-consent-banner__category-expander {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+.coi-consent-banner__description-container {
+  display:none;
+  width: 100%;
+  align-self: flex-end;
+}
+.tab-panel-active{
+  display:block;
+}
+.coi-consent-banner__description-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
+}
+.coi-consent-banner__description-container::-webkit-scrollbar-track {
+  background-color: none;
+}
+.coi-consent-banner__description-container::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+  border-radius: 2px;
+  display: none;
+}
+.coi-consent-banner__category-description {
+  padding: 0 0 0 20px;
+  margin-top: 5px;
+  background: 0 0;
+  color: var(--text-color);
+  line-height: 20px;
+  font-weight: 400;
+  flex:4 1;
+}
+.cookie-details__detail-container, .cookie-details__detail-container a {
+  font-size: 0.9em;
+  flex: 1;
+  word-break: break-word;
+  display: flex;
+}
+.cookie-details__detail-title {
+  font-weight: 700;
+  min-width: 162px;
+  max-width: 152px;
+  flex: 2;
+  padding-right: 5px;
+}
+.cookie-details__detail-container-data-processor-name{
+  font-size:1em;
+  font-weight:bold;
+}
+.cookie-details__detail-content {
+  flex: 4;
+}
+.coi-consent-banner__found-cookies {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #f6f6f6;
+  margin-top: 15px;
+}
+.coi-consent-banner__cookie-details {
+  color: var(--text-color);
+  flex-direction: column;
+  padding: 0 0 20px 0;
+  line-height: 16px;
+}
+.cookie-details__detail-container td,
+.cookie-details__detail-container th{
+  border: none;
+  padding: 0px;
+}
+.coi-consent-banner__cookie-details:last-child{
+  padding: 0;
+}
+.ci-arrow {
+  border: solid #222;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transition: all .3s ease;
+  margin: 0 10px 0 3px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  position: relative;
+}
+
+.coi-consent-banner__category-controls .ci-btn-tab-active .ci-arrow {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  top: 0px;
+}
+@media only screen and (max-width:540px) {
+  .coi-consent-banner__cookie-details {
+    flex-direction: column;
+  }
+}
+
+/* Consent Toggles Start*/
+.coi-consent-banner__switch-container{
+  padding-top: 10px;
+}
+.coi-checkboxes{
+  position:relative;
+  display:flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-weight: 500;
+}
+.coi-checkboxes input {
+  opacity: 0 ;
+  position:absolute;
+  z-index:1;
+  width:100%;
+  height:100%;
+  cursor: pointer;
+  clip:initial ;
+  left:0 ;
+  top:0 ;
+  display:block ;
+}
+.coi-checkboxes .checkbox-toggle {
+  background: #888888;
+  width: 65px;
+  height: 40px;
+  border-radius: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: .3s ease;
+  transform-origin:center;
+  box-sizing: content-box !important;
+}
+.coi-checkboxes input[type=checkbox]:checked + .checkbox-toggle {
+  background: var(--main-color);
+}
+.coi-checkboxes input[type=checkbox]:checked + .checkbox-toggle:before {
+  left: 30px;
+  background: #fff;
+}
+.coi-checkboxes input[type=checkbox]:disabled{
+  cursor:not-allowed !important;
+}
+.coi-checkboxes input[type=checkbox]:disabled + .checkbox-toggle {
+  opacity:.2;
+}
+.coi-checkboxes .checkbox-toggle:before {
+  transition: .3s ease;
+  content: '';
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background: #fff;
+  left: 5px;
+  top: 5px;
+  box-sizing: border-box;
+  color: #333;
+  border-radius: 100px;
+}
+/* Consent Toggles End */
+
+/*Declaration CSS*/
+.cookiedeclaration_wrapper{
+  background:var(--footer-background);
+  border-bottom:solid 1px #CCC;
+  overflow-x:hidden;
+}
+.top-column__website-domains{
+  display:block;
+}
+.top-column__bold-text {
+  font-weight: 700;
+  display: block;
+  margin: 10px 0;
+}
+
+.coi-banner__toggle-consent {
+  display: flex;
+  justify-content: flex-end;
+  padding:20px 40px 0 40px;
+  margin-bottom: 20px;
+}
+
+#coi-banner__deselectAll, 
+#coi-banner__selectAll{
+  cursor: pointer;
+  text-decoration: underline;
+  margin: 5px 0;
+  color: #222;
+  background:none;
+  padding:0 !important;
+  border:none !important;
+  font-size: 1em;
+}
+
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+/** ANIMATIONS START **/
+@-webkit-keyframes ci-bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+    40% {-webkit-transform: translateY(-30px) }
+    60% {-webkit-transform: translateY(-20px);}
+} 
+@keyframes ci-bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-20px);}
+}
+.ci-bounce {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-name: bounce;
+    animation-name: ci-bounce;
+}
+/** ANIMATIONS END **/
+
+
+/* MOBILE VIEW */
+@media only screen and (max-width:576px) {
+  .coi-banner__header{
+    display: none;
+    padding: 10px 20px;
+    margin: 0px;
+  }
+  .coi-banner__header > *{
+    padding: 0 5px;
+    align-items: center;
+  }
+  .coi-banner__header img{
+    max-width: 100% !important;
+    align-self: center;
+  }
+  .coi-banner__headline{
+    font-size:1.2em;
+    margin-bottom: 20px;
+  } 
+  #coiOverlay{
+    padding:15px;
+    align-items: flex-end;
+  }
+  #coi-expand{
+    display: block;
+    margin-top: -20px;
+  }
+  #coi-expand div{
+    border: solid #757575;
+    border-width: 0 4px 4px 0;
+    padding: 3px;
+    width: 20px;
+    height: 20px;
+    transform: rotate(225deg);
+    -webkit-transform: rotate(225deg); 
+    position: relative;
+    margin: 15px auto;
+  }
+  #coi-banner-wrapper{
+    max-height: 45%;
+  }
+  #coi-banner-wrapper.coi_expanded {
+    max-height: 100%;
+    overflow: scroll;
+  }
+  .coi_expanded .coi-banner__header {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+  }
+  .coi_expanded #coi-expand {
+    display: none;
+  }
+  .coi-banner__summary,
+  .coi-banner__cookiedeclaration,
+  .cookiedeclaration_wrapper {
+    padding:20px;
+  }
+  .coi-button-group{
+    flex-flow:wrap-reverse;
+    padding: 15px 20px;
+  }
+  .coi-button-group button{
+    margin:0 0 5px;
+    padding:10px 20px;
+  }
+  .coi-button-group button:first-child{
+    /*margin-bottom:0;*/
+  }
+  .coi-checkboxes{
+    font-size:0.9em;
+    text-align:center !important;
+  }
+  .coi-checkboxes .checkbox-toggle{
+    transform:scale(.7);
+    margin-top:0;
+    transform-origin:top right;
+  }
+  .coi-consent-banner__category-name {
+    flex-direction: column;
+    flex-flow: wrap;
+    flex: 1 0 100%;
+    margin-bottom:10px;
+  }
+  .coi-consent-banner__category-name span{
+    margin-bottom:10px;
+    max-width:100%;
+  }
+
+  .coi-consent-banner__category-name h3 {
+  margin-bottom: 10px;
+  min-width: 200px;
+  max-width: 200px;
+  word-break: keep-all;
+}
+  .coi-consent-banner__description-container {
+    width: 100%;
+  }rem
+  .coi-consent-banner__category-description {
+    padding: 0;
+  }
+  .coi-consent-banner__category-container{
+    margin-bottom: 30px;
+  }
+  .cookie-details__detail-container, .cookie-details__detail-container a{
+    flex-flow:wrap;
+  }
+  .coi-consent-banner__category-container{
+    padding: 0 20px;
+  }
+  .coi-consent-banner__category-container:first-child{
+    padding-bottom:0;
+  }
+  .coi-consent-banner__category-container:last-child{
+    padding-top: 0;
+    padding-bottom:20px;
+  }
+  .coi-banner__toggle-consent{
+    padding:20px 20px 0 20px;
+    margin-bottom:0;
+  }
+  .coi-consent-banner__switch-container{
+    margin-left: 15px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+@media only screen and (max-width:350px){
+  .coi-banner__page,#coi-banner-wrapper button{
+    font-size: 13px !important;
+  }
+  .coi-button-group button{
+    width:100%;
+    padding:8px;
+  }
+  .coi-banner__summary, .coi-banner__cookiedeclaration, .cookiedeclaration_wrapper, .coi-banner__page-footer{
+    padding:10px;
+  }
+  .coi-banner__toggle-consent{
+    padding:10px 10px 0 10px;
+  }
+  .cookie-details__detail-title{
+    min-width:unset;
+  }
+  .ci-arrow{
+    border-width: 0 2px 2px 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 5px;
+    height: 5px;
+  }
+}</style><!--
+Template name: Overlay v3
+URI: https://cookieinformation.com
+Version 1.1.0
+-->
+
+<div id="coiOverlay" role="banner" aria-hidden="true" style="display: none;">
+  <div role="dialog" tabindex="-1" aria-modal="true" id="coi-banner-wrapper" class="coi-banner__wrapper" aria-describedby="coiBannerHeadline" aria-labelledby="coi-banner-wrapper_label" lang="da" dir="ltr" aria-hidden="true">
+    <div id="coiPage-1" class="coi-banner__page">
+      <div class="coi-banner__summary">
+        <button tabindex="-1" id="coi-expand" disabled=""><div></div></button>
+        <div class="coi-banner__text">
+          <h2 class="coi-banner__headline" id="coiBannerHeadline">Du bestemmer over dine data</h2>
+          <div class="coi-banner__maintext" id="coi-banner-wrapper_label"><p>Vi og vores samarbejdspartnere bruger cookies til at indsamle oplysninger om din brug af hjemmesiden.</p>
+<p>Ved at trykke på 'Accepter alle cookies' giver du samtykke til alle formål i de viste tjekbokse. Du kan også angive, hvilke formål du vil give samtykke til.<br>Du kan til enhver tid trække dit samtykke tilbage ved at trykke på det lille ikon nederst i venstre hjørne af hjemmesiden.</p>
+<p>Du kan læse mere om vores brug af cookies og andre teknologier, samt om vores indsamling og behandling af personoplysninger ved at trykke på linket herunder.</p>
+<p><a href="https://www.ug.dk/servicemenu/persondatapolitik-og-cookies">Læs mere om cookies og persondatapolitik på UG.</a><br>
+Læs mere  <a href="javascript:TogglePage(this, 'coiPage-3');" class="coi-banner__policy">Om cookies</a></p></div>
+        </div>
+      </div>
+      <div class="coi-consent-banner__categories-wrapper" aria-label="Cookiepolitik" id="coiConsentBannerCategoriesWrapper">
+        <div class="coi-banner__toggle-consent">
+            <button tabindex="0" aria-hidden="false" onclick="setCheckboxes(true);" onkeypress="javascript:setCheckboxes(true);" id="coi-banner__selectAll" aria-label="Vælg alle">Vælg alle</button>
+            <button tabindex="0" aria-hidden="true" onclick="setCheckboxes(false);" onkeypress="javascript:setCheckboxes(false);" id="coi-banner__deselectAll" style="display:none;" aria-label="Fravælg alle">Fravælg alle</button>
+        </div>
+          <div class="coi-consent-banner__category-container">
+            <div class="coi-consent-banner__category-controls">
+              <div class="category-button-group">
+                <button aria-controls="description-container-cookie_cat_necessary" aria-expanded="false" onclick="toggleCookieDetails(this,'description-container-cookie_cat_necessary')" class="coi-consent-banner__category-name">
+                  <div aria-hidden="true" class="ci-arrow"></div>
+                  <h3 aria-label="Nødvendige" for="cookie_cat_necessary">Nødvendige</h3>
+                </button>
+              </div>
+              <div class="coi-consent-banner__category-description">Nødvendige cookies hjælper med at gøre en hjemmeside brugbar ved at aktivere grundlæggende funktioner, såsom side-navigation og adgang til sikre områder af hjemmesiden. Hjemmesiden kan ikke fungere optimalt uden disse cookies.</div>
+            </div>
+            <div class="coi-consent-banner__description-container" id="description-container-cookie_cat_necessary" aria-hidden="true">
+                <table role="presentation" aria-label="" class="coi-consent-banner__found-cookies">
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">MitID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Understøtter funktionerne i et "Content Management System" til at sikre, at websitet fungerer korrekt.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://nemlog-in.mitid.dk/ShowCookies">MitID - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">has_js</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">MitID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">_sg_b_n</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://nemlog-in.mitid.dk/ShowCookies">MitID - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_sg_b_n</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">MitID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet gennem formularer og visuelt indhold til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://nemlog-in.mitid.dk/ShowCookies">MitID - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_sg_b_p</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">MitID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet gennem formularer og visuelt indhold til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://nemlog-in.mitid.dk/ShowCookies">MitID - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_sg_b_v</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">New Relic</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om websitet og indholdet til rapportering og sikkerhedsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://newrelic.com/termsandconditions/privacy">New Relic - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">JSESSIONID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.nr-data.net</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">MitID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">persistence-cookie</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://nemlog-in.mitid.dk/ShowCookies">MitID - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">persistence-cookie</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Piwik Pro</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://piwik.pro/privacy-policy">Piwik Pro - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">et år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_pk_idxxx</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Cookie Information</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Understøtter websitets tekniske funktioner.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://cookieinformation.com/cookie-and-privacy-policy/">Cookie Information - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">et år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">CookieInformationConsent</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Piwik Pro</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://piwik.pro/privacy-policy">Piwik Pro - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">30 minutter</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_pk_sesxxx</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">PHP</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Påkrævet for at websitet kan fungere.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="#">PHP - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">PHPSESSID</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">stil.app4.geckobooking.dk</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="coi-consent-banner__category-container">
+            <div class="coi-consent-banner__category-controls">
+              <div class="category-button-group">
+                <button aria-controls="description-container-cookie_cat_functional" aria-expanded="false" onclick="toggleCookieDetails(this,'description-container-cookie_cat_functional')" class="coi-consent-banner__category-name">
+                  <div aria-hidden="true" class="ci-arrow"></div>
+                  <h3 aria-label="Funktionelle" for="cookie_cat_functional">Funktionelle</h3>
+                </button>
+                <div class="coi-consent-banner__switch-container" id="switch-cookie_cat_functional">
+                  <label class="coi-checkboxes">
+                    <input class="coi__checkbox" tabindex="0" data-index="0" name="cookie_cat_functional" id="cookie_cat_functional" type="checkbox" title="Funktionelle" onclick="CookieInformation.changeCategoryConsentDecision('cookie_cat_functional')">
+                    <span class="checkbox-toggle"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="coi-consent-banner__category-description">Vi indsamler oplysninger om dine foretrukne indstillinger og valg på hjemmesiden. Det gør vi for at kunne vise dig den version af hjemmesiden, der passer til dine præferencer. Oplysningerne bliver brugt til at afgøre, hvilken region og sprog du foretrækker, til at vise videoer og andre visuelle elementer på hjemmesiden fx jobsøgning.</div>
+            </div>
+            <div class="coi-consent-banner__description-container" id="description-container-cookie_cat_functional" aria-hidden="true">
+                <table role="presentation" aria-label="" class="coi-consent-banner__found-cookies">
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Highcharts</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Afventer</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2022/03/08101732/Highsoft-Privacy-Policy-10.0.pdf">Highcharts - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_cfuvid</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.vimeo.com</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="coi-consent-banner__category-container">
+            <div class="coi-consent-banner__category-controls">
+              <div class="category-button-group">
+                <button aria-controls="description-container-cookie_cat_statistic" aria-expanded="false" onclick="toggleCookieDetails(this,'description-container-cookie_cat_statistic')" class="coi-consent-banner__category-name">
+                  <div aria-hidden="true" class="ci-arrow"></div>
+                  <h3 aria-label="Statistiske" for="cookie_cat_statistic">Statistiske</h3>
+                </button>
+                <div class="coi-consent-banner__switch-container" id="switch-cookie_cat_statistic">
+                  <label class="coi-checkboxes">
+                    <input class="coi__checkbox" tabindex="0" data-index="0" name="cookie_cat_statistic" id="cookie_cat_statistic" type="checkbox" title="Statistiske" onclick="CookieInformation.changeCategoryConsentDecision('cookie_cat_statistic')">
+                    <span class="checkbox-toggle"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="coi-consent-banner__category-description">Vi indsamler oplysninger om, hvordan du interagerer med hjemmesiden, herunder hvor ofte du besøger siden, og hvilke sider du kigger på. Det gør vi for at kunne optimere design, brugervenlighed og styrke effektiviteten af hjemmesiden. Derudover bruger vi oplysningerne til at give dig personaliseret indhold og udarbejde markedsanalyser.</div>
+            </div>
+            <div class="coi-consent-banner__description-container" id="description-container-cookie_cat_statistic" aria-hidden="true">
+                <table role="presentation" aria-label="" class="coi-consent-banner__found-cookies">
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Piwik Pro</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://piwik.pro/privacy-policy">Piwik Pro - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">et år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_pk_idxxx</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Piwik Pro</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://piwik.pro/privacy-policy">Piwik Pro - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">30 minutter</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_pk_sesxxx</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">www.ug.dk</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="coi-consent-banner__category-container">
+            <div class="coi-consent-banner__category-controls">
+              <div class="category-button-group">
+                <button aria-controls="description-container-cookie_cat_marketing" aria-expanded="false" onclick="toggleCookieDetails(this,'description-container-cookie_cat_marketing')" class="coi-consent-banner__category-name">
+                  <div aria-hidden="true" class="ci-arrow"></div>
+                  <h3 aria-label="Marketing" for="cookie_cat_marketing">Marketing</h3>
+                </button>
+                <div class="coi-consent-banner__switch-container" id="switch-cookie_cat_marketing">
+                  <label class="coi-checkboxes">
+                    <input class="coi__checkbox" tabindex="0" data-index="0" name="cookie_cat_marketing" id="cookie_cat_marketing" type="checkbox" title="Marketing" onclick="CookieInformation.changeCategoryConsentDecision('cookie_cat_marketing')">
+                    <span class="checkbox-toggle"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="coi-consent-banner__category-description">Vi indsamler oplysninger om dine interesser, herunder hvilke sider og annoncer du klikker på, hvilke produkter eller ydelser du viser interesse for, eller køber, på denne og andre hjemmesider. Det gør vi for at kunne vise dig annoncer, der er relevante for dig og dine interesser. 
+For at kunne vise dig målrettede annoncer på denne og andre hjemmesider, samarbejder vi med andre virksomheder, som vi deler oplysninger med. Det kan du læse mere om herunder.</div>
+            </div>
+            <div class="coi-consent-banner__description-container" id="description-container-cookie_cat_marketing" aria-hidden="true">
+                <table role="presentation" aria-label="" class="coi-consent-banner__found-cookies">
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Youtube, Google</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet via indlejrede videospillere med det formål at levere målrettet annoncering.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Youtube, Google - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">Session</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">YSC</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.youtube.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Google Analytics</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Google Analytics - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">få sekunder</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_gat</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Google Analytics</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Google Analytics - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">en dag</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_gid</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Youtube, Google</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Samler information om brugerne og deres aktivitet på websitet. Informationen bruges til at spore og analysere brugeradfærd, for at imødekomme de enkelte brugers behov og for at levere målrettet annoncering.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Youtube, Google - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">6 måneder</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">VISITOR_PRIVACY_METADATA</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.youtube.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Google Analytics</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Google Analytics - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_ga</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Youtube, Google</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Youtube, Google - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">et år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">SOCS</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.youtube.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Youtube, Google</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet via indlejrede videospillere med det formål at levere målrettet annoncering.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Youtube, Google - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">et år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">__Secure-YEC</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.youtube.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Vimeo</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet gennem en indlejret video player til analyse og rapporteringsformål.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://vimeo.com/privacy">Vimeo - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">vuid</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.vimeo.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Google Analytics</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content"></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Google Analytics - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">2 år</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">_ga_xxx</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.ug.dk</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Youtube, Google</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Indsamler oplysninger om brugerne og deres aktivitet på websitet via indlejrede videospillere med det formål at levere målrettet annoncering.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://policies.google.com/technologies/partner-sites?hl=en">Youtube, Google - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">6 måneder</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">VISITOR_INFO1_LIVE</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.youtube.com</td>
+                        </tr>
+                      </tbody>
+                      <tbody class="coi-consent-banner__cookie-details">
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-name">
+                          <td class="cookie-details__detail-title">Service:</td>
+                          <td class="cookie-details__detail-content">Vimeo</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-purpose">
+                          <td class="cookie-details__detail-title">Formål:</td>
+                          <td class="cookie-details__detail-content">Understøtter websitets tekniske funktioner.</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-data-processor-privacy-policy">
+                          <td class="cookie-details__detail-title">Privatlivspolitik:</td>
+                          <td class="cookie-details__detail-content"><a title="Privatlivspolitik" rel="noopener noreferrer" tabindex="-1" target="_blank" href="https://vimeo.com/privacy">Vimeo - Privatlivspolitik<span class="screen-reader-only">(opens in a new tab)</span></a></td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-expiry">
+                          <td class="cookie-details__detail-title">Udløb:</td>
+                          <td class="cookie-details__detail-content">30 minutter</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-name">
+                          <td class="cookie-details__detail-title">Navn:</td>
+                          <td class="cookie-details__detail-content">__cf_bm</td>
+                        </tr>
+                        <tr class="cookie-details__detail-container cookie-details__detail-container-provider">
+                          <td class="cookie-details__detail-title">Udbyder:</td>
+                          <td class="cookie-details__detail-content">.vimeo.com</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+          </div>
+      </div>
+      <div class="coi-banner__page-footer" role="navigation" aria-label="menu">
+        <div class="coi-button-group">
+          <button tabindex="0" onclick="CookieInformation.declineAllCategories()" aria-label="Kun Nødvendige cookies" id="declineButton" class="coi-banner__decline">Kun Nødvendige cookies</button>
+          <button tabindex="0" onclick="CookieInformation.submitConsent()" aria-label="Gem indstillinger" id="updateButton" class="coi-banner__decline">Gem indstillinger</button>
+          <button tabindex="0" onclick="CookieInformation.submitAllCategories();" aria-label="Accepter alle cookies " class="coi-banner__accept">Accepter alle cookies </button>
+        </div>
+        <div class="coi-banner__header"><span aria-hidden="true"></span>
+          <span class="coi-banner__branding">powered by: <a class="coi-external-link" href="https://cookieinformation.com/" target="_blank">Cookie Information</a></span>
+        </div>
+      </div>
+    </div>
+    <div id="coiPage-3" class="coi-banner__page" style="display:none;">
+      <div class="coi-banner__cookiedeclaration">
+        <div class="coi-banner__text">
+          <h2 class="coi-banner__headline">Cookiepolitik</h2>
+          <div class="coi-banner__maintext">
+            <strong class="top-column__bold-text">Dit samtykke gælder for følgende domæner:</strong>
+            <span class="top-column__website-domains">ug.dk</span>
+            <strong class="top-column__bold-text">Cookiepolitikken er sidst opdateret d. 19.04.2024</strong>
+          </div>
+        </div>
+      </div>
+      <div class="cookiedeclaration_wrapper">
+        <div class="bottom-column__why-cookies"><h2>Hvad er en cookie?</h2>
+<p>En cookie er en lille datafil, som bliver gemt på din computer, tablet eller mobiltelefon. En cookie er ikke et program, der kan indeholde skadelige programmer eller virus.</p> 
+<h2>Hjemmesidens brug af cookies</h2>
+<p>Cookies kan være nødvendige for at få hjemmesiden til at fungere. Cookies hjælper os desuden med at få overblik over dit besøg på hjemmesiden, så vi løbende kan optimere og målrette hjemmesiden til dine behov og interesser. Cookies husker f.eks., hvad du har lagt i en eventuel indkøbskurv, om du tidligere har besøgt siden, om du er logget ind og hvilket sprog og valuta, du gerne vil have vist på hjemmesiden. Vi bruger også cookies til at målrette vores annoncer over for dig på andre hjemmesider. Helt overordnet anvender vi cookies som del af vores service til at vise indhold, der er så relevant som muligt for dig.</p>
+<p>Du kan se, hvilke services der sætter cookies, og til hvilke formål under de forskellige kategorier [Nødvendige, Funktionelle, Statistiske og Marketing].</p>
+<h2>Hvor længe bliver cookies gemt?</h2>
+<p>Det varierer, hvor længe en bestemt cookie bliver opbevaret på dine enheder og browsere. En cookies levetid beregnes ud fra dit seneste besøg på hjemmesiden. Når cookiens levetid udløber, bliver den automatisk slettet. Alle vores cookies' levetid fremgår i vores cookiepolitik.</p>
+<h2>Sådan afviser eller sletter du cookies</h2>
+<p>Du kan altid afvise alle -/tredjepartscookies fuldstændig ved at ændre indstillingerne i din browser på din computer, tablet eller telefon. Hvor du finder indstillingerne afhænger af, hvilken browser du anvender. Du skal dog være opmærksom på, at hvis du afviser alle -/tredjepartscookies, vil der være funktioner og services, du ikke kan anvende på hjemmesiden (fordi disse er afhængige af cookies).<br>
+</p>
+<h2>Hvordan sletter man cookies?</h2>
+<p>Cookies du tidligere har accepteret, kan sagtens slettes. Hvordan du sletter disse afhænger af den browser du bruger (Chrome, Firefox, Safari etc.) og på hvilken enhed (mobil, tablet, pc, mac). <br> Det er typisk under Indstillinger - Sikkerhed og Privatliv, men kan variere fra browser til browser.  Hvilken enhed/browser bruger du - klik på det relevante link:</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies#ie=ie-11" target="_blank">Internet Explorer</a></li>
+<li><a href="https://support.microsoft.com/en-us/help/4027947/microsoft-edge-delete-cookies" target="_blank">Microsoft Edge</a></li>
+<li><a href="https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored" target="_blank">Mozilla Firefox</a></li>
+<li><a href="https://support.google.com/chrome/answer/95647?hl=en" target="_blank">Google Chrome</a></li>
+<li><a href="https://www.opera.com/help/tutorials/security/cookies" target="_blank">Opera</a></li>
+<li><a href="https://support.apple.com/en-us/HT201265" target="_blank">Safari</a></li>
+<li><a href="https://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager07.html" target="_blank">Flash cookies</a></li>
+<li><a href="https://support.apple.com/en-us/HT1677" target="_blank">Apple</a></li>
+<li><a href="https://timeread.hubpages.com/hub/How-to-delete-internet-cookies-on-your-Droid-or-any-Android-device" target="_blank">Android</a></li>
+<li><a href="https://support.microsoft.com/en-us/help/11696/windows-phone-7" target="_blank">Windows 7</a></li>
+</ul>
+<h2>Ændring af dit samtykke</h2>
+<p>Du ændrer dit samtykke ved enten at slette cookies fra browseren eller ved at ændre dit oprindelige valg ved at klikke på linket herunder:</p>
+<a class="coi-renew-button" href="javascript:TogglePage(this, 'coiPage-1')">Du ændrer dit samtykke ved at klikke her</a>
+<p>Husk: Bruger du flere browsere, skal du slette cookies i dem alle.</p>
+<h2>Har du spørgsmål?</h2>
+<p>Har du kommentarer eller spørgsmål i forbindelse med vores information og/eller behandling af personlige oplysninger, er du velkommen til at kontakte os. Selve cookiepolitikken bliver opdateret hver måned af <a href="https://cookieinformation.com/" target="_blank">Cookie Information</a>. Har du spørgsmål til cookiepolitikken, kan du kontakte Cookie Information via deres hjemmeside <a href="https://cookieinformation.com/" target="_blank">ved at klikke her</a></p></div>
+      </div>
+                    <div class="coi-banner__page-footer" role="navigation" aria-label="third-menu">
+        <div class="coi-button-group">
+          <button tabindex="0" onclick="TogglePage(this, 'coiPage-1')" aria-label="Indstillinger" class="coi-banner__lastpage">Indstillinger</button>
+          <button tabindex="0" onclick="CookieInformation.submitAllCategories();" aria-label="Accepter alle cookies  button" class="coi-banner__accept">Accepter alle cookies </button>
+        </div>
+                        <div class="coi-banner__header"><span aria-hidden="true"></span>
+          <span class="coi-banner__branding">powered by: <a class="coi-external-link" href="https://cookieinformation.com/" target="_blank">Cookie Information</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="coi-banner-categories" aria-hidden="true" style="display:none;">
+    <li>Funktionelle</li>
+    <li>Statistiske</li>
+    <li>Marketing</li>
+  </div>
+</div>
+<button tabindex="0" aria-label="Renew consent" id="Coi-Renew" role="button" onclick="javascript:CookieConsent.renew();" style="display: block;">
+  <svg version="1.1" id="coi-renew-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 304.4 304.4" style="enable-background:new 0 0 304.4 304.4;" xml:space="preserve">
+<g>
+	<path class="renew_path" d="M80.8,53.3c-6.6-8.2-19.5-8.5-27.5,0.5C33,76.8,1.7,124.4,16.4,187.7c0,0-4.1,1.2-9.3,2.7
+		c-5.1,1.5-2.5,9.7,5.9,18.3l35.9,36.9c8.4,8.6,16.6,6,18.4-5.9l7.2-48.3c1.8-11.9-2.3-19.9-9.1-17.9L53,177
+		c-8.9-42.1,10-75.1,24.7-93.3C85.3,74.4,87.4,61.5,80.8,53.3z"></path>
+	<path class="renew_path" d="M121.7,300.8c9.5,1.9,21.6,3.6,35.3,3.6c29.2,0,65.3-7.7,97.5-36.7c0,0,4.1,3.9,9.2,8.8
+		c5.1,4.9,11.8-0.5,15.1-12.1l14.1-49.5c3.3-11.6-3.1-17.4-14.3-13l-45.4,17.8c-11.2,4.4-17.1,11-13.3,14.7l7,6.7
+		c-31.7,27.1-68.7,27.1-91.4,23.4c-11.9-1.9-24.1,2.7-27.9,12.5C103.8,287,110,298.3,121.7,300.8z"></path>
+	<path class="renew_path" d="M299.3,127.6c-6.9-29.3-26.8-80.8-84.1-106.1c0,0,1.9-5.5,4.2-12.2c2.3-6.7-5.4-10.7-17.3-8.9l-50.8,7.9
+		c-11.9,1.8-14.5,10.1-5.8,18.4l35.2,33.8c8.7,8.3,17.1,11.1,18.8,6.1l3.1-8.9c36.8,17.6,52,50.7,58.1,72.5
+		c3.3,11.6,12.6,20.8,23.1,20.1C294.3,149.6,302,139.3,299.3,127.6z"></path>
+</g>
+<g>
+	<g>
+		<g>
+			<path class="renew_path" d="M203.9,101.4c-2.6-2.6-6.1-4.1-9.1-6.2c-3-2.2-5.6-4.7-8.9-6.4c-3.3-1.7-6.4-3.9-9.9-5
+				c-3.5-1.1-7.2-1.7-10.8-2.3c-3.6-0.6-7.3-1.6-11-1.6c-3.7,0-7.2,2.6-10.8,3.2c-3.7,0.6-7.3,0.6-10.8,1.7
+				c-3.5,1.1-6.5,3.1-9.8,4.7c-3.3,1.7-6.5,3.1-9.5,5.3c-2.9,2.1-6.6,3.5-9.2,6.2c-2.6,2.6-5.7,5.1-7.8,8c-2.2,3-2.8,7-4.5,10.3
+				c-1.7,3.3-2,7-3.1,10.5c-1.1,3.5-3.3,6.7-3.9,10.3c-0.6,3.6-0.9,7.3-0.9,11c0,3.7-0.7,7.6-0.1,11.2c0.6,3.7,1.9,7.3,3.1,10.7
+				c1.1,3.5,4.2,6.2,5.9,9.4c1.7,3.3,2.1,7.3,4.2,10.3c2.1,2.9,5.8,4.7,8.4,7.3c2.6,2.6,4,6.7,6.9,8.9c3,2.2,7.2,2.5,10.4,4.2
+				c3.3,1.7,6.2,4.2,9.7,5.4c3.5,1.1,7,2.8,10.7,3.3c3.6,0.6,7.5-0.2,11.2-0.2c3.7,0,7.2-1.8,10.8-2.3c3.7-0.6,7.3-0.6,10.8-1.7
+				c3.5-1.1,7-2.2,10.3-3.9c3.3-1.7,6.5-3.5,9.5-5.7c2.9-2.1,4.9-5.4,7.5-8c2.6-2.6,5-5.2,7.2-8.2c2.2-3,5.7-5.1,7.4-8.4
+				c1.7-3.3,3-6.9,4.1-10.4c1.1-3.5,0.3-7.5,0.8-11.1c0.6-3.6,1.7-7.1,1.7-10.8c0-3.7-1.4-7.2-2-10.8c-0.6-3.7-1.2-7.1-2.3-10.6
+				c-1.1-3.5-1.3-7.3-3-10.6c-1.7-3.3-3.7-6.4-5.9-9.4C209,106.8,206.5,104.1,203.9,101.4z M209.6,151.1c0,4.2,0.6,8.6-0.3,12.6
+				c-0.9,4.1-3.1,7.9-4.9,11.6c-1.8,3.8-4.7,6.8-7.3,10c-2.6,3.2-5.3,6.3-8.5,8.9c-3.2,2.6-7,4.1-10.8,5.9c-3.7,1.8-6.9,5.4-11,6.3
+				c-4,0.9-8.4,0.6-12.6,0.6c-4.2,0-8.6,0.1-12.6-0.8c-4.1-0.9-8.1-2.8-11.7-4.6c-3.8-1.8-6.6-5.1-9.8-7.7c-3.2-2.6-5.5-5.9-8.1-9.1
+				c-2.6-3.2-6-5.8-7.9-9.6c-1.8-3.7-4.3-7.4-5.2-11.5c-0.9-4,0-8.4,0-12.6c0-4.2,0.5-8.3,1.5-12.3c0.9-4.1,3.2-7.5,5-11.2
+				c1.8-3.8,3.5-7.4,6.1-10.6c2.6-3.2,4.3-7.5,7.5-10.1c3.2-2.6,7.7-3.3,11.5-5.1c3.7-1.8,7.1-4.7,11.2-5.7c4-0.9,8.3,0.8,12.6,0.8
+				c4.2,0,8.5-1.4,12.5-0.5c4.1,0.9,7.6,3.5,11.3,5.3c3.8,1.8,6.7,4.6,9.9,7.1c3.2,2.6,6.8,4.7,9.4,7.9c2.6,3.2,6.1,6,7.9,9.8
+				c1.8,3.7,2.4,8.1,3.4,12.1C209.5,142.7,209.6,146.9,209.6,151.1z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M154.2,191.6c0-2.7-2.3-5-5-5c-2.7,0-4.9,2.3-4.9,5c0,2.7,2.2,4.8,4.9,4.8
+				C151.9,196.4,154.2,194.3,154.2,191.6z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M198.4,143.3c0-2.7-2.2-5-4.9-5c-2.7,0-4.8,2.2-4.8,5s2.1,4.9,4.8,4.9C196.2,148.2,198.4,146,198.4,143.3z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M161,150c0-2.7-2.1-4.8-4.8-4.8c-2.7,0-4.9,2.1-4.9,4.8s2.2,4.8,4.9,4.8C158.9,154.9,161,152.7,161,150z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M127,175.1c0-2.7-2.1-4.9-4.8-4.9c-2.7,0-4.9,2.2-4.9,4.9s2.2,4.9,4.9,4.9C124.9,180,127,177.8,127,175.1z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M141.6,110.6c0-2.7-2.2-4.8-4.9-4.8c-2.7,0-4.9,2.1-4.9,4.8s2.2,4.8,4.9,4.8
+				C139.4,115.4,141.6,113.3,141.6,110.6z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M127.6,130c-3.8,0-7.2,1.6-9.7,4.1c-2.5,2.5-4,5.9-4,9.7c0,3.8,1.3,7.4,3.8,9.9c2.5,2.5,6.1,3.8,9.9,3.8
+				s7.4-1.3,9.9-3.9c2.5-2.5,4.1-6.1,4.1-9.9c0-3.8-1.9-7.1-4.4-9.7C134.8,131.6,131.5,130,127.6,130z M127.6,150
+				c-3.4,0-6.2-2.8-6.2-6.2c0-3.4,2.9-6.3,6.2-6.3c3.4,0,5.9,2.9,5.9,6.3C133.5,147.2,131,150,127.6,150z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M177.7,161.9c-3.8,0-7.1,1.7-9.7,4.2c-2.5,2.5-4.4,5.8-4.4,9.7c0,3.8,1.7,7.3,4.2,9.8c2.5,2.5,6,4.2,9.8,4.2
+				c3.8,0,7.2-1.8,9.7-4.3c2.5-2.5,4.4-5.9,4.4-9.7c0-3.8-1.9-7.2-4.4-9.7C184.8,163.6,181.5,161.9,177.7,161.9z M177.7,181.9
+				c-3.4,0-6.3-2.8-6.3-6.1c0-3.4,3-5.9,6.3-5.9c3.4,0,6.1,2.6,6.1,5.9C183.8,179.1,181,181.9,177.7,181.9z"></path>
+		</g>
+		<g>
+			<path class="renew_path" d="M181.3,123.9c0-3.2-1.2-6.1-3.3-8.2c-2.1-2.1-5-3.2-8.2-3.2c-3.2,0-5.9,1.3-8,3.3c-2.1,2.1-3.6,4.8-3.6,8
+				c0,3.2,1.4,6,3.5,8.1c2.1,2.1,4.9,3.2,8.1,3.2s6.2-1,8.3-3.1C180.2,130.1,181.3,127.1,181.3,123.9z M166.1,123.9
+				c0-2.1,1.7-3.7,3.8-3.7c2.1,0,3.9,1.6,3.9,3.7s-1.8,3.9-3.9,3.9C167.8,127.8,166.1,126,166.1,123.9z"></path>
+		</g>
+	</g>
+</g>
+</svg>
+</button><script type="text/javascript">    /**
+Template name: Overlay v3
+URI: https://cookieinformation.com
+Version 1.1.0
+**/
+var coiOverlay = document.getElementById('coiOverlay');
+var wrapper = document.getElementById('coi-banner-wrapper');
+var renewBtn = document.getElementById('Coi-Renew');
+var purposesList = document.getElementsByClassName('coi-purpose-list');
+var checkboxes = document.querySelectorAll('.coi__checkbox');
+var coiExpandBtn = document.getElementById('coi-expand');
+var coiPolicyLink = document.getElementsByClassName("coi-banner__policy")
+var selectAll = document.getElementById('coi-banner__selectAll');
+var deselectAll = document.getElementById('coi-banner__deselectAll');
+
+coiExpandBtn.onclick = function () 
+{  
+  wrapper.classList.add('coi_expanded');
+};
+
+
+//Check the users screen size, ,if it is under 576px, enable "expand" button
+var w = document.documentElement.clientWidth || window.innerWidth;
+if (w >= 576) {
+  coiExpandBtn.disabled = true; //user is on desktop
+  coiExpandBtn.setAttribute('tabindex',-1);
+} else {
+  coiExpandBtn.disabled = false; // user is on mobile
+  coiExpandBtn.setAttribute('tabindex',0);
+}
+
+/* LOGO FUNCTION START */
+(function(){
+  var imagePath = ''; // Change this to your own logo URL
+  var container = document.getElementsByClassName('coi-banner__header');
+
+  if(imagePath){
+    for (var i = 0; i < container.length; i++){
+      var logo = document.createElement('img');
+      logo.style.width = '180px'; // Change width for better fit
+      logo.src = imagePath;
+      logo.alt = 'logo';
+      container[i].insertBefore(logo, container[i].childNodes[0]);
+    }
+  }else{
+    for (var i = 0; i < container.length; i++){
+      var logo = document.createElement('span');
+      logo.setAttribute('aria-hidden','true');
+      container[i].insertBefore(logo, container[i].childNodes[0]);
+    } 
+  }
+})();
+/* LOGO FUNCTION END */
+
+function insertPurposesInList(){
+  var purposesElements = document.getElementById('coi-banner-categories').innerHTML;
+  if(purposesList && purposesElements){
+    for (var i = 0; i < purposesList.length; i++) {
+      purposesList[i].innerHTML = purposesElements;
+    }
+  }
+}
+
+function trapFocusInModal(modal){
+  var defaultTemp = document.getElementById(modal);
+  var focusableEl = defaultTemp.querySelectorAll('button:not([disabled]), a[href]:not([disabled]), input:not([disabled]), select, textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  wrapper.focus();  
+  var firstFocusableEl = focusableEl[0];
+  var lastFocusableEl = focusableEl[focusableEl.length - 1];
+  var KEYCODE_TAB = 9;
+
+  function ctlFocus(e){
+    var isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
+    if (!isTabPressed) { 
+      return; 
+    }
+    if ( e.shiftKey ) /* shift + tab */ {
+      if (document.activeElement === firstFocusableEl) {
+        lastFocusableEl.focus();
+        e.preventDefault();
+      }
+    } else /* tab */ {
+      if (document.activeElement === lastFocusableEl) {
+        firstFocusableEl.focus();              
+        e.preventDefault();
+      }
+    }
+    document.activeElement.scrollIntoView();
+  }
+  if (window.addEventListener) {
+    defaultTemp.addEventListener('keydown', ctlFocus);
+  }else if (document.attachEvent) { // IE 
+    defaultTemp.attachEvent("onkeydown", ctlFocus);
+  }else{
+    defaultTemp.addEventListener('keydown', ctlFocus);
+  }
+}
+
+
+function setCheckboxes(stat){
+  for(var i = 0; i < checkboxes.length; i++){
+    if(checkboxes[i].type === "checkbox"){
+      if(stat == true){
+        deselectAll.focus();
+        if(!checkboxes[i].checked){
+          checkboxes[i].click();
+        }
+      }else{
+        selectAll.focus();
+        if(checkboxes[i].checked){
+          checkboxes[i].click();
+        }
+      }
+    }
+  }
+}
+function setCheckboxLabel(el){
+
+  //added tabindex change for "accept/decline all"
+  if(el.type === "checkbox" && el.checked) {
+    selectAll.style.display = 'none';
+    selectAll.setAttribute('aria-hidden','true');
+    selectAll.setAttribute('tabindex',-1);
+    deselectAll.style.display = 'block';
+    deselectAll.setAttribute('aria-hidden','false');
+    deselectAll.setAttribute('tabindex',0);
+  } else {
+    deselectAll.style.display = 'none';
+    deselectAll.setAttribute('aria-hidden','true');
+    deselectAll.setAttribute('tabindex',-1);
+    selectAll.style.display = 'block';
+    selectAll.setAttribute('aria-hidden','false');
+    selectAll.setAttribute('tabindex',0);
+  }
+}
+for(var i = 0; i < checkboxes.length; i++){
+  checkboxes[i].addEventListener( 'change', function() {
+    setCheckboxLabel(this);
+  });
+}
+
+setTimeout(deselectAll.focus(),100);
+//Toggles the menu tabs in banner
+function TogglePage(id,element){
+  var i, tabcontent, tablinks; 
+  wrapper.classList.add('coi_expanded');
+  tabcontent = document.getElementsByClassName("coi-banner__page");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  // Get all elements with class="coi-banner-tab" and remove the class "active"
+  tablinks = document.getElementsByClassName("coi-banner__nextpage");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" activeTab", "");
+  }
+  // Show the current tab, and add an "active" class to the link that opened the tab
+  document.getElementById(element).style.display = "block";
+  trapFocusInModal(element);
+  id.className += " activeTab";
+}
+
+function toggleCookieDetails(btn,tab){
+  var tabContent = document.getElementById(tab);
+  btn.classList.toggle("ci-btn-tab-active");
+  if(btn.getAttribute('aria-expanded') === 'false'){
+    btn.setAttribute('aria-expanded','true');
+  }else{
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  tabContent.classList.toggle("tab-panel-active");
+  if(tabContent.getAttribute('aria-hidden') === 'false'){
+    tabContent.setAttribute('aria-hidden','true');
+  }else{
+    tabContent.setAttribute('aria-hidden','false');
+  }
+
+  if(!tabContent.classList.contains('tab-panel-active')){
+    var links = tabContent.querySelectorAll('a');
+    for(var i = 0; i < links.length; i++){
+      links[i].setAttribute('tabindex',-1);
+    }
+  }else{
+    var links = tabContent.querySelectorAll('a');
+    for(var i = 0; i < links.length; i++){
+      links[i].setAttribute('tabindex',0);
+    }
+  }
+}
+
+coiOverlay.addEventListener("click", function(e) {
+  if (e.target == this){
+    e.preventDefault;
+    wrapper.classList.remove("ci-bounce");
+    wrapper.offsetWidth = coiOverlay.offsetWidth;
+    wrapper.classList.add("ci-bounce");
+  }
+}, false);
+
+function togglePlaceholderElementsOnConsent(){
+  var consentplaceholders = document.getElementsByClassName('consent-placeholder');
+  if(consentplaceholders){
+    for(var i = 0; i < consentplaceholders.length; i++){
+      if(!CookieInformation.getConsentGivenFor(consentplaceholders[i].getAttribute('data-category'))){
+        consentplaceholders[i].style.display = 'block';
+      }else{
+        consentplaceholders[i].style.display = 'none';
+      }
+    }
+  }
+}
+
+
+function setNoScroll(state){
+  var htmlElement = document.getElementsByTagName('html')[0];
+  if(state){
+    htmlElement.classList.add('noScroll');
+  }else{
+    htmlElement.classList.remove('noScroll');
+  }
+}
+//Renew link modifier
+try{
+  var linkR = document.getElementsByClassName("coi-renew-link")[0];
+  var buttonR = document.getElementsByClassName("coi-renew-button")[0];
+  if (buttonR != undefined) {
+    buttonR.href = "javascript:TogglePage(this, 'coiPage-1')";
+  } else if (linkR != undefined) {
+    linkR.href = "javascript:TogglePage(this, 'coiPage-1')";
+  }
+} catch (error){
+  console.log(error);
+}
+
+// Show and Hides the banner
+function showCookieBanner() {
+  insertPurposesInList();
+  coiOverlay.style.display = 'flex';
+  setNoScroll(true);
+  wrapper.setAttribute('aria-hidden','false');
+  coiOverlay.setAttribute('aria-hidden','false');
+  setTimeout(function(){
+    trapFocusInModal('coiPage-1');
+  },100);
+
+  renewBtn.style.display = 'none';
+  togglePlaceholderElementsOnConsent();
+}
+
+function hideCookieBanner() { 
+  wrapper.setAttribute('aria-hidden','true');
+  coiOverlay.setAttribute('aria-hidden','true');
+  coiOverlay.style.display = 'none';
+  setNoScroll(false);
+
+  renewBtn.style.display = 'block';
+  togglePlaceholderElementsOnConsent();
+}
+window.CookieInformation.enableYoutubeNotVisibleDescription = true;
+window.CookieInformation.youtubeCategorySdk = 'cookie_cat_marketing';
+window.CookieInformation.youtubeNotVisibleDescription = 'Du skal acceptere 3.parts cookies for at se dette indhold<br /><span>Klik her for at ændre indstillinger og derved acceptere cookies fra anden udbyder end Børne- og Undervisningsministeriet.</span>';
+window.CookieInformation.youtubeBlockedCSSClassName = 'youtube-consent-text';</script></div>
+<div id="skip-link">
+  <a href="#main-content" class="element-invisible element-focusable">Gå til hovedindhold</a>
+</div>
+<header id="navbar" role="banner" class="navbar container navbar-default">
+
+  <div class="search" style="margin-bottom: 10px;">
+          <h1 class="uglogo">
+        <a href="/">UddannelsesGuiden</a>
+        </h1>
+      <form class="navbar-form" action="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi" method="post" id="ug3-search-form" accept-charset="UTF-8"><div><div class="form-item form-item-search form-type-textfield form-autocomplete form-group" role="application"><label class="control-label" for="edit-search">Søgefelt </label>
+<div class="input-group"><input placeholder="Indtast søgeord" class="auto_submit form-control form-text" data-search-api-autocomplete-search="ug3_search_autocomplete" type="text" id="edit-search" name="search" value="" size="60" maxlength="128" autocomplete="OFF" aria-autocomplete="list"><input class="autocomplete autocomplete-processed" disabled="disabled" id="edit-search-autocomplete" type="hidden" value="https://www.ug.dk/index.php?q=search_api_autocomplete/ug3_search_autocomplete/-">
+<span class="input-group-addon"><span class="icon glyphicon glyphicon-refresh" aria-hidden="true"></span>
+</span></div><span class="element-invisible" aria-live="assertive" id="edit-search-autocomplete-aria-live"></span></div><button type="submit" id="edit-submit" name="op" value="Søg" class="btn btn-primary form-submit">Søg</button>
+<input type="hidden" name="form_id" value="ug3_search_form">
+</div></form>      </div>
+  <div class="uvmlogo">
+    <a href="/"><img class="uvmimg" src="https://www.ug.dk/profiles/ug3/themes/ug3/logo.png" alt="UVM logo"></a>
+  </div>
+
+  <div class="container">
+    <div class="navbar-header">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+          <div class="navbar-collapse collapse">
+        <nav role="navigation">
+          <ul class="menu nav navbar-nav"><li class="first leaf"><a href="/6til10klasse">Uddannelser til unge</a></li>
+<li class="leaf"><a href="/videregaaendeuddannelse">Videregående uddannelser</a></li>
+<li class="leaf"><a href="/efteruddannelse">Voksen- og efteruddannelser</a></li>
+<li class="last leaf"><a href="/job">Job og Karriere</a></li>
+<li class="first last leaf"><a href="/inspiration/vejledningsvaerktoejer-0">Værktøjer</a></li>
+</ul>        </nav>
+      </div>
+      </div>
+
+</header>
+
+<div class="main-container container">
+
+  <header role="banner" id="page-header">
+    
+      </header> <!-- /#page-header -->
+
+  <div class="row">
+
+    
+    <section class="col-sm-12">
+            <div class="breadcrumb-section clearfix"><div class="breadcrumb"><a href="/">Forside</a> / <a href="/uddannelser">Uddannelser</a> / <a href="/uddannelser/bachelorogkandidatuddannelser">Bachelor- og kandidatuddannelser</a> / <a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser">Bacheloruddannelser</a> / <a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser">Naturvidenskabelige bacheloruddannelser</a> / <a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser-1">Matematik, fysik, kemi og datalogi</a> / <strong>Datalogi</strong></div></div>      <a id="main-content"></a>
+                                                                <ul class="action-links" style="display: none;"></ul>
+              <div class="region region-content">
+    <section id="block-system-main" class="block block-system clearfix">
+
+      
+  <div class="bootstrap-twocol-stacked">
+  <div class="row">
+      </div>
+  <div class="row">
+    <div class="panel-panel left col-sm-8"><div class="panel-pane pane-views pane-artikelbillede">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="view view-artikelbillede view-id-artikelbillede view-display-id-default view-dom-id-4ce3bde5737883f8d576737fc3a1995a">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field views-field-field-artikelbillede">        <div class="field-content"><img typeof="foaf:Image" class="img-responsive" src="https://www.ug.dk/sites/default/files/styles/ug3_large/public/bachcand-datalogi-l.jpg?itok=qjWALkyj" width="620" height="237" alt="kandidatuddannelse i Datalogi" title="studerende kigger på computeren"></div>  </div>  
+  <div class="views-field views-field-field-ug2-displaydocclass" style="width: 460px;">        <div class="field-content">Bacheloruddannelse</div>  </div>  
+  <div class="views-field views-field-title">        <h1 class="field-content">Datalogi</h1>  </div>  </div>
+
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-entity-field pane-node-field-manchet">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="field field-name-field-manchet field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Som datalog designer og udvikler du de it-systemer, som danner grundlag for uundværlige funktioner for mennesker, virksomheder og samfund.</div></div></div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-entity-field pane-node-field-fakta">
+  
+          <h2 class="pane-title">Fakta</h2>
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="field field-name-field-fakta field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><dl>
+      
+      
+        <dt>Navn:</dt>
+        <dd>Datalogi</dd>
+      
+
+        <dt>Andre betegnelser:</dt>
+        <dd>Computer Science</dd>
+
+      
+        <dt>Varighed:</dt>
+        <dd>3 år</dd>
+      
+
+        <dt>Sprog:</dt>
+        <dd>Dansk eller engelsk</dd>
+
+      
+        <dt>Adgangskrav:</dt>
+        <dd>Gymnasial eksamen + specifikke adgangskrav</dd>
+      
+      
+        <dt>Økonomi:</dt>
+        <dd>SU</dd>
+      
+    </dl>
+</div></div></div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-entity-field pane-node-field-pixi">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="field field-name-field-pixi field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>Du lærer at analysere og løse komplekse problemer i forbindelse med it. Det sker med redskabsfag som fx programmering og matematik, der er basis for at kunne arbejde med fx algoritmer og datastrukturer.&nbsp;Uddannelsen forudsætter ikke, at du i forvejen kan programmere.</p><p>Med en bacheloruddannelse i datalogi kan du læse videre på en kandidatuddannelse.&nbsp;Som færdiguddannet vil du have&nbsp;jobmuligheder i bl.a. private it-virksomheder.</p></div></div></div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-entity-field pane-node-field-linkboks">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="field field-name-field-linkboks field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p style="text-align: right;">Foto: Getty Images</p></div></div></div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-views pane-afsnitsliste ug3-foldable-cnt">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="view view-afsnitsliste view-id-afsnitsliste view-display-id-default view-dom-id-54b4f5a000472e06e5abe4c882516a5d is-foldable">
+            <div class="view-header">
+                    <div role="button" tabindex="0" class="ug3-fold-alle-afsnit-ud">Fold alle afsnit ud</div>
+          </div>
+  
+  
+  
+      <div style="clear:both"></div>
+    <div class="view-content">
+        <div class="views-row views-row-1">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled ug3-foldable-active">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down ug3-smooth-transition ug3-upside-down"></i>
+                <a id="Indhold" class="anchor"></a>
+          <a tabindex="-1" href="#Indhold" id="link-for-anchor-Indhold"><span>Indhold</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – skjul indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content visible-force" style="overflow: hidden; display: block;">
+        <div class="field-content"><p>Datalogi betyder egentlig videnskaben om data. Uddannelsen handler ikke kun om computere, men også om de generelle principper bag repræsentation og behandling af data. Og i udviklingen af nye it-systemer har man netop brug for at arbejde systematisk med disse principper.</p><p>Uddannelsens teoretiske fag giver dig den videnskabelige baggrund for at kunne lave modeller af løsningerne på en konkret problemstilling.</p><h3>Undervisningens indhold</h3><p>I løbet af uddannelsen har du kurser som:</p><ul><li>Programmering, herunder de forskellige sprog,&nbsp;som bruges til programmering eller udvikling af nye systemer</li><li>Softwarearkitektur, herunder softwares opbygning og funktion i forhold til andre dele af et it-system</li><li>Databaser, herunder opbygning og udvikling</li><li>Algoritmer og datastrukturer, herunder analyse og konstruktion af&nbsp;de logiske systemer, der ligger bag alt software og fx gør informationer tilgængelige og søgbare</li><li>Systemudvikling, herunder udvikling og vurdering af it-systemer i forhold til deres anvendelsesområde</li></ul><p>Du lærer altså, hvad en computer kan bruges til, hvordan man programmerer den, og hvordan software- og it-systemer designes og udvikles. Alt sammen værdifuld viden, når du skal arbejde med computere, programmer og data.&nbsp;</p><h3>Opbygning og indhold kan variere</h3><p>Uddannelsen kan variere i opbygning og indhold afhængigt af uddannelsessted. Læs mere på det enkelte uddannelsessteds hjemmeside.</p><h3>Titel</h3><p>Du får titlen bachelor (BSc) i datalogi. På Roskilde Universitet afhænger titlen af dit individuelle uddannelsesforløb.</p></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-2">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Undervisning" class="anchor"></a>
+          <a tabindex="-1" href="#Undervisning" id="link-for-anchor-Undervisning"><span>Undervisning</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>Undervisningen veksler mellem forelæsninger, holdundervisning og øvelser. På Roskilde Universitet og Aalborg Universitet er store dele af undervisningen tilrettelagt som problemorienteret projektarbejde.</p><h3>Sprog</h3><p>Du kan tage uddannelsen på engelsk. Se hvor i afsnittet Uddannelsessteder.</p><h3>Eksamen</h3><p>Du afslutter bacheloruddannelsen med et bachelorprojekt.</p></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-3">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Adgangskrav" class="anchor"></a>
+          <a tabindex="-1" href="#Adgangskrav" id="link-for-anchor-Adgangskrav"><span>Adgangskrav</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>For at søge optagelse på uddannelsen skal du bestå forskellige adgangskrav.</p><p>Alle de nævnte fag skal være bestået. Kravene gælder optagelse i både kvote 1 og kvote 2.</p><h3>Generelle adgangskrav</h3><ul><li><a href="/videregaaendeuddannelse/altomoptagelse/gymnasiale-eksamener">En&nbsp;gymnasial eksamen&nbsp;</a>(bemærk: krav om overbygning for hf og eux 1. del)</li></ul><p>Læs mere om adgangsgivende eksamener og uddannelser:<br><a href="/videregaaendeuddannelse/altomoptagelse/adgangskrav-til-de-videregaaende-uddannelser">Adgangskrav til de videregående uddannelser</a></p><h3><strong>Specifikke adgangskrav</strong>&nbsp;</h3><ul><li>Dansk A</li><li>Engelsk B</li><li>Matematik A</li></ul><p>Læs om supplering, hvis du mangler fag eller niveauer:<br><a href="/uddannelser/gymnasialeuddannelser/enkeltfagogsupplering/gymnasial-supplering-gs">Gymnasiale suppleringskurser (GSK)</a></p><h3><strong>Lokale adgangskrav</strong></h3><p>Ud over de generelle og specifikke adgangskrav er der lokale adgangskrav. De gælder kun for det enkelte uddannelsessted.</p><h4><br><strong>Københavns Universitet</strong></h4><ul><li>Hvis du søger om optagelse&nbsp;i kvote 1, skal karaktergennemsnittet fra din&nbsp;gymnasiale eksamen være mindst 6,0</li><li>Hvis du søger om optagelse&nbsp;i kvote 2, skal du bl.a. deltage i en kvote 2-prøve. Se mere på uddannelsesstedets hjemmeside</li></ul><h4><br>Aarhus Universitet</h4><ul><li>Hvis du søger i kvote 1, skal karaktergennemsnittet fra din gymnasiale eksamen være mindst 6,0, og du skal have mindst 6,0 i gennemsnit i matematik A.</li><li>​Hvis du søger i kvote 2, skal du bl.a. deltage i en optagelsesprøve. Se mere på uddannelsesstedet hjemmeside.</li></ul><h4><br><strong>Syddansk Universitet</strong></h4><ul><li>Hvis du søger om optagelse&nbsp;i kvote 1, skal karaktergennemsnittet fra den gymnasiale eksamen være på mindst 6,0 eller 7,0 i gennemsnit i matematik A</li><li>Fra 2025 kan du kun søge i kvote 1, hvis du har et karaktergennemsnit fra din gymnasiale eksamen på mindst 6,0</li><li>Hvis du søger om optagelse&nbsp;i kvote 2, skal du deltage i en optagelsesprøve</li></ul><p><a href="http://www.sdu.dk/da/uddannelse/bachelor/kvote_1_og_2/testbaseret_optag_kvote2" target="_blank">Læs mere om optagelsesprøven på uddannelsesstedets&nbsp;hjemmeside</a></p><h3><br><strong>Særskilte adgangskrav for Roskilde Universitet</strong></h3><p>Datalogi og Computer Science (engelsksproget)&nbsp;er bachelorfag, der læses i kombination med et andet bachelorfag på RUC.</p><p>For at læse datalogi og et andet fag eller Computer Science og et andet fag skal du opfylde adgangskravene og søge optagelse på en&nbsp;af følgende bacheloruddannelser:</p><ul><li><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/humanistiskebacheloruddannelser/oevrigehumaniora/humanistisk-bachelor">Humanistisk bachelor</a></li><li><a href="/Uddannelse.aspx?article_id=udb2-humhumtekbas">Humanistisk-teknologiske bachelor</a></li><li><a href="/Uddannelse.aspx?article_id=udb2-natvidbasisudd">Naturvidenskabelig bachelor</a></li><li><a href="https://www.ug.dk/Uddannelse.aspx?article_id=udb2-samfsamfvidbasisudd">Samfundsvidenskabelig bachelor</a></li><li><a href="https://www.ug.dk/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/oevrigenaturvidenskab/international-bachelor-natural-sciences">International Bachelor in Natural Sciences</a></li></ul><h4><br>Kombinationsmuligheder</h4><p>Der er forskellige kombinationsmuligheder for datalogi og Computer Science. Undersøg mulighederne på RUCs hjemmeside:&nbsp;</p><ul><li><a href="http://ruc.dk/bachelor/kombinationer/3127" target="_blank">Datalogi</a>&nbsp;</li><li><a href="http://ruc.dk/bachelor/kombinationer/129" target="_blank">Computer Science</a></li></ul></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-4">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Optagelse" class="anchor"></a>
+          <a tabindex="-1" href="#Optagelse" id="link-for-anchor-Optagelse"><span>Optagelse</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>Du søger om optagelse på&nbsp;Optagelse.dk.</p><h3 style="clear:left;">Ansøgere i kvote 1</h3><ul><li>Ansøgningsfrist:&nbsp;5. juli inden kl. 12.00</li><li>Du bliver optaget på baggrund af din gymnasiale eksamen</li></ul><h3 style="clear:left;">Ansøgere i kvote 2</h3><ul><li>Ansøgningsfrist:&nbsp;15. marts inden kl. 12.00</li><li>Du bliver individuelt vurderet i forhold til de kvote 2-kriterier, som det enkelte uddannelsessted har fastsat</li></ul><h3 style="clear:left;">Udenlandsk eller international eksamen</h3><ul><li>Hvis du ikke har en fuld gymnasial uddannelse eller søger med international/udenlandsk gymnasial eksamen, skal du søge senest 15. marts inden kl. 12.00</li></ul><h3 style="clear:left;">Læs mere</h3><ul><li><a href="http://www.optagelse.dk/" target="_blank">Søg optagelse (optagelse.dk)</a></li><li><a href="/videregaaendeuddannelse/altomoptagelse/optagelse-paa-videregaaende-uddannelser">Læs om optagelse generelt</a></li></ul></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-5">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Uddannelsessteder" class="anchor"></a>
+          <a tabindex="-1" href="#Uddannelsessteder" id="link-for-anchor-Uddannelsessteder"><span>Uddannelsessteder</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>Læs mere om uddannelsen på de enkelte uddannelsessteders hjemmesider.</p><p>Bacheloruddannelsen i datalogi foregår i:</p><ul><li>København:&nbsp;<a href="http://studier.ku.dk/bachelor/datalogi/" target="_blank">Københavns Universitet (ku.dk)</a></li><li>Odense:&nbsp;<a href="http://www.sdu.dk/da/uddannelse/bachelor/datalogi" target="_blank">Syddansk Universitet (sdu.dk)</a></li><li>Roskilde:&nbsp;<a href="http://ruc.dk/bachelor/datalogi" target="_blank">Roskilde Universitet (ruc.dk)</a></li><li>Aalborg:&nbsp;<a href="http://www.aau.dk/uddannelser/bachelor/datalogi" target="_blank">Aalborg Universitet (aau.dk)</a></li><li>Aarhus:&nbsp;<a href="http://bachelor.au.dk/datalogi/" target="_blank">Aarhus Universitet (au.dk)</a></li></ul><h3>Uddannelsen på engelsk</h3><ul><li>Roskilde: <a href="https://ruc.dk/bachelor/computer-science" target="_blank">Roskilde Universitet (ruc.dk)</a></li></ul></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-6">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Adgangskvotienter-2023" class="anchor"></a>
+          <a tabindex="-1" href="#Adgangskvotienter-2023" id="link-for-anchor-Adgangskvotienter-2023"><span>Adgangskvotienter 2023</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>En adgangskvotient viser det laveste gennemsnit for den seneste optagelse i kvote 1. Den kan stige eller falde ved næste optagelse og må ikke forveksles med et adgangskrav.</p><p><strong>Bemærk om RUC</strong>:&nbsp;Der er ingen adgangskvotienter for dette bachelorfag, da det indgår i en samlet RUC-uddannelse. Du kan i stedet se adgangskvotienter for den bacheloruddannelse (hovedområde), som du søger optagelse på, ved at klikke på den i afsnittet Adgangskrav.</p><div class="table-responsive"><table class="table"><caption>&nbsp;</caption><thead><tr><th>&nbsp;</th><th>Kvote 1</th><th>Standby</th></tr></thead><tbody><tr><td><b>Københavns Universitet</b></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>København Ø (Sommerstart)</td><td>AO</td><td>&nbsp;</td></tr><tr><td><b>Syddansk Universitet</b></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>Odense M (Sommerstart)</td><td>AO</td><td>&nbsp;</td></tr><tr><td><b>Aarhus Universitet</b></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>Aarhus C (Sommerstart)</td><td>AO</td><td>&nbsp;</td></tr><tr><td><b>Aalborg Universitet</b></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>Aalborg Øst (Sommerstart)</td><td>AO</td><td>&nbsp;</td></tr></tbody></table></div><p style="margin-bottom: 3px; line-height: 0.8em;"><small>AO: Alle optaget</small></p><p><a href="/KOT-tal">Samlet oversigt over dette års KOT-tal</a></p></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-7">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="--konomi" class="anchor"></a>
+          <a tabindex="-1" href="#--konomi" id="link-for-anchor---konomi"><span>Økonomi</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>Du&nbsp;kan søge&nbsp;SU under uddannelsen.&nbsp;Læs mere i artiklen:</p><p><a href="https://www.ug.dk/uddannelser/artikleromuddannelser/oekonomi/statens-uddannelsesstoette-su">SU (Statens Uddannelsesstøtte)</a></p></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-8">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Fremtidsmuligheder" class="anchor"></a>
+          <a tabindex="-1" href="#Fremtidsmuligheder" id="link-for-anchor-Fremtidsmuligheder"><span>Fremtidsmuligheder</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><p>Med en bacheloruddannelse i datalogi kan du læse videre på en kandidatuddannelse inden for det naturvidenskabelige område. Du kan bl.a. komme ind på følgende kandidatuddannelser:</p><ul><li><a href="/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/naturvidenskabeligekandidatuddannelser/matematikfysikkemiogdatalogi/datalogi">Datalogi</a></li><li><a href="/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/naturvidenskabeligekandidatuddannelser/matematikfysikkemiogdatalogi/bioinformatik">Bioinformatics</a></li><li><a href="/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser/humanistiskekandidatuddannelser/oevrigehumaniora/it-og-kognition">IT and Cognition</a></li></ul><p>Bemærk: Der findes ikke en samlet oversigt over mulige kandidatuddannelser.</p><h3>Jobmuligheder</h3><p>Som færdiguddannet vil du have jobmuligheder i private it-virksomheder eller med it-funktioner i offentlige institutioner.</p><h3>Arbejdsområder</h3><p>Læs mere om arbejdsområder samt typer af job inden for:</p><ul><li><a href="/Job/dataitogteleteknik/itprogram">Systemudvikling, programmering og design</a></li><li><a href="/Job/dataitogteleteknik/itadmsupport">Drift, support og netværk</a></li></ul><h3 style="clear:left;">Få mere at vide</h3><p><a href="http://www.futurepeople.dk/find-uddannelser/" target="_blank">Oversigt over de forskellige it-uddannelser på universiteterne</a></p></div>
+      </div>
+  </div>
+  </div>
+  <div class="views-row views-row-9">
+    
+  <div class="ug3-foldable-parent ug3-foldable-handled">
+
+                <div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header ug3-foldable-header-afsnit">
+        <i class="fa pull-left ug3-dimmed-chevron fa-chevron-down"></i>
+                <a id="Love-og-regler" class="anchor"></a>
+          <a tabindex="-1" href="#Love-og-regler" id="link-for-anchor-Love-og-regler"><span>Love og regler</span></a>      </h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div>
+    
+            <div class="views-field-field-bodytext ug3-foldable-content hidden-force">
+        <div class="field-content"><ul><li><a href="https://www.retsinformation.dk/eli/lta/2021/2285" target="_blank">Bekendtgørelse om universitetsuddannelser tilrettelagt på heltid. Nr. 2285 af 1. december 2021</a></li><li><a href="https://www.retsinformation.dk/eli/lta/2024/51" target="_blank">Bekendtgørelse om adgang til universitetsuddannelser tilrettelagt på heltid. Nr. 51 af 14. januar 2024</a></li></ul><h3>Kvalifikationsniveau</h3><p>Uddannelsen er placeret på niveau 6 i den danske kvalifikationsramme for livslang læring. Kvalifikationsrammen går fra niveau 1-8 og definerer det forventede udbytte af undervisningen.</p><p>Læs om:</p><p><a href="/uddannelser/artikleromuddannelser/kvalifikationsniveauer/kvalifikationsniveau-videregaaende-uddannelser">Kvalifikationsniveauer for videregående uddannelser</a></p></div>
+      </div>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-panels-mini pane-relaterede-spalter">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="bootstrap-twocol-stacked" id="mini-panel-relaterede_spalter">
+  <div class="row">
+    <div class="panel-pane pane-custom pane-1">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <a name="mulige-job" id="mulige-job"></a>  </div>
+
+  
+  </div>
+  </div>
+  <div class="row">
+    <div class="panel-panel left col-md-6"><div class="panel-pane pane-entity-field pane-node-field-relateret-uddannelse" style="height: auto;">
+  
+          <h2 class="pane-title">Uddannelser der ligner</h2>
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="field field-name-field-relateret-uddannelse field-type-entityreference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/software">Software</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/humanistiskebacheloruddannelser/oevrigehumaniora/cognitive-science">Cognitive Science</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/humanistiskebacheloruddannelser/oevrigehumaniora/kommunikation-og-it">Kommunikation og it</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/matematik-og-teknologi">Matematik og teknologi</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/software-engineering">Software Engineering</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/cyberteknologi">Cyberteknologi</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/robotteknologi">Robotteknologi</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/oevrigenaturvidenskab/interaktionsdesign">Interaktionsdesign</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/informatik">Informatik</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datavidenskab">Datavidenskab</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/machine-learning-og-datavidenskab">Machine learning og datavidenskab</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/naturvidenskabeligebacheloruddannelser/matematikfysikkemiogdatalogi/datalogi-oekonomi">Datalogi-økonomi</a></div><div class="field-item even"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/tekniskvidenskabeligebacheloruddannelser/civilingenioeruddannelser/kunstig-intelligens-og-data">Kunstig intelligens og data</a></div><div class="field-item odd"><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser/samfundsvidenskabeligebacheloruddannelser/oevrigesamfundsvidenskab/kognitions-og-datavidenskab">Kognitions- og datavidenskab</a></div></div></div>  </div>
+
+  
+  </div>
+</div>    <div class="panel-panel right col-md-6"></div>  </div>
+  <div class="row">
+      </div>
+</div>
+  </div>
+
+  
+  </div>
+</div>    <div class="panel-panel right col-sm-4"><div class="panel-pane pane-panels-mini pane-evejleder">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="panel-display panel-1col clearfix" id="mini-panel-evejleder">
+  <div class="panel-panel panel-col">
+    <div><div class="panel-pane pane-block pane-vejlederboks-vejlederboks-block">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <!-- Pattern url is hardcoded as inline style because is impossible to define multiple backgrounds on same element from two different selectors :-( -->
+<aside class="vejlederboks-block-vejlederboks vejlederboks-has-background" style="background-image: url(https://www.ug.dk/sites/default/files/styles/ug3_vejlederboks_baggrund/public/brug-for-hjaelp.png?itok=WibVHN16), url(/profiles/ug3/themes/ug3/images/pattern.png);">
+          <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h3><strong>Brug for mere hjælp?</strong></h3><p>Læs om <a href="https://www.ug.dk/videregaaendeuddannelse/altomoptagelse">optagelse</a></p><p>Læs om <a href="https://www.ug.dk/videregaaendeuddannelse/omvalgafuddannelse">valg af uddannelse</a></p><p>Få <a href="https://www.ug.dk/videregaaendeuddannelse/omvalgafuddannelse/vejledning">vejledning</a></p><p>Se spørgsmål og svar om <a href="http://www.ug.dk/videregaaendeuddannelse/altomoptagelse/spoergsmaal-og-svar-om-optagelse-paa-videregaaende-uddannelse">optagelse</a></p><p>&nbsp;</p></div></div></div>  </aside>
+    </div>
+
+  
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+
+  
+  </div>
+<div class="panel-pane pane-panels-mini pane-uddannelsens-veje">
+  
+          <h3 class="pane-title">Uddannelsens veje</h3>
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="panel-display panel-1col clearfix" id="mini-panel-uddannelsens_veje">
+  <div class="panel-panel panel-col">
+    <div><div class="panel-pane pane-views pane-uddannelsens-veje">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="view view-uddannelsens-veje view-id-uddannelsens_veje view-display-id-block view-dom-id-384b3f810140cc73f461ffcea91fbb2d">
+        
+  
+  
+      <div class="view-content">
+      <div><div class="line  flere_veje2"><div class="inside"><div title="Kandidatuddannelse" class="arrow_box klikbar" onclick="document.location='/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser';"><div><a href="/uddannelser/bachelorogkandidatuddannelser/kandidatuddannelser">Kandidatuddannelse</a></div></div></div><div class="inside"><div title="Job" class="arrow_box klikbar" onclick="document.location='#mulige-job';"><div><a href="#mulige-job">Job</a></div></div></div></div><div class="line "><div class="inside"><div title="Bacheloruddannelse" class="arrow_box klikbar aktuel_niveau" onclick="document.location='/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser';"><div><a href="/uddannelser/bachelorogkandidatuddannelser/bacheloruddannelser">Bacheloruddannelse</a></div></div></div></div><div class="line "><div class="inside"><div title="Hf, hhx, htx, stx og eux" class="arrow_box klikbar" onclick="document.location='/uddannelser/gymnasialeuddannelser';"><div><a href="/uddannelser/gymnasialeuddannelser">Hf, hhx, htx, stx og eux</a></div></div></div></div><div class="line "><div class="inside"><div title="9./10. klasse" class="arrow_box klikbar" onclick="document.location='/uddannelser/grundskoleundervisning';"><div><a href="/uddannelser/grundskoleundervisning">9./10. klasse</a></div></div></div></div></div><div class="inline-link">Læs mere om <a id="vis-adgangskrav-link" href="#Adgangskrav">adgangskrav og optagelse</a></div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+
+  
+  </div>
+<div class="panel-pane pane-views pane-institutioner-for-uddannelse">
+  
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="view view-institutioner-for-uddannelse view-id-institutioner_for_uddannelse view-display-id-block_1 view-dom-id-75e134aaedba8fee65d8b9e963727355">
+        
+  
+  
+      <div class="view-content">
+      
+<h3>Uddannelsessteder</h3>
+<p>På uddannelsesstedernes hjemmesider kan du finde mere information</p>
+<div id="institutions-map" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" style="position: relative;" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-42px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?&amp;service=WMS&amp;request=GetMap&amp;layers=dtk_skaermkort_daempet&amp;styles=&amp;format=image%2Fpng&amp;transparent=FALSE&amp;version=1.3.0&amp;username=NELRGYKAMN&amp;password=TeamOL4ever!&amp;width=256&amp;height=256&amp;crs=EPSG%3A25832&amp;bbox=419430.40000000055,6291456,838860.7999999993,6710886.399999999" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-13px, -164px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?&amp;service=WMS&amp;request=GetMap&amp;layers=dtk_skaermkort_daempet&amp;styles=&amp;format=image%2Fpng&amp;transparent=FALSE&amp;version=1.3.0&amp;username=NELRGYKAMN&amp;password=TeamOL4ever!&amp;width=256&amp;height=256&amp;crs=EPSG%3A25832&amp;bbox=838860.8,6291456,1258291.2,6710886.399999999" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(243px, -164px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?&amp;service=WMS&amp;request=GetMap&amp;layers=dtk_skaermkort_daempet&amp;styles=&amp;format=image%2Fpng&amp;transparent=FALSE&amp;version=1.3.0&amp;username=NELRGYKAMN&amp;password=TeamOL4ever!&amp;width=256&amp;height=256&amp;crs=EPSG%3A25832&amp;bbox=419430.3999999999,5872025.6,838860.8000000002,6291455.999999999" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-13px, 92px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?&amp;service=WMS&amp;request=GetMap&amp;layers=dtk_skaermkort_daempet&amp;styles=&amp;format=image%2Fpng&amp;transparent=FALSE&amp;version=1.3.0&amp;username=NELRGYKAMN&amp;password=TeamOL4ever!&amp;width=256&amp;height=256&amp;crs=EPSG%3A25832&amp;bbox=838860.7999999993,5872025.600000001,1258291.1999999997,6291456" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(243px, 92px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-marker-pane"><img src="/profiles/ug3/themes/ug3/images/marker-only.svg" class="leaflet-marker-icon institution-mark leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -5px; margin-top: -19px; width: 10px; height: 19px; transform: translate3d(173px, 161px, 0px); z-index: 161;"><img src="/profiles/ug3/themes/ug3/images/marker-only.svg" class="leaflet-marker-icon institution-mark leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -5px; margin-top: -19px; width: 10px; height: 19px; transform: translate3d(157px, 165px, 0px); z-index: 165;"><img src="/profiles/ug3/themes/ug3/images/marker-only.svg" class="leaflet-marker-icon institution-mark leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -5px; margin-top: -19px; width: 10px; height: 19px; transform: translate3d(73px, 75px, 0px); z-index: 75;"><img src="/profiles/ug3/themes/ug3/images/marker-only.svg" class="leaflet-marker-icon institution-mark leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -5px; margin-top: -19px; width: 10px; height: 19px; transform: translate3d(91px, 186px, 0px); z-index: 186;"><img src="/profiles/ug3/themes/ug3/images/marker-only.svg" class="leaflet-marker-icon institution-mark leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -5px; margin-top: -19px; width: 10px; height: 19px; transform: translate3d(82px, 132px, 0px); z-index: 132;"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(406.5px, -3794.5px, 0px) scale(0.5);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"></div><div class="leaflet-top leaflet-right"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a><a class="leaflet-control-zoom-out leaflet-disabled" href="#" title="Zoom out" role="button" aria-label="Zoom out">−</a></div><div class="leaflet-control-fullscreen leaflet-bar leaflet-control"><a class="leaflet-control-fullscreen-button leaflet-bar-part" href="#" title="View Fullscreen"></a></div></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | © <a target="_blank" href="https://datafordeler.dk/dataoversigt/skaermkortet/">Skærmkortet - Datafordeler</a></div></div></div></div>
+<script type="text/javascript">
+  let udbyder_institutioner = [  
+          {"field_ir_web_adr":"www.ku.dk","field_ir_geo_bredde_grad":"55.70255722","field_ir_geo_laengde_grad":"12.55953683","field_ir_postdistrikt":"K\u00f8benhavn \u00d8","field_ir_hovedskole_inst":"101582","field_ir_inst_adresse":"Universitetsparken 15","field_ir_inst_navn":"K\u00f8benhavns Universitet, N\u00f8rre Campus","field_ir_postnr":"2100","node_path":"institution\/koebenhavns-universitet-noerre-campus-ku-nr-campus"}  ,  
+          {"field_ir_web_adr":"www.ruc.dk","field_ir_geo_bredde_grad":"55.65168752","field_ir_geo_laengde_grad":"12.13666545","field_ir_postdistrikt":"Roskilde","field_ir_hovedskole_inst":"265407","field_ir_inst_adresse":"Universitetsvej 1","field_ir_inst_navn":"Roskilde Universitet","field_ir_postnr":"4000","node_path":"institution\/roskilde-universitet-ruc"}  ,  
+          {"field_ir_web_adr":"www.aau.dk","field_ir_geo_bredde_grad":"57.01396047","field_ir_geo_laengde_grad":"9.98446934","field_ir_postdistrikt":"Aalborg \u00d8st","field_ir_hovedskole_inst":"851446","field_ir_inst_adresse":"Fredrik Bajers Vej 7K","field_ir_inst_navn":"Aalborg Universitet","field_ir_postnr":"9220","node_path":"institution\/aalborg-universitet-aau"}  ,  
+          {"field_ir_web_adr":"www.sdu.dk","field_ir_geo_bredde_grad":"55.36864371","field_ir_geo_laengde_grad":"10.42817746","field_ir_postdistrikt":"Odense M","field_ir_hovedskole_inst":"461437","field_ir_inst_adresse":"Campusvej 55","field_ir_inst_navn":"Syddansk Universitet, Odense","field_ir_postnr":"5230","node_path":"institution\/syddansk-universitet-odense-syddanskodense"}  ,  
+          {"field_ir_web_adr":"www.au.dk","field_ir_geo_bredde_grad":"56.17102843","field_ir_geo_laengde_grad":"10.19938084","field_ir_postdistrikt":"Aarhus C","field_ir_hovedskole_inst":"751465","field_ir_inst_adresse":"Ndr.Ringgade 1","field_ir_inst_navn":"Aarhus Universitet","field_ir_postnr":"8000","node_path":"institution\/aarhus-universitet-aarhus-univ"}  ];
+  (function ($) {
+    $(function () {
+      $.providingInstitutionsMap({
+        'institutioner': udbyder_institutioner
+      });
+    });
+  })(jQuery);
+</script>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+<div class="panel-pane pane-views-panes pane-arrangementer-panel-pane-2">
+  
+          <h2 class="pane-title">Arrangementer</h2>
+    
+  
+  
+  <!-- Per default, mini panel content is disable -->
+  <div class="pane-content">
+  <div class="view view-arrangementer view-id-arrangementer view-display-id-panel_pane_2 view-dom-id-1816b67e8bf17e67c972aa3c10926660">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/arrangement/afproev-uddannelsen-som-studerende-en-dag-paa-sdu">Afprøv uddannelsen som studerende for en dag på SDU</a></span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+</div>  </div>
+  <div class="row">
+    <div class="panel-panel bottom col-sm-12"></div>  </div>
+</div>
+
+</section> <!-- /.block -->
+  </div>
+    </section>
+
+    
+  </div>
+</div>
+<footer class="footer container">
+  <div class="footer-main">
+    <div class="menu nav" role="navigation"><div class="menuelement ug3-foldable-parent ug3-foldable-handled" style="height: auto;"><div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header">UddannelsesGuiden<i class="fa fa-chevron-down pull-right"></i></h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div><nav role="navigation"><ul class="hidden-xs hidden-sm ug3-foldable-content hidden-force"><li class="first leaf footer-menu-leaf-item"><a href="/servicemenu/kontakt" title="Kontaktoplysninger til ug-redaktion og udbydere">Kontakt</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="https://www.ug.dk/servicemenu/omuddannelsesguiden/uddannelsesguidens-nyhedsbrev">Nyhedsbreve</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/servicemenu/omuddannelsesguiden">Om ug.dk</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/servicemenu/teknisk-information" title="Her kan du finde information omkring teknikken bag ug.dk på pc, mobil og app til iOS og Android.">Teknisk information </a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/servicemenu/persondatapolitik-og-cookies" title="Uddannelsesguiden anvender cookies. Læs om hvad det er og hvordan du kan slette dem">Persondatapolitik og cookies</a></li>
+<li class="last leaf footer-menu-leaf-item"><a href="/was">Tilgængelighedserklæring</a></li>
+</ul></nav></div><div class="menuelement ug3-foldable-parent ug3-foldable-handled" style="height: auto;"><div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header">Vejledning<i class="fa fa-chevron-down pull-right"></i></h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div><nav role="navigation"><ul class="hidden-xs hidden-sm ug3-foldable-content hidden-force"><li class="first leaf footer-menu-leaf-item"><a href="/evejledning">eVejledning</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="https://studievalg.dk/">Studievalg Danmark</a></li>
+<li class="last leaf footer-menu-leaf-item"><a href="/6til10klasse/vejledning-i-din-kommune" title="Oversigt over KUI-centre i hele landet">Den kommunale ungeindsats</a></li>
+</ul></nav></div><div class="menuelement ug3-foldable-parent ug3-foldable-handled" style="height: auto;"><div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header">Områder<i class="fa fa-chevron-down pull-right"></i></h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div><nav role="navigation"><ul class="hidden-xs hidden-sm ug3-foldable-content hidden-force"><li class="first leaf footer-menu-leaf-item"><a href="https://www.ug.dk/arrangementer" title="Arrangementer annonceret af uddannelsesinstitutionerne">Arrangementskalender</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/inspiration/vejledningsvaerktoejer-0" title="Værktøjer der kan hjælpe og inspirere til studievalg.">Få inspiration</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/job">Job og arbejdsmarked</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/uddannelser">Uddannelser</a></li>
+<li class="leaf footer-menu-leaf-item"><a href="/alfabetisk/institutioner/">Uddannelsessteder</a></li>
+<li class="last leaf footer-menu-leaf-item"><a href="https://www.ug.dk/diagrammer/det-ordinaere-system">Uddannelsessystemet</a></li>
+</ul></nav></div><div class="menuelement ug3-foldable-parent ug3-foldable-handled" style="height: auto;"><div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header">Videnscenter<i class="fa fa-chevron-down pull-right"></i></h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div><nav role="navigation"><ul class="hidden-xs hidden-sm ug3-foldable-content hidden-force"><li class="first last leaf footer-menu-leaf-item"><a href="/videnscenter">Videnscenter for Vejledning</a></li>
+</ul></nav></div><div class="menuelement ug3-foldable-parent ug3-foldable-handled" style="height: auto;"><div class="ug3-foldable-header-cnt" role="button" tabindex="0"><h2 class="ug3-foldable-header">English<i class="fa fa-chevron-down pull-right"></i></h2><span class="ug3-foldable-header-sr-label sr-only"> – vis indhold</span></div><nav role="navigation"><ul class="hidden-xs hidden-sm ug3-foldable-content hidden-force"><li class="first leaf footer-menu-leaf-item"><a href="/programmes/aboutugdk">About ug.dk</a></li>
+<li class="last leaf footer-menu-leaf-item"><a href="/programmes" title="Programmes in English">Programmes in English</a></li>
+</ul></nav></div></div>  </div>
+    <div class="region region-footer">
+    <section id="block-ug3-footer-ug3-footer" class="block block-ug3-footer clearfix">
+
+      
+  <aside class="revision">
+  <p>Ophavsretten tilhører Undervisningsministeriet. Senest ændret 24. april 2024.</p></aside>
+
+</section> <!-- /.block -->
+  </div>
+<!--  <script type="text/javascript" src="https://www.defgo.net/surveys/dk/interfazes/2014/ug_dk_plain_setup/defgo_float_init.js"></script>-->
+</footer>
+<script src="https://www.ug.dk/sites/default/files/js/js_MLVgtzZ1ORq9krYqkeOsRay6ou_T-0QZytivuM9tTT8.js"></script>
+<script src="https://www.ug.dk/sites/default/files/js/js_MRdvkC2u4oGsp5wVxBG1pGV5NrCPW3mssHxIn6G9tGE.js"></script>
+
+
+<div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious"></button><button type="button" id="cboxNext"></button><button type="button" id="cboxSlideshow"></button><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div></div><script type="text/javascript" async="" id="consent-file" src="https://policy.app.cookieinformation.com/4f0a08/ug.dk/da.js
+" charset="UTF-8">
+</script>
+</body>
+</html>
