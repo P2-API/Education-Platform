@@ -29,7 +29,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const filters = filterInfo.filters
   const quizAnswers = quizInfo.quizData;
 
-
+  console.log("rankedData", rankedData)
   const data: RankedDataStructure[] = rankedData.ranking;
 
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
@@ -63,7 +63,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const score = row.original.score * 100;
           return (
-            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{score.toFixed(2)}%</p>
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "2em", fontSize: "1em", textDecoration: "none", fontWeight: "bold", color: "#0f03cf" }}>{score.toFixed(2)}%</p>
           );
         }
       },
@@ -114,14 +114,19 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         header: "Fag",
         size: 130,
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
-          const subjects: string[] = row.original.education.subjects.map((subject) => subject.title)
-          // ("subjects", subjects)
+          const subjects: string[] = row.original.education.subjects
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3)
+          .map((subject) => subject.title);
+
           return (
-            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
-              {subjects.map((subject: string, index: number) => (
-                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>{index + 1}.{subject}</p>
-              ))}
-            </ul>
+          <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
+            {subjects.map((subject: string, index: number) => (
+            <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>
+              {index + 1}.{subject}
+            </p>
+            ))}
+          </ul>
           );
         }
       },
@@ -187,7 +192,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
       {
         accessorKey: "education.socialFeedback",
         header: "Socialt miljø 1 til 5",
-        size: 160,
+        size: 180,
         sortingFn: (rowA, rowB) => {
           let rowAMedian = rowA.original.education.socialFeedback.socialEnvironment + rowA.original.education.socialFeedback.groupEngagement + rowA.original.education.socialFeedback.loneliness + rowA.original.education.socialFeedback.stress;
           let rowBMedian = rowB.original.education.socialFeedback.socialEnvironment + rowB.original.education.socialFeedback.groupEngagement + rowB.original.education.socialFeedback.loneliness + rowB.original.education.socialFeedback.stress;
