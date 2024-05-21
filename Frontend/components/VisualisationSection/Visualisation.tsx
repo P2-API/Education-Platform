@@ -6,6 +6,8 @@ import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
 import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
 import { Education, EducationGroup } from '@src/types';
+import { PropertiesToPropertyNames } from '../../utilities/helper'
+
 
 interface VisualisationProps {
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>,
@@ -78,7 +80,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
 
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
-            <button onClick={generateRandomData} >Randomize</button>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>
                 <Plot
                     data={[
@@ -128,33 +129,51 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
 
     const barPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
-            <button onClick={generateRandomData} >Randomize</button>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>
                 <Plot
                     data={[
                         {
-                            x: data.y,
-                            y: data.x,
-                            text: data.text,
+                            x: PropertiesToPropertyNames(properties),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education),
+                            name: educationGroups[0]?.title,
                             mode: "markers",
                             type: "bar",
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
-                                "<b>%{text}</b><br><br>" +
-                                "Uddannelsestype: %{y}<br>" +
-                                "Løn: %{x}<br>" +
+                                "Værdi: %{y}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            x: PropertiesToPropertyNames(properties),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education),
+                            name: educationGroups[1]?.title,
+                            mode: "markers",
+                            type: "bar",
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "Værdi: %{y}<br>" +
+                                "<extra></extra>"
+                        },
+                        {
+                            x: PropertiesToPropertyNames(properties),
+                            y: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education),
+                            name: educationGroups[2]?.title,
+                            mode: "markers",
+                            type: "bar",
+                            marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
+                            hovertemplate:
+                                "Værdi: %{y}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "Bar - Løn og uddannelsestype",
+                        title: "Bargraf",
                         xaxis: {
-                            title: "Løn (kr.)",
-                            range: [0, 100] // Set the range for x-axis
+                            title: "Egenskaber"
                         },
                         yaxis: {
-                            title: "Uddannelsestype",
-                            range: [0, 10] // Set the range for y-axis
+                            title: "Værdi",
+                            range: [0, 100] // Set the range for y-axis
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },
@@ -198,20 +217,18 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
             }
             
         });
-        console.log("property values and edu", propertyValues, properties, edu);
         return propertyValues;
     }
     
     const radarPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
-            <button onClick={generateRandomData} >Randomize</button>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>
                 <Plot
                     data={[
                         {
                             r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[0]?.title) ?? {} as Education), // Set to the education selection of first education
-                            theta: properties,
-                            text: properties,
+                            theta: PropertiesToPropertyNames(properties),
+                            text: PropertiesToPropertyNames(properties),
                             name: educationGroups[0]?.title,
                             mode: "markers",
                             type: "scatterpolar",
@@ -219,13 +236,13 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
                                 "<b>%{text}</b><br>" +
-                                "Value: %{r}<br>" +
+                                "Værdi: %{r}<br>" +
                                 "<extra></extra>"
                         },
                         {
                             r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[1]?.title) ?? {} as Education),// Set to the education selection of second education
-                            theta: properties,
-                            text: properties,
+                            theta: PropertiesToPropertyNames(properties),
+                            text: PropertiesToPropertyNames(properties),
                             name: educationGroups[1]?.title,
                             mode: "markers",
                             type: "scatterpolar",
@@ -233,13 +250,13 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
                                 "<b>%{text}</b><br>" +
-                                "Value: %{r}<br>" +
+                                "Værdi: %{r}<br>" +
                                 "<extra></extra>"
                         },
                         {
                             r: getValuesOfProperties(normalizedEducations.find(education => education.title == educationGroups[2]?.title) ?? {} as Education),// Set to the education selection of third education
-                            theta: properties,
-                            text: properties,
+                            theta: PropertiesToPropertyNames(properties),
+                            text: PropertiesToPropertyNames(properties),
                             name: educationGroups[2]?.title,
                             mode: "markers",
                             type: "scatterpolar",
@@ -247,12 +264,12 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             marker: { size: 10, sizemode: "area", colorscale: "Viridis" },
                             hovertemplate:
                                 "<b>%{text}</b><br>" +
-                                "Value: %{r}<br>" +
+                                "Værdi: %{r}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
                     layout={{
-                        title: "Radar - Løn og uddannelsestype",
+                        title: "Radar",
                         polar: {
                             radialaxis: {
                                 visible: true,
