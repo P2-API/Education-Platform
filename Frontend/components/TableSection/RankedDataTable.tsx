@@ -484,7 +484,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const DetailPanelContent = () => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     return (
-      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{ marginLeft: `${margingLeft}px`, height: "300px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         DEFINITELY RANKED
       </div>
     );
@@ -495,21 +495,13 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     data, //10,000 rows
     enableExpandAll: false,
     renderDetailPanel: () => <DetailPanelContent />,
-    muiTableBodyRowProps: ({ row }) => ({
-      onClick: () => {
-        row.toggleExpanded();
-        // if expanded, change background color of row
-        if (row.getIsExpanded()) {
-          // change style of row
-
-        }
-      },
+    muiTableBodyRowProps: ({ row, table }) => ({
       sx: {
         cursor: 'pointer',
-        backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
+        backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),
-    positionExpandColumn: "last",
+    positionExpandColumn: "first",
     enableBottomToolbar: false,
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,
