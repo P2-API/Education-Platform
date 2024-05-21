@@ -9,6 +9,7 @@ import {
   MRT_ColumnVirtualizer,
 } from "material-react-table";
 import { FinalRankingType, RankedDataStructure } from "../../../src/types";
+import { useServer } from "../../../Backend/server/useServer";
 
 type RankedMaterialReactDataTableProps = {
   rankedData: FinalRankingType;
@@ -19,6 +20,9 @@ type RankedMaterialReactDataTableProps = {
 
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
+  
+  const { getSmallTextAboutEducation } = useServer();
+
   const data: RankedDataStructure[] = rankedData.ranking;
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
     () => [
@@ -479,12 +483,28 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
   const columnVirtualizerInstanceRef = useRef<MRT_ColumnVirtualizer>(null);
 
-  const DetailPanelContent = () => {
+
+  type DetailPanelContentProps = {
+    row: MRT_Row<RankedDataStructure>;
+  };
+
+  const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
-    console.log("margingLeft", margingLeft)
+    const [smallText, setSmallText] = useState<string | null>(null);
+
+    useEffect(() => {
+      getSmallTextAboutEducation(row.original.education).then((text) => {
+        setSmallText(text);
+      });
+    }, [row.original.education]);
+
     return (
       <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-      DEFINITELY RANKED
+        <p>{smallText}</p>
+        {!smallText && <p>Loading...</p>}
+        <button>
+          Generate personal recommendation
+        </button>
       </div>
     );
   };
@@ -493,7 +513,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     columns,
     data, //10,000 rows
     enableExpandAll: false,
-    renderDetailPanel: () => <DetailPanelContent />,
+    renderDetailPanel: ({ row }: { row: MRT_Row<RankedDataStructure>; }) => <DetailPanelContent row={row} />,
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
         row.toggleExpanded();

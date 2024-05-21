@@ -3,7 +3,8 @@ import {
     EducationDataFromServer,
     PCAData,
     EducationGroup,
-    TableFilters
+    TableFilters,
+    Education
 } from "types";
 
 const useServer = () => {
@@ -34,7 +35,21 @@ const useServer = () => {
     }
     // write more functions here
 
-
+    const getSmallTextAboutEducation = async (education: Education) => {
+        console.log("education", education)
+        
+        const response = await fetch("http://localhost:1337/get_small_text_about_education", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ education })
+        });
+        console.log("response", response)
+        const smallText = await response.text();
+        console.log("smallText", smallText)    
+        return smallText;
+    }
 
     const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
         console.log("im in here")
@@ -68,7 +83,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation };
 }
 
 export { useServer };
