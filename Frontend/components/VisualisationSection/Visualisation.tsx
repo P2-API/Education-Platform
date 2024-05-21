@@ -27,10 +27,19 @@ let normalizedEducations: Education[] = [];
 
 const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, rankedDataInfo, educationGroups }) => {
 
+    const [, setEducationProperties] = useState<string[]>([]);
     const quizAnswerState = useContext(QuizInfoContext);
     const filterInfo = useContext(filtersContext);
-
-
+    
+    const { getEducationsProperties, getNormalizedEducations } = useServer();
+    useEffect(() => {
+        getEducationsProperties().then((data) => {
+            setEducationProperties(data);
+        })
+        getNormalizedEducations().then((data) => {
+            normalizedEducations = data;
+        })
+    }, []);
 
     const { getPCAData } = useServer();
     const [pcaData, setPCAData] = useState<pcaScatterData>();
