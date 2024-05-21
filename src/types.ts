@@ -300,3 +300,36 @@ export type EducationData = {
     normalized: Education[],
     normal: Education[]
 }
+
+export type PropertyNames = {
+    withManyStudents: string,
+    withFewStudents: string,
+    withSupervision: string,
+    socialEnvironment: string,
+    groupEngagement: string,
+    loneliness: string,
+    stress: string,
+    academicEnvironment: string,
+    teacherEvaluation: string,
+    satisfaction: string,
+    lectures: string,
+    literature: string,
+    studentJob: string,
+    teaching: string,
+    exams: string,
+    internship: string,
+    internationalStay: string,
+    dropoutRate: string,
+    lowerQuartile: string,
+    median: string,
+    upperQuartile: string,
+    workingHours: string,
+    fixedHoursPercent: string,
+    flexibleHoursPercent: string,
+    selfSchedulePercent: string,
+    variableSchedulePercent: string,
+    nightAndEveningShiftsPercent: string,
+    degreeRelevance: string,
+    degreePreparesForJob: string,
+    nationalJobs: string
+}

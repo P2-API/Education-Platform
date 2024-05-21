@@ -8,9 +8,10 @@ import {
   MRT_Row,
   MRT_ColumnVirtualizer,
 } from "material-react-table";
-import { FinalRankingType, RankedDataStructure } from "../../../src/types";
+import { Education, FinalRankingType, QuizAnswers, RankedDataStructure, TableFilters } from "../../../src/types";
 import { useServer } from "../../../Backend/server/useServer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { filtersContext, QuizInfoContext } from "../Tabs";
 
 type RankedMaterialReactDataTableProps = {
   rankedData: FinalRankingType;
@@ -22,7 +23,12 @@ type RankedMaterialReactDataTableProps = {
 
 const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> = ({ rankedData }) => {
   
-  const { getSmallTextAboutEducation } = useServer();
+  const { getSmallTextAboutEducation, getPersonalizedMessage } = useServer();
+  const filterInfo = useContext(filtersContext);
+  const quizInfo = useContext(QuizInfoContext);
+  const filters = filterInfo.filters
+  const quizAnswers = quizInfo.quizData;
+
 
   const data: RankedDataStructure[] = rankedData.ranking;
 
@@ -491,9 +497,16 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     row: MRT_Row<RankedDataStructure>;
   };
 
+
+  const getMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
+    const response = await getPersonalizedMessage(filters, quizAnswers, education);
+    return response;
+};
+
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     const [smallText, setSmallText] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
       getSmallTextAboutEducation(row.original.education).then((text) => {
@@ -501,13 +514,21 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
       });
     }, [row.original.education]);
 
+    const handleClick = async () => {
+      getMessage(filters, quizAnswers, row.original.education).then((message) => {
+        setMessage(message);
+      });
+    }
+
     return (
       <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         <p>{smallText}</p>
-        {!smallText && <p>Loading...</p>}
-        <button>
-          Generate personal recommendation
+        {!smallText && <p>Indlæser...</p>}
+        <button onClick={handleClick}>
+          Generere personlig besked
         </button>
+        <p>{message}</p>
+        {!message && <p>Personlig besked bliver bedst hvis quizzen er besvaret</p>}
       </div>
     );
   };
@@ -518,20 +539,12 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     enableExpandAll: false,
     renderDetailPanel: ({ row }: { row: MRT_Row<RankedDataStructure>; }) => <DetailPanelContent row={row} />,
     muiTableBodyRowProps: ({ row }) => ({
-      onClick: () => {
-        row.toggleExpanded();
-        // if expanded, change background color of row
-        if (row.getIsExpanded()) {
-          // change style of row
-
-        }
-      },
       sx: {
         cursor: 'pointer',
         backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),
-    positionExpandColumn: "last",
+    positionExpandColumn: "first",
     enableBottomToolbar: false,
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,

@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 import { spawn } from 'child_process';
 import fs from 'fs';
 
-import { EducationsGroupped, NormalizedProfession, Profession, Education, Subject, NormalizedProfessionData } from "../../src/types";
+import { EducationsGroupped, NormalizedProfession, Profession, Education, Subject, NormalizedProfessionData, TableFilters, QuizAnswers } from "../../src/types";
 
 
 const failedUrls: string[] = [];
@@ -149,49 +149,23 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
     }
 }
 
-export async function getPersonalizedMessage(url: string): Promise<{ message: string | null }> {
+export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education): Promise<string> {
     try {
-        const text = await getAllText(url);
+        console.log("Getting personalized message for education:", education.title);
+        const text = await getAllText(education.url);
         if (text === "Error fetching the URL" || text === null) {
-            console.error("Error fetching or processing text from URL:", url);
-            return { message: null };
+            console.error("Error fetching or processing text from URL:", education.url);
+            return "Der skete en fejl ved generering af en besked, prøv venligst senere";
         }
 
-        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst.";
+        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst. Dit svar skal være meget direkte i forhold til de filtre og de preferencer som brugeren har valgt.  Læg ekstra meget vægt på preferencer med en værdi på 5 og ingen vægt på preferencer på 3 eller mindre. Inkluder IKKE de numeriske værdier fra preferencer i dit svar. Svar kun i hnehold til de valgte kriterier / Filtre. DU SKAL inddrage de fag som brugeren har valgt.";
 
-        const preferences = {
-            academic_environment_priority: 5,
-            degree_relevance_priority: 5,
-            dislike_exam_priority: 3,
-            experienced_salary_priority: 5,
-            fixed_hours_priority: 2,
-            flexible_hours_priority: 4,
-            general_salary_priority: 5,
-            group_engagement_priority: 1,
-            high_workload_acceptance_priority: 2,
-            industries_priority: 3,
-            international_stay_priority: 4,
-            internship_priority: 2,
-            lectures_priority: 3,
-            literature_priority: 3,
-            loneliness_priority: 5,
-            self_schedule_priority: 4,
-            social_environment_priority: 1,
-            starting_salary_priority: 5,
-            stress_priority: 2,
-            student_job_priority: 5,
-            subjects_priority: 4,
-            teaching_priority: 3,
-            unemployment_priority: 4,
-            variable_schedule_priority: 2,
-            work_internationally_priority: 4,
-        };
 
-        const message = await sendMessageToChatGPT(text, preferences, promptString);
-        return { message };
+        const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
+        return message;
     } catch (error) {
         console.error('Error:', error);
-        return { message: null };
+        return "Der skete en fejl ved generering af en besked, prøv venligst senere" ;
     }
 }
 
@@ -237,7 +211,12 @@ export async function getHeadliner(url: string): Promise<{ headlinerText: string
             return { headlinerText: null };
         }
 
-        const headlinerText = await getHeadlinerText(response.data);
+        let headlinerText = await getHeadlinerText(response.data);
+
+        if (headlinerText === "Her kan du se nedlagte uddannelser, hvor du ikke længere kan søge optagelse. Oversigten går 5 år tilbage og dækker både uddannelser for unge og vokse. ") {
+            headlinerText = "Denne uddannelse er nedlagt."
+        }
+
         return { headlinerText };
     } catch (error) {
         console.error('Error:', error);
@@ -312,14 +291,20 @@ export async function fetchHtml(url: string) {
     }
 }
 
-async function sendMessageToChatGPT(text: string, preferences: Record<string, number>, promptString: string) {
+async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
+    console.log("CHATGPT HELL")
     const completion = await openai.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: ("dette er data omkring uddanelsen" + text).replace(/\s+/g, ' ').trim() +
+                content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() +
                     ' | ' +
-                    "dette data er omkring brugeren" + JSON.stringify(preferences).replace(/"/g, ''),
+                    "dette data er omkring brugeren, disse vægte ligger mellem 1 og 5, her betyder 1 at bruger vægter det lavt og 5 betyder at brugeren vægter det højt =" + JSON.stringify(preferences).replace(/"/g, '') +
+                    ' | ' +
+                    "dette er data omkring uddanelsen, her er alle numeriske værdier under subjects normalizeret til at være mellem 0 og 1, 0 betyder at det ikke er relevant for uddanelsen og 1 betyder det har stor relevans for uddanelsen =" + JSON.stringify(education).replace(/"/g, '') +
+                    ' | ' +
+                    "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med, hvis der ingen data her om hvlike interreser brugeren har, og dette betydr du ikke ved hvilke intereser bruger har, og du kan ikke bestemme hvilke interreser bruger har. =" + JSON.stringify(filters).replace(/"/g, '')
+                    ,
             },
             {
                 role: "user",
@@ -331,7 +316,10 @@ async function sendMessageToChatGPT(text: string, preferences: Record<string, nu
         temperature: 0.2,
     });
 
-    return completion.choices[0].message.content;
+    const jsonString = completion.choices[0].message.content;
+    const obj = JSON.parse(jsonString);
+
+    return obj.personalizedText;
 }
 
 async function translateTextToEnglishChatGPT(text: string) {

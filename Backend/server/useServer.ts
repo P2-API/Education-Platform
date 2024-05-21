@@ -42,8 +42,19 @@ const useServer = () => {
     }
     // write more functions here
 
+    const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers,  education: Education) => {
+        const response = await fetch("http://localhost:1337/generate_personalized_message", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ filters, quizAnswers, education })
+        });
+        const personalizedMessage = await response.text();
+        return personalizedMessage;
+    }
+
     const getSmallTextAboutEducation = async (education: Education) => {
-        console.log("education", education)
         
         const response = await fetch("http://localhost:1337/get_small_text_about_education", {
             method: "POST",
@@ -52,9 +63,7 @@ const useServer = () => {
             },
             body: JSON.stringify({ education })
         });
-        console.log("response", response)
         const smallText = await response.text();
-        console.log("smallText", smallText)    
         return smallText;
     }
 
@@ -75,13 +84,13 @@ const useServer = () => {
 
     };
 
-    const getPCAData = async (quizAnswers: QuizAnswers) => {
+    const getPCAData = async (quizAnswers: QuizAnswers, filters: TableFilters) => {
         const response = await fetch("http://localhost:1337/PCA_request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ quizAnswers })
+            body: JSON.stringify({ quizAnswers, filters })
         });
 
         const responseJson: PCAData = await response.json();
@@ -92,7 +101,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations, getPersonalizedMessage };
 }
 
 export { useServer };

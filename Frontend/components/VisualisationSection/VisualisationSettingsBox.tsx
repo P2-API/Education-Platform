@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
-import { Education, EducationGroup } from 'types'
+import { Education, EducationGroup, PropertyNames } from 'types'
+import { ConvertPropertyToName, EducationPropertyNames, PropertiesToPropertyNames } from '../../utilities/helper'
 export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
 
 type VisualisationSettingsBoxProps = {
@@ -18,9 +19,7 @@ type VisualisationSettingsBoxProps = {
 let normalizedEducations: Education[] = [];
 let educationProperties: string[] = [];
 
-
 const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ setUpdate, chartType, setChartType, setProperties, educationGroups, setEducationGroups }) => {
-    console.log("edu props:", educationProperties);
     //const { getPCAData } = useServer();
 
     /*const calculatePCA = async () => {
@@ -40,17 +39,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     //const groupedEducationTitles: string[] = getGroupedEducations.map(education => education.title);
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
 
-    const { getGroupedEducations, getEducationsProperties, getNormalizedEducations } = useServer();
+    const { getGroupedEducations, getNormalizedEducations } = useServer();
     
+
     useEffect(() => {
         getGroupedEducations().then((data) => {
             setGroupedEducations(data);
         });
-        getEducationsProperties().then((data) => {
-            educationProperties = data as string[];
-            console.log(educationProperties);
-
-        })
         getNormalizedEducations().then((data) => {
             normalizedEducations = data;
         })
@@ -64,12 +59,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     const handleChartChange = (event: SelectChangeEvent) => {
         setChartType(event.target.value as ChartType);
     };
+
     const scatterPlotSettingBox = (
         <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                 <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <InputLabel id="select-graph">Graf</InputLabel>
                     <Select
                         labelId="select-graph"
                         id="select-graph"
@@ -102,9 +98,9 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     const barPlotSettingBox = (
         <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
-                <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
+                <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Bar graf</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <InputLabel id="select-graph">Graf</InputLabel>
                     <Select
                         labelId="select-graph"
                         id="select-graph"
@@ -120,39 +116,69 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
-                    Bar plot
-                    <br />
-                    <br />
-                    This is a bar plot, here you can see 2 educations up against each other on their different statistics
-                    in order to see which you prefer.
+                    Det her er en bar graf, her kan du se forskellige egenskaber for op til 3 uddannelser sat imod hinanden.
                 </p>
                 <Autocomplete
+                    onChange={(event: any, newValue: string | null) => {
+                        console.log("1: ", newValue);
+                        let education = normalizedEducations.find((edu) => edu.title == newValue);
+                        educationGroups[0] = education as EducationGroup;
+                        setEducationGroups(educationGroups);
+                        setUpdate(true);
+                    }}
                     disablePortal
                     id="udd1"
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Education" />}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
+                    onChange={(event: any, newValue: string | null) => {
+                        console.log("2: ", newValue);
+                        let education = normalizedEducations.find((edu) => edu.title == newValue);
+                        educationGroups[1] = education as EducationGroup;
+                        setEducationGroups(educationGroups);
+                        setUpdate(true);
+                    }}
                     disablePortal
                     id="udd2"
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Education" />}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
-                <button className='primary-button' style={{ width: "150px" }}  >Beregn</button>
+                <Autocomplete
+                    onChange={(event: any, newValue: string | null) => {
+                        console.log("3: ", newValue);
+                        let education = normalizedEducations.find((edu) => edu.title == newValue);
+                        educationGroups[2] = education as EducationGroup;
+                        setEducationGroups(educationGroups);
+                        setUpdate(true);
+                    }}
+                    disablePortal
+                    id="udd2"
+                    options={groupedEducationTitles}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
+                />
+                <MultiSelectAutoComplete
+                    givenValue={[]}
+                    collection={Object.keys(EducationPropertyNames) ?? []}
+                    setProperties={setProperties}
+                    selectLabel="Egenskaber"
+                    selectPlaceholder="Egenskaber"
+                    identifier="Egenskaber"
+                    getOptionsLabel={ConvertPropertyToName}
+                />
             </div>
         </Paper>
     );
 
-    const educations: EducationGroup[] = [];
-
     const radarPlotSettingBox = (
         <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
-                <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Principal Component Analysis</h3>
+                <h3 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Radar graf</h3>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <InputLabel id="select-graph">Graph</InputLabel>
+                    <InputLabel id="select-graph">Graf</InputLabel>
                     <Select
                         labelId="select-graph"
                         id="select-graph"
@@ -166,17 +192,15 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     </Select>
                 </FormControl>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
+            <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em", overflowY: "scroll" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
-                    - Radar -
-
+                    Her kan du se forskellige uddannelsers egenskaber på en radar graf.
                 </p>
                 <Autocomplete
                     onChange={(event: any, newValue: string | null) => {
                         console.log("1: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[0] = education as EducationGroup;
-                        console.log("educations ting: ", educationGroups);
                         setEducationGroups(educationGroups);
                         setUpdate(true);
                     }}
@@ -184,14 +208,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     id="udd1"
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Education" />}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
                     onChange={(event: any, newValue: string | null) => {
                         console.log("2: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[1] = education as EducationGroup;
-                        console.log("educations ting: ", educationGroups);
                         setEducationGroups(educationGroups);
                         setUpdate(true);
                     }}
@@ -199,14 +222,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     id="udd2"
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Education" />}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
                     onChange={(event: any, newValue: string | null) => {
                         console.log("3: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[2] = education as EducationGroup;
-                        console.log("educations ting: ", educationGroups);
                         setEducationGroups(educationGroups);
                         setUpdate(true);
                     }}
@@ -214,15 +236,16 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     id="udd3"
                     options={groupedEducationTitles}
                     sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Education" />}
+                    renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <MultiSelectAutoComplete
                     givenValue={[]}
-                    collection={educationProperties ?? []}
+                    collection={Object.keys(EducationPropertyNames) ?? []}
                     setProperties={setProperties}
-                    selectLabel="Properties"
-                    selectPlaceholder="Properties"
-                    identifier="selectProperties"
+                    selectLabel="Egenskaber"
+                    selectPlaceholder="Egenskaber"
+                    identifier="Egenskaber"
+                    getOptionsLabel={ConvertPropertyToName}
                 />
             </div>
         </Paper>

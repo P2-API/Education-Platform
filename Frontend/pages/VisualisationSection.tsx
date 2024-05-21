@@ -12,9 +12,8 @@ const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataI
     const [chartType, setChartType] = React.useState<ChartType>(ChartType.scatter);
     const [properties, setProperties] = React.useState<string[]>([]);
     const [educationGroups, setEducationGroups] = React.useState<EducationGroup[]>([]);
-    console.log("Visualization has access to: ", rankedDataInfo)
+    //console.log("Visualization has access to: ", rankedDataInfo)
     const rankedDat = rankedDataInfo;
-    console.log("educationGroups inside of general section", educationGroups)
 
     // Very cursed update function
     const [update, setUpdate] = React.useState<boolean>(false);
