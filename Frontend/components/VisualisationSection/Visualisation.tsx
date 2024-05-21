@@ -4,7 +4,7 @@ import Plot from 'react-plotly.js';
 
 import { ChartType } from "./VisualisationSettingsBox"
 import { useServer } from '@backend/server/useServer';
-import { QuizInfoContext, rankedDataInfo } from '@frontend/components/Tabs';
+import { QuizInfoContext, rankedDataInfo, filtersContext } from '@frontend/components/Tabs';
 import { PCAData } from '@src/types';
 
 interface VisualisationProps {
@@ -24,6 +24,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     const [educationProperties, setEducationProperties] = useState<string[]>([]);
     console.log("rankedDataInfo: ", rankedDataInfo)
     const quizAnswerState = useContext(QuizInfoContext);
+    const filterInfo = useContext(filtersContext);
 
     const { getEducationsProperties } = useServer();
     useEffect(() => {
@@ -38,7 +39,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     const [pcaData, setPCAData] = useState<pcaScatterData>();
 
     useEffect(() => {
-        getPCAData(quizAnswerState.quizData).then((data) => {
+        getPCAData(quizAnswerState.quizData, filterInfo.filters).then((data) => {
             setPCAData({
                 xValues: data?.points.map((point) => point.x),
                 yValues: data?.points.map((point) => point.y),
