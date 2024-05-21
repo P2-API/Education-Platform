@@ -468,17 +468,12 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
       },
       {
         accessorKey: "education.jobData.nationalJobs",
-        header: "Internationalt job",
+        header: "Nationale job",
         size: 140,
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
 
-          let national_jobs = row.original.education.jobData.nationalJobs;
-          if (national_jobs < 0) {
-            national_jobs = national_jobs / 10000;
-          }
-
           return (
-            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "3em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{national_jobs}%</p>
+            <p className="" style={{ cursor: "default", justifyContent: "center", display: "flex", scrollbarWidth: "none", marginLeft: "3em", fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{row.original.education.jobData.nationalJobs}%</p>
           );
         }
       }
