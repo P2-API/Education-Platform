@@ -11,38 +11,38 @@ const useServer = () => {
 
 
     const greetServer = async () => {
-        const response = await fetch("http://localhost:1337/server");
+        const response = await fetch("http://localhost:3222/server");
         const data = await response.text();
         return data;
     }
 
     const getTableSectionData = async (): Promise<EducationDataFromServer> => {
-        const response = await fetch("http://localhost:1337/get_table_section_data");
+        const response = await fetch("http://localhost:3222/get_table_section_data");
         const tableSectionData: EducationDataFromServer = await response.json();
         return tableSectionData;
     }
 
     const getGroupedEducations = async (): Promise<EducationGroup[]> => {
-        const response = await fetch("http://localhost:1337/get_grouped_educations");
+        const response = await fetch("http://localhost:3222/get_grouped_educations");
         const groupedEducations: EducationGroup[] = await response.json();
         return groupedEducations;
     }
 
     const getEducationsProperties = async (): Promise<any[]> => {
-        const response = await fetch("http://localhost:1337/get_education_properties");
+        const response = await fetch("http://localhost:3222/get_education_properties");
         const educationProperties: any[] = await response.json();
         return educationProperties;
     }
 
     const getNormalizedEducations = async (): Promise<Education[]> => {
-        const response = await fetch("http://localhost:1337/get_normalized_educations");
+        const response = await fetch("http://localhost:3222/get_normalized_educations");
         const normalizedEducations: any[] = await response.json();
         return normalizedEducations;
     }
     // write more functions here
 
     const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers,  education: Education) => {
-        const response = await fetch("http://localhost:1337/generate_personalized_message", {
+        const response = await fetch("http://localhost:3222/generate_personalized_message", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -55,7 +55,7 @@ const useServer = () => {
 
     const getSmallTextAboutEducation = async (education: Education) => {
         
-        const response = await fetch("http://localhost:1337/get_small_text_about_education", {
+        const response = await fetch("http://localhost:3222/get_small_text_about_education", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -68,7 +68,7 @@ const useServer = () => {
 
     const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
         console.log("im in here")
-        const response = await fetch("http://localhost:1337/update_ranking", {
+        const response = await fetch("http://localhost:3222/update_ranking", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -84,7 +84,7 @@ const useServer = () => {
     };
 
     const getPCAData = async (quizAnswers: QuizAnswers, filters: TableFilters) => {
-        const response = await fetch("http://localhost:1337/PCA_request", {
+        const response = await fetch("http://localhost:3222/PCA_request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
