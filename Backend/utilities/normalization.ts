@@ -205,10 +205,14 @@ const normilizeEducationWorkSchedule = (workSchedule: JobWorkSchedule) => {
 }
 
 const normilizeUnemployment = (unemployment: Unemployment) => {
-    let minUnemployment = minimumEducation.jobData.unemployment;
-    let maxUnemployment = maximumEducation.jobData.unemployment;
-    unemployment.experienced = normilize(unemployment.experienced, minUnemployment.experienced, maxUnemployment.experienced);
-    unemployment.newGraduate = normilize(unemployment.newGraduate, minUnemployment.newGraduate, maxUnemployment.newGraduate);
+    let minUnemployment: Unemployment = minimumEducation.jobData.unemployment;
+    let maxUnemployment: Unemployment = maximumEducation.jobData.unemployment;
+
+    let minValue = Math.min(minUnemployment.newGraduate, minUnemployment.experienced);
+    let maxValue = Math.max(maxUnemployment.newGraduate, maxUnemployment.experienced);
+
+    unemployment.experienced = normilize(unemployment.experienced, minValue, maxValue);
+    unemployment.newGraduate = normilize(unemployment.newGraduate, minValue, maxValue);
     unemployment.projectedExperienced = normilize(unemployment.projectedExperienced, minUnemployment.projectedExperienced, maxUnemployment.projectedExperienced);
     unemployment.projectedNewGraduate = normilize(unemployment.projectedNewGraduate, minUnemployment.projectedNewGraduate, maxUnemployment.projectedNewGraduate);
 }

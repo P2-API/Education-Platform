@@ -2,6 +2,7 @@ import { Education, RankedEducationsType, UserInputs, TableFilters, QuizAnswers,
 import { findOptimalSolution } from "./linear-programming"
 import { DegreeTypeToDuration } from "../../src/enums"
 import { getEducationData } from "../server/on-server-start"
+import { equal } from "assert"
 
 export class Ranker {
     ranking: RankedEducationsType
@@ -24,15 +25,19 @@ export class Ranker {
         finalRanking.index = finalRanking.ranking.length
         rankedEducations.lowerhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         this.normalizeScores(finalRanking.ranking)
+    
         //map the ranked educations to the normal education data
         finalRanking.ranking.map((education) => {
-            const normalEducation = normalEducationData.find((normalEducation) => (normalEducation.title === education.education.title && normalEducation.institutions === education.education.institutions));
+            const normalEducation = normalEducationData.find((normalEducation) => this.areEquivalent(normalEducation, education.education));
             if (normalEducation) {
                 education.education = normalEducation;
             } else {
                 throw new Error("could not map normalized education to normal education data");
             }
         });
+        for (let i = 0; i < finalRanking.index; i++) {
+            console.log(finalRanking.ranking[i].education.title, finalRanking.ranking[i].education.institutions, finalRanking.ranking[i].education.degreeType, finalRanking.ranking[i].education.geographies)
+        }
         return finalRanking
     }
 
@@ -56,9 +61,6 @@ export class Ranker {
             */
             if (this.filtersPassed(education, filters)) {
                 this.ranking.upperhalf.push(education)
-                console.log("education",education.jobData.salaries)
-                console.log("upperquartile",education.jobData.salaries.newGraduate.upperQuartile)
-                console.log("filterMaximum",filters.wantedSalary.newGraduate.maximum)
             }
             else {
                 this.ranking.lowerhalf.push(education)
@@ -195,5 +197,12 @@ export class Ranker {
     unemploymentFilterPassed(education: Education, unemploymentFilter: UnemploymentFilters): boolean {
         return education.jobData.unemployment.newGraduate <= unemploymentFilter.newGraduate.maximum && education.jobData.unemployment.newGraduate >= unemploymentFilter.newGraduate.minimum
             && education.jobData.unemployment.experienced <= unemploymentFilter.experienced.maximum && education.jobData.unemployment.experienced >= unemploymentFilter.experienced.minimum
+    }
+    areEquivalent(education1: Education, education2: Education): boolean {
+        return (education1.title === education2.title && 
+            education1.institutions === education2.institutions &&
+            education1.degreeType === education2.degreeType &&
+            education1.geographies[0] === education2.geographies[0]
+        )
     }
 }
