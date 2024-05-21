@@ -36,7 +36,6 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     }
 
     const getLabel: (option: string) => string = getOptionsLabel != undefined ? getOptionsLabel : (option) => option;
-    console.log(scrollable);
     if (scrollable){
         return (
             <Autocomplete
