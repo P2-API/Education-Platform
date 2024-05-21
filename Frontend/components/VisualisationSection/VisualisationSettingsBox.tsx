@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
-import { Education, EducationGroup } from 'types'
-import { ConvertPropertyToName, PropertiesToPropertyNames } from '../../utilities/helper'
+import { Education, EducationGroup, PropertyNames } from 'types'
+import { ConvertPropertyToName, EducationPropertyNames, PropertiesToPropertyNames } from '../../utilities/helper'
 export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
 
 type VisualisationSettingsBoxProps = {
@@ -18,7 +18,6 @@ type VisualisationSettingsBoxProps = {
 //let educations: Education[] = [];
 let normalizedEducations: Education[] = [];
 let educationProperties: string[] = [];
-
 
 const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ setUpdate, chartType, setChartType, setProperties, educationGroups, setEducationGroups }) => {
     //const { getPCAData } = useServer();
@@ -40,17 +39,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     //const groupedEducationTitles: string[] = getGroupedEducations.map(education => education.title);
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
 
-    const { getGroupedEducations, getEducationsProperties, getNormalizedEducations } = useServer();
+    const { getGroupedEducations, getNormalizedEducations } = useServer();
     
+
     useEffect(() => {
         getGroupedEducations().then((data) => {
             setGroupedEducations(data);
         });
-        getEducationsProperties().then((data) => {
-            educationProperties = data as string[];
-            console.log("props:", educationProperties);
-
-        })
         getNormalizedEducations().then((data) => {
             normalizedEducations = data;
         })
@@ -121,9 +116,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
             </div>
             <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
-                    Bar graf
-                    <br />
-                    <br />
                     Det her er en bar graf, her kan du se forskellige egenskaber for op til 3 uddannelser sat imod hinanden.
                 </p>
                 <Autocomplete
@@ -170,7 +162,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <MultiSelectAutoComplete
                     givenValue={[]}
-                    collection={educationProperties ?? []}
+                    collection={Object.keys(EducationPropertyNames) ?? []}
                     setProperties={setProperties}
                     selectLabel="Egenskaber"
                     selectPlaceholder="Egenskaber"
@@ -200,13 +192,9 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     </Select>
                 </FormControl>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em" }}>
+            <div style={{ display: "flex", justifyContent: "space-around", height: "80%", flexDirection: "column", padding: "1em", overflowY: "scroll" }}>
                 <p style={{ fontSize: "0.9em", marginBottom: "0px" }}>
-                    - Radar -
-                    <br />
-                    <br />
                     Her kan du se forskellige uddannelsers egenskaber på en radar graf.
-
                 </p>
                 <Autocomplete
                     onChange={(event: any, newValue: string | null) => {
@@ -252,7 +240,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <MultiSelectAutoComplete
                     givenValue={[]}
-                    collection={educationProperties ?? []}
+                    collection={Object.keys(EducationPropertyNames) ?? []}
                     setProperties={setProperties}
                     selectLabel="Egenskaber"
                     selectPlaceholder="Egenskaber"

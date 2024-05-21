@@ -175,7 +175,6 @@ function groupEducations() {
         if (!alreadyGrouped) educationGroups.push(educationToEducationGroup(education));
     });
     fs.writeFileSync("./Backend/cache/education_groups.ts", JSON.stringify(educationGroups));
-    console.log("thomas, tallet er det her :)-> ", educationGroups.length);
 }
 
 export function getGroupedEducations(): EducationGroup[] {
