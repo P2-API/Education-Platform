@@ -291,6 +291,7 @@ export async function fetchHtml(url: string) {
 }
 
 async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
+    console.log("CHATGPT HELL")
     const completion = await openai.chat.completions.create({
         messages: [
             {
@@ -313,7 +314,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
         response_format: { type: "json_object" },
         temperature: 0.2,
     });
-
+    console.log(completion.choices[0].message.content);
     return completion.choices[0].message.content;
 }
 

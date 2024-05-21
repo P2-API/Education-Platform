@@ -68,7 +68,7 @@ server.post("/update_ranking", (request: Request, response: Response) => {
     }
 });
 
-server.post("generate_personalized_message", (request: Request, response: Response) => {
+server.post("/generate_personalized_message", (request: Request, response: Response) => {
     const requestData = request.body;
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
