@@ -42,6 +42,18 @@ const useServer = () => {
     }
     // write more functions here
 
+    const getPersonalizedMessage = async (quizAnswers: QuizAnswers, filters: TableFilters, education: Education) => {
+        const response = await fetch("http://localhost:1337/generate_personalized_message", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ quizAnswers, filters, education })
+        });
+        const personalizedMessage = await response.text();
+        return personalizedMessage;
+    }
+
     const getSmallTextAboutEducation = async (education: Education) => {
         
         const response = await fetch("http://localhost:1337/get_small_text_about_education", {
@@ -89,7 +101,7 @@ const useServer = () => {
 
     // write more functions here
 
-    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations };
+    return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations, getPersonalizedMessage };
 }
 
 export { useServer };
