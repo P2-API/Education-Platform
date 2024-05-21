@@ -10,6 +10,7 @@ import {
 } from "material-react-table";
 import { FinalRankingType, RankedDataStructure } from "../../../src/types";
 import { useServer } from "../../../Backend/server/useServer";
+import { useEffect, useState } from "react";
 
 type RankedMaterialReactDataTableProps = {
   rankedData: FinalRankingType;
@@ -492,9 +493,21 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
   const DetailPanelContent: React.FC<DetailPanelContentProps> = ({row}) => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
+    const [smallText, setSmallText] = useState<string | null>(null);
+
+    useEffect(() => {
+      getSmallTextAboutEducation(row.original.education).then((text) => {
+        setSmallText(text);
+      });
+    }, [row.original.education]);
+
     return (
-      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-        DEFINITELY RANKED
+      <div style={{marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+        <p>{smallText}</p>
+        {!smallText && <p>Loading...</p>}
+        <button>
+          Generate personal recommendation
+        </button>
       </div>
     );
   };
