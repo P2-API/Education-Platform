@@ -1,7 +1,8 @@
 import {describe, it, expect} from 'vitest';
-import {QuizAnswers, TableFilters, UserInputs, EducationData, EducationVector, PCAData, Education } from '../../src/types';
+import {QuizAnswers, TableFilters, UserInputs, EducationData, EducationVector, PCAData, Education} from '../../src/types';
 import {getEducationData} from '../../Backend/server/on-server-start';
 import {constructEducationVectors, constructMatrix, pcaData} from '../../Backend/utilities/pca';
+import { DegreeType, County, Institution } from '../../src/enums';
 import { PCA } from 'ml-pca';
 
 const defaultMock: Education = {
@@ -42,7 +43,7 @@ const defaultMock: Education = {
       internship: 0,
       internationalStay: 0
     },
-    teachingMethods: ["Klasseundervisning (holdundervisning)","jo"] //irrelevant
+    teachingMethods: ["Klasseundervisning (holdundervisning)"] //irrelevant
   },
   dropoutRate: 0, //irrelevant
   jobData: {
