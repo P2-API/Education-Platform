@@ -1,7 +1,6 @@
 import MaterialReactDataTable from "../components/TableSection/DataTable";
 import React, { useEffect, useState, useContext } from "react";
 import FilterBoxComponent from "../components/TableSection/FilterBoxComponent";
-import { TableFilters, } from "../../src/types";
 import { EducationDataFromServerContext } from "./Homepage";
 import RankedMaterialReactDataTable from "../components/TableSection/RankedDataTable";
 import { filtersContext, rankedDataInfo } from "../components/Tabs";
@@ -27,9 +26,6 @@ const DataTableSection: React.FC<DataTableSectionProps> = ({ rankedDataInfo }) =
             setisCalculating(false);
         }
     }, [data]);
-
-    console.log("filters", filterInfo.filters);
-
 
     return (
         <div style={{ display: "flex", height: "80vh", width: "100%", maxWidth: "100vw" }}>

@@ -40,7 +40,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
         minimum: data?.minimumValueEducation?.jobData.salaries.experienced.lowerQuartile ?? 0,
         maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
     };
-    console.log("data", data)
     // Value packing for working hours slider
     const wantedWorkingHoursRange: MinimumMaximum = {
         minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
@@ -99,9 +98,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     useEffect(() => {
         setInternalFilters(filters); // Update internalFilters whenever filters change
     }, [filters]);
-
-    console.log("internalFilters", internalFilters)
-
 
     bouncy.register()
     return (

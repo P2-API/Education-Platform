@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
-import { Education, EducationGroup, PropertyNames } from 'types'
-import { ConvertPropertyToName, EducationPropertyNames, PropertiesToPropertyNames } from '../../utilities/helper'
+import { Education, EducationGroup } from 'types'
+import { ConvertPropertyToName, EducationPropertyNames } from '../../utilities/helper'
 export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
 
 type VisualisationSettingsBoxProps = {
@@ -17,7 +17,6 @@ type VisualisationSettingsBoxProps = {
 
 //let educations: Education[] = [];
 let normalizedEducations: Education[] = [];
-let educationProperties: string[] = [];
 
 const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ setUpdate, chartType, setChartType, setProperties, educationGroups, setEducationGroups }) => {
     //const { getPCAData } = useServer();
@@ -119,7 +118,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     Det her er en bar graf, her kan du se forskellige egenskaber for op til 3 uddannelser sat imod hinanden.
                 </p>
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("1: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[0] = education as EducationGroup;
@@ -133,7 +132,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("2: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[1] = education as EducationGroup;
@@ -147,7 +146,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("3: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[2] = education as EducationGroup;
@@ -197,7 +196,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     Her kan du se forskellige uddannelsers egenskaber på en radar graf.
                 </p>
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("1: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[0] = education as EducationGroup;
@@ -211,7 +210,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("2: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[1] = education as EducationGroup;
@@ -225,7 +224,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     renderInput={(params) => <TextField {...params} label="Uddannelse" />}
                 />
                 <Autocomplete
-                    onChange={(event: any, newValue: string | null) => {
+                    onChange={(_event: any, newValue: string | null) => {
                         console.log("3: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[2] = education as EducationGroup;

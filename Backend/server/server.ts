@@ -10,7 +10,7 @@ import { getHeadliner, getPersonalizedMessage } from '../utilities/web_scraper';
 
 const server: Express = express();
 
-const PORT = 1337;
+const PORT = 3222;
 
 
 onStart();
