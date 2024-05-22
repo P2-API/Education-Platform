@@ -102,6 +102,8 @@ server.post("/get_small_text_about_education", (request: Request, response: Resp
 });
 
 server.listen(PORT, () => {
+    console.log(" ");
+    console.log(`Server is running on http://localhost:${PORT}...`);
 }).on("error", (error) => {
     throw new Error(error.message);
 });
