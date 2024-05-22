@@ -3,6 +3,8 @@ import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+
 import Slider from '@mui/material/Slider';
 import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -20,7 +22,17 @@ type MultiSelectAutoCompleteProps = {
     scrollable?: boolean;
 }
 
-export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({ givenValue, collection, selectLabel, selectPlaceholder, setFilters, setProperties, identifier, getOptionsLabel, scrollable = false }) => {
+export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = ({
+    givenValue,
+    collection,
+    selectLabel,
+    selectPlaceholder,
+    setFilters,
+    setProperties,
+    identifier,
+    getOptionsLabel,
+    scrollable = false
+}) => {
 
     const [value, setValue] = React.useState<string[]>(givenValue);
     const identity = identifier; // Assign the identifier value to a constant variable identity
@@ -36,48 +48,39 @@ export const MultiSelectAutoComplete: React.FC<MultiSelectAutoCompleteProps> = (
     }
 
     const getLabel: (option: string) => string = getOptionsLabel != undefined ? getOptionsLabel : (option) => option;
-    if (scrollable){
-        return (
-            <Autocomplete
-                multiple
-                id="tags-outlined"
-                sx={{ width: "100%", maxHeight: "300px", overflowY: "scroll" }}
-                options={collection}
-                getOptionLabel={getLabel}
-                filterSelectedOptions
-                value={value}
-                onChange={handleChange}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label={selectLabel}
-                        placeholder={selectPlaceholder}
-                    />
-                )}
-            />
-        );
-    }
-    else {
-        return (
-            <Autocomplete
-                multiple
-                id="tags-outlined"
-                sx={{ width: "100%" }}
-                options={collection}
-                getOptionLabel={getLabel}
-                filterSelectedOptions
-                value={value}
-                onChange={handleChange}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label={selectLabel}
-                        placeholder={selectPlaceholder}
-                    />
-                )}
-            />
-        );
-    }
+
+    return (
+        <Autocomplete
+            multiple
+            id="tags-outlined"
+            sx={{ width: "100%", ...(scrollable && { maxHeight: "300px", padingTop: "20px", overflowY: "scroll" }) }}
+            options={collection}
+            getOptionLabel={getLabel}
+            filterSelectedOptions
+            value={value}
+            onChange={handleChange}
+            renderTags={(value, getTagProps) =>
+                value.map((option, index) => {
+                    const { key, onDelete, ...tagProps } = getTagProps({ index });
+                    return (
+                        <Chip
+                            key={option}
+                            label={getLabel(option)}
+                            onDelete={onDelete}
+                            {...tagProps}
+                        />
+                    );
+                })
+            }
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={selectLabel}
+                    placeholder={selectPlaceholder}
+                />
+            )}
+        />
+    );
 }
 
 
