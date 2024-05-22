@@ -18,13 +18,13 @@ export class LPclass implements LP {
     const variables = this.objective.vars
     // add weights to:
     // subjects
-    if (filters.hasSubjects.length > 0){
+    if (filters.hasSubjects.length > 0) {
       filters.hasSubjects.forEach((subject) => {
-        variables.push({ name: subject, coef: quizAnswers.subjectsPriority})
+        variables.push({ name: subject, coef: quizAnswers.subjectsPriority })
       })
     } else {
-      Object.keys(SubjectTitle).forEach((key) =>{
-        variables.push({name: key , coef: quizAnswers.subjectsPriority})
+      Object.keys(SubjectTitle).forEach((key) => {
+        variables.push({ name: key, coef: quizAnswers.subjectsPriority })
       })
     }
     // hours
@@ -67,14 +67,14 @@ export class LPclass implements LP {
     this.objective.vars.forEach((variable) => {
       this.subjectTo.push({ name: variable.name, vars: [{ name: variable.name, coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: 1, lb: 0 } })
     })
-    
+
     // user defined LP filters
     const userDefinedConstraints = [
-      { name: "startingSalary", vars: [{ name: "startingSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.newGraduate.maximum, lb: filters.wantedSalary.newGraduate.minimum }},
-      { name: "experiencedSalary", vars: [{ name: "experiencedSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.experienced.maximum, lb: filters.wantedSalary.experienced.minimum }},
-      { name: "unemploymentNewGraduate", vars: [{ name: "unemploymentNewGraduate", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.newGraduate.maximum, lb: filters.unemployment.newGraduate.minimum }},
-      { name: "unemploymentExperienced", vars: [{ name: "unemploymentExperienced", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.experienced.maximum, lb: filters.unemployment.experienced.minimum }}]
-    
+      { name: "startingSalary", vars: [{ name: "startingSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.newGraduate.maximum, lb: filters.wantedSalary.newGraduate.minimum } },
+      { name: "experiencedSalary", vars: [{ name: "experiencedSalary", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.wantedSalary.experienced.maximum, lb: filters.wantedSalary.experienced.minimum } },
+      { name: "unemploymentNewGraduate", vars: [{ name: "unemploymentNewGraduate", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.newGraduate.maximum, lb: filters.unemployment.newGraduate.minimum } },
+      { name: "unemploymentExperienced", vars: [{ name: "unemploymentExperienced", coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: filters.unemployment.experienced.maximum, lb: filters.unemployment.experienced.minimum } }]
+
     // add/change user defined constraints depending on whether default constraints of the same name already exist
     userDefinedConstraints.forEach(userConstraint => {
       const existingConstraint = this.subjectTo.find(constraint => constraint.name === userConstraint.name);
@@ -82,7 +82,7 @@ export class LPclass implements LP {
         existingConstraint.bnds.ub = userConstraint.bnds.ub;
         existingConstraint.bnds.lb = userConstraint.bnds.lb;
       } else {
-        this.subjectTo.push({ name: userConstraint.name, vars: [{ name: userConstraint.name, coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: userConstraint.bnds.ub, lb: userConstraint.bnds.lb}});
+        this.subjectTo.push({ name: userConstraint.name, vars: [{ name: userConstraint.name, coef: 1 }], bnds: { type: this.solverInstance.GLP_DB, ub: userConstraint.bnds.ub, lb: userConstraint.bnds.lb } });
       }
     });
   }
@@ -185,18 +185,19 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
       }, //irelevant
       degreeRelevance: values["degreeRelevance"],
       degreePreparesForJob: 0, // irelevant
-      nationalJobs: 0 } //irelevant 
+      nationalJobs: 0
+    } //irelevant 
   };
-  
+
   function addSubjects(result: Result, FilterSubjects: string[]): Types.Subject[] {
     const optimalSubjectsAndScores: Types.Subject[] = [];
-    if(FilterSubjects.length > 0){
+    if (FilterSubjects.length > 0) {
       FilterSubjects.forEach((subject) => {
         optimalSubjectsAndScores.push({ title: subject, score: result.result.vars[subject] })
       })
     } else {
-      Object.keys(SubjectTitle).forEach((key) =>{
-        optimalSubjectsAndScores.push({title: key, score: result.result.vars[key]})
+      Object.keys(SubjectTitle).forEach((key) => {
+        optimalSubjectsAndScores.push({ title: key, score: result.result.vars[key] })
       })
     }
     return optimalSubjectsAndScores;

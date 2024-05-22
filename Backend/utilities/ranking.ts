@@ -11,7 +11,7 @@ export class Ranker {
     }
 
     produceRanking(userInputs: UserInputs): FinalRankingType {
-        const educationData:EducationData = getEducationData()
+        const educationData: EducationData = getEducationData()
         this.roughSorting(userInputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userInputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userInputs)
@@ -100,6 +100,7 @@ export class Ranker {
             filterSubjects.forEach((filterSubject) => {
                 try {
                     const subject = education.subjects.find((subject) => { return subject.title === filterSubject })
+                    if (!subject) return;
                     coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier })
                 } catch {
                     new Error("subject not found")

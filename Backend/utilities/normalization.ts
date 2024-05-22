@@ -1,5 +1,4 @@
-import { SubjectTitle } from "../../src/enums";
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, SalaryFilters, SocialFeedback, Subject, TableFilters, Unemployment, UnemploymentFilters } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, SalaryFilters, SocialFeedback, TableFilters, Unemployment, UnemploymentFilters } from "../../src/types";
 import { getMinimumEducation, getMaximumEducation, getEducationDurationRange } from "../server/on-server-start";
 import deepCopy from "./deep-copy";
 

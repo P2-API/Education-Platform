@@ -1,4 +1,4 @@
-import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salaries, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment, EducationData } from "../../src/types";
+import { AcademicFeedback, AcademicWorkload, DegreeContents, Education, EducationGroup, HoursSpentDoing, Industry, JobData, JobWorkSchedule, MinimumMaximum, Salary, SocialFeedback, Subject, EducationDataFromServer, Unemployment, EducationData } from "../../src/types";
 import { GetEducationsOnServerStart } from "../utilities/csv_importer";
 import { DegreeType, Institution, Geography, DegreeTypeToDuration, SubjectTitle, FormOfEducation } from "../../src/enums";
 
@@ -145,17 +145,17 @@ const calculateEducationProperties = () => {
 
 // Recursively gets all the leaf properties of an object
 // Meaning the ones which aren't themselves objects
-const recursivelyGetLeafProperties = (object: Object, prefix: string = ""): string[] => {
+const recursivelyGetLeafProperties = (object: { [key: string]: any } = Object, prefix: string = ""): string[] => {
     let array: string[] = [];
     for (let key in object) { // Search through all the keys in the object
-        if (object[key] != undefined && typeof object[key] === "object") { // If the key is an object, then search through that object
+        if (object[key] !== undefined && typeof object[key] === "object") { // If the key is an object, then search through that object
             const branches = recursivelyGetLeafProperties(object[key], prefix + key + ".");
             for (let branch in branches) {
                 array.push(branches[branch]);
             }
         }
         else {
-            if (typeof object[key] == 'string') continue;
+            if (typeof object[key] === 'string') continue;
             array.push(prefix + key);
         }
     }

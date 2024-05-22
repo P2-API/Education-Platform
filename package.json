@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest --coverage",
-    "server": "ts-node-dev --respawn --pretty --transpile-only Backend/server/server.ts",
+    "server": "ts-node  Backend/server/server.ts",
     "start": "concurrently \"npm run server\" \"npm run dev\""
   },
   "exports": "./dist/index.js",

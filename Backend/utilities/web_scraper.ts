@@ -91,7 +91,7 @@ export async function processAllEducations() {
         allEducationData = { ...allEducationData, ...groupData };
     }
 
-    const educationSubjects = readJsonFile('Backend/cache/all-education-data.json')
+    const educationSubjects = readJsonFile('Backend/cache/all-education-data.json') as Record<string, Profession>;
 
     const newEducationData = updateProfessions(educationSubjects, allEducationData);
 
@@ -160,6 +160,7 @@ export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAn
 
         const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
         console.log("message:", message)
+        if (!message) return "Der skete en fejl. Prøv igen eller kontakt serveren."
         return message;
     } catch (error) {
         console.error('Error:', error);
@@ -291,34 +292,44 @@ export async function fetchHtml(url: string) {
 
 async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
     let completion;
-    await openai.chat.completions.create({
-        messages: [
-            {
-                role: "system",
-                content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() + ". Lever den op til filtrene? = " +
-                    ' | ' +
-                    "Følgende data er brugerens individuelle præferencar. En score på 1 betyder at det slet ikke er vigtigt, en score på 3 betyder at det ikke rigtigt er vigtigt, en score på 4 eller 5 betyder at det er meget vigtigt for vedkommende. Du skal fokusere på de prioriteter som brugeren har valgt, som har en score på 4-5. Her er præferancerne. =" + JSON.stringify(preferences).replace(/"/g, '') +
-                    ' | ' +
-                    "Følgende er  data omkring den specifikke uddanelse. Det er uddannelsens score indenfor en række faktorer. Her er alle numeriske værdier under subjects normaliseret til at være mellem 0 og 1. 0 betyder at uddannelsesn er den laveste i forhold til alle andre uddssannelser, mens en score på 1 betyder at uddannelsen har den højeste score for denne faktor af alle uddannelser. =" + JSON.stringify(education).replace(/"/g, '') +
-                    ' | ' +
-                    "Følgende er hvilke filtre brugeren har valgt at sammenligne uddanelserne med. HVIS SUBJECTS er TOM, SKAL DU IKKE KOMMENTERE OVERHOVEDET PÅ BRUGERENS SCORE INDENFOR FAG. Alle punkter er hårde filtre, hvilket vil sige, at hvis en bruger har indtastet Hovedstaten indenfor Geografi, så er det kun uddannelser der ligger i Hovedstaten som er accepteret. Det eneste punkt der ikke er en hård filter er Subjects, hvilket handler om de fag brugeren har valgt. Et fag som brugeren har valgt fungerer som en vægt i rangeringen af hvilken uddannelse der er den optimale for den enkelte bruger. Hvis en bruger har valgt fagene Matematik og Programmering, og uddannelsens score indenfor de 2 fag er under 0.5, så skal du ikke anbefale uddannelsen på baggrund af fagene. Her er filtrene = " + JSON.stringify(filters).replace(/"/g, '')
-                ,
-            },
-            {
-                role: "user",
-                content: promptString
-            },
-        ],
-        model: "gpt-3.5-turbo-0125",
-        response_format: { type: "json_object" },
-        temperature: 0.2,
-    }).then((result) => {
-        completion = result
-    }).catch((error) => console.log("error:", error));
-
-    const jsonString = completion.choices[0].message.content;
-    const jsonObject = JSON.parse(jsonString);
-    return jsonObject.text;
+    try {
+        await openai.chat.completions.create({
+            messages: [
+                {
+                    role: "system",
+                    content: (
+                        "dette er en kort text omkring uddanelsen =" + text
+                    ).replace(/\s+/g, " ").trim() +
+                        ". Lever den op til filtrene? = " +
+                        " | " +
+                        "Følgende data er brugerens individuelle præferencar. En score på 1 betyder at det slet ikke er vigtigt, en score på 3 betyder at det ikke rigtigt er vigtigt, en score på 4 eller 5 betyder at det er meget vigtigt for vedkommende. Du skal fokusere på de prioriteter som brugeren har valgt, som har en score på 4-5. Her er præferancerne. =" +
+                        JSON.stringify(preferences).replace(/"/g, "") +
+                        " | " +
+                        "Følgende er data omkring den specifikke uddanelse. Det er uddannelsens score indenfor en række faktorer. Her er alle numeriske værdier under subjects normaliseret til at være mellem 0 og 1. 0 betyder at uddannelsesn er den laveste i forhold til alle andre uddssannelser, mens en score på 1 betyder at uddannelsen har den højeste score for denne faktor af alle uddannelser. =" +
+                        JSON.stringify(education).replace(/"/g, "") +
+                        " | " +
+                        "Følgende er hvilke filtre brugeren har valgt at sammenligne uddanelserne med. HVIS SUBJECTS er TOM, SKAL DU IKKE KOMMENTERE OVERHOVEDET PÅ BRUGERENS SCORE INDENFOR FAG. Alle punkter er hårde filtre, hvilket vil sige, at hvis en bruger har indtastet Hovedstaten indenfor Geografi, så er det kun uddannelser der ligger i Hovedstaten som er accepteret. Det eneste punkt der ikke er en hård filter er Subjects, hvilket handler om de fag brugeren har valgt. Et fag som brugeren har valgt fungerer som en vægt i rangeringen af hvilken uddannelse der er den optimale for den enkelte bruger. Hvis en bruger har valgt fagene Matematik og Programmering, og uddannelsens score indenfor de 2 fag er under 0.5, så skal du ikke anbefale uddannelsen på baggrund af fagene. Her er filtrene = " +
+                        JSON.stringify(filters).replace(/"/g, "")
+                },
+                {
+                    role: "user",
+                    content: promptString
+                }
+            ],
+            model: "gpt-3.5-turbo-0125",
+            response_format: { type: "json_object" },
+            temperature: 0.2
+        }).then((result) => {
+            completion = result;
+            const jsonString = completion.choices[0].message.content;
+            if (jsonString == null) return "Der skete en fejl. Prøv igen eller kontakt serveren."
+            const jsonObject = JSON.parse(jsonString);
+            return jsonObject.text;
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        return "Der skete en fejl. Prøv igen."
+    }
 }
 
 async function translateTextToEnglishChatGPT(text: string) {
@@ -494,14 +505,14 @@ export function readJsonFile(filename: string): unknown {
     }
 }
 
-export function normalizeData(professions: unknown): NormalizedProfession[] {
+export function normalizeData(professions: Record<string, any>): NormalizedProfession[] {
     const normalizedProfessions: NormalizedProfession[] = [];
     const maxValueByDataKey: Record<string, number> = {};
     const minValueByDataKey: Record<string, number> = {};
 
-    for (const professionKey in professions) {
+    for (const professionKey in professions as Record<string, unknown>) {
         if (Object.prototype.hasOwnProperty.call(professions, professionKey)) {
-            const data = professions[professionKey].data;
+            const data = (professions[professionKey] as NormalizedProfession).data;
             for (const dataKey in data) {
                 if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
                     const value = data[dataKey];

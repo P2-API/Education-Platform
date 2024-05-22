@@ -2,25 +2,28 @@ import * as fs from "fs"
 import axios from 'axios';
 
 import { Education } from "../../src/types"
-import * as csvParse from 'csv-parse'
-import { County, DegreeType, Institution, Geography } from "../../src/enums";
+// import * as csvParse from 'csv-parse'
+import { County, DegreeType, Institution } from "../../src/enums";
 import { countyToGeography } from "./custom-type-conversion";
 
-const header = ["Titel"];
+
 
 const csvURL = "https://ufm.dk/uddannelse/statistik-og-analyser/uddannelseszoom/ufm_samlet_23mar2024.csv";
 const csvFilePath = "./src/education-csv.csv";
 
 // File path for writing not being used anymore
-const tsObjectWritePath = "./src/debug/tsObject.ts"
+// const tsObjectWritePath = "./src/debug/tsObject.ts"
 
-const parseOptions: csvParse.Options = {
+/* const parseOptions: csvParse.Options = {
     columns: true,
     trim: true
-};
+}; */
+
+
 
 function csvParser(csvData: string): Education[] {
     const lines = csvData.split('\n');
+    // const headers = lines[0].split(',');
     const educations: Education[] = [];
 
     for (let i = 1; i < lines.length - 1; i++) {
@@ -32,10 +35,10 @@ function csvParser(csvData: string): Education[] {
             "url": values[2],
             "rank": 0,
             "title": values[4],
-            "degreeType": DegreeType[values[6]],
-            "counties": [County[values[11]]],
-            "geographies": [countyToGeography(County[values[11]])],
-            "institution": Institution[values[9]],
+            "degreeType": DegreeType[values[6] as keyof typeof DegreeType],
+            "counties": [County[values[11] as keyof typeof County]],
+            "geographies": [countyToGeography(County[values[11] as keyof typeof County])],
+            "institution": Institution[values[9] as keyof typeof Institution],
             "subjects": [],
             "industries": [
                 {
@@ -154,7 +157,7 @@ export function removeSemicolonsBetweenQuotes(input: string): string {
     return result;
 }
 
-const recursivelyCheckForMissingProperties = (object: object): boolean => {
+const recursivelyCheckForMissingProperties = (object: { [key: string]: any } = Object): boolean => {
     for (const key in object) { // loop through keys in the object 
         if (typeof object[key] === 'object' && object[key] !== null) { // check if keys value is an object
             let answer = recursivelyCheckForMissingProperties(object[key]); // call for nested object

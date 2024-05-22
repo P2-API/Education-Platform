@@ -119,15 +119,9 @@ function a11yProps(index: number) {
 }
 
 export default function BasicTabs() {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
+    const [value, setValue] = React.useState(0); // index keeping track on whether to show data table or visualisation
     const [rankedData, setRankedData] = useState<FinalRankingType | null>(null);
-
-    // Quiz states
+    const [isQuizOpen, setIsQuizOpen] = useState(false);
     const [quizAnswerState, SetQuizAnswerState] = useState<QuizAnswers>(
         {
             subjectsPriority: 3,
@@ -157,8 +151,6 @@ export default function BasicTabs() {
             nightAndEveningShiftsPriority: 3,
         }
     );
-    const [isQuizOpen, setIsQuizOpen] = useState(false);
-
     const [filters, setFilters] = useState<TableFilters>({
         wantedDegreeTypes: [],
         hasSubjects: [],
@@ -180,21 +172,23 @@ export default function BasicTabs() {
     });
 
 
-    const QuizInfo: QuizInfoType = {
+    const quizInfo: QuizInfoType = {
         quizData: quizAnswerState,
         setQuizData: SetQuizAnswerState,
         isQuizOpen: isQuizOpen,
         setIsQuizOpen: setIsQuizOpen
     };
-
     const rankedDataInfo: rankedDataInfo = {
         rankedData: rankedData,
         setRankedData: setRankedData
     };
-
     const filterInfo: FilterInfoType = {
         filters: filters,
         setFilters: setFilters
+    };
+
+    const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
     };
 
 
@@ -206,7 +200,7 @@ export default function BasicTabs() {
                     <Tab sx={{ width: "200px", fontWeight: "bolder", fontSize: "larger", paddingTop: "14px" }} label="Visualisering" {...a11yProps(1)} />
                 </Tabs>
             </Box>
-            <QuizInfoContext.Provider value={QuizInfo}>
+            <QuizInfoContext.Provider value={quizInfo}>
                 <filtersContext.Provider value={filterInfo}>
                     <CustomTabPanel value={value} index={0}>
                         <DataTableSection rankedDataInfo={rankedDataInfo} />
