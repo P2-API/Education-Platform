@@ -16,24 +16,26 @@ body {
   margin: 0;
 }
 
+
 /* This applies to all scrollable elements */
 ::-webkit-scrollbar {
   width: 0px; /* width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f100; /* color of the tracking area */
+  background: #e8000000; /* color of the tracking area */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #88888800; /* color of the scroll thumb */
+  background: #e7000000; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
 }
 
 /* change color on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #ae1f1f;
 }
+
 .primary-button {
   border-radius: 0.5em;
   border: none;

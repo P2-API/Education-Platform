@@ -103,7 +103,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
     return (
         <>
             <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} filters={filterInfo.filters} setRankedData={setRankedData} setIsCalculating={setIsCalculating} />
-            <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
+            <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll", scrollbarWidth: "none" }}>
 
                 {isCalculating ? (
                     <div style={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
@@ -120,7 +120,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                             <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre</h2>
                             <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
                         </div>
-                        <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "auto" }}>
+                        <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "scroll", scrollbarColor: "red", scrollbarWidth: "thin" }}>
                             <>
                                 <MultiSelectAutoComplete
                                     givenValue={internalFilters.wantedDegreeTypes}

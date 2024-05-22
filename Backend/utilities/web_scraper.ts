@@ -155,9 +155,8 @@ export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAn
             console.error("Error fetching or processing text from URL:", education.url);
             return "Der skete en fejl ved generering af en besked, prøv venligst senere";
         }
-
-        const promptString = "hvordan vil denne uddannelse passe til en person med disse præferencer, giv en kort personlig tekst. brug data'en fra preferences, 1 er en lav præference og 5 er høj præference. returneres som en JSON-streng, returer kun den personlige tekst. Dit svar skal være meget direkte i forhold til de filtre og de preferencer som brugeren har valgt.  Læg ekstra meget vægt på preferencer med en værdi på 5 og ingen vægt på preferencer på 3 eller mindre. Inkluder IKKE de numeriske værdier fra preferencer i dit svar. Svar kun i hnehold til de valgte kriterier / Filtre. DU SKAL inddrage de fag som brugeren har valgt.";
-
+        console.log("filter subjects", filters.hasSubjects)
+        const promptString = "Du skal give en kort forklaring på, om denne uddannelse passer til den enkelte bruger. Det er helt fint at sige at den ikke lever op til kravene. Hvis filters.hasSubjects er en tom liste, så skal du ikke inddrage fagene i din besvarelse. Det vigtige er, om fagene man har valgt i filtret passer til uddannelsen. Du skal tage udgangspunkt i de præferancer brugeren har valgt, og de filtre brugeren har valgt, samt de faktiske data for den enkelte uddannelse. Du skal fokusere på de præferancer som brugeren har valgt, som har en score på 4-5. Du skal fokusere meget på de filtre der er valgt, eksempelvis løn eller arbejdsløshed. Du skal også tage højde for de filtre brugeren har valgt, og kun anbefale uddannelsen hvis den passer til de filtre brugeren har valgt. Hvis en uddannelse har lave score i de fag man har valgt, så skal man ikke anbefale uddannelsen. Hvis ikke uddannelsen lever op til filtrene, så skal du fortælle brugeren hvorfor den ikke passer. returneres som en JSON-streng. Returner kun den personlige tekst.";
 
         const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
         return message;
@@ -296,11 +295,11 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
                 role: "system",
                 content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() +
                     ' | ' +
-                    "dette data er omkring brugeren, disse vægte ligger mellem 1 og 5, her betyder 1 at bruger vægter det lavt og 5 betyder at brugeren vægter det højt =" + JSON.stringify(preferences).replace(/"/g, '') +
+                    "Følgende data er brugerens individuelle præferencar. En score på 1 betyder at det slet ikke er vigtigt, en score på 3 betyder at det ikke rigtigt er vigtigt, en score på 4 eller 5 betyder at det er meget vigtigt for vedkommende. Du skal fokusere på de prioriteter som brugeren har valgt, som har en score på 4-5. Her er præferancerne. =" + JSON.stringify(preferences).replace(/"/g, '') +
                     ' | ' +
-                    "dette er data omkring uddanelsen, her er alle numeriske værdier under subjects normalizeret til at være mellem 0 og 1, 0 betyder at det ikke er relevant for uddanelsen og 1 betyder det har stor relevans for uddanelsen =" + JSON.stringify(education).replace(/"/g, '') +
+                    "Følgende er  data omkring den specifikke uddanelse. Det er uddannelsens score indenfor en række faktorer. Her er alle numeriske værdier under subjects normaliseret til at være mellem 0 og 1. 0 betyder at uddannelsesn er den laveste i forhold til alle andre uddannelser, mens en score på 1 betyder at uddannelsen har den højeste score for denne faktor af alle uddannelser. =" + JSON.stringify(education).replace(/"/g, '') +
                     ' | ' +
-                    "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med, hvis der ingen data her om hvlike interreser brugeren har, og dette betydr du ikke ved hvilke intereser bruger har, og du kan ikke bestemme hvilke interreser bruger har. =" + JSON.stringify(filters).replace(/"/g, '')
+                    "Følgende er hvilke filtre brugeren har valgt at sammenligne uddanelserne med. HVIS SUBJECTS er TOM, SKAL DU IKKE KOMMENTERE OVERHOVEDET PÅ BRUGERENS SCORE INDENFOR FAG. Alle punkter er hårde filtre, hvilket vil sige, at hvis en bruger har indtastet Hovedstaten indenfor Geografi, så er det kun uddannelser der ligger i Hovedstaten som er accepteret. Det eneste punkt der ikke er en hård filter er Subjects, hvilket handler om de fag brugeren har valgt. Et fag som brugeren har valgt fungerer som en vægt i rangeringen af hvilken uddannelse der er den optimale for den enkelte bruger. Hvis en bruger har valgt fagene Matematik og Programmering, og uddannelsens score indenfor de 2 fag er under 0.5, så skal du ikke anbefale uddannelsen på baggrund af fagene. Her er filtrene = " + JSON.stringify(filters).replace(/"/g, '')
                 ,
             },
             {

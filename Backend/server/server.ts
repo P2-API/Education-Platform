@@ -31,7 +31,7 @@ server.get("/get_table_section_data", (request: Request, response: Response) => 
     response.status(200).send(getTableSectionData());
 });
 server.post("/PCA_request", (request: Request, response: Response) => {
-    const requestData:UserInputs = request.body;
+    const requestData: UserInputs = request.body;
     const pcaData = performPCA(requestData);
     response.status(200).send(pcaData);
 });
@@ -74,7 +74,7 @@ server.post("/generate_personalized_message", (request: Request, response: Respo
     const education = requestData.education;
 
     let personalizedMessage;
-    getPersonalizedMessage(quizAnswers, filters, education).then((text) => {
+    getPersonalizedMessage(filters, quizAnswers, education).then((text) => {
         personalizedMessage = text;
         response.status(200).send(personalizedMessage);
     }
