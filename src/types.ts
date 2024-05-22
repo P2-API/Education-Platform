@@ -283,17 +283,17 @@ export type FilterProps = {
 export type ProfessionData = Record<string, number>;
 
 export type Profession = {
-  name: string;
-  url: string;
-  data: ProfessionData;
+    name: string;
+    url: string;
+    data: ProfessionData;
 };
 
 export type NormalizedProfessionData = Record<string, number>;
 
 export type NormalizedProfession = {
-  name: string;
-  url: string;
-  data: NormalizedProfessionData;
+    name: string;
+    url: string;
+    data: NormalizedProfessionData;
 };
 
 export type EducationData = {

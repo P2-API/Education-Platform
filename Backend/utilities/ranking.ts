@@ -11,7 +11,7 @@ export class Ranker {
     }
 
     produceRanking(userInputs: UserInputs): FinalRankingType {
-        const educationData:EducationData = getEducationData()
+        const educationData: EducationData = getEducationData()
         this.roughSorting(userInputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userInputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userInputs)
@@ -100,6 +100,7 @@ export class Ranker {
             filterSubjects.forEach((filterSubject) => {
                 try {
                     const subject = education.subjects.find((subject) => { return subject.title === filterSubject })
+                    if (!subject) return;
                     coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier })
                 } catch {
                     new Error("subject not found")
@@ -155,7 +156,7 @@ export class Ranker {
 
         return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
             && ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)))
-            && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions))
+            && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institution))
             && ((filters.hasFormsOfEducation.length == 0) ? true : (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))))
             && (filters.canWorkInternationally ? (education.jobData.nationalJobs > normalizeNationalJobs(80) ? false : true) : true)
             && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > normalizeFlexibleHours(50) ? true : false) : true)
@@ -181,7 +182,7 @@ export class Ranker {
     }
     areEquivalent(education1: Education, education2: Education): boolean {
         return (education1.title === education2.title &&
-            education1.institutions === education2.institutions &&
+            education1.institution === education2.institution &&
             education1.degreeType === education2.degreeType &&
             education1.geographies[0] === education2.geographies[0] &&
             education1.url === education2.url &&

@@ -2,10 +2,9 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
 import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties, getNormalizedEducations } from './on-server-start';
-import { MinimumMaximum, UserInputs, TableFilters, QuizAnswers } from '../../src/types';
+import { UserInputs, TableFilters, QuizAnswers } from '../../src/types';
 import { Ranker } from "../utilities/ranking";
 import { performPCA } from "../utilities/pca";
-import bodyParser from 'body-parser'; // Import the bodyParser package
 import { getHeadliner, getPersonalizedMessage } from '../utilities/web_scraper';
 
 const server: Express = express();
@@ -17,32 +16,34 @@ onStart();
 server.use(cors()); // Enable CORS
 server.use(express.json({ limit: '50mb' }));
 server.use(express.urlencoded({ limit: '50mb' }));
+server.use(express.static('dist'));
 
 
-server.get("/", (request: Request, response: Response) => {
-    response.status(200).send("Hello Worlds");
+
+server.get("/", (response: Response) => {
+    response.sendFile('/index.html');
 });
 
-server.get("/server", (request: Request, response: Response) => {
+server.get("/server", (response: Response) => {
     response.status(200).send("Hello from the server!");
 });
 
-server.get("/get_table_section_data", (request: Request, response: Response) => {
-    response.status(200).send(getTableSectionData());
+server.get("/get_table_section_data", (_request: Request, response: Response) => {
+    response.send(getTableSectionData());
 });
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData: UserInputs = request.body;
     const pcaData = performPCA(requestData);
-    response.status(200).send(pcaData);
+    response.send(pcaData);
 });
-server.get("/get_grouped_educations", (request: Request, response: Response) => {
-    response.status(200).send(getGroupedEducations());
+server.get("/get_grouped_educations", (_request: Request, response: Response) => {
+    response.send(getGroupedEducations());
 });
-server.get("/get_education_properties", (request: Request, response: Response) => {
-    response.status(200).send(getEducationProperties());
+server.get("/get_education_properties", (_request: Request, response: Response) => {
+    response.send(getEducationProperties());
 });
-server.get("/get_normalized_educations", (request: Request, response: Response) => {
-    response.status(200).send(getNormalizedEducations());
+server.get("/get_normalized_educations", (_request: Request, response: Response) => {
+    response.send(getNormalizedEducations());
 });
 
 
