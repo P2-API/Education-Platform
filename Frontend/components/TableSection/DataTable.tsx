@@ -537,10 +537,10 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
     enableRowVirtualization: true,
     muiTableBodyCellProps: { sx: { padding: 0, paddingLeft: "1rem", height: "90px", overflow: "scroll" } },
     muiTableHeadCellProps: { sx: { padding: 0, paddingLeft: "1rem" } },
-    muiTableContainerProps: { sx: { maxHeight: "100%", overflow: "scroll" } },
-    muiTablePaperProps: { sx: { maxHeight: "100%", overflow: "scroll" } },
-    muiTableBodyProps: { sx: { maxHeight: "100%", overflow: "scroll" } },
-    muiTableProps: { sx: { maxHeight: "100%", overflow: "scroll" } },
+    muiTableContainerProps: { sx: { height: "100%", overflow: "scroll" } },
+    muiTablePaperProps: { sx: { height: "100%", overflow: "scroll" } },
+    muiTableBodyProps: { sx: { height: "100%", overflow: "scroll" } },
+    muiTableProps: { sx: { height: "100%", overflow: "scroll" } },
     rowVirtualizerInstanceRef, //optional
     rowVirtualizerOptions: { overscan: 2 }, //optionally customize the row virtualizer
     columnVirtualizerOptions: { overscan: 4 }, //optionally customize the column virtualizer

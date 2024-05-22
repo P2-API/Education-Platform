@@ -156,7 +156,7 @@ export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAn
             return "Der skete en fejl ved generering af en besked, prøv venligst senere";
         }
         const passesFilters = doesPassFilters ? "Ja! derfor SKAL du forklare hvorfor den kan anbefales" : "Nej. Derfor skal du forklare HVORFOR den ikke lever op til kravene.";
-        const promptString = `Lever denne uddannelse op til kravene? ${passesFilters}. Du skal give en kort forklaring på, om denne uddannelse passer til den enkelte bruger. Det er helt fint at sige at den ikke lever op til kravene. Hvis filters.hasSubjects er en tom liste, så skal du ikke inddrage fagene i din besvarelse. Hvis en uddannelse ikke lever op til filtrene, så skal du ikke kommentere på, hvorfor den kan være et godt match, men hvorfor den ikke er et godt match. Det vigtige er, om fagene man har valgt i filtret passer til uddannelsen. Du skal tage udgangspunkt i de præferancer brugeren har valgt, og de filtre brugeren har valgt, samt de faktiske data for den enkelte uddannelse. Du skal fokusere på de præferancer som brugeren har valgt, som har en score på 4-5. Du skal fokusere meget på de filtre der er valgt, eksempelvis løn eller arbejdsløshed. Du skal også tage højde for de filtre brugeren har valgt, og kun anbefale uddannelsen hvis den passer til de filtre brugeren har valgt. Hvis en uddannelse har lave score i de fag man har valgt, så skal man ikke anbefale uddannelsen. Hvis ikke uddannelsen lever op til filtrene, så skal du fortælle brugeren hvorfor den ikke passer. returneres som en JSON-streng. Returner kun den personlige tekst.`;
+        const promptString = `Lever denne uddannelse op til kravene? ${passesFilters}. Du skal give en kort forklaring på, om denne uddannelse passer til den enkelte bruger. Det er helt fint at sige at den ikke lever op til kravene. Hvis filters.hasSubjects er en tom liste, så skal du ikke inddrage fagene i din besvarelse. Hvis en uddannelse ikke lever op til filtrene, så skal du ikke kommentere på, hvorfor den kan være et godt match, men hvorfor den ikke er et godt match. Det vigtige er, om fagene man har valgt i filtret passer til uddannelsen. Du skal tage udgangspunkt i de præferancer brugeren har valgt, og de filtre brugeren har valgt, samt de faktiske data for den enkelte uddannelse. Du skal fokusere på de præferancer som brugeren har valgt, som har en score på 4-5. Du skal fokusere meget på de filtre der er valgt, eksempelvis løn eller arbejdsløshed. Du skal også tage højde for de filtre brugeren har valgt, og kun anbefale uddannelsen hvis den passer til de filtre brugeren har valgt. Hvis en uddannelse har lave score i de fag man har valgt, så skal man ikke anbefale uddannelsen. Hvis ikke uddannelsen lever op til filtrene, så skal du fortælle brugeren hvorfor den ikke passer. returneres som en JSON-streng, og resultatet skal hedde 'svar'. Returner kun den personlige tekst.`;
 
         const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
         console.log("message:", message)
@@ -291,7 +291,7 @@ export async function fetchHtml(url: string) {
 }
 
 async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
-    let completion;
+    let svar: string = "";
     try {
         await openai.chat.completions.create({
             messages: [
@@ -320,16 +320,18 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
             response_format: { type: "json_object" },
             temperature: 0.2
         }).then((result) => {
-            completion = result;
-            const jsonString = completion.choices[0].message.content;
-            if (jsonString == null) return "Der skete en fejl. Prøv igen eller kontakt serveren."
+            const jsonString = result.choices[0].message.content;
+            if (jsonString == null) return "Der skete en fejl, prøv igen eller kontakt serveren. 11"
             const jsonObject = JSON.parse(jsonString);
-            return jsonObject.text;
+            const answer: string = jsonObject.svar// ChatGPT har fået besked på at svare tilbage med 'svar'.
+            svar = answer;
         });
+        return svar;
     } catch (error) {
         console.error("Error:", error);
         return "Der skete en fejl. Prøv igen."
     }
+
 }
 
 async function translateTextToEnglishChatGPT(text: string) {
