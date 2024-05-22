@@ -2,7 +2,6 @@ import { getHeadlinerText } from '../utilities/web_scraper.ts';
 //import { getDescribingText } from '../utilities/web_scraper.ts';
 import { fetchHtml } from '../utilities/web_scraper.ts';
 
-console.log(getHeadlinerText("html"));
 
 
 export async function getHeadliner(url: string) {
@@ -12,7 +11,7 @@ export async function getHeadliner(url: string) {
     }
     const headlinerText = getHeadlinerText(response.data);
     //const describingText = getDescribingText(response.data);
-    return { headlinerText};
+    return { headlinerText };
 }
 
 

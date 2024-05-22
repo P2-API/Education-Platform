@@ -132,7 +132,6 @@ function csvParser(csvData: string): Education[] {
         // This no run if property be bye bye
         educations.push(education);
     }
-    console.log("thomas, tallet er det her -> ", educations.length);
     return educations;
 }
 

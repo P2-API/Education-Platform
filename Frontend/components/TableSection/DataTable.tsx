@@ -462,7 +462,6 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
 
   const DetailPanelContent = () => {
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
-    console.log("margingLeft", margingLeft)
     return (
       <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
         NOT RANKED

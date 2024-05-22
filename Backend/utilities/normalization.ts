@@ -14,10 +14,10 @@ const normilize = (number: number, min: number, max: number) => {
     return (number - min) / (max - min); // puts the number in the range [0, 1], given the min and max
 }
 
-export const normalizeFilters = (filters: TableFilters):TableFilters => {
+export const normalizeFilters = (filters: TableFilters): TableFilters => {
     minimumEducation ??= getMinimumEducation();
     maximumEducation ??= getMaximumEducation();
-    
+
     const normalizedFilters = deepCopy(filters);
 
     normalizeSalaryFilters(normalizedFilters.wantedSalary);
@@ -48,7 +48,7 @@ const normalizeUnemploymentFilters = (unemploymentFilter: UnemploymentFilters) =
     unemploymentFilter.newGraduate.minimum = normilize(unemploymentFilter.newGraduate.minimum, minValue, maxValue);
     unemploymentFilter.newGraduate.maximum = normilize(unemploymentFilter.newGraduate.maximum, minValue, maxValue);
 
-    unemploymentFilter.experienced.minimum = normilize(unemploymentFilter.experienced.minimum, minValue, maxValue);    
+    unemploymentFilter.experienced.minimum = normilize(unemploymentFilter.experienced.minimum, minValue, maxValue);
     unemploymentFilter.experienced.maximum = normilize(unemploymentFilter.experienced.maximum, minValue, maxValue);
 }
 
@@ -171,7 +171,7 @@ const normilizeEducationSalaries = (salary: Salaries) => {
     salary.newGraduate.lowerQuartile = normilize(salary.newGraduate.lowerQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
     salary.newGraduate.median = normilize(salary.newGraduate.median, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
     salary.newGraduate.upperQuartile = normilize(salary.newGraduate.upperQuartile, minSalary.newGraduate.lowerQuartile, maxSalary.newGraduate.upperQuartile);
-    
+
     salary.experienced.lowerQuartile = normilize(salary.experienced.lowerQuartile, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
     salary.experienced.median = normilize(salary.experienced.median, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
     salary.experienced.upperQuartile = normilize(salary.experienced.upperQuartile, minSalary.experienced.lowerQuartile, maxSalary.experienced.upperQuartile);
@@ -210,7 +210,7 @@ export const normalizeFlexibleHours = (value: number) => {
 export const normalizeNationalJobs = (value: number) => {
     const minNationalJobs = minimumEducation.jobData.nationalJobs;
     const maxNationalJobs = maximumEducation.jobData.nationalJobs;
-    console.log("max",maxNationalJobs,"min", minNationalJobs)
+
     return normilize(value, minNationalJobs, maxNationalJobs);
 }
 

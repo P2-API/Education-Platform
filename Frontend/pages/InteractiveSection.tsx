@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import BasicTabs from '../components/Tabs.tsx';
+import IntroductionOverlay from '../components/IntroductionOverlay.tsx';
+import { OverlayContext } from '@src/App.tsx';
+
 
 type InteractiveSectionProps = {
     tableRef: React.RefObject<HTMLDivElement>;
@@ -7,6 +10,14 @@ type InteractiveSectionProps = {
 
 
 const InteractiveSection: React.FC<InteractiveSectionProps> = ({ tableRef }) => {
+
+    const overlay = useContext(OverlayContext);
+
+    if (overlay.showOverlay) {
+        return (
+            <IntroductionOverlay closeOverlay={() => overlay.setShowOverlay(false)} tableRef={tableRef} />
+        );
+    }
 
     return (
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#f8fbff" }}>

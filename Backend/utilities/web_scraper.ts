@@ -39,7 +39,7 @@ interface Rankings {
     [subject: string]: number;
 }
 
-export async function manualKeywordExtraction(url : string) {
+export async function manualKeywordExtraction(url: string) {
     const response = await fetchHtml(url);
     if (response === "Error fetching the URL") {
         return "Error fetching the URL";
@@ -74,7 +74,6 @@ export async function manualKeywordExtraction(url : string) {
         return "Error extracting keywords";
     }
 
-    console.log(keywords);
 }
 
 export async function processAllEducations() {
@@ -151,7 +150,6 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
 
 export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education): Promise<string> {
     try {
-        console.log("Getting personalized message for education:", education.title);
         const text = await getAllText(education.url);
         if (text === "Error fetching the URL" || text === null) {
             console.error("Error fetching or processing text from URL:", education.url);
@@ -165,7 +163,7 @@ export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAn
         return message;
     } catch (error) {
         console.error('Error:', error);
-        return "Der skete en fejl ved generering af en besked, prøv venligst senere" ;
+        return "Der skete en fejl ved generering af en besked, prøv venligst senere";
     }
 }
 
@@ -292,7 +290,6 @@ export async function fetchHtml(url: string) {
 }
 
 async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
-    console.log("CHATGPT HELL")
     const completion = await openai.chat.completions.create({
         messages: [
             {
@@ -304,7 +301,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
                     "dette er data omkring uddanelsen, her er alle numeriske værdier under subjects normalizeret til at være mellem 0 og 1, 0 betyder at det ikke er relevant for uddanelsen og 1 betyder det har stor relevans for uddanelsen =" + JSON.stringify(education).replace(/"/g, '') +
                     ' | ' +
                     "dette er hvilke filtere bruger har valgt at sammenligne uddanelserne med, hvis der ingen data her om hvlike interreser brugeren har, og dette betydr du ikke ved hvilke intereser bruger har, og du kan ikke bestemme hvilke interreser bruger har. =" + JSON.stringify(filters).replace(/"/g, '')
-                    ,
+                ,
             },
             {
                 role: "user",
@@ -407,11 +404,11 @@ async function analyseSubjects(keywords: string[]): Promise<Rankings> {
     return similarities;
 }
 
-export async function calculateSimilarity(): Promise<Rankings> {
+export async function calculateSimilarity(wordList: string[]): Promise<Rankings> {
     return new Promise((resolve, reject) => {
         const inputFile = 'Backend/cache/input.json';
         const outputFile = 'Backend/cache/output.json';
-        //fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
+        fs.writeFileSync(inputFile, JSON.stringify({ words: wordList }));
 
         const pythonProcess = spawn('python', ['Backend/utilities/semanticanalyzer.py', inputFile, outputFile]);
 
@@ -542,7 +539,6 @@ export function normalizeData(professions: unknown): NormalizedProfession[] {
 }
 
 export function assignSubjectsToEducations(educations: Education[]): void {
-    console.log('Assigning subjects to educations...');
     const educationSubjects = readJsonFile('Backend/cache/all-education-data.json');
     if (!educationSubjects || Object.keys(educationSubjects).length === 0) {
         console.error('Error reading education subjects from file or the file is empty.');
@@ -569,9 +565,8 @@ export function assignSubjectsToEducations(educations: Education[]): void {
             education.subjects = subjects;
         });
 
-        
+
     });
-    console.log('Subjects assigned to educations.');
 }
 
 function translateProfessions(professions: NormalizedProfession[]): NormalizedProfession[] {
@@ -626,18 +621,18 @@ function translateProfessions(professions: NormalizedProfession[]): NormalizedPr
 function updateProfessions(
     existingProfessions: Record<string, Profession>,
     newProfessions: Record<string, Profession>
-  ): Record<string, Profession> {
+): Record<string, Profession> {
     for (const key in newProfessions) {
-      if (Object.prototype.hasOwnProperty.call(newProfessions, key)) {
-        const newProfession = newProfessions[key];
-  
-        if (Object.prototype.hasOwnProperty.call(existingProfessions, key)) {
-          existingProfessions[key].data = newProfession.data;
-        } else {
-          existingProfessions[key] = newProfession;
+        if (Object.prototype.hasOwnProperty.call(newProfessions, key)) {
+            const newProfession = newProfessions[key];
+
+            if (Object.prototype.hasOwnProperty.call(existingProfessions, key)) {
+                existingProfessions[key].data = newProfession.data;
+            } else {
+                existingProfessions[key] = newProfession;
+            }
         }
-      }
     }
-  
+
     return existingProfessions;
-  }
+}
