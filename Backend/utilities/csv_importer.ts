@@ -21,7 +21,6 @@ const parseOptions: csvParse.Options = {
 
 function csvParser(csvData: string): Education[] {
     const lines = csvData.split('\n');
-    const headers = lines[0].split(',');
     const educations: Education[] = [];
 
     for (let i = 1; i < lines.length - 1; i++) {
