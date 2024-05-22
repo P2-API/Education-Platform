@@ -397,7 +397,7 @@ export const getHighestPercentage = () => {
 
 export const getEducationData = (): EducationData => {
     const normalizedAndNormalEducations = {
-        normalized: normilizedEducations,
+        normalized: normilizedEducations.filter((education) => education.subjects.length > 0),
         normal: educations
     }
     return normalizedAndNormalEducations;

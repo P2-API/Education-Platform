@@ -4,7 +4,7 @@ import { PCA, PCAOptions} from "ml-pca";
 import { getEducationData } from "../server/on-server-start";
 
 export function performPCA(userInputs:UserInputs):PCAData{
-    const educations:EducationVector[] = constructEducationVecotors(userInputs);
+    const educations:EducationVector[] = constructEducationVectors(userInputs);
     const dataset = constructMatrix(educations)
 
     const pcaSettings:PCAOptions = {
@@ -17,7 +17,7 @@ export function performPCA(userInputs:UserInputs):PCAData{
     return pcaData(educations, transformedData, Pca);
 }
 
-function constructMatrix(educations:EducationVector[]):number[][]{
+export function constructMatrix(educations:EducationVector[]):number[][]{
     const matrix:number[][] = []
     educations.forEach((education) => {
         const row:number[] = []
@@ -29,7 +29,10 @@ function constructMatrix(educations:EducationVector[]):number[][]{
     return matrix
 }
 
-function pcaData(educations:EducationVector[], transformedData:number[][], Pca:PCA):PCAData{
+export function pcaData(educations:EducationVector[], transformedData:number[][], Pca:PCA):PCAData{
+   /* if (educations.length !== transformedData.length){
+        throw new Error("The number of educations and the number of transformed data points must be equal")
+    }*/
     const pcaData:PCAData = {points:[], principalComponents:{xAxis: {composition: [], varianceExplained:0}, yAxis: {composition: [], varianceExplained:0}}}
     educations.forEach((education, index) => {
         pcaData.points.push({x:transformedData[index][0], y:transformedData[index][1], education:education.education})
@@ -46,9 +49,8 @@ function pcaData(educations:EducationVector[], transformedData:number[][], Pca:P
     return pcaData
 }
 
-function constructEducationVecotors(userInputs:UserInputs):EducationVector[]{
+export function constructEducationVectors(userInputs:UserInputs):EducationVector[]{
     const educations:EducationData = getEducationData()
-    educations.normalized = educations.normalized.filter((education) => education.subjects.length > 0)
     const educationVectors:EducationVector[] = []
     const ranker = new Ranker()
     
