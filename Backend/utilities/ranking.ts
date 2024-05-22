@@ -11,7 +11,7 @@ export class Ranker {
     }
 
     produceRanking(userInputs: UserInputs): FinalRankingType {
-        const educationData:EducationData = getEducationData()
+        const educationData: EducationData = getEducationData()
         educationData.normalized = educationData.normalized.filter((education) => education.subjects.length > 0)
         this.roughSorting(userInputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userInputs)
@@ -19,13 +19,13 @@ export class Ranker {
         return this.changeToApropriateType(rankedEducations, educationData.normal)
     }
 
-    changeToApropriateType(rankedEducations: IntermediateRankingType, normalEducationData:Education[]): FinalRankingType {
+    changeToApropriateType(rankedEducations: IntermediateRankingType, normalEducationData: Education[]): FinalRankingType {
         const finalRanking: FinalRankingType = { ranking: [], index: 0 }
         rankedEducations.upperhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         finalRanking.index = finalRanking.ranking.length
         rankedEducations.lowerhalf.forEach((education) => finalRanking.ranking.push({ education: education.education, score: education.similarity }))
         this.normalizeScores(finalRanking.ranking)
-    
+
         //map the ranked educations to the normal education data
         finalRanking.ranking.map((education) => {
             const normalEducation = normalEducationData.find((normalEducation) => this.areEquivalent(normalEducation, education.education));
@@ -35,9 +35,7 @@ export class Ranker {
                 throw new Error("could not map normalized education to normal education data");
             }
         });
-        /*for (let i = 0; i < finalRanking.index; i++) {
-            console.log("normal education",finalRanking.ranking[i].education.title, finalRanking.ranking[i].education.institutions, finalRanking.ranking[i].education.degreeType, finalRanking.ranking[i].education.geographies, finalRanking.ranking[i].education.jobData.workSchedule.flexibleHoursPercent)
-        }*/
+
         return finalRanking
     }
 
@@ -48,7 +46,7 @@ export class Ranker {
 
     roughSorting(filters: TableFilters, educations: Education[]) {
         educations.forEach((education) => {
-            if (this.filtersPassed(education, filters)) {    
+            if (this.filtersPassed(education, filters)) {
                 this.ranking.upperhalf.push(education)
             }
             else {
@@ -57,13 +55,12 @@ export class Ranker {
         })
     }
 
-    normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs:UserInputs): IntermediateRankingType {
+    normSorting(ranking: RankedEducationsType, optimalEducation: Education, userInputs: UserInputs): IntermediateRankingType {
         const normValue = 2;
         const optimalEducationVector: EducationVector = this.educationVector(optimalEducation, userInputs);
-        const educationVectors: {upperhalf: EducationVector[], lowerhalf: EducationVector[]} = this.addEducationVectors(ranking, userInputs);
-        //educationVectors.upperhalf.forEach((education) => console.log("coordinates", education.coordinates))
-        //console.log("optimalEducationCoordinates", optimalEducationVector.coordinates)
-        const sortedEducations: IntermediateRankingType = {upperhalf: [], lowerhalf: []};
+        const educationVectors: { upperhalf: EducationVector[], lowerhalf: EducationVector[] } = this.addEducationVectors(ranking, userInputs);
+
+        const sortedEducations: IntermediateRankingType = { upperhalf: [], lowerhalf: [] };
         educationVectors.upperhalf.forEach((education) => {
             sortedEducations.upperhalf.push({ education: education.education, similarity: this.norm(education, optimalEducationVector, normValue) })
         })
@@ -79,7 +76,6 @@ export class Ranker {
 
     norm(education: EducationVector, optimalEducation: EducationVector, normValue: number): number {
         let sum = 0;
-        //console.log("education", education.coordinates)
         education.coordinates.forEach((coordinate, index) => {
             sum += Math.pow(coordinate.value - optimalEducation.coordinates[index].value, normValue)
         })
@@ -93,22 +89,20 @@ export class Ranker {
         return educationVecotors
     }
 
-    educationVector(education: Education, userInputs:UserInputs): EducationVector {
+    educationVector(education: Education, userInputs: UserInputs): EducationVector {
         const weightedEducationVector: EducationVector = { education: education, coordinates: [] }; //the coordinates are calculated by multiplying the values of relevant education properties with the weight of the corresponding property
         const coordinates = weightedEducationVector.coordinates
-        const weights:QuizAnswers = userInputs.quizAnswers
-        const filterSubjects:string[] = userInputs.filters.hasSubjects
+        const weights: QuizAnswers = userInputs.quizAnswers
+        const filterSubjects: string[] = userInputs.filters.hasSubjects
         const subjectWeightAmplifier = 10
         //add subjects
-        if (filterSubjects.length > 0){
-            //console.log("hi")
-            //console.log(education.title)
-            //console.log(education.subjects)
+        if (filterSubjects.length > 0) {
+
             filterSubjects.forEach((filterSubject) => {
-                try{
-                    const subject = education.subjects.find((subject) => {return subject.title === filterSubject})
-                    coordinates.push({name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier})
-                } catch{
+                try {
+                    const subject = education.subjects.find((subject) => { return subject.title === filterSubject })
+                    coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier })
+                } catch {
                     new Error("subject not found")
                 }
             })
@@ -117,7 +111,6 @@ export class Ranker {
                 coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority })
             })
         }
-       // console.log("coordinates", coordinates)
         /*
         //add industries
         education.industries.forEach((industry) => {
@@ -154,26 +147,26 @@ export class Ranker {
             { name: "selfSchedulePercent", value: education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority },
             { name: "variableSchedulePercent", value: education.jobData.workSchedule.variableSchedulePercent * weights.variableSchedulePriority },
             { name: "nightAndEveningShiftsPercent", value: education.jobData.workSchedule.nightAndEveningShiftsPercent * weights.nightAndEveningShiftsPriority })
-           // { name: "nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority })
-        
+        // { name: "nationalJobs", value: education.jobData.nationalJobs * weights.workNationallyPriority })
+
         return weightedEducationVector
     }
 
     filtersPassed(education: Education, filters: TableFilters) {
-    
-       return   ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
-                && ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)))
-                && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions)) 
-                && ((filters.hasFormsOfEducation.length == 0)? true: (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod)))) 
-                && (filters.canWorkInternationally ? (education.jobData.nationalJobs > normalizeNationalJobs(80) ? false : true) : true)
-                && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > normalizeFlexibleHours(50) ? true : false) : true)
-                && this.educationDurationFilterPassed(education, filters.educationDuration)
-                && this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
-                && this.salaryFilterPassed(education, filters.wantedSalary)
-                && this.unemploymentFilterPassed(education, filters.unemployment)
+
+        return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
+            && ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)))
+            && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions))
+            && ((filters.hasFormsOfEducation.length == 0) ? true : (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))))
+            && (filters.canWorkInternationally ? (education.jobData.nationalJobs > normalizeNationalJobs(80) ? false : true) : true)
+            && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > normalizeFlexibleHours(50) ? true : false) : true)
+            && this.educationDurationFilterPassed(education, filters.educationDuration)
+            && this.workingHoursFilterPassed(education, filters.wantedWorkingHours)
+            && this.salaryFilterPassed(education, filters.wantedSalary)
+            && this.unemploymentFilterPassed(education, filters.unemployment)
     }
     educationDurationFilterPassed(education: Education, educationDurationFilter: MinimumMaximum): boolean {
-        const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType,true)
+        const educationDuration: MinimumMaximum = DegreeTypeToDuration(education.degreeType, true)
         return educationDuration.minimum >= educationDurationFilter.minimum && educationDuration.maximum <= educationDurationFilter.maximum
     }
     workingHoursFilterPassed(education: Education, workingHoursFilter: MinimumMaximum): boolean {
@@ -181,14 +174,14 @@ export class Ranker {
     }
     salaryFilterPassed(education: Education, salaryFilter: SalaryFilters): boolean {
         return education.jobData.salaries.newGraduate.lowerQuartile >= salaryFilter.newGraduate.minimum && education.jobData.salaries.newGraduate.upperQuartile <= salaryFilter.newGraduate.maximum
-                && education.jobData.salaries.experienced.lowerQuartile >= salaryFilter.experienced.minimum && education.jobData.salaries.experienced.upperQuartile <= salaryFilter.experienced.maximum
+            && education.jobData.salaries.experienced.lowerQuartile >= salaryFilter.experienced.minimum && education.jobData.salaries.experienced.upperQuartile <= salaryFilter.experienced.maximum
     }
     unemploymentFilterPassed(education: Education, unemploymentFilter: UnemploymentFilters): boolean {
         return education.jobData.unemployment.newGraduate <= unemploymentFilter.newGraduate.maximum && education.jobData.unemployment.newGraduate >= unemploymentFilter.newGraduate.minimum
             && education.jobData.unemployment.experienced <= unemploymentFilter.experienced.maximum && education.jobData.unemployment.experienced >= unemploymentFilter.experienced.minimum
     }
     areEquivalent(education1: Education, education2: Education): boolean {
-        return (education1.title === education2.title && 
+        return (education1.title === education2.title &&
             education1.institutions === education2.institutions &&
             education1.degreeType === education2.degreeType &&
             education1.geographies[0] === education2.geographies[0] &&

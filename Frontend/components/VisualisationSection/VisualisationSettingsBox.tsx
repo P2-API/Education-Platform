@@ -4,7 +4,7 @@ import { MultiSelectAutoComplete } from '../TableSection/FilterInputComponents';
 import { useServer } from '@backend/server/useServer';
 import { Education, EducationGroup } from 'types'
 import { ConvertPropertyToName, EducationPropertyNames } from '../../utilities/helper'
-export enum ChartType {scatter="scatter", bar="bar", radar="radar"};
+export enum ChartType { scatter = "scatter", bar = "bar", radar = "radar" };
 
 type VisualisationSettingsBoxProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>,
@@ -39,7 +39,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     const [groupedEducations, setGroupedEducations] = useState<EducationGroup[]>([]);
 
     const { getGroupedEducations, getNormalizedEducations } = useServer();
-    
+
 
     useEffect(() => {
         getGroupedEducations().then((data) => {
@@ -119,7 +119,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 </p>
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("1: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[0] = education as EducationGroup;
                         setEducationGroups(educationGroups);
@@ -133,7 +132,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("2: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[1] = education as EducationGroup;
                         setEducationGroups(educationGroups);
@@ -147,7 +145,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("3: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[2] = education as EducationGroup;
                         setEducationGroups(educationGroups);
@@ -185,7 +182,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                         label="Chart"
                         onChange={handleChartChange}
                     >
-                        <MenuItem key={"scatter"} value="scatter">Scatter</MenuItem> 
+                        <MenuItem key={"scatter"} value="scatter">Scatter</MenuItem>
                         <MenuItem key={"bar"} value="bar">Bar</MenuItem>
                         <MenuItem key={"radar"} value="radar">Radar</MenuItem>
                     </Select>
@@ -197,7 +194,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 </p>
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("1: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[0] = education as EducationGroup;
                         setEducationGroups(educationGroups);
@@ -211,7 +207,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("2: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[1] = education as EducationGroup;
                         setEducationGroups(educationGroups);
@@ -225,7 +220,6 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                 />
                 <Autocomplete
                     onChange={(_event: any, newValue: string | null) => {
-                        console.log("3: ", newValue);
                         let education = normalizedEducations.find((edu) => edu.title == newValue);
                         educationGroups[2] = education as EducationGroup;
                         setEducationGroups(educationGroups);

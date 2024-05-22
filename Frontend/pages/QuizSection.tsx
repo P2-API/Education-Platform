@@ -201,7 +201,6 @@ const QuizModal: React.FC<QuizModalProperties> = ({ isModalOpen, setIsModalOpen 
 
         SetSliderValue(3);
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-        console.log(newAnswer)
     }
 
     return (

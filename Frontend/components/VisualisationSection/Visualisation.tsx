@@ -30,7 +30,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     const [, setEducationProperties] = useState<string[]>([]);
     const quizAnswerState = useContext(QuizInfoContext);
     const filterInfo = useContext(filtersContext);
-    
+
     const { getEducationsProperties, getNormalizedEducations } = useServer();
     useEffect(() => {
         getEducationsProperties().then((data) => {
@@ -104,7 +104,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         </Paper >
     );
 
-    console.log("Visualisaztion.tsx", properties);
 
     const barPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
@@ -174,7 +173,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     function getValueByPath(obj: any, path: string): any {
         const keys = path.split('.'); // Split the path string by dot
         let value = obj;
-    
+
         // Iterate through each part of the path and access nested properties
         for (const key of keys) {
             if (value && typeof value === 'object') {
@@ -184,23 +183,19 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                 return undefined;
             }
         }
-    
+
         return value; // Return the final value
     }
 
     function getValuesOfProperties(edu: Education): number[] {
         let propertyValues: number[] = [];
-        console.log("getValuesOfProperties", properties)
         properties.forEach((property) => {
             let value = getValueByPath(edu, property);
-            console.log("value", value);
             if (typeof value === 'number') {
                 propertyValues.push(value * 100); // Times 100 to make it look better
-                console.log("value:", value * 100)
             }
 
         });
-        console.log("values of properties:", propertyValues)
         return propertyValues;
     }
 

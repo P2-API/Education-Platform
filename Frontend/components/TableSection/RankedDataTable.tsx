@@ -31,7 +31,6 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const quizAnswers = quizInfo.quizData;
   bouncy.register();
 
-  console.log("rankedData", rankedData)
   const data: RankedDataStructure[] = rankedData.ranking;
 
   const columns: MRT_ColumnDef<RankedDataStructure>[] = useMemo(
@@ -117,18 +116,18 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         size: 130,
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const subjects: string[] = row.original.education.subjects
-          .sort((a, b) => b.score - a.score)
-          .slice(0, 3)
-          .map((subject) => subject.title);
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 3)
+            .map((subject) => subject.title);
 
           return (
-          <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
-            {subjects.map((subject: string, index: number) => (
-            <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>
-              {index + 1}.{subject}
-            </p>
-            ))}
-          </ul>
+            <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
+              {subjects.map((subject: string, index: number) => (
+                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>
+                  {index + 1}.{subject}
+                </p>
+              ))}
+            </ul>
           );
         }
       },

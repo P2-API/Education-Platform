@@ -43,7 +43,7 @@ const useServer = () => {
     }
     // write more functions here
 
-    const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers,  education: Education) => {
+    const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
         const response = await fetch(`${BASEURL}/generate_personalized_message`, {
             method: "POST",
             headers: {
@@ -56,7 +56,7 @@ const useServer = () => {
     }
 
     const getSmallTextAboutEducation = async (education: Education) => {
-        
+
         const response = await fetch(`${BASEURL}/get_small_text_about_education`, {
             method: "POST",
             headers: {
@@ -69,7 +69,6 @@ const useServer = () => {
     }
 
     const updateRanking = async (filterProps: TableFilters, quizAnswers: QuizAnswers) => {
-        console.log("im in here")
         const response = await fetch(`${BASEURL}/update_ranking`, {
             method: "POST",
             headers: {
@@ -77,10 +76,8 @@ const useServer = () => {
             },
             body: JSON.stringify({ filterProps, quizAnswers })
         });
-        console.log("filterProps", filterProps)
 
         const responseJson = await response.json(); // Read the response as text
-        console.log("responseJson", responseJson)
         return responseJson;
 
     };
