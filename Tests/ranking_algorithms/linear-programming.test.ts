@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { LPsolver, findOptimalSolution, LPclass} from '../../Backend/utilities/linear-programming';
+import { LPsolver, LPclass} from '../../Backend/utilities/linear-programming';
 import * as Type from '../../src/types';
 
 const solver = new LPsolver();
-const Lp = new LPclass(solver.solver); 
 
 //default quizAnswers
 const deafultWeights:Type.QuizAnswers = {
@@ -38,7 +37,7 @@ const defaultFilters:Type.TableFilters = {
     wantedDegreeTypes: [],
     canStudyInGeographies: [], 
     canStudyAtInstitution: [],
-    hasSubjects: ["subject1", "subject2", "subject3"],
+    hasSubjects: [],
     hasFormsOfEducation: [],
     educationDuration: {minimum: 0, maximum: 1},
     wantedSalary: { newGraduate: {minimum: 0, maximum: 1},
@@ -52,39 +51,106 @@ const defaultFilters:Type.TableFilters = {
 
 describe("addObjectiveFunction() method of LPclass", () => {
     it("it should add variables and their corresponding coefficients to the objective function of the lp opject", () => {
+        // act
+        const Lp = new LPclass(solver.solver); 
         Lp.addObjectiveFunction(deafultWeights, defaultFilters);
+        const sp = deafultWeights.subjectsPriority
+        //assert
         expect(Lp.objective).toEqual({
             direction: solver.solver.GLP_MAX,
             name: "Optimal Education",
-            vars: [{name: "subject1", coef: 3},
-                   {name: "subject2", coef: 3},
-                   {name: "subject3", coef: 3},
-                   {name: "withManyStudents", coef: 3},
-                   {name: "withFewStudents", coef: 3},
-                   {name: "withSupervision", coef: 3},
-                   {name: "socialEnvironment", coef: 3},
-                   {name: "groupEngagement", coef: 3},
-                   {name: "loneliness", coef: 3},
-                   {name: "stress", coef: 3},
-                   {name: "academicEnvironment", coef: 3},
-                   {name: "teacherEvaluation", coef: 3},
-                   {name: "studentJob", coef: 3},
-                   {name: "lectures", coef: 3},
-                   {name: "literature", coef: 3},
-                   {name: "dislikeExam", coef: 3},
-                   {name: "internship", coef: 3},
-                   {name: "internationalStay", coef: 3},
-                   {name: "startingSalary", coef: 3},
-                   {name: "experiencedSalary", coef: 3},
-                   {name: "unemploymentNewGraduate", coef: 3},
-                   {name: "unemploymentExperienced", coef: 3},
-                   {name: "degreeRelevance", coef: 3},
-                   {name: "fixedHours", coef: 3},
-                   {name: "flexibleHours", coef: 3},
-                   {name: "selfSchedule", coef: 3},
-                   {name: "variableSchedule", coef: 3},
-                   {name: "nightAndEveningShifts", coef: 3 },
-                   {name: "nationalJobs", coef: 3}
+            vars: [{name: "Naturvidenskab", coef: sp},
+                    {name:"Kunst", coef: sp},
+                    {name:"Historie", coef: sp},
+                    {name:"Psykologi", coef: sp},
+                    {name:"Filosofi", coef: sp},
+                    {name:"Matematik", coef: sp},
+                    {name:"Arkitektur", coef: sp},
+                    {name:"Musik", coef: sp},
+                    {name:"Politik", coef: sp},
+                    {name:"Kultur", coef: sp},
+                    {name:"Sundhedsvidenskab", coef: sp},
+                    {name:"Jura", coef: sp},
+                    {name:"Økonomi", coef: sp},
+                    {name:"Informationsteknologi", coef: sp},
+                    {name:"Programmering", coef: sp},
+                    {name:"Miljøvidenskab", coef: sp},
+                    {name:"Uddannelse", coef: sp},
+                    {name:"Journalistik", coef: sp},
+                    {name:"Kommunikation", coef: sp},
+                    {name:"Religion", coef: sp},
+                    {name:"Sociologi", coef: 3},
+                    {name:"Landbrugsvidenskab", coef: sp},
+                    {name: "withManyStudents", coef: 3},
+                    {name: "withFewStudents", coef: 3},
+                    {name: "withSupervision", coef: 3},
+                    {name: "socialEnvironment", coef: 3},
+                    {name: "groupEngagement", coef: 3},
+                    {name: "loneliness", coef: -3},
+                    {name: "stress", coef: -3},
+                    {name: "academicEnvironment", coef: 3},
+                    {name: "teacherEvaluation", coef: 3},
+                    {name: "studentJob", coef: 3},
+                    {name: "lectures", coef: 3},
+                    {name: "literature", coef: 3},
+                    {name: "dislikeExam", coef: 3},
+                    {name: "internship", coef: 3},
+                    {name: "internationalStay", coef: 3},
+                    {name: "startingSalary", coef: 3},
+                    {name: "experiencedSalary", coef: 3},
+                    {name: "unemploymentNewGraduate", coef: -3},
+                    {name: "unemploymentExperienced", coef: -3},
+                    {name: "degreeRelevance", coef: 3},
+                    {name: "fixedHours", coef: 3},
+                    {name: "flexibleHours", coef: 3},
+                    {name: "selfSchedule", coef: 3},
+                    {name: "variableSchedule", coef: 3},
+                    {name: "nightAndEveningShifts", coef: 3 },
+                    {name: "nationalJobs", coef: 3}
+                ]
+        });
+
+        // arrange
+        const Lp2 = new LPclass(solver.solver);
+        const modifiedFilters = {...defaultFilters}
+        modifiedFilters.hasSubjects = ["Jura", "Kunst", "Historie"];
+
+        // act
+        Lp2.addObjectiveFunction(deafultWeights, modifiedFilters);
+
+        // assert
+        expect(Lp2.objective).toEqual({
+            direction: solver.solver.GLP_MAX,
+            name: "Optimal Education",
+            vars: [ {name:"Jura", coef: sp},
+                    {name:"Kunst", coef: sp},
+                    {name:"Historie", coef: sp},
+                    {name: "withManyStudents", coef: 3},
+                    {name: "withFewStudents", coef: 3},
+                    {name: "withSupervision", coef: 3},
+                    {name: "socialEnvironment", coef: 3},
+                    {name: "groupEngagement", coef: 3},
+                    {name: "loneliness", coef: -3},
+                    {name: "stress", coef: -3},
+                    {name: "academicEnvironment", coef: 3},
+                    {name: "teacherEvaluation", coef: 3},
+                    {name: "studentJob", coef: 3},
+                    {name: "lectures", coef: 3},
+                    {name: "literature", coef: 3},
+                    {name: "dislikeExam", coef: 3},
+                    {name: "internship", coef: 3},
+                    {name: "internationalStay", coef: 3},
+                    {name: "startingSalary", coef: 3},
+                    {name: "experiencedSalary", coef: 3},
+                    {name: "unemploymentNewGraduate", coef: -3},
+                    {name: "unemploymentExperienced", coef: -3},
+                    {name: "degreeRelevance", coef: 3},
+                    {name: "fixedHours", coef: 3},
+                    {name: "flexibleHours", coef: 3},
+                    {name: "selfSchedule", coef: 3},
+                    {name: "variableSchedule", coef: 3},
+                    {name: "nightAndEveningShifts", coef: 3 },
+                    {name: "nationalJobs", coef: 3}
                 ]
         });
     })
@@ -92,21 +158,124 @@ describe("addObjectiveFunction() method of LPclass", () => {
 
 describe("AddConstraintsFunction() method of LPclass", () => {
     it("should add the constraints to the lp object", () => {
+        
+        //arrange
+        const Lp = new LPclass(solver.solver); 
+
+        //act
+        Lp.addObjectiveFunction(deafultWeights, defaultFilters);
         Lp.addConstraints(defaultFilters);
+
+        //assert
         expect(Lp.subjectTo).toEqual([
             {
-                name: "subject1",
-                vars: [{name: "subject1", coef: 1}],
+                name: "Naturvidenskab",
+                vars: [{name: "Naturvidenskab", coef: 1}],
                 bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
             },
             {
-                name: "subject2",
-                vars: [{name: "subject2", coef: 1}],
+                name: "Kunst",
+                vars: [{name: "Kunst", coef: 1}],
                 bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
             },
             {
-                name: "subject3",
-                vars: [{name: "subject3", coef: 1}],
+                name: "Historie",
+                vars: [{name: "Historie", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Psykologi",
+                vars: [{name: "Psykologi", coef: 1}], 
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Filosofi",
+                vars: [{name: "Filosofi", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Matematik",
+                vars: [{name: "Matematik", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Arkitektur",
+                vars: [{name: "Arkitektur", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Musik",
+                vars: [{name: "Musik", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Politik",
+                vars: [{name: "Politik", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Kultur",
+                vars: [{name: "Kultur", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Sundhedsvidenskab",
+                vars: [{name: "Sundhedsvidenskab", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Jura",
+                vars: [{name: "Jura", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Økonomi",
+                vars: [{name: "Økonomi", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Informationsteknologi",
+                vars: [{name: "Informationsteknologi", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Programmering",
+                vars: [{name: "Programmering", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Miljøvidenskab",
+                vars: [{name: "Miljøvidenskab", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Uddannelse",
+                vars: [{name: "Uddannelse", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Journalistik",
+                vars: [{name: "Journalistik", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Kommunikation",
+                vars: [{name: "Kommunikation", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Religion",
+                vars: [{name: "Religion", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Sociologi",
+                vars: [{name: "Sociologi", coef: 1}],
+                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+            },
+            {
+                name: "Landbrugsvidenskab",
+                vars: [{name: "Landbrugsvidenskab", coef: 1}],
                 bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
             },
             {   
@@ -202,7 +371,7 @@ describe("AddConstraintsFunction() method of LPclass", () => {
             {
                 name: "unemploymentExperienced",
                 vars: [{name: "unemploymentExperienced", coef: 1}],
-                bnds: {type: solver.solver.GLP_DB, ub: 1, lb: 0}
+                bnds: {type: solver.solver.GLP_DB, ub: defaultFilters.unemployment.experienced.maximum, lb: 0}
             },
             {
                 name: "degreeRelevance",
@@ -242,64 +411,3 @@ describe("AddConstraintsFunction() method of LPclass", () => {
         );
     });
 })
-
-/*
-describe("findOptimalSolution", () => {
-    const LPtestSettings = costructDummySettings();
-    
-    it("should return the optimal value to the linear program constructed from the abovementioned settings", () => {
-        expect(findOptimalSolution(LPtestSettings).result).toBe(0);
-    })
-
-    it("should return the values of the opjective variables for which the optimal value was obtained", () => {
-        expect(findOptimalSolution(LPtestSettings).result.vars).toEqual([4,8]);
-    })
-    
-    settings.constraints = [];
-    it("should return undefined because no constraints exist meaning that the solution is unbounded", () => {
-        expect(findOptimalSolution(settings).result).toBe(undefined);
-    })
-    settings.constraints = [{coefficients: [1,0], operator: ">=", value: 1},
-                            {coefficients: [1,0], operator: "<=", value: 0}];
-
-    it("should return undefined because the constraints are contradictory", () => {
-        expect(findOptimalSolution(settings).result).toBe(undefined);
-    })
-})
-
-expect(solver.setUpLP(settings)).toEqual({
-            name: "LP",
-            objective: {
-                direction: solver.solver.GLP_MAX,
-                name: "objective value",
-                vars: [{name: "x_1", coef: 40},
-                       {name: "x_2", coef: 30}]
-            },
-            subjectTo:[{
-                    name: "constraint 1",
-                    vars: [{name: "x_1", coef: 1},
-                            {name: "x_2", coef: 1}],
-                    bnds: {type: solver.solver.GLP_UP, ub: 12, lb: 0}
-                },
-                {
-                    name: "constraint 2",
-                    vars: [{name: "x_1", coef: 2},
-                            {name: "x_2", coef: 1}],
-                    bnds: {type: solver.solver.GLP_UP, ub: 16, lb: 0}
-                },
-                {
-                    name: "constraint 3",
-                    vars: [{name: "x_1", coef: 1}],
-                    bnds: {type: solver.solver.GLP_LO, ub: 0, lb: 0}
-                },
-                {
-                    name: "constraint 4",
-                    vars: [{name: "x_2", coef: 1}],
-                    bnds: {type: solver.solver.GLP_LO, ub: 0, lb: 0}
-                }
-            ],
-        });     
-    })
-})
-
-*/

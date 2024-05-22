@@ -30,9 +30,6 @@ export function constructMatrix(educations: EducationVector[]): number[][] {
 }
 
 export function pcaData(educations: EducationVector[], transformedData: number[][], Pca: PCA): PCAData {
-    /* if (educations.length !== transformedData.length){
-         throw new Error("The number of educations and the number of transformed data points must be equal")
-     }*/
     const pcaData: PCAData = { points: [], principalComponents: { xAxis: { composition: [], varianceExplained: 0 }, yAxis: { composition: [], varianceExplained: 0 } } }
     educations.forEach((education, index) => {
         pcaData.points.push({ x: transformedData[index][0], y: transformedData[index][1], education: education.education })
