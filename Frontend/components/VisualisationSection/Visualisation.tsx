@@ -43,7 +43,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
 
     const { getPCAData } = useServer();
     const [pcaData, setPCAData] = useState<pcaScatterData>();
-
+    console.log("chartType outside of PCA fetching", chartType)
     useEffect(() => {
         getPCAData(quizAnswerState.quizData, filterInfo.filters).then((data) => {
             setPCAData({
@@ -51,8 +51,9 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                 yValues: data?.points.map((point) => point.y),
                 textValues: data?.points.map((point) => point.education.title)
             })
+            console.log("chartType inside of PCA fetching", chartType)
         })
-    }, [quizAnswerState.quizData]);
+    }, [quizAnswerState.quizData, chartType]);
     const rankedData = rankedDataInfo;
     const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
 
@@ -272,13 +273,15 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
         </Paper >
     );
 
-    return (
-        ((chartType == ChartType.scatter) && scatterPlot)
-        ||
-        ((chartType == ChartType.bar) && barPlot)
-        ||
-        ((chartType == ChartType.radar) && radarPlot)
-    )
+    if (chartType == ChartType.scatter) {
+        return scatterPlot;
+    }
+    else if (chartType == ChartType.bar) {
+        return barPlot;
+    }
+    else{
+        return radarPlot;
+    }
 }
 
 

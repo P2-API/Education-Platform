@@ -71,7 +71,7 @@ const calculateEducationProperties = () => {
         degreeType: DegreeType["Andre uddannelser"],
         counties: [],
         geographies: [],
-        institutions: Institution["?"],
+        institution: Institution["?"],
         subjects: [],
         industries: [],
         hours: {

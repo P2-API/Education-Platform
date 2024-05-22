@@ -56,7 +56,13 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
     //let educationPropertiesTitles = educationProperties.map((education) => education.title);
 
     const handleChartChange = (event: SelectChangeEvent) => {
-        setChartType(event.target.value as ChartType);
+        const chartType: ChartType = event.target.value as ChartType;
+        if (chartType == ChartType.scatter){
+            setProperties([]);
+            setEducationGroups([]);
+        }
+        setChartType(chartType);
+        
     };
 
     const scatterPlotSettingBox = (
@@ -245,14 +251,15 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
         </Paper>
     );
 
-    return (
-        ((chartType == ChartType.scatter) && scatterPlotSettingBox)
-        ||
-        ((chartType == ChartType.bar) && barPlotSettingBox)
-        ||
-        ((chartType == ChartType.radar) && radarPlotSettingBox)
-
-    );
+    if (chartType == ChartType.scatter) {
+        return scatterPlotSettingBox;
+    }
+    else if (chartType == ChartType.bar) {
+        return barPlotSettingBox;
+    }
+    else {
+        return radarPlotSettingBox;
+    }
 };
 
 export default VisualisationSettingsBox
