@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest --coverage",
     "server": "ts-node  Backend/server/server.ts",
-    "dev-server": "ts-node-dev --respawn --pretty --transpile-only Backend/server/server.ts",
+    "dev-server": "ts-node-dev --respawn --pretty --transpile-only Backend/server/server_old.ts",
     "start": "concurrently \"npm run dev-server\" \"npm run dev\""
   },
   "exports": "./dist/index.js",
