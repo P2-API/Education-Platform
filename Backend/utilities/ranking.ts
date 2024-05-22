@@ -11,8 +11,7 @@ export class Ranker {
     }
 
     produceRanking(userInputs: UserInputs): FinalRankingType {
-        const educationData: EducationData = getEducationData()
-        educationData.normalized = educationData.normalized.filter((education) => education.subjects.length > 0)
+        const educationData:EducationData = getEducationData()
         this.roughSorting(userInputs.filters, educationData.normalized)
         const optimalEducation = findOptimalSolution(userInputs)
         const rankedEducations = this.normSorting(this.ranking, optimalEducation, userInputs)

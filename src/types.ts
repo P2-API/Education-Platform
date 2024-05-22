@@ -86,7 +86,7 @@ export type Education = {
     degreeType: DegreeType; // filter = wantedDegreeTypes: string[];
     counties: County[];
     geographies: Geography[];  // filter = canStudyInGeoraphies: Geography[]
-    institutions: Institution; // filter = canStudyAtInstitution: Institution[];
+    institution: Institution; // filter = canStudyAtInstitution: Institution[];
     subjects: Subject[] // LP filter = hasSubjects: string[]; / Quiz = subjects_priority: number;
     industries: Industry[]; // LP filter = hasIndustries: string[]; Quiz = industries_priority: number;
     hours: HoursSpentDoing; // quiz = high_workload_acceptance_priority: number; 
