@@ -84,7 +84,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         accessorKey: "education.institutions",
         header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
-          const institutionName = Institution[row.original.education.institutions];
+          const institutionName = Institution[row.original.education.institution];
           // (row.original.institutions)
           return (
             <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
@@ -497,8 +497,8 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   };
 
 
-  const getMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
-    const message = await getPersonalizedMessage(filters, quizAnswers, education);
+  const getMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education, doesPassFilters: Boolean) => {
+    const message = await getPersonalizedMessage(filters, quizAnswers, education, doesPassFilters);
     return message;
   }
 
@@ -508,6 +508,8 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     const [message, setMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
+    const doesPassFilters = row.index < rankedData.index;
+
     useEffect(() => {
       getSmallTextAboutEducation(row.original.education).then((text) => {
         setSmallText(text);
@@ -516,7 +518,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
 
     const handleClick = async () => {
       setLoading(true);
-      getMessage(filters, quizAnswers, row.original.education).then((message) => {
+      getMessage(filters, quizAnswers, row.original.education, doesPassFilters).then((message) => {
         setMessage(message);
         setLoading(false);
       });

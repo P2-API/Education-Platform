@@ -43,13 +43,13 @@ const useServer = () => {
     }
     // write more functions here
 
-    const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education) => {
+    const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education, doesPassFilters: Boolean) => {
         const response = await fetch(`${BASEURL}/generate_personalized_message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ filters, quizAnswers, education })
+            body: JSON.stringify({ filters, quizAnswers, education, doesPassFilters })
         });
         const personalizedMessage = await response.text();
         return personalizedMessage;

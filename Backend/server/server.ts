@@ -72,9 +72,10 @@ server.post("/generate_personalized_message", (request: Request, response: Respo
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
     const education = requestData.education;
+    const doesPassFilters = requestData.doesPassFilters;
 
     let personalizedMessage;
-    getPersonalizedMessage(filters, quizAnswers, education).then((text) => {
+    getPersonalizedMessage(filters, quizAnswers, education, doesPassFilters).then((text) => {
         personalizedMessage = text;
         response.status(200).send(personalizedMessage);
     }

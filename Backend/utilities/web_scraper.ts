@@ -148,17 +148,18 @@ function loadEducationsFromFile(filePath: string): EducationsGroupped {
     }
 }
 
-export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education): Promise<string> {
+export async function getPersonalizedMessage(filters: TableFilters, quiz: QuizAnswers, education: Education, doesPassFilters: Boolean): Promise<string> {
     try {
         const text = await getAllText(education.url);
         if (text === "Error fetching the URL" || text === null) {
             console.error("Error fetching or processing text from URL:", education.url);
             return "Der skete en fejl ved generering af en besked, prøv venligst senere";
         }
-        console.log("filter subjects", filters.hasSubjects)
-        const promptString = "Du skal give en kort forklaring på, om denne uddannelse passer til den enkelte bruger. Det er helt fint at sige at den ikke lever op til kravene. Hvis filters.hasSubjects er en tom liste, så skal du ikke inddrage fagene i din besvarelse. Det vigtige er, om fagene man har valgt i filtret passer til uddannelsen. Du skal tage udgangspunkt i de præferancer brugeren har valgt, og de filtre brugeren har valgt, samt de faktiske data for den enkelte uddannelse. Du skal fokusere på de præferancer som brugeren har valgt, som har en score på 4-5. Du skal fokusere meget på de filtre der er valgt, eksempelvis løn eller arbejdsløshed. Du skal også tage højde for de filtre brugeren har valgt, og kun anbefale uddannelsen hvis den passer til de filtre brugeren har valgt. Hvis en uddannelse har lave score i de fag man har valgt, så skal man ikke anbefale uddannelsen. Hvis ikke uddannelsen lever op til filtrene, så skal du fortælle brugeren hvorfor den ikke passer. returneres som en JSON-streng. Returner kun den personlige tekst.";
+        const passesFilters = doesPassFilters ? "Ja! derfor SKAL du forklare hvorfor den kan anbefales" : "Nej. Derfor skal du forklare HVORFOR den ikke lever op til kravene.";
+        const promptString = `Lever denne uddannelse op til kravene? ${passesFilters}. Du skal give en kort forklaring på, om denne uddannelse passer til den enkelte bruger. Det er helt fint at sige at den ikke lever op til kravene. Hvis filters.hasSubjects er en tom liste, så skal du ikke inddrage fagene i din besvarelse. Hvis en uddannelse ikke lever op til filtrene, så skal du ikke kommentere på, hvorfor den kan være et godt match, men hvorfor den ikke er et godt match. Det vigtige er, om fagene man har valgt i filtret passer til uddannelsen. Du skal tage udgangspunkt i de præferancer brugeren har valgt, og de filtre brugeren har valgt, samt de faktiske data for den enkelte uddannelse. Du skal fokusere på de præferancer som brugeren har valgt, som har en score på 4-5. Du skal fokusere meget på de filtre der er valgt, eksempelvis løn eller arbejdsløshed. Du skal også tage højde for de filtre brugeren har valgt, og kun anbefale uddannelsen hvis den passer til de filtre brugeren har valgt. Hvis en uddannelse har lave score i de fag man har valgt, så skal man ikke anbefale uddannelsen. Hvis ikke uddannelsen lever op til filtrene, så skal du fortælle brugeren hvorfor den ikke passer. returneres som en JSON-streng. Returner kun den personlige tekst.`;
 
         const message = await sendMessageToChatGPT(text, quiz, education, filters, promptString);
+        console.log("message:", message)
         return message;
     } catch (error) {
         console.error('Error:', error);
@@ -293,7 +294,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
         messages: [
             {
                 role: "system",
-                content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() +
+                content: ("dette er en kort text omkring uddanelsen =" + text).replace(/\s+/g, ' ').trim() + ". Lever den op til filtrene? = " +
                     ' | ' +
                     "Følgende data er brugerens individuelle præferencar. En score på 1 betyder at det slet ikke er vigtigt, en score på 3 betyder at det ikke rigtigt er vigtigt, en score på 4 eller 5 betyder at det er meget vigtigt for vedkommende. Du skal fokusere på de prioriteter som brugeren har valgt, som har en score på 4-5. Her er præferancerne. =" + JSON.stringify(preferences).replace(/"/g, '') +
                     ' | ' +
@@ -313,9 +314,8 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
     });
 
     const jsonString = completion.choices[0].message.content;
-    const obj = JSON.parse(jsonString);
-
-    return obj.personalizedText;
+    const jsonObject = JSON.parse(jsonString);
+    return jsonObject.text;
 }
 
 async function translateTextToEnglishChatGPT(text: string) {
