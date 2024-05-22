@@ -12,6 +12,7 @@ import { Education, FinalRankingType, QuizAnswers, RankedDataStructure, TableFil
 import { useServer } from "../../../Backend/server/useServer";
 import { useEffect, useState, useContext } from "react";
 import { filtersContext, QuizInfoContext } from "../Tabs";
+import { bouncy } from 'ldrs'
 
 type RankedMaterialReactDataTableProps = {
   rankedData: FinalRankingType;
@@ -28,6 +29,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
   const quizInfo = useContext(QuizInfoContext);
   const filters = filterInfo.filters
   const quizAnswers = quizInfo.quizData;
+  bouncy.register();
 
 
   const data: RankedDataStructure[] = rankedData.ranking;
@@ -500,6 +502,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
     const [smallText, setSmallText] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
       getSmallTextAboutEducation(row.original.education).then((text) => {
@@ -508,20 +511,39 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     }, [row.original.education]);
 
     const handleClick = async () => {
+      setLoading(true);
       getMessage(filters, quizAnswers, row.original.education).then((message) => {
         setMessage(message);
+        setLoading(false);
       });
     }
 
     return (
-      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
+      <div style={{ marginLeft: `${margingLeft}px`, height: "400px", width: "400px", padding: 0, overflowY: "scroll", scrollbarWidth: "thin" }}>
+        <p style={{ borderBottom: "2px solid #006eff", marginBottom: "0em" }}><b>{row.original.education.title}:</b></p>
         <p>{smallText}</p>
         {!smallText && <p>Indlæser...</p>}
-        <button onClick={handleClick}>
-          Generere personlig besked
-        </button>
+        {smallText && (
+          <>
+            {!message && !loading && <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={handleClick}>Generer personlig forklaring</button>}
+            {loading && (
+              <div style={{ display: "flex" }}>
+                <p style={{}}>Genererer</p>
+                <div style={{ marginTop: "10px", marginLeft: "10px" }}>
+                  <l-bouncy
+                    size="35"
+                    speed="1.75"
+                    color="black"
+                  ></l-bouncy>
+                </div>
+
+              </div>
+
+
+            )}
+          </>
+        )}
         <p>{message}</p>
-        {!message && <p>Personlig besked bliver bedst hvis quizzen er besvaret</p>}
       </div>
     );
   };
