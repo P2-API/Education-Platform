@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import { Education } from "@src/types"
 import { Institution } from "../../../src/enums"
 import {
@@ -9,12 +9,17 @@ import {
   MRT_Row,
   MRT_ColumnVirtualizer,
 } from "material-react-table";
+import { useServer } from "@backend/server/useServer"
 
 type MaterialReactDataTableProps = {
   data: Education[];
 }
 
 const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data }) => {
+
+  const { getSmallTextAboutEducation } = useServer();
+
+
   const columns: MRT_ColumnDef<Education>[] = useMemo(
     () => [
       {
@@ -53,7 +58,7 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         accessorKey: "institutions",
         header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const institutionName = Institution[row.original.institutions];
+          const institutionName = Institution[row.original.institution];
           // (row.original.institutions)
           return (
             <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }}>{institutionName}</p>
@@ -84,12 +89,17 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
         header: "Fag",
         size: 130,
         Cell: ({ row }: { row: MRT_Row<Education> }) => {
-          const subjects: string[] = row.original.subjects.map((subject) => subject.title)
-          // ("subjects", subjects)
+          const subjects: string[] = row.original.subjects
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 3)
+            .map((subject) => subject.title);
+
           return (
             <ul style={{ padding: 0, width: "250px", justifyContent: "center", height: "60px" }}>
               {subjects.map((subject: string, index: number) => (
-                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>{index + 1}.{subject}</p>
+                <p className="" style={{ cursor: "default", margin: 0, fontSize: "1em", textDecoration: "none", fontWeight: "normal" }} key={subject}>
+                  {index + 1}.{subject}
+                </p>
               ))}
             </ul>
           );
@@ -460,11 +470,39 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
   const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
   const columnVirtualizerInstanceRef = useRef<MRT_ColumnVirtualizer>(null);
 
-  const DetailPanelContent = () => {
+
+  type DetailPanelContentProps = {
+    row: MRT_Row<Education>;
+  };
+
+
+  const DetailPanelContent: React.FC<DetailPanelContentProps> = ({ row }) => {
+    const [smallText, setSmallText] = useState<string | null>(null);
+
+
+    useEffect(() => {
+      getSmallTextAboutEducation(row.original).then((text) => {
+        setSmallText(text);
+      });
+    }, [row.original.title]);
+
+
     const margingLeft = columnVirtualizerInstanceRef.current?.scrollOffset || 0;
+
     return (
-      <div style={{ marginLeft: `${margingLeft}px`, height: "800px", width: "400px", padding: 0, backgroundColor: "grey", overflowY: "scroll", scrollbarWidth: "thin" }}>
-        NOT RANKED
+      <div style={{ marginLeft: `${margingLeft}px`, height: "300px", width: "400px", padding: 0, overflowY: "scroll", scrollbarWidth: "thin" }}>
+        <p style={{ borderBottom: "2px solid #006eff", marginBottom: "0em" }}><b>{row.original.title}:</b></p>
+        {!smallText && <p>Indlæser...</p>}
+        {smallText && (
+          <>
+
+            <p>{smallText}</p>
+            <p>Hvis du vil generere en personlig anbefaling skal du først vælge filtre og trykke beregn eller besvare quizzen.</p>
+            <a href={`https://${row.original.url}`} style={{ color: "blue" }} target="" rel="noopener noreferrer">Læs mere om uddannelsen på UG.dk</a>
+
+          </>
+        )}
+
       </div>
     );
   };
@@ -473,21 +511,11 @@ const MaterialReactDataTable: React.FC<MaterialReactDataTableProps> = ({ data })
     columns,
     data, //10,000 rows
     enableExpandAll: false,
-    renderDetailPanel: () => <DetailPanelContent />,
-    muiTableBodyRowProps: ({ row }) => ({
-      onClick: () => {
-        row.toggleExpanded();
-        // if expanded, change background color of row
-        if (row.getIsExpanded()) {
-          // change style of row
-
-        }
-      },
-      sx: {
-        cursor: 'pointer',
-      },
+    renderDetailPanel: ({ row }: { row: MRT_Row<Education>; }) => <DetailPanelContent row={row} />,
+    muiExpandButtonProps: ({ row, table }) => ({
+      onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //set only this row to be expanded
     }),
-    positionExpandColumn: "last",
+    positionExpandColumn: "first",
     enableBottomToolbar: false,
     enableColumnResizing: true, // enable column resizing
     enableGlobalFilter: true,

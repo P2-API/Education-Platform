@@ -550,6 +550,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
           </>
         )}
         <p>{message}</p>
+        {!message && (
+          <a href={`https://${row.original.education.url}`} style={{ color: "blue" }} target="" rel="noopener noreferrer">Læs mere om uddannelsen på UG.dk</a>
+        )}
       </div>
     );
   };
@@ -561,7 +564,6 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
     renderDetailPanel: ({ row }: { row: MRT_Row<RankedDataStructure>; }) => <DetailPanelContent row={row} />,
     muiTableBodyRowProps: ({ row }) => ({
       sx: {
-        cursor: 'pointer',
         backgroundColor: (!row.getIsExpanded() && row.index >= rankedData.index) ? "#f2cbcb" : row.getIsExpanded() ? "#f0f0f0" : row.index <= 10 ? row.index <= 4 ? "#72bd7f" : "#9bd5a5" : "#cfe6d3",
       },
     }),

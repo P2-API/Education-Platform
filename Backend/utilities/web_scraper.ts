@@ -290,7 +290,8 @@ export async function fetchHtml(url: string) {
 }
 
 async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, education: Education, filters: TableFilters, promptString: string) {
-    const completion = await openai.chat.completions.create({
+    let completion;
+    await openai.chat.completions.create({
         messages: [
             {
                 role: "system",
@@ -298,7 +299,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
                     ' | ' +
                     "Følgende data er brugerens individuelle præferencar. En score på 1 betyder at det slet ikke er vigtigt, en score på 3 betyder at det ikke rigtigt er vigtigt, en score på 4 eller 5 betyder at det er meget vigtigt for vedkommende. Du skal fokusere på de prioriteter som brugeren har valgt, som har en score på 4-5. Her er præferancerne. =" + JSON.stringify(preferences).replace(/"/g, '') +
                     ' | ' +
-                    "Følgende er  data omkring den specifikke uddanelse. Det er uddannelsens score indenfor en række faktorer. Her er alle numeriske værdier under subjects normaliseret til at være mellem 0 og 1. 0 betyder at uddannelsesn er den laveste i forhold til alle andre uddannelser, mens en score på 1 betyder at uddannelsen har den højeste score for denne faktor af alle uddannelser. =" + JSON.stringify(education).replace(/"/g, '') +
+                    "Følgende er  data omkring den specifikke uddanelse. Det er uddannelsens score indenfor en række faktorer. Her er alle numeriske værdier under subjects normaliseret til at være mellem 0 og 1. 0 betyder at uddannelsesn er den laveste i forhold til alle andre uddssannelser, mens en score på 1 betyder at uddannelsen har den højeste score for denne faktor af alle uddannelser. =" + JSON.stringify(education).replace(/"/g, '') +
                     ' | ' +
                     "Følgende er hvilke filtre brugeren har valgt at sammenligne uddanelserne med. HVIS SUBJECTS er TOM, SKAL DU IKKE KOMMENTERE OVERHOVEDET PÅ BRUGERENS SCORE INDENFOR FAG. Alle punkter er hårde filtre, hvilket vil sige, at hvis en bruger har indtastet Hovedstaten indenfor Geografi, så er det kun uddannelser der ligger i Hovedstaten som er accepteret. Det eneste punkt der ikke er en hård filter er Subjects, hvilket handler om de fag brugeren har valgt. Et fag som brugeren har valgt fungerer som en vægt i rangeringen af hvilken uddannelse der er den optimale for den enkelte bruger. Hvis en bruger har valgt fagene Matematik og Programmering, og uddannelsens score indenfor de 2 fag er under 0.5, så skal du ikke anbefale uddannelsen på baggrund af fagene. Her er filtrene = " + JSON.stringify(filters).replace(/"/g, '')
                 ,
@@ -311,7 +312,9 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
         model: "gpt-3.5-turbo-0125",
         response_format: { type: "json_object" },
         temperature: 0.2,
-    });
+    }).then((result) => {
+        completion = result
+    }).catch((error) => console.log("error:", error));
 
     const jsonString = completion.choices[0].message.content;
     const jsonObject = JSON.parse(jsonString);
