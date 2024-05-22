@@ -26,7 +26,7 @@ const VisualisationSection: React.FC<VisualisationSectionProps> = ({ rankedDataI
                     <VisualisationSettingsBox setUpdate={setUpdate} chartType={chartType} setChartType={setChartType} setProperties={setProperties} educationGroups={educationGroups} setEducationGroups={setEducationGroups} />
                 </div>
                 <div style={{ width: "69%" }}>
-                    <Visualisation setUpdate={setUpdate} chartType={chartType} properties={properties} rankedDataInfo={rankedDat} educationGroups={educationGroups} />
+                    <Visualisation setUpdate={setUpdate} chartType={chartType} properties={properties} rankedDataInfo={rankedDat} educationGroups={educationGroups}  />
                 </div>
             </div>
         );
