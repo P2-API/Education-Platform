@@ -36,7 +36,7 @@ function csvParser(csvData: string): Education[] {
             "degreeType": DegreeType[values[6]],
             "counties": [County[values[11]]],
             "geographies": [countyToGeography(County[values[11]])],
-            "institutions": Institution[values[9]],
+            "institution": Institution[values[9]],
             "subjects": [],
             "industries": [
                 {

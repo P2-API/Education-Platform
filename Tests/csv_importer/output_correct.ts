@@ -9,7 +9,7 @@ export let educations: Education[] = [
         "degreeType": DegreeType.Kandidatuddannelse,
         "counties": [County.Frederiksberg],
         "geographies": [Geography.Hovedstaden],
-        "institutions": Institution["Copenhagen Business School - Handelshøjskolen"],
+        "institution": Institution["Copenhagen Business School - Handelshøjskolen"],
         "subjects": [],
         "industries": [
             {
@@ -103,7 +103,7 @@ export let educations: Education[] = [
         "degreeType": DegreeType.Kandidatuddannelse,
         "counties": [County.København],
         "geographies": [Geography.Hovedstaden],
-        "institutions": Institution["Københavns Universitet"],
+        "institution": Institution["Københavns Universitet"],
         "subjects": [],
         "industries": [
             {
@@ -197,7 +197,7 @@ export let educations: Education[] = [
         "degreeType": DegreeType.Kandidatuddannelse,
         "counties": [County.Aarhus],
         "geographies": [ Geography.Midtjylland],
-        "institutions": Institution["Aarhus Universitet"],
+        "institution": Institution["Aarhus Universitet"],
         "subjects": [],
         "industries": [
             {
