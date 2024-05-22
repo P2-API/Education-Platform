@@ -117,16 +117,17 @@ export class Ranker {
         })
         */
         //add hours
-        coordinates.push({ name: "HoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority },
-            { name: "HourswithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority },
-            { name: "HoursWithSupervision", value: education.hours.withSupervision * weights.highWorkloadAcceptancePriority })
+        coordinates.push({ name: "hoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority },
+            { name: "hoursWithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority },
+            { name: "hoursWithSupervision", value: education.hours.withSupervision * weights.highWorkloadAcceptancePriority })
         //add socialFeedback
         coordinates.push({ name: "socialEnvironment", value: education.socialFeedback.socialEnvironment * weights.socialEnvironmentPriority },
             { name: "groupEngaement", value: education.socialFeedback.groupEngagement * weights.groupEngagementPriority },
-            { name: "loneliness", value: education.socialFeedback.loneliness * weights.lonelinessPriority })
+            { name: "loneliness", value: education.socialFeedback.loneliness * weights.lonelinessPriority },
+            { name: "stress", value: education.socialFeedback.stress * weights.stressPriority})
         //add academicFeedback
         coordinates.push({ name: "acedemicEnvironment", value: education.academicFeedback.academicEnvironment * weights.academicEnvironmentPriority },
-            { name: "acedemicFeedback", value: education.academicFeedback.teacherEvaluation * weights.teachingPriority })
+            { name: "teacherEvaluation", value: education.academicFeedback.teacherEvaluation * weights.teachingPriority })
         //add academicWorkload
         coordinates.push({ name: "studentJob", value: education.academicWorkload.studentJob * weights.studentJobPriority },
             { name: "lectures", value: education.academicWorkload.lectures * weights.lecturesPriority },
@@ -155,7 +156,7 @@ export class Ranker {
 
         return ((filters.wantedDegreeTypes.length === 0) ? true : filters.wantedDegreeTypes.includes(education.degreeType))
             && ((filters.canStudyInGeographies.length === 0) ? true : filters.canStudyInGeographies.some((geography) => education.geographies.includes(geography)))
-            && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institutions))
+            && ((filters.canStudyAtInstitution.length === 0) ? true : filters.canStudyAtInstitution.includes(education.institution))
             && ((filters.hasFormsOfEducation.length == 0) ? true : (filters.hasFormsOfEducation.some((teachingMethod) => education.degreeStructure.teachingMethods.includes(teachingMethod))))
             && (filters.canWorkInternationally ? (education.jobData.nationalJobs > normalizeNationalJobs(80) ? false : true) : true)
             && ((filters.hasFlexibleJobSchedule === true) ? (education.jobData.workSchedule.flexibleHoursPercent > normalizeFlexibleHours(50) ? true : false) : true)
@@ -181,7 +182,7 @@ export class Ranker {
     }
     areEquivalent(education1: Education, education2: Education): boolean {
         return (education1.title === education2.title &&
-            education1.institutions === education2.institutions &&
+            education1.institution === education2.institution &&
             education1.degreeType === education2.degreeType &&
             education1.geographies[0] === education2.geographies[0] &&
             education1.url === education2.url &&

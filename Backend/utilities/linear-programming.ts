@@ -120,7 +120,7 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     degreeType: "" as DegreeType, // irrelevant 
     counties: [] as County[], // irrelevant 
     geographies: [] as Geography[], // irrelevant 
-    institutions: "" as Institution, // irrelevant
+    institution: "" as Institution, // irrelevant
     subjects: addSubjects(result, filters.hasSubjects),
     industries: [], // irrelevant
     hours: {
