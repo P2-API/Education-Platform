@@ -20,9 +20,6 @@ const Homepage: React.FC = () => {
   const tableRef = useRef<HTMLDivElement>(null);
 
 
-
-
-
   // Fetch data from server
   const { getTableSectionData } = useServer();
   useEffect(() => {
