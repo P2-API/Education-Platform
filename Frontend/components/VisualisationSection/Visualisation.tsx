@@ -21,6 +21,8 @@ type pcaScatterData = {
     xValues: number[],
     yValues: number[]
     textValues: string[]
+    xAxisTitle?: string
+    yAxisTitle?: string
 }
 
 let normalizedEducations: Education[] = [];
@@ -47,9 +49,12 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     useEffect(() => {
         getPCAData(quizAnswerState.quizData, filterInfo.filters).then((data) => {
             setPCAData({
-                xValues: data?.points.map((point) => point.x),
-                yValues: data?.points.map((point) => point.y),
-                textValues: data?.points.map((point) => point.education.title)
+                xValues: data?.points.map((point) => parseFloat(point.x.toFixed(2))),
+                yValues: data?.points.map((point) => parseFloat(point.y.toFixed(2))),
+                textValues: data?.points.map((point) => point.education.title),
+
+                xAxisTitle: data?.principalComponents.xAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ...",
+                yAxisTitle: data?.principalComponents.yAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ..."
             })
             console.log("chartType inside of PCA fetching", chartType)
             console.log("PCA data fetched", data)
@@ -92,10 +97,10 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                     layout={{
                         title: "PCA Analyse",
                         xaxis: {
-                            title: "Kramsemar",
+                            title: pcaData?.xAxisTitle,
                         },
                         yaxis: {
-                            title: "Hjalfedildur",
+                            title: pcaData?.yAxisTitle,
                         },
                         hovermode: "closest",
                         hoverlabel: { bgcolor: "#FFF" },
@@ -288,7 +293,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
     else if (chartType == ChartType.bar) {
         return barPlot;
     }
-    else{
+    else {
         return radarPlot;
     }
 }

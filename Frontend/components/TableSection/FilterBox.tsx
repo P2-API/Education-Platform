@@ -3,79 +3,28 @@ import Paper from '@mui/material/Paper';
 import { useContext, useEffect, useState } from "react";
 import { EducationDataFromServerContext } from "@frontend/pages/Homepage";
 import { MultiSelectAutoComplete, MinimumDistanceSlider, CheckmarkToggleButton } from "./FilterInputComponents";
-import { MinimumMaximum, FinalRankingType } from "@src/types"
+import { FinalRankingType } from "@src/types"
 import { bouncy } from 'ldrs';
 import QuizModal from "@frontend/pages/QuizModal"
 import { useServer } from '@backend/server/useServer';
 import { QuizInfoContext } from '../Tabs';
 import { FilterInfoType } from '@frontend/components/Tabs';
 
-
-
 type FilterBoxComponentProps = {
-    isCalculating: Boolean;
-    setIsCalculating: React.Dispatch<React.SetStateAction<boolean>>;
     setRankedData: React.Dispatch<React.SetStateAction<FinalRankingType | null>>;
     filterInfo: FilterInfoType
 }
 
-
-
-const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, setIsCalculating, setRankedData, filterInfo }) => {
+const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ setRankedData, filterInfo }) => {
+    bouncy.register();
     const data = useContext(EducationDataFromServerContext);
-
-    const quizAnswerState = useContext(QuizInfoContext)?.quizData;
-    const SetQuizAnswerState = useContext(QuizInfoContext)?.setQuizData;
-    const isModalOpen = useContext(QuizInfoContext)?.isQuizOpen;
-    const setIsModalOpen = useContext(QuizInfoContext)?.setIsQuizOpen;
-
-
-
-    // Value packing for salary sliders
-    const newGraduateSalaryRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation?.jobData.salaries.newGraduate.lowerQuartile ?? 0,
-        maximum: data?.maximumValueEducation?.jobData.salaries.newGraduate.upperQuartile ?? 1
-    };
-    const experiencedSalaryRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation?.jobData.salaries.experienced.lowerQuartile ?? 0,
-        maximum: data?.maximumValueEducation?.jobData.salaries.experienced.upperQuartile ?? 1
-    };
-    // Value packing for working hours slider
-    const wantedWorkingHoursRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation?.jobData.workSchedule.workingHours ?? 0,
-        maximum: data?.maximumValueEducation?.jobData.workSchedule.workingHours ?? 1,
-    }
-
-    // Value packing for unemployment sliders
-    const newGraduateUnemploymentRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation?.jobData.unemployment.newGraduate ?? 0,
-        maximum: data?.maximumValueEducation?.jobData.unemployment.newGraduate ?? 1,
-    }
-    const experiencedUnemploymentRange: MinimumMaximum = {
-        minimum: data?.minimumValueEducation?.jobData.unemployment.experienced ?? 0,
-        maximum: data?.maximumValueEducation?.jobData.unemployment.experienced ?? 1,
-    }
-
-
-
+    const quizInfo = useContext(QuizInfoContext);
+    const [isCalculating, setIsCalculating] = useState(false);
     const { filters, setFilters } = filterInfo;
+    const { updateRanking } = useServer();
+    const [internalFilters, setInternalFilters] = useState(filters); // Initialize with filters directly
 
 
-    useEffect(() => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            wantedSalary: {
-                newGraduate: newGraduateSalaryRange,
-                experienced: experiencedSalaryRange
-            },
-            wantedWorkingHours: wantedWorkingHoursRange,
-            unemployment: {
-                newGraduate: newGraduateUnemploymentRange,
-                experienced: experiencedUnemploymentRange
-            },
-            educationDuration: data?.educationDurationRange ?? { minimum: 0, maximum: 36 }
-        }));
-    }, [data]);
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
     const getValueTextSalary = (value: number) => { return `${value}k kr.` }
@@ -85,24 +34,39 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
 
 
     // rank degrees: 
-    const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
         setFilters(internalFilters);
-        const response = await updateRanking(internalFilters, quizAnswerState,);
+        const response = await updateRanking(internalFilters, quizInfo.quizData,);
         setRankedData(response);
         setIsCalculating(false);
     }
-    const [internalFilters, setInternalFilters] = useState(filters); // Initialize with filters directly
 
     useEffect(() => {
         setInternalFilters(filters); // Update internalFilters whenever filters change
     }, [filters]);
+    useEffect(() => {
+        setInternalFilters((prevFilters) => ({
+            ...prevFilters,
+            educationDuration: data?.filterBoxRanges.educationDurationRange ?? { minimum: 4, maximum: 36 },
+            wantedSalary: {
+                newGraduate: data?.filterBoxRanges.salaryRange.newGraduate ?? { minimum: 11.4, maximum: 60.3 },
+                experienced: data?.filterBoxRanges.salaryRange.experienced ?? { minimum: 5, maximum: 97.35 },
+            },
+            wantedWorkingHours: data?.filterBoxRanges.wantedWorkingHoursRange ?? { minimum: 31, maximum: 57 },
+            unemployment: {
+                newGraduate: data?.filterBoxRanges.unemploymentRange.newGraduate ?? { minimum: 0, maximum: 37 },
+                experienced: data?.filterBoxRanges.unemploymentRange.experienced ?? { minimum: 0, maximum: 10 },
+            },
+        }));
+    }, [data]);
 
-    bouncy.register()
+
+
+
     return (
         <>
-            <QuizModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setQuizAnswerState={SetQuizAnswerState} quizAnswerState={quizAnswerState} filters={filterInfo.filters} setRankedData={setRankedData} setIsCalculating={setIsCalculating} />
+            <QuizModal isModalOpen={quizInfo.isQuizOpen} setIsModalOpen={quizInfo.setIsQuizOpen} setQuizAnswerState={quizInfo.setQuizData} quizAnswerState={quizInfo.quizData} filters={filterInfo.filters} setRankedData={setRankedData} setIsCalculating={setIsCalculating} />
             <Paper elevation={2} style={{ marginRight: "1em", height: "100%", zIndex: 1, width: "100%", overflowY: "scroll", scrollbarWidth: "none" }}>
 
                 {isCalculating ? (
@@ -118,7 +82,7 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                     <>
                         <div style={{ height: "3.5em", position: "sticky", top: 0, zIndex: 2, borderBottom: "2px solid black", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "white" }}>
                             <h2 style={{ textAlign: "left", paddingLeft: "0.5em" }}>Filtre</h2>
-                            <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => setIsModalOpen(true)}>Quiz</button>
+                            <button className="primary-button" style={{ marginRight: "0.5em", borderRadius: 5 }} onClick={() => quizInfo.setIsQuizOpen(true)}>Quiz</button>
                         </div>
                         <div style={{ padding: "1em", display: "grid", gap: "1em", height: "100%", overflowY: "scroll", scrollbarColor: "red", scrollbarWidth: "thin" }}>
                             <>
@@ -163,8 +127,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="hasFormsOfEducation"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
-                                    sliderRange={data?.educationDurationRange ?? { minimum: 0, maximum: 0 }}
+                                    initialState={data?.filterBoxRanges.educationDurationRange ?? { minimum: 4, maximum: 36 }}
+                                    sliderRange={data?.filterBoxRanges.educationDurationRange ?? { minimum: 4, maximum: 36 }}
                                     givenValue={internalFilters.educationDuration}
                                     minimumDistance={1}
                                     description="Filtrer efter uddannelsesvarighed i måneder"
@@ -173,8 +137,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="educationDuration"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={newGraduateSalaryRange}
-                                    sliderRange={newGraduateSalaryRange}
+                                    initialState={data?.filterBoxRanges.salaryRange.newGraduate ?? { minimum: 11.4, maximum: 60.3 }}
+                                    sliderRange={data?.filterBoxRanges.salaryRange.newGraduate ?? { minimum: 11.4, maximum: 60.3 }}
                                     givenValue={internalFilters.wantedSalary.newGraduate}
                                     minimumDistance={1}
                                     description="Filtrer efter nyuddannedes løn i tusinde"
@@ -183,8 +147,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="salary.newGraduate"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={experiencedSalaryRange}
-                                    sliderRange={experiencedSalaryRange}
+                                    initialState={data?.filterBoxRanges.salaryRange.experienced ?? { minimum: 5, maximum: 97.35 }}
+                                    sliderRange={data?.filterBoxRanges.salaryRange.experienced ?? { minimum: 5, maximum: 97.35 }}
                                     givenValue={internalFilters.wantedSalary.experienced}
                                     minimumDistance={1}
                                     description="Filtrer efter erfarenes løn i tusinde"
@@ -193,8 +157,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="salary.experienced"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={wantedWorkingHoursRange}
-                                    sliderRange={wantedWorkingHoursRange}
+                                    initialState={data?.filterBoxRanges.wantedWorkingHoursRange ?? { minimum: 31, maximum: 57 }}
+                                    sliderRange={data?.filterBoxRanges.wantedWorkingHoursRange ?? { minimum: 31, maximum: 57 }}
                                     givenValue={internalFilters.wantedWorkingHours}
                                     minimumDistance={1}
                                     description="Filtrer efter arbejdstimer i muligt arbejde efter uddannelse"
@@ -203,8 +167,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="wantedWorkingHours"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={newGraduateUnemploymentRange}
-                                    sliderRange={newGraduateUnemploymentRange}
+                                    initialState={data?.filterBoxRanges.unemploymentRange.newGraduate ?? { minimum: 0, maximum: 37 }}
+                                    sliderRange={data?.filterBoxRanges.unemploymentRange.newGraduate ?? { minimum: 0, maximum: 37 }}
                                     givenValue={internalFilters.unemployment.newGraduate}
                                     minimumDistance={1}
                                     description="Filtrer efter nyuddannedes arbejdsløshed"
@@ -213,8 +177,8 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ isCalculating, 
                                     identifier="unemployment.newGraduate"
                                 />
                                 <MinimumDistanceSlider
-                                    initialState={experiencedUnemploymentRange}
-                                    sliderRange={experiencedUnemploymentRange}
+                                    initialState={data?.filterBoxRanges.unemploymentRange.experienced ?? { minimum: 0, maximum: 10 }}
+                                    sliderRange={data?.filterBoxRanges.unemploymentRange.experienced ?? { minimum: 0, maximum: 10 }}
                                     givenValue={internalFilters.unemployment.experienced}
                                     minimumDistance={1}
                                     description="Filtrer efter erfarenes arbejdsløshed"

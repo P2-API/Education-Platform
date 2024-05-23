@@ -81,7 +81,7 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
         size: 160,
       },
       {
-        accessorKey: "education.institutions",
+        accessorKey: "education.institution",
         header: "Uddannelsessted",
         Cell: ({ row }: { row: MRT_Row<RankedDataStructure> }) => {
           const institutionName = Institution[row.original.education.institution];

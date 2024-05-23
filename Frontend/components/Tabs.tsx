@@ -18,7 +18,6 @@ export type QuizInfoType = {
     setIsQuizOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-
 export type FilterInfoType = {
     filters: TableFilters;
     setFilters: React.Dispatch<React.SetStateAction<TableFilters>>;

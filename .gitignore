@@ -4,8 +4,6 @@
 node_modules/git 
 
 # Ignore built files and directories for the server
-/build/
-/dist/
 *.js
 *.js.map
 
