@@ -96,10 +96,9 @@ type MinimumDistanceSliderProps = {
 }
 
 export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, givenValue, minimumDistance, description, getValueText, setFilters, identifier }) => {
-    const [value1, setValue1] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
-    console.log("initialState", initialState)
-    console.log("givenValue", givenValue)
-    const handleChange1 = (
+    const [value, setValue] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
+
+    const handleChange = (
         _event: Event,
         newValue: number | number[],
         activeThumb: number,
@@ -111,15 +110,15 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
         }
 
         if (activeThumb === 0) {
-            const minValue = Math.min(newValue[0], value1[1] - minimumDistance);
-            const maxValue = Math.max(newValue[0] + minimumDistance, value1[1]);
-            setValue1([minValue, maxValue]);
+            const minValue = Math.min(newValue[0], value[1] - minimumDistance);
+            const maxValue = Math.max(newValue[0] + minimumDistance, value[1]);
+            setValue([minValue, maxValue]);
 
         }
         else {
-            const minValue = value1[0];
-            const maxValue = Math.max(newValue[1], value1[0] + minimumDistance);
-            setValue1([minValue, maxValue]);
+            const minValue = value[0];
+            const maxValue = Math.max(newValue[1], value[0] + minimumDistance);
+            setValue([minValue, maxValue]);
 
         }
     };
@@ -186,9 +185,9 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
             <div style={{}}  >{description}</div>
             <Slider
                 getAriaLabel={() => 'Minimum distance'}
-                value={value1}
+                value={value}
                 onChangeCommitted={handleFilterChange}
-                onChange={handleChange1}
+                onChange={handleChange}
                 valueLabelDisplay="auto"
                 getAriaValueText={getValueText}
                 valueLabelFormat={getValueText}
