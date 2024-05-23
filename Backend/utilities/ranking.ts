@@ -76,7 +76,7 @@ export class Ranker {
     norm(education: EducationVector, optimalEducation: EducationVector, normValue: number): number {
         let sum = 0;
         education.coordinates.forEach((coordinate, index) => {
-            sum += Math.pow(coordinate.value - optimalEducation.coordinates[index].value, normValue)
+            sum += Math.pow(Math.abs(coordinate.value - optimalEducation.coordinates[index].value), normValue)
         })
         return Math.pow(sum, 1 / normValue)
     }
@@ -101,7 +101,7 @@ export class Ranker {
                 try {
                     const subject = education.subjects.find((subject) => { return subject.title === filterSubject })
                     if (!subject) return;
-                    coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier })
+                    coordinates.push({ name: subject.title, value: subject.score * weights.subjectsPriority * subjectWeightAmplifier})
                 } catch {
                     new Error("subject not found")
                 }
