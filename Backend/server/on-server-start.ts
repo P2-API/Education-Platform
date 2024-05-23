@@ -421,6 +421,10 @@ export const getEducationDurationRange = (): MinimumMaximum => {
 }
 
 // Get all the relevant data packed into an object
+
+
+
+
 export const getTableSectionData = (): EducationDataFromServer => {
     return {
         educations: educations,
@@ -431,9 +435,33 @@ export const getTableSectionData = (): EducationDataFromServer => {
         geographyKeys: geographyKeys,
         formOfEducationKeys: formOfEducationKeys,
 
-        educationDurationRange: educationDurationRange,
-
-        minimumValueEducation: minimumEducation,
-        maximumValueEducation: maximumEducation,
+        filterBoxRanges: {
+            educationDurationRange: educationDurationRange,
+            wantedWorkingHoursRange: {
+                minimum: minimumEducation.jobData.workSchedule.workingHours,
+                maximum: maximumEducation.jobData.workSchedule.workingHours
+            },
+            salaryRange: {
+                newGraduate: {
+                    minimum: minimumEducation.jobData.salaries.newGraduate.lowerQuartile,
+                    maximum: maximumEducation.jobData.salaries.newGraduate.upperQuartile
+                },
+                experienced: {
+                    minimum: minimumEducation.jobData.salaries.experienced.lowerQuartile,
+                    maximum: maximumEducation.jobData.salaries.experienced.upperQuartile
+                }
+            },
+            unemploymentRange: {
+                newGraduate: {
+                    minimum: minimumEducation.jobData.unemployment.newGraduate,
+                    maximum: maximumEducation.jobData.unemployment.newGraduate
+                },
+                experienced: {
+                    minimum: minimumEducation.jobData.unemployment.experienced,
+                    maximum: maximumEducation.jobData.unemployment.experienced
+                }
+            },
+        },
     }
 }
+

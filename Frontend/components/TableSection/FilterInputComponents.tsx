@@ -97,12 +97,15 @@ type MinimumDistanceSliderProps = {
 
 export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ initialState, sliderRange, givenValue, minimumDistance, description, getValueText, setFilters, identifier }) => {
     const [value1, setValue1] = React.useState<number[]>(givenValue?.minimum !== 0 || givenValue?.maximum !== 0 ? [givenValue?.minimum, givenValue?.maximum] : [initialState?.minimum, initialState?.maximum]);
-
+    console.log("initialState", initialState)
+    console.log("givenValue", givenValue)
     const handleChange1 = (
         _event: Event,
         newValue: number | number[],
         activeThumb: number,
     ) => {
+        console.log("newValue", newValue)
+        console.log("identifier", identifier)
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -125,7 +128,7 @@ export const MinimumDistanceSlider: React.FC<MinimumDistanceSliderProps> = ({ in
         _event: Event | React.SyntheticEvent,
         newValue: number | number[],
     ) => {
-
+        console.log("set filters to " + newValue + "for " + identifier)
         if (!Array.isArray(newValue)) {
             return;
         }

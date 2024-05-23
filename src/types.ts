@@ -172,10 +172,18 @@ export type EducationDataFromServer = {
     geographyKeys: (keyof typeof Geography)[];
     formOfEducationKeys: (keyof typeof FormOfEducation)[];
 
-    educationDurationRange: MinimumMaximum;
-
-    minimumValueEducation: Education;
-    maximumValueEducation: Education;
+    filterBoxRanges: {
+        educationDurationRange: MinimumMaximum,
+        wantedWorkingHoursRange: MinimumMaximum,
+        salaryRange: {
+            newGraduate: MinimumMaximum,
+            experienced: MinimumMaximum
+        },
+        unemploymentRange: {
+            newGraduate: MinimumMaximum,
+            experienced: MinimumMaximum
+        },
+    }
 }
 
 export type TableFilters = {
