@@ -314,6 +314,7 @@ describe("roughSorting()", () => {
 
 describe("norm()",()=>{
     it("should find the 'distance' between an education an the optimal education",()=>{
+      //case 1
       //arrange
       const ranker = new Ranker();
       let mockEducationVector:EducationVector = {education:defaultMock, coordinates:[]}
@@ -325,6 +326,7 @@ describe("norm()",()=>{
       //assert
       expect(actualDistance).toBe(0.0)
 
+      //case 2
       //arrange
       mockEducationVector = {education:mockEducation1, coordinates:[{name:"", value:4},
                                                                       {name:"", value:5}]}
@@ -335,6 +337,17 @@ describe("norm()",()=>{
 
       //assert
       expect(actualDistance).toBe(5.0)
+
+      //case 3
+      //arraange
+      mockEducationVector = {education:mockEducation1, coordinates:[{name:"", value:3},
+                                                                      {name:"", value:1}]}
+      mockOptimalVector = {education:defaultMock, coordinates:[{name:"", value:1},{name:"", value:0}]}
+      //act
+      actualDistance = ranker.norm(mockEducationVector, mockOptimalVector,1)
+
+      //assert
+      expect(actualDistance).toBe(3.0)
     })
 })
 
