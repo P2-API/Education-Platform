@@ -57,12 +57,12 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
 
     const handleChartChange = (event: SelectChangeEvent) => {
         const chartType: ChartType = event.target.value as ChartType;
-        if (chartType == ChartType.scatter){
+        if (chartType == ChartType.scatter) {
             setProperties([]);
             setEducationGroups([]);
         }
         setChartType(chartType);
-        
+
     };
 
     const scatterPlotSettingBox = (
@@ -93,7 +93,11 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     visualisere data på en mere overskuelig måde.
                     <br />
                     <br />
-                    PCA visualiseringen er baseret ud fra dine filtre indstillinger og svar på quizzen i 'udannelser' siden.
+                    PCA visualiseringen er baseret ud fra dine filtre indstillinger og svar på quizzen i 'uddannelser' siden.
+                    <br />
+                    <br />
+                    Akserne viser de første 3 principal components, som er de mest signifikante faktorer i dataen og deres vægt.
+                    Hold musen over en uddannelse for at se dens værdier og dens navn.
                 </p>
             </div>
 
