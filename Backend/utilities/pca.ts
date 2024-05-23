@@ -37,14 +37,20 @@ export function pcaData(educations: EducationVector[], transformedData: number[]
     const explainedVariance: number[] = Pca.getExplainedVariance();
     const eigenvectors: number[][] = Pca.getEigenvectors().to2DArray();
 
-    pcaData.principalComponents.xAxis.varianceExplained = explainedVariance[0] //explainedVariance property is filled in for each axis
-    pcaData.principalComponents.yAxis.varianceExplained = explainedVariance[1] //explainedVariance property is filled in for each axis
+    pcaData.principalComponents.xAxis.varianceExplained = explainedVariance[0]
+    pcaData.principalComponents.yAxis.varianceExplained = explainedVariance[1] 
     eigenvectors[0].forEach((coefficient, i) => {
         pcaData.principalComponents.xAxis.composition.push({ variable: educations[0].coordinates[i].name, coeff: coefficient }) // the composition property is filled in for each axis
     })
     eigenvectors[1].forEach((coefficient, i) => {
         pcaData.principalComponents.yAxis.composition.push({ variable: educations[0].coordinates[i].name, coeff: coefficient }) // the composition property is filled in for each axis
     })
+    
+    pcaData.principalComponents.xAxis.composition.sort((a, b) => Math.abs(b.coeff) - Math.abs(a.coeff))
+    pcaData.principalComponents.yAxis.composition.sort((a, b) => Math.abs(b.coeff) - Math.abs(a.coeff))
+
+    console.log("xaxis",pcaData.principalComponents.xAxis.composition, pcaData.principalComponents.xAxis.varianceExplained)
+    console.log("yaxis",pcaData.principalComponents.yAxis.composition, pcaData.principalComponents.yAxis.varianceExplained)
 
     return pcaData
 }
