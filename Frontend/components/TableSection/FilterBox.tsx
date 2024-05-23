@@ -15,16 +15,15 @@ type FilterBoxComponentProps = {
     filterInfo: FilterInfoType
 }
 
-
-
 const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ setRankedData, filterInfo }) => {
+    bouncy.register();
     const data = useContext(EducationDataFromServerContext);
     const quizInfo = useContext(QuizInfoContext);
     const [isCalculating, setIsCalculating] = useState(false);
-
-
-
     const { filters, setFilters } = filterInfo;
+    const { updateRanking } = useServer();
+    const [internalFilters, setInternalFilters] = useState(filters); // Initialize with filters directly
+
 
     // Utility function for showcasing value when moving sliders
     const getValueTextDuration = (value: number) => { return `${value} måneder`; }
@@ -35,7 +34,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ setRankedData, 
 
 
     // rank degrees: 
-    const { updateRanking } = useServer();
     const rankDegrees = async () => {
         setIsCalculating(true);
         setFilters(internalFilters);
@@ -43,12 +41,10 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ setRankedData, 
         setRankedData(response);
         setIsCalculating(false);
     }
-    const [internalFilters, setInternalFilters] = useState(filters); // Initialize with filters directly
 
     useEffect(() => {
         setInternalFilters(filters); // Update internalFilters whenever filters change
     }, [filters]);
-
     useEffect(() => {
         setInternalFilters((prevFilters) => ({
             ...prevFilters,
@@ -67,7 +63,6 @@ const FilterBoxComponent: React.FC<FilterBoxComponentProps> = ({ setRankedData, 
 
 
 
-    bouncy.register()
 
     return (
         <>

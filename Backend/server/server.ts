@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import path from 'path';
 import cors from 'cors';
 import { normalizeFilters } from '../utilities/normalization';
 import { onStart, getTableSectionData, getGroupedEducations, getEducationProperties, getNormalizedEducations } from './on-server-start';
@@ -8,45 +9,43 @@ import { performPCA } from "../utilities/pca";
 import { getHeadliner, getPersonalizedMessage } from '../utilities/web_scraper';
 
 const server: Express = express();
-
 const PORT = 3222;
-
-
+const pathToDist = path.join(__dirname, '../../dist');
 onStart();
 server.use(cors()); // Enable CORS
 server.use(express.json({ limit: '50mb' }));
 server.use(express.urlencoded({ limit: '50mb' }));
-server.use(express.static('dist'));
-
-
-
-server.get("/", (response: Response) => {
-    response.sendFile('/index.html');
+server.use(express.static(pathToDist)); // Serve static files from the 'dist' folder
+// Serve index.html on the root route
+server.get("/", (_request: Request, response: Response) => {
+    response.sendFile(path.join(pathToDist, 'index.html'));
 });
 
-server.get("/server", (response: Response) => {
+server.get("/server", (_request: Request, response: Response) => {
     response.status(200).send("Hello from the server!");
 });
 
 server.get("/get_table_section_data", (_request: Request, response: Response) => {
     response.send(getTableSectionData());
 });
+
 server.post("/PCA_request", (request: Request, response: Response) => {
     const requestData: UserInputs = request.body;
     const pcaData = performPCA(requestData);
     response.send(pcaData);
 });
+
 server.get("/get_grouped_educations", (_request: Request, response: Response) => {
     response.send(getGroupedEducations());
 });
+
 server.get("/get_education_properties", (_request: Request, response: Response) => {
     response.send(getEducationProperties());
 });
+
 server.get("/get_normalized_educations", (_request: Request, response: Response) => {
     response.send(getNormalizedEducations());
 });
-
-
 
 server.post("/update_ranking", (request: Request, response: Response) => {
     try {
@@ -102,7 +101,6 @@ server.post("/get_small_text_about_education", (request: Request, response: Resp
 });
 
 server.listen(PORT, () => {
-    console.log(" ");
     console.log(`Server is running on http://localhost:${PORT}...`);
 }).on("error", (error) => {
     throw new Error(error.message);
