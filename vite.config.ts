@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
+  root: './', // Ensure the root is set to the directory containing index.html
+  build: {
+    outDir: 'dist', // The output directory for the build
+  },
   plugins: [react()],
   resolve: {
     alias: {

@@ -1,4 +1,4 @@
-import Logo from "../assets/logo.png";
+import Logo from "./logo-BS2AC-zD.png";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
@@ -12,8 +12,8 @@ const Navbar = () => {
   };
 
   const showNavbar = useMediaQuery("(min-width:850px)");
-  const condenseNavbar = useMediaQuery("(min-width:1280px)");
-
+  const condenseNavbar = useMediaQuery("(min-width:1280px)");	
+ console.log("path", path);
   const drawerList = (
     <div
       style={{
@@ -25,31 +25,31 @@ const Navbar = () => {
     >
       <li className="elements"
         style={{
-          color: path === "/about" ? "#006eff" : undefined,
+          color: path === "/node2/about" ? "#006eff" : undefined,
           fontSize: "x-large",
         }}
       >
-        <Link to="/about" onClick={toggleDrawer(false)}>
+        <Link to="/node2/about" onClick={toggleDrawer(false)}>
           Om siden
         </Link>
       </li>
       <li className="elements"
         style={{
-          color: path === "/" ? "#006eff" : undefined,
+          color: path === "/node2/" ? "#006eff" : undefined,
           fontSize: "x-large",
         }}
       >
-        <Link to="/" onClick={toggleDrawer(false)}>
+        <Link to="/node2/" onClick={toggleDrawer(false)}>
           Uddannelser
         </Link>
       </li>
       <li className="elements"
         style={{
-          color: path === "/methods" ? "#006eff" : undefined,
+          color: path === "/node2/methods" ? "#006eff" : undefined,
           fontSize: "x-large",
         }}
       >
-        <Link to="/methods" onClick={toggleDrawer(false)}>
+        <Link to="/node2/methods" onClick={toggleDrawer(false)}>
           Metoder
         </Link>
       </li>
@@ -93,8 +93,8 @@ const Navbar = () => {
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/about" ? "white" : undefined,
-              backgroundColor: path === "/about" ? "#006eff" : undefined,
+              color: path === "/node2/about" ? "white" : undefined,
+              backgroundColor: path === "/node2/about" ? "#006eff" : undefined,
               fontSize: "18px",
               height: "2em",
               display: "flex",
@@ -104,14 +104,14 @@ const Navbar = () => {
               borderRadius: "5px",
             }}
           >
-            <Link to="/about">Om siden</Link>
+            <Link to="/node2/about">Om siden</Link>
           </li>
           <li
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/" ? "white" : undefined,
-              backgroundColor: path === "/" ? "#006eff" : undefined,
+              color: path === "/node2/" ? "white" : undefined,
+              backgroundColor: path === "/node2/" ? "#006eff" : undefined,
               fontSize: "18px",
               height: "2em",
               display: "flex",
@@ -121,14 +121,14 @@ const Navbar = () => {
               borderRadius: "5px",
             }}
           >
-            <Link to="/">Uddannelser</Link>
+            <Link to="/node2/">Uddannelser</Link>
           </li>
           <li
             style={{
               marginLeft: "1em",
               marginRight: "1em",
-              color: path === "/methods" ? "white" : undefined,
-              backgroundColor: path === "/methods" ? "#006eff" : undefined,
+              color: path === "/node2/methods" ? "white" : undefined,
+              backgroundColor: path === "/node2/methods" ? "#006eff" : undefined,
               fontSize: "18px",
               height: "2em",
               display: "flex",
@@ -138,7 +138,7 @@ const Navbar = () => {
               borderRadius: "5px",
             }}
           >
-            <Link to="/methods">Metoder</Link>
+            <Link to="/node2/methods">Metoder</Link>
           </li>
         </ul>
       ) : (

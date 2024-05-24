@@ -45,7 +45,6 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
 
     const { getPCAData } = useServer();
     const [pcaData, setPCAData] = useState<pcaScatterData>();
-    console.log("chartType outside of PCA fetching", chartType)
     useEffect(() => {
         getPCAData(quizAnswerState.quizData, filterInfo.filters).then((data) => {
             setPCAData({
@@ -56,12 +55,10 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                 xAxisTitle: data?.principalComponents.xAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ...",
                 yAxisTitle: data?.principalComponents.yAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ..."
             })
-            console.log("chartType inside of PCA fetching", chartType)
         })
     }, [quizAnswerState.quizData, chartType]);
     const rankedData = rankedDataInfo;
     const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
-    console.log("pcadata", pcaData)
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>

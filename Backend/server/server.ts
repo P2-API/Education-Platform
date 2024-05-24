@@ -17,37 +17,39 @@ server.use(express.json({ limit: '50mb' }));
 server.use(express.urlencoded({ limit: '50mb' }));
 server.use(express.static(pathToDist)); // Serve static files from the 'dist' folder
 // Serve index.html on the root route
-server.get("/", (_request: Request, response: Response) => {
+
+
+server.get("/node2", (_request: Request, response: Response) => {
     response.sendFile(path.join(pathToDist, 'index.html'));
 });
 
-server.get("/server", (_request: Request, response: Response) => {
+server.get("/node2/server", (_request: Request, response: Response) => {
     response.status(200).send("Hello from the server!");
 });
 
-server.get("/get_table_section_data", (_request: Request, response: Response) => {
+server.get("/node2/get_table_section_data", (_request: Request, response: Response) => {
     response.send(getTableSectionData());
 });
 
-server.post("/PCA_request", (request: Request, response: Response) => {
+server.post("/node2/PCA_request", (request: Request, response: Response) => {
     const requestData: UserInputs = request.body;
     const pcaData = performPCA(requestData);
     response.send(pcaData);
 });
 
-server.get("/get_grouped_educations", (_request: Request, response: Response) => {
+server.get("/node2/get_grouped_educations", (_request: Request, response: Response) => {
     response.send(getGroupedEducations());
 });
 
-server.get("/get_education_properties", (_request: Request, response: Response) => {
+server.get("/node2/get_education_properties", (_request: Request, response: Response) => {
     response.send(getEducationProperties());
 });
 
-server.get("/get_normalized_educations", (_request: Request, response: Response) => {
+server.get("/node2/get_normalized_educations", (_request: Request, response: Response) => {
     response.send(getNormalizedEducations());
 });
 
-server.post("/update_ranking", (request: Request, response: Response) => {
+server.post("/node2/update_ranking", (request: Request, response: Response) => {
     try {
         const requestData = request.body;
         const filters: TableFilters = requestData.filterProps;
@@ -67,7 +69,7 @@ server.post("/update_ranking", (request: Request, response: Response) => {
     }
 });
 
-server.post("/generate_personalized_message", (request: Request, response: Response) => {
+server.post("/node2/generate_personalized_message", (request: Request, response: Response) => {
     const requestData = request.body;
     const quizAnswers = requestData.quizAnswers;
     const filters = requestData.filters;
@@ -85,7 +87,7 @@ server.post("/generate_personalized_message", (request: Request, response: Respo
     });
 });
 
-server.post("/get_small_text_about_education", (request: Request, response: Response) => {
+server.post("/node2/get_small_text_about_education", (request: Request, response: Response) => {
     const requestData = request.body;
     const education = requestData.education;
 
@@ -101,7 +103,7 @@ server.post("/get_small_text_about_education", (request: Request, response: Resp
 });
 
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}...`);
+    console.log(`Server is running on https://cs-24-dat-2-02.p2datsw.cs.aau.dk/node2/ ...`);
 }).on("error", (error) => {
     throw new Error(error.message);
 });
