@@ -55,10 +55,20 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                 xAxisTitle: data?.principalComponents.xAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ...",
                 yAxisTitle: data?.principalComponents.yAxis.composition.slice(0, 3).map((component) => component.variable + ": " + parseFloat(component.coeff.toFixed(2))).join(" + ") + " ..."
             })
+
         })
     }, [quizAnswerState.quizData, chartType]);
     const rankedData = rankedDataInfo;
     const rankIndex = rankedData?.rankedData ? rankedData?.rankedData.index : 366;
+
+    const isValidDegree = (degreeTitle: string): Boolean => {
+        const degree = rankedData?.rankedData?.ranking.find((degree) => degree.education.title === degreeTitle);
+        const index = rankedData?.rankedData?.ranking.indexOf(degree as any);
+        if (index == undefined) return false;
+        if (index <= rankIndex) return true;
+        return false
+    };
+
     const scatterPlot = (
         <Paper elevation={2} style={{ height: "100%", zIndex: 1, width: "100%", overflowY: "scroll" }}>
             <div style={{ display: "grid", gap: "1em", height: "95%", }}>
@@ -73,7 +83,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             marker: {
                                 size: 10,
                                 sizemode: "area",
-                                color: pcaData?.textValues.map((_text, index) => (index < rankIndex ? "green" : "red"))
+                                color: pcaData?.textValues.map((text) => isValidDegree(text) ? "green" : "red"),
                             },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
