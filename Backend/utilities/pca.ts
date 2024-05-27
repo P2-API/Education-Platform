@@ -49,8 +49,6 @@ export function pcaData(educations: EducationVector[], transformedData: number[]
     pcaData.principalComponents.xAxis.composition.sort((a, b) => Math.abs(b.coeff) - Math.abs(a.coeff))
     pcaData.principalComponents.yAxis.composition.sort((a, b) => Math.abs(b.coeff) - Math.abs(a.coeff))
 
-    console.log("xaxis",pcaData.principalComponents.xAxis.composition, pcaData.principalComponents.xAxis.varianceExplained)
-    console.log("yaxis",pcaData.principalComponents.yAxis.composition, pcaData.principalComponents.yAxis.varianceExplained)
 
     return pcaData
 }

@@ -6,12 +6,10 @@ import {
     TableFilters,
     Education
 } from "types";
-const PORT = 3222;
-const BASEURL = `http://localhost:${PORT}`;
+
+const BASEURL = `https://cs-24-dat-2-02.p2datsw.cs.aau.dk/node2/node2`;
 
 const useServer = () => {
-
-
     const greetServer = async () => {
         const response = await fetch(`${BASEURL}/server`);
         const data = await response.text();
@@ -41,7 +39,6 @@ const useServer = () => {
         const normalizedEducations: any[] = await response.json();
         return normalizedEducations;
     }
-    // write more functions here
 
     const getPersonalizedMessage = async (filters: TableFilters, quizAnswers: QuizAnswers, education: Education, doesPassFilters: Boolean) => {
         const response = await fetch(`${BASEURL}/generate_personalized_message`, {
@@ -56,7 +53,6 @@ const useServer = () => {
     }
 
     const getSmallTextAboutEducation = async (education: Education) => {
-
         const response = await fetch(`${BASEURL}/get_small_text_about_education`, {
             method: "POST",
             headers: {
@@ -77,9 +73,8 @@ const useServer = () => {
             body: JSON.stringify({ filterProps, quizAnswers })
         });
 
-        const responseJson = await response.json(); // Read the response as text
+        const responseJson = await response.json();
         return responseJson;
-
     };
 
     const getPCAData = async (quizAnswers: QuizAnswers, filters: TableFilters) => {
@@ -92,12 +87,8 @@ const useServer = () => {
         });
 
         const responseJson: PCAData = await response.json();
-
         return responseJson;
     }
-
-
-    // write more functions here
 
     return { greetServer, updateRanking, getTableSectionData, getPCAData, getGroupedEducations, getEducationsProperties, getSmallTextAboutEducation, getNormalizedEducations, getPersonalizedMessage };
 }

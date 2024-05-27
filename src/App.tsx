@@ -41,9 +41,9 @@ function App() {
           }}
         >
           <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/about" element={<h1>Om siden</h1>} />
-            <Route path="/methods" element={<h1>Kontakt</h1>} />
+            <Route path="/node2/" element={<Homepage />} />
+            <Route path="/node2//about" element={<h1>Om siden</h1>} />
+            <Route path="/node2//methods" element={<h1>Kontakt</h1>} />
             {/* Add more routes here */}
           </Routes>
         </div>

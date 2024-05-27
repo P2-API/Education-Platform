@@ -7,11 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "vite preview ",
     "test": "vitest --coverage",
     "server": "ts-node  Backend/server/server.ts",
     "dev-server": "ts-node-dev --respawn --pretty --transpile-only Backend/server/server_old.ts",
-    "start": "concurrently \"npm run dev-server\" \"npm run dev\""
+    "start": "concurrently \"npm run dev-server\" \"npm run dev\"",
+    "mock": "concurrently \"npm run preview\" \"npm run dev-server\""
   },
   "exports": "./dist/index.js",
   "dependencies": {
