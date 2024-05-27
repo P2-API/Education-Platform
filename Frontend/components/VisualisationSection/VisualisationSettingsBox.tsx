@@ -90,7 +90,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     <br />
                     <br />
                     En PCA analyser tager adskillige faktorer i betragtning og reducerer dimensionenen/antallet af akser, så man kan
-                    visualisere data på en mere overskuelig måde.
+                    visualisere data på en mere overskuelig måde. Placeringen af uddannelserne viser deres relation/position til hinanden.
                     <br />
                     <br />
                     PCA visualiseringen er baseret ud fra dine filtre indstillinger og svar på quizzen i 'uddannelser' siden.
@@ -98,6 +98,7 @@ const VisualisationSettingsBox: React.FC<VisualisationSettingsBoxProps> = ({ set
                     <br />
                     Akserne viser de første 3 principal components, som er de mest signifikante faktorer i dataen og deres vægt.
                     Hold musen over en uddannelse for at se dens værdier og dens navn.
+
                 </p>
             </div>
 

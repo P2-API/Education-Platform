@@ -316,7 +316,7 @@ async function sendMessageToChatGPT(text: string, preferences: QuizAnswers, educ
                     content: promptString
                 }
             ],
-            model: "gpt-3.5-turbo-0125",
+            model: "gpt-4o",
             response_format: { type: "json_object" },
             temperature: 0.2
         }).then((result) => {
