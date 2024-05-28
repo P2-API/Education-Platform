@@ -550,9 +550,9 @@ const RankedMaterialReactDataTable: React.FC<RankedMaterialReactDataTableProps> 
           </>
         )}
         <p>{message}</p>
-        {!message && (
-          <a href={`https://${row.original.education.url}`} style={{ color: "blue" }} target="" rel="noopener noreferrer">Læs mere om uddannelsen på UG.dk</a>
-        )}
+
+        <a href={`https://${row.original.education.url}`} style={{ color: "blue" }} target="" rel="noopener noreferrer">Læs mere om uddannelsen på UG.dk</a>
+
       </div>
     );
   };
