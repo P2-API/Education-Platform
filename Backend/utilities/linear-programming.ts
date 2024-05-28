@@ -212,7 +212,6 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     return optimalIndustries;
   }
   */
-  console.log(optimalEducation.jobData.unemployment)
   return optimalEducation;
 }
 
