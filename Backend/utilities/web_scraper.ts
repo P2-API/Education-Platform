@@ -8,7 +8,7 @@ import { EducationsGroupped, NormalizedProfession, Profession, Education, Subjec
 
 
 const failedUrls: string[] = [];
-const openai = new OpenAI({ apiKey: 'sk-proj-G0xX1ik8iBjsWcO0mILaT3BlbkFJRYxWgMmDxlIaMmWvmHFz' });
+const openai = new OpenAI({ apiKey: 'sk-proj-pY2yhpi6h9E2Q4CYCN6GT3BlbkFJH6OCl6ORakU0vfl5gl6O' });
 
 interface GroupData {
     [key: string]: unknown;
