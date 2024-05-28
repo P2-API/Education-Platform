@@ -390,8 +390,8 @@ describe("educationVector()", () => {
             { name: 'hoursWithSupervision', value: 0.3 },
             { name: 'socialEnvironment', value: 2.4 },
             { name: 'groupEngaement', value: 2.7 },
-            { name: 'loneliness', value: 0.9 },
-            { name: 'stress', value: 0.9 },
+            { name: 'loneliness', value: 2.1 },
+            { name: 'stress', value: 2.1 },
             { name: 'acedemicEnvironment', value: 0.6 },
             { name: 'teacherEvaluation', value: 1.5 },
             { name: 'studentJob', value: 2.7 },
@@ -402,7 +402,7 @@ describe("educationVector()", () => {
             { name: 'internationalStay', value: 1.2 },
             { name: 'salaryNewGraduate', value: 1.8 },
             { name: 'salaryExperienced', value: 2.4 },
-            { name: 'unemploymentExperienced', value: 0.3 },
+            { name: 'unemploymentExperienced', value: 2.7 },
             { name: 'unemploymentNewGraduate', value: 1.5 },
             { name: 'degreeRelevance', value: 0.3 },
             { name: 'fixedHoursPercernt', value: 2.7 },
@@ -419,7 +419,9 @@ describe("educationVector()", () => {
       expect(actualEducationVector.education).toEqual(expectedEducationVector.education);
       expect(actualEducationVector.coordinates.length).toBe(expectedEducationVector.coordinates.length);
       for (let i = 0; i < actualEducationVector.coordinates.length; i++) {
+        console.log(actualEducationVector.coordinates[i].name, expectedEducationVector.coordinates[i].name)
         expect(actualEducationVector.coordinates[i].name).toBe(expectedEducationVector.coordinates[i].name);
+        console.log(actualEducationVector.coordinates[i].value, expectedEducationVector.coordinates[i].value)
         expect(actualEducationVector.coordinates[i].value).toBeCloseTo(expectedEducationVector.coordinates[i].value, precision);
       }
   })

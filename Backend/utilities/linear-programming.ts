@@ -35,8 +35,8 @@ export class LPclass implements LP {
     // socialFeedback
     variables.push({ name: "socialEnvironment", coef: quizAnswers.socialEnvironmentPriority },
       { name: "groupEngagement", coef: quizAnswers.groupEngagementPriority },
-      { name: "loneliness", coef: -quizAnswers.lonelinessPriority },
-      { name: "stress", coef: -quizAnswers.stressPriority })
+      { name: "loneliness", coef: /*-*/quizAnswers.lonelinessPriority },
+      { name: "stress", coef: /*-*/quizAnswers.stressPriority })
     // academicFeedback
     variables.push({ name: "academicEnvironment", coef: quizAnswers.academicEnvironmentPriority },
       { name: "teacherEvaluation", coef: quizAnswers.teachingPriority })
@@ -51,8 +51,8 @@ export class LPclass implements LP {
     // jobData
     variables.push({ name: "startingSalary", coef: quizAnswers.startingSalaryPriority },
       { name: "experiencedSalary", coef: quizAnswers.experiencedSalaryPriority },
-      { name: "unemploymentNewGraduate", coef: -quizAnswers.unemploymentPriority },
-      { name: "unemploymentExperienced", coef: -quizAnswers.unemploymentPriority },
+      { name: "unemploymentNewGraduate", coef: /*-*/quizAnswers.unemploymentPriority },
+      { name: "unemploymentExperienced", coef: /*-*/quizAnswers.unemploymentPriority },
       { name: "degreeRelevance", coef: quizAnswers.degreeRelevancePriority },
       { name: "fixedHours", coef: quizAnswers.fixedHoursPriority },
       { name: "flexibleHours", coef: quizAnswers.flexibleHoursPriority },
@@ -131,8 +131,8 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     socialFeedback: {
       socialEnvironment: values["socialEnvironment"],
       groupEngagement: values["groupEngagement"],
-      loneliness: values["loneliness"],
-      stress: values["stress"]
+      loneliness: 1-values["loneliness"],
+      stress: 1-values["stress"]
     },
     academicFeedback: {
       academicEnvironment: values["academicEnvironment"],
@@ -178,8 +178,8 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
         nightAndEveningShiftsPercent: values["nightAndEveningShifts"]
       },
       unemployment: {
-        newGraduate: values["unemploymentNewGraduate"],
-        experienced: values["unemploymentExperienced"],
+        newGraduate: 1-values["unemploymentNewGraduate"],
+        experienced: 1-values["unemploymentExperienced"],
         projectedNewGraduate: 0, //irelevant
         projectedExperienced: 0
       }, //irelevant
@@ -212,6 +212,7 @@ function OptimalEducation(result: Result, filters: Types.TableFilters): Types.Ed
     return optimalIndustries;
   }
   */
+  console.log(optimalEducation.jobData.unemployment)
   return optimalEducation;
 }
 
