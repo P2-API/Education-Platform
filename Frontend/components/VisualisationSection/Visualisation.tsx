@@ -87,8 +87,8 @@ const Visualisation: React.FC<VisualisationProps> = ({ chartType, properties, ra
                             },
                             hovertemplate:
                                 "<b>%{text}</b><br><br>" +
-                                "Hjalfedildur: %{y}<br>" +
-                                "Kramsemar: %{x}<br>" +
+                                "1. Principal Component: %{y}<br>" +
+                                "2. Principal Component: %{x}<br>" +
                                 "<extra></extra>"
                         }
                     ]}
