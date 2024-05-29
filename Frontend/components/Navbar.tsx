@@ -12,8 +12,8 @@ const Navbar = () => {
   };
 
   const showNavbar = useMediaQuery("(min-width:850px)");
-  const condenseNavbar = useMediaQuery("(min-width:1280px)");	
- console.log("path", path);
+  const condenseNavbar = useMediaQuery("(min-width:1280px)");
+
   const drawerList = (
     <div
       style={{
