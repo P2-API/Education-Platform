@@ -93,7 +93,7 @@ export class Ranker {
         const coordinates = weightedEducationVector.coordinates
         const weights: QuizAnswers = userInputs.quizAnswers
         const filterSubjects: string[] = userInputs.filters.hasSubjects
-        const subjectWeightAmplifier = 10
+        const subjectWeightAmplifier = 10 
         //add subjects
         if (filterSubjects.length > 0) {
 
@@ -118,31 +118,31 @@ export class Ranker {
         })
         */
         //add hours
-        coordinates.push({ name: "hoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority },
-            { name: "hoursWithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority },
-            { name: "hoursWithSupervision", value: education.hours.withSupervision * weights.highWorkloadAcceptancePriority })
+        coordinates.push({ name: "hoursWithFewStudent", value: education.hours.withFewStudents * weights.highWorkloadAcceptancePriority},
+            { name: "hoursWithManyStedents", value: education.hours.withManyStudents * weights.highWorkloadAcceptancePriority},
+            { name: "hoursWithSupervision", value: education.hours.withSupervision * weights.highWorkloadAcceptancePriority})
         //add socialFeedback
-        coordinates.push({ name: "socialEnvironment", value: education.socialFeedback.socialEnvironment * weights.socialEnvironmentPriority },
-            { name: "groupEngaement", value: education.socialFeedback.groupEngagement * weights.groupEngagementPriority },
-            { name: "loneliness", value: education.socialFeedback.loneliness * weights.lonelinessPriority },
-            { name: "stress", value: education.socialFeedback.stress * weights.stressPriority})
+        coordinates.push({ name: "socialEnvironment", value: education.socialFeedback.socialEnvironment * weights.socialEnvironmentPriority},
+            { name: "groupEngaement", value: education.socialFeedback.groupEngagement * weights.groupEngagementPriority},
+            { name: "loneliness", value: (1 - education.socialFeedback.loneliness) * weights.lonelinessPriority},
+            { name: "stress", value: (1 - education.socialFeedback.stress) * weights.stressPriority})
         //add academicFeedback
         coordinates.push({ name: "acedemicEnvironment", value: education.academicFeedback.academicEnvironment * weights.academicEnvironmentPriority },
             { name: "teacherEvaluation", value: education.academicFeedback.teacherEvaluation * weights.teachingPriority })
         //add academicWorkload
-        coordinates.push({ name: "studentJob", value: education.academicWorkload.studentJob * weights.studentJobPriority },
-            { name: "lectures", value: education.academicWorkload.lectures * weights.lecturesPriority },
-            { name: "literature", value: education.academicWorkload.literature * weights.literaturePriority })
+        coordinates.push({ name: "studentJob", value: education.academicWorkload.studentJob * weights.studentJobPriority},
+            { name: "lectures", value: education.academicWorkload.lectures * weights.lecturesPriority},
+            { name: "literature", value: education.academicWorkload.literature * weights.literaturePriority})
         //add degreeStructure
-        coordinates.push({ name: "exams", value: education.degreeStructure.contents.exams * weights.dislikeExamPriority },
-            { name: "internship", value: education.degreeStructure.contents.internship * weights.internshipPriority },
-            { name: "internationalStay", value: education.degreeStructure.contents.internationalStay * weights.internationalStayPriority })
+        coordinates.push({ name: "exams", value: education.degreeStructure.contents.exams * weights.dislikeExamPriority},
+            { name: "internship", value: education.degreeStructure.contents.internship * weights.internshipPriority},
+            { name: "internationalStay", value: education.degreeStructure.contents.internationalStay * weights.internationalStayPriority})
         //add jobData
-        coordinates.push({ name: "salaryNewGraduate", value: education.jobData.salaries.newGraduate.median * weights.startingSalaryPriority },
-            { name: "salaryExperienced", value: education.jobData.salaries.experienced.median * weights.experiencedSalaryPriority },
-            { name: "unemploymentExperienced", value: education.jobData.unemployment.experienced * weights.unemploymentPriority },
-            { name: "unemploymentNewGraduate", value: education.jobData.unemployment.newGraduate * weights.unemploymentPriority },
-            { name: "degreeRelevance", value: education.jobData.degreeRelevance * weights.degreeRelevancePriority },
+        coordinates.push({ name: "salaryNewGraduate", value: education.jobData.salaries.newGraduate.median * weights.startingSalaryPriority},
+            { name: "salaryExperienced", value: education.jobData.salaries.experienced.median * weights.experiencedSalaryPriority},
+            { name: "unemploymentExperienced", value: (1-education.jobData.unemployment.experienced) * weights.unemploymentPriority},
+            { name: "unemploymentNewGraduate", value: (1-education.jobData.unemployment.newGraduate) * weights.unemploymentPriority},
+            { name: "degreeRelevance", value: education.jobData.degreeRelevance * weights.degreeRelevancePriority},
             { name: "fixedHoursPercernt", value: education.jobData.workSchedule.fixedHoursPercent * weights.fixedHoursPriority },
             { name: "flexibleHoursPercent", value: education.jobData.workSchedule.flexibleHoursPercent * weights.flexibleHoursPriority },
             { name: "selfSchedulePercent", value: education.jobData.workSchedule.selfSchedulePercent * weights.selfSchedulePriority },
